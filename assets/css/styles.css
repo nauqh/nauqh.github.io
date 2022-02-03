@@ -309,10 +309,6 @@ body.light-theme {
   padding-top: 2rem;
 }
 
-.home__data {
-  padding-left: 6rem;
-}
-
 .home__greeting,
 .home__education {
   font-size: var(--small-font-size);
@@ -1161,6 +1157,10 @@ iframe {
     height: calc(var(--header-height) + 1rem);
   }
 
+  .home__data {
+    padding-left: 6rem;
+  }
+
   .home__handle {
     width: 290px;
   }
@@ -1284,51 +1284,3 @@ iframe {
     border-radius: 0.5rem;
   }
 }
-
-/* Anime */
-/* .anime__section {
-  overflow: hidden;
-  font-family: "Rubik Mono One", sans-serif;
-  background: var(--body-color);
-}
-
-.anime__section .input {
-  font-size: 20px;
-  text-align: center;
-  background: none;
-  width: 50%;
-  margin: auto;
-  border: none;
-  color: #eee;
-  border-radius: 0.5rem;
-  border: 2px solid var(--first-color);
-}
-
-.anime__section .text,
-.anime__section .offscreen-text {
-  margin-top: 100px;
-  width: 100%;
-  position: absolute;
-}
-
-.anime__section .offscreen-text {
-  text-align: center;
-  top: -9999px;
-}
-
-.anime__section .text span {
-  position: absolute;
-}
-
-.anime__section .container {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  margin: auto;
-  height: 300px;
-}
-
-.anime__section svg {
-  height: 100%;
-  width: 100%;
-} */
