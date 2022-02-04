@@ -83,7 +83,7 @@ textarea {
 body {
   background-color: var(--body-color);
   color: var(--text-color);
-  transition: 0.4s; /* for light mode animation */
+  transition: 0.4s;
 }
 
 h1,
@@ -126,7 +126,7 @@ img {
 /*========== Variables Light theme ==========*/
 body.light-theme {
   --title-color: #112240;
-  --text-color: hsl(var(--second-hue), 8%, 35%);
+  --text-color: #0a192f;
   --body-color: #e7eff6;
   --container-color: #d1fbfc;
 }
@@ -180,15 +180,15 @@ body.light-theme {
 }
 
 .light-theme::-webkit-scrollbar {
-  background-color: hsl(var(--second-hue), 8%, 66%);
+  background-color: #a1a6af;
 }
 
 .light-theme::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--second-hue), 8%, 54%);
+  background-color: #808793;
 }
 
 .light-theme::-webkit-scrollbar-thumb:hover {
-  background-color: hsl(var(--second-hue), 8%, 44%);
+  background-color: #676e79;
 }
 
 /*=============== REUSABLE CSS CLASSES ===============*/
