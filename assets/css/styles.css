@@ -17,7 +17,7 @@
 
   --title-color: #e0e0e0;
   --text-color: #a8b2d1;
-  --text-color-light: hsl(var(--second-hue), 4%, 55%);
+  --text-color-light: #71808e;
 
   --body-color: #0a192f;
   --container-color: #112240;
