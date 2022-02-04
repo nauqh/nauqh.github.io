@@ -918,53 +918,22 @@ iframe {
 
 /*=============== FOOTER ===============*/
 .footer {
-  background-color: var(--first-color);
+  background-color: var(--body-color);
 }
 
 .footer__container {
   padding: 2rem 0 6rem;
 }
 
-.footer__title,
-.footer__link {
-  color: var(--body-color);
-}
-
-.footer__title {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.footer__list {
-  display: flex;
-  justify-content: center;
-  column-gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.footer__social {
-  display: flex;
-  justify-content: center;
-  column-gap: 1.25rem;
-}
-
-.footer__social-link {
-  width: max-content;
-  background-color: var(--container-color);
-  color: var(--first-color);
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-  display: flex;
-  font-size: 1rem;
-  transition: 0.4s;
-}
-
 .footer__copy {
   display: block;
-  margin-top: 4.5rem;
-  color: var(--container-color);
+  color: var(--text-color);
   text-align: center;
-  font-size: var(--smaller-font-size);
+  font-size: 1rem;
+}
+
+.footer__copy a {
+  color: var(--first-color);
 }
 
 /*=============== SCROLL BAR ===============*/
