@@ -1051,15 +1051,6 @@ iframe {
     font-size: 1.5rem;
   }
 
-  .services__container {
-    grid-template-columns: repeat(3, 280px);
-    column-gap: 3rem;
-  }
-
-  .services__card {
-    padding: 5rem 2rem 1.5rem;
-  }
-
   .work__container {
     grid-template-columns: repeat(3, 300px);
     column-gap: 2rem;
