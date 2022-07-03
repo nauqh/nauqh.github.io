@@ -930,7 +930,6 @@ iframe {
   .project {
     width: 300px;
   }
-
 }
 
 /* For large devices */
@@ -940,11 +939,11 @@ iframe {
   }
 
   .home__name {
-    font-size: 5rem;
+    font-size: 3.5rem;
   }
 
   .home__education {
-    font-size: 3rem;
+    font-size: 2rem;
   }
   .section__title {
     font-size: 2rem;
