@@ -267,7 +267,7 @@ img {
   overflow: hidden;
 }
 
-.home__handle .wake {
+/* .home__handle .wake {
   display: none;
 }
 
@@ -281,7 +281,7 @@ img {
 
 .home__handle:hover {
   cursor: pointer;
-}
+} */
 
 .home__buttons {
   display: flex;
