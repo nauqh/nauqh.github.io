@@ -203,10 +203,6 @@ img {
   border-radius: 5rem;
 }
 
-#theme-button {
-  font-size: 2rem;
-}
-
 /* Active link */
 .active-link {
   background: linear-gradient(
@@ -419,6 +415,10 @@ img {
 
 .about__description {
   margin-bottom: 2rem;
+}
+
+.about__button {
+  display: none;
 }
 
 /*=============== SKILLS ===============*/
@@ -926,6 +926,10 @@ iframe {
 
   .home__scroll-icon {
     font-size: 2.5rem;
+  }
+
+  .about__button {
+    display: inline;
   }
 
   .about__container {
