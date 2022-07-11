@@ -333,28 +333,28 @@ img {
 .button {
   display: inline;
   background-color: var(--first-color);
-  color: var(--body-color);
+  color: black;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
   font-weight: var(--font-medium);
-  transition: 0.4s;
+  transition: 0.2s;
 }
 
 .button:hover {
-  background-color: var(--first-color-alt);
-  color: var(--body-color);
+  color: var(--title-color);
 }
 
 .button--ghost {
   background-color: transparent;
   border: 2px solid var(--first-color);
   color: var(--first-color);
+  font-weight: bold;
 }
 
 .button--ghost:hover {
   border: 2px solid var(--first-color);
   background-color: var(--first-color);
-  color: black;
+  color: var(--title-color);
 }
 
 /*=============== ABOUT ===============*/
