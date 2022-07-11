@@ -260,28 +260,12 @@ img {
     hsla(174, 86%, 46%, 1),
     hsla(174, 86%, 46%, 0.2)
   );
-  border-radius: 10rem 10rem 1rem 1rem;
+  border-radius: 5rem 5rem 1rem 1rem;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   overflow: hidden;
 }
-
-/* .home__handle .wake {
-  display: none;
-}
-
-.home__handle:hover .wake {
-  display: inline;
-}
-
-.home__handle:hover .sleep {
-  display: none;
-}
-
-.home__handle:hover {
-  cursor: pointer;
-} */
 
 .home__buttons {
   display: flex;
@@ -368,7 +352,9 @@ img {
 }
 
 .button--ghost:hover {
-  border: 2px solid var(--first-color-alt);
+  border: 2px solid var(--first-color);
+  background-color: var(--first-color);
+  color: black;
 }
 
 /*=============== ABOUT ===============*/
