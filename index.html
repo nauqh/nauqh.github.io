@@ -6,342 +6,483 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!--=============== FAVICON ===============-->
-    <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
 
-    <!--=============== BOXICONS ===============-->
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <!--=============== REMIXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!--=============== SWIPER CSS ===============-->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
 
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="assets/css/styles.css">
 
-    <title> Nauqh_ </title>
+    <title>Nauqh</title>
 </head>
 
 <body>
-    <!--=============== HEADER ===============-->
+    <!--==================== HEADER ====================-->
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="index.html" class="nav__logo">N&nbsp;a&nbsp;u&nbsp;q&nbsp;h</a>
+            <a href="#" class="nav__logo">
+                <!-- <i class="ri-code-box-line"></i> -->
+                Nauqh
+            </a>
 
-            <div class="nav__menu">
-                <ul class="nav__list">
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list grid">
                     <li class="nav__item">
                         <a href="#home" class="nav__link active-link">
-                            <i class='bx bx-home-alt'></i>
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#about" class="nav__link">
-                            <i class='bx bx-user'></i>
+                            <i class="ri-home-5-line"></i> Home
                         </a>
                     </li>
 
                     <li class="nav__item">
                         <a href="#skills" class="nav__link">
-                            <i class='bx bx-book'></i>
+                            <i class="ri-trophy-line"></i> Skills
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        <a href="#work" class="nav__link">
-                            <i class='bx bx-briefcase-alt-2'></i>
+                        <a href="#qualification" class="nav__link">
+                            <i class="ri-book-open-line"></i> Qualification
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="#projects" class="nav__link"> Projects
+
                         </a>
                     </li>
                 </ul>
+
+                <!-- CLose button -->
+                <div class="nav__close" id="nav-close">
+                    <i class="ri-close-line"></i>
+                </div>
+            </div>
+
+            <div class="nav__buttons">
+                <!-- Toggle button -->
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="ri-menu-4-line"></i>
+                </div>
             </div>
         </nav>
     </header>
 
-    <!--=============== MAIN ===============-->
+    <!--==================== MAIN ====================-->
     <main class="main">
-        <!--=============== HOME ===============-->
+        <!--==================== HOME ====================-->
         <section class="home section" id="home">
-            <div class="home__container container grid">
-                <div class="home__data">
-                    <span class="home__greeting">Hi, my name is</span>
-                    <h1 class="home__name">Minh Quan</h1>
-                    <h3 class="home__education">Data Engineer</h3>
+            <div class="home__container container grid section__border">
+                <div class="home__data grid">
+                    <h1 class="home__title">
+                        Hi, my<br>
+                        name is Min Wan<br>
+                    </h1>
 
-                    <div class="home__buttons">
-                        <a download="" href="assets/pdf/nauqh_resume.pdf" class="button button--ghost">Download CV</a>
-                        <a href="resume.html" class="button">About me</a>
+                    <div class="home__blob grid">
+                        <div class="home__peril">
+                            <img src="assets/img/R2-D2.gif" alt="home peril">
+                        </div>
+
+                        <img src="assets/img/shape-wawes.svg" alt="" class="home__shape-waves">
+                        <img src="assets/img/shape-circle.svg" alt="" class="home__shape-circle">
                     </div>
+
+                    <ul class="home__social">
+                        <a href="https://www.facebook.com/profile.php?id=100012103698354" target="_blank"
+                            class="home__social-link">
+                            <i class="ri-facebook-circle-fill"></i>
+                        </a>
+
+                        <a href="https://github.com/nauqh" target="_blank" class="home__social-link">
+                            <i class="ri-github-fill"></i>
+                        </a>
+
+                        <a href="https://www.instagram.com/nauqh_/" target="_blank" class="home__social-link">
+                            <i class="ri-instagram-fill"></i>
+                        </a>
+                    </ul>
                 </div>
 
-                <div class="home__handle">
-                    <img src="assets/img/R2-D2.gif" alt="" class="home__img sleep">
+                <!--==================== HOME INFO 1 ====================-->
+                <div class="home__info">
+                    <div>
+                        <h3 class="home__info-title">
+                            BIOGRAPHY
+                        </h3>
+                        <p class="home__info-description">
+                            I'm an insanely curious person who always seek out to travel and explore the vast virtual
+                            space of the internet.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="home__info-title">
+                            CONTACT
+                        </h3>
+                        <p class="home__info-description">
+                            Clayton, Melbourne <br>
+                            hodominhquan@gmail.com <br>
+                            @nauqh <br>
+                        </p>
+                    </div>
+
+
                 </div>
 
-                <div class="home__social">
-                    <a href="https://github.com/nauqh" target="_blank" class="home__social-link">
-                        <i class='bx bxl-github'></i>
-                    </a>
-                    <a href="error.html" class="home__social-link">
-                        <i class='bx bxl-discord-alt'></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100012103698354" target="_blank"
-                        class="home__social-link">
-                        <i class='bx bxl-facebook'></i>
-                    </a>
-                    <a href="https://www.instagram.com/nauqh_/" target="_blank" class="home__social-link">
-                        <i class='bx bxl-instagram'></i>
-                    </a>
+                <!--==================== HOME INFO 2 ====================-->
+                <div class="home__info large-screen">
+                    <div class="home__box">
+                        <img src="assets/img/python-5.svg" alt="skills image">
+                    </div>
+
+                    <div style="display: flex;justify-content: flex-end;">
+                        <div class="home__box" id="home__box-second">
+                            <img src="assets/img/postgresql.svg" alt="skills image">
+                        </div>
+                    </div>
+
+
+                    <div class="home__box">
+                        <img src="assets/img/heroku-4.svg" alt="skills image">
+                    </div>
+
                 </div>
 
-                <a href="#about" class="home__scroll">
-                    <i class='bx bx-mouse home__scroll-icon'></i>
-                    <span class="home__scroll-name">Scroll down</span>
-                </a>
             </div>
         </section>
 
-
-        <!--=============== ABOUT ===============-->
-        <section class="about section" id="about">
-            <span class="section__subtitle">__init__</span>
-            <h2 class="section__title">About</h2>
-
-            <div class="about__container container grid">
-                <img src="assets/img/bb8.gif" alt="" class="about__img">
-
-                <div class="about__data">
-                    <div class="about__info">
-                        <div class="about__box">
-                            <i class='bx bx-award about__icon'></i>
-                            <h3 class="about__title">Education</h3>
-                            <span class="about__subtitle">Monash University</span>
-                        </div>
-
-                        <div class="about__box">
-                            <i class='bx bx-briefcase-alt about__icon'></i>
-                            <h3 class="about__title">Experience</h3>
-                            <span class="about__subtitle">GDSC Core Member</span>
-                        </div>
-
-                        <div class="about__box">
-                            <i class='bx bx-support about__icon'></i>
-                            <h3 class="about__title">Completed</h3>
-                            <span class="about__subtitle">5 projects</span>
-                        </div>
-                    </div>
-
-                    <p class="about__description" style="text-align: justify;">
-                        I am an insanely <span style="color: #10dbc7;">curious</span> person who always seek out to
-                        meet new people with <span style="color: #10dbc7;">unique interests</span> and
-                        share the love to travel and explore the vast virtual space of the internet.
-                    </p>
-                    <a href="error.html" class="button about__button">Contact me</a>
-                </div>
-            </div>
-        </section>
-
-        <!--=============== SKILLS ===============-->
+        <!--==================== SKILLS ====================-->
         <section class="skills section" id="skills">
-            <span class="section__subtitle">__slots__</span>
-            <h2 class="section__title">Experience</h2>
+            <h2 class="section__title">Tools</h2>
+            <span class="section__subtitle">Skills</span>
 
-            <div class="skills__container container grid">
+            <div class="skills__container container grid section__border">
+                <!--==================== SKILLS 1 ====================-->
                 <div class="skills__content">
-                    <h3 class="skills__title">Data Engineer</h3>
+                    <h3 class="skills__title">
+                        <i class="ri-database-2-line"></i> Data Engineer
+                    </h3>
 
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">Python</h3>
-                                    <span class="skills__level">Advanced</span>
-                                </div>
+                    <div class="skills__info">
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/python-5.svg" alt="skills image">
                             </div>
-
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">SQL</h3>
-                                    <span class="skills__level">Intermediate</span>
-                                </div>
-                            </div>
-
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">API</h3>
-                                    <span class="skills__level">Intermediate</span>
-                                </div>
-                            </div>
+                            <h3 class="skills__name">Python</h3>
+                            <span class="skills__subtitle">Advanced</span>
                         </div>
 
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/r-lang.svg" alt="skills image">
+                            </div>
+                            <h3 class="skills__name">R</h3>
+                            <span class="skills__subtitle">Intermediate</span>
+                        </div>
 
-                                <div>
-                                    <h3 class="skills__name">Visualization</h3>
-                                    <span class="skills__level">Streamlit, Plotly</span>
-                                </div>
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/postgresql.svg" alt="skills image">
+                            </div>
+                            <h3 class="skills__name">Postgresql</h3>
+                            <span class="skills__subtitle">Database</span>
+                        </div>
+
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/streamlit.svg" alt="skills image">
+                            </div>
+                            <h3 class="skills__name">Streamlit</h3>
+                            <span class="skills__subtitle">Intermediate</span>
+                        </div>
+
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/aws-logo.svg" alt="skills image">
                             </div>
 
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
+                            <h3 class="skills__name">Storage</h3>
+                            <span class="skills__subtitle">AWS</span>
+                        </div>
 
-                                <div>
-                                    <h3 class="skills__name">Modelling</h3>
-                                    <span class="skills__level">Intermediate</span>
-                                </div>
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/dbt-seeklogo.com.svg" alt="skills image">
                             </div>
 
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">Testing</h3>
-                                    <span class="skills__level">Intermediate</span>
-                                </div>
-                            </div>
+                            <h3 class="skills__name">Ochestra</h3>
+                            <span class="skills__subtitle">DBT</span>
                         </div>
                     </div>
                 </div>
 
+
+                <!--==================== SKILLS 2 ====================-->
                 <div class="skills__content">
-                    <h3 class="skills__title">Software Engineer</h3>
+                    <h3 class="skills__title">
+                        <i class="ri-stack-line"></i> Software Engineer
+                    </h3>
 
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">HTML & CSS</h3>
-                                    <span class="skills__level">Intermediate</span>
-                                </div>
+                    <div class="skills__info">
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/html-1.svg" alt="skills image">
                             </div>
-
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">Javascript</h3>
-                                    <span class="skills__level">Intermediate</span>
-                                </div>
-                            </div>
-
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">Cloud</h3>
-                                    <span class="skills__level">AWS Solution Architect</span>
-                                </div>
-                            </div>
+                            <h3 class="skills__name">HTML</h3>
+                            <span class="skills__subtitle">Intermediate</span>
                         </div>
 
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">Database</h3>
-                                    <span class="skills__level">PostgreSQL</span>
-                                </div>
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/css-3.svg" alt="skills image">
                             </div>
+                            <h3 class="skills__name">CSS</h3>
+                            <span class="skills__subtitle">Intermediate</span>
+                        </div>
 
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">Docker</h3>
-                                    <span class="skills__level">Intermediate</span>
-                                </div>
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/heroku-4.svg" alt="skills image">
                             </div>
+                            <h3 class="skills__name">Heroku</h3>
+                            <span class="skills__subtitle">Deploy</span>
+                        </div>
 
-                            <div class="skills__data">
-                                <i class='bx bxs-badge-check'></i>
-
-                                <div>
-                                    <h3 class="skills__name">Flutter</h3>
-                                    <span class="skills__level">Basic</span>
-                                </div>
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/flask.svg" alt="skills image">
                             </div>
+                            <h3 class="skills__name">Flask</h3>
+                            <span class="skills__subtitle">API</span>
+                        </div>
+
+                        <div class="skills__data">
+                            <div class="skills__blob">
+                                <img src="assets/img/docker.svg" alt="skills image">
+                            </div>
+                            <h3 class="skills__name">Docker</h3>
+                            <span class="skills__subtitle">Intermediate</span>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </section>
 
-        <!--=============== WORK ===============-->
-        <section class="work section" id="work">
-            <span class="section__subtitle">__dir__</span>
+        <!--==================== QUALIFICATION ====================-->
+        <section class="qualification section" id="qualification">
+            <h2 class="section__title">Qualification</h2>
+            <span class="section__subtitle">Experience & education</span>
+
+            <div class="qualification__container container grid section__border">
+                <!--==================== QUALIFICATION 1 ====================-->
+                <div class="qualification__content">
+                    <h3 class="qualification__title">
+                        <i class="ri-building-line"></i> Education
+                    </h3>
+
+                    <div class="qualification__info">
+                        <div>
+                            <h3 class="qualification__name">
+                                Le Hong Phong High School For The Gifted
+                            </h3>
+                            <span class="qualification__country">Graduated with honors</span>
+                            <span class="qualification__year">2017 2020</span>
+                        </div>
+
+                        <div>
+                            <h3 class="qualification__name">
+                                Ho Chi Minh University Of Technology
+                            </h3>
+                            <span class="qualification__country">Bachelor of Computer Engineering</span>
+                            <span class="qualification__year">2020 - 2021</span>
+                        </div>
+
+                        <div>
+                            <h3 class="qualification__name">
+                                Monash University
+                            </h3>
+                            <span class="qualification__country">Bachelor of Computer Science</span>
+                            <span class="qualification__year">2021 - 2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--==================== QUALIFICATION 2 ====================-->
+                <div class="qualification__content">
+                    <h3 class="qualification__title">
+                        <i class="ri-book-line"></i> Experience
+                    </h3>
+
+                    <div class="qualification__info">
+                        <div>
+                            <h3 class="qualification__name">
+                                Google Developer Student Club
+                            </h3>
+                            <span class="qualification__country">Technical Officer</span>
+                            <span class="qualification__year">Jun ~ Dec 2020</span>
+                        </div>
+
+                        <div>
+                            <h3 class="qualification__name">
+                                Monash DeepNeuron
+                            </h3>
+                            <span class="qualification__country">Outreach Team</span>
+                            <span class="qualification__year">Mar ~ May 2021</span>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <img src="assets/img/shape-circle.svg" alt="qualification image" class="qualification__img">
+        </section>
+
+        <!--==================== SERVICES ====================-->
+        <!-- <section class="services section" id="services">
+
+        </section> -->
+
+        <!--==================== PROJECTS ====================-->
+        <section class="projects section" id="projects">
             <h2 class="section__title">Projects</h2>
+            <span class="section__subtitle">Some things I've worked on</span>
 
-            <div class="work__filters">
-                <span class="work__item active-work" data-filter="all">All</span>
-                <span class="work__item" data-filter=".web">Website</span>
-                <span class="work__item" data-filter=".movil">Projects</span>
-                <span class="work__item" data-filter=".design">Playlist</span>
-            </div>
+            <div class="container section__border" style="border-bottom:none;">
+                <div class="projects__container swiper">
+                    <div class="swiper-wrapper">
+                        <!--==================== PROJECTS 1 ====================-->
+                        <div class="projects__content swiper-slide">
+                            <img src="assets/img/project1.gif" alt="projects image" class="projects__img">
 
-            <div class="work__container container grid">
-                <div class="work__card mix movil">
-                    <img src="assets/img/corporation.gif" alt="" class="work__img">
+                            <div>
+                                <span class="projects__subtitle">Music Discord Bot</span>
+                                <h1 class="projects__title">Ashema</h1>
 
-                    <h3 class="work__title">Hikari Discord Bot</h3>
+                                <a href="https://github.com/nauqh/Ashema" class="projects__button">
+                                    View demo <i class="ri-arrow-right-line"></i>
+                                </a>
+                            </div>
+                        </div>
 
-                    <a href="https://github.com/nauqh/Tiamut" target="_blank" class="work__button">
-                        Demo <i class='bx bx-right-arrow-alt work__icon'></i>
-                    </a>
+                        <!--==================== PROJECTS 2 ====================-->
+                        <div class="projects__content swiper-slide">
+                            <img src="assets/img/project2.gif" alt="projects image" class="projects__img">
+
+                            <div>
+                                <span class="projects__subtitle">Spotify Playlist Analyzer</span>
+                                <h1 class="projects__title">Resonance</h1>
+
+                                <a href="https://resonance.streamlit.app/" class="projects__button">
+                                    Live view <i class="ri-arrow-right-line"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!--==================== PROJECTS 3 ====================-->
+                        <div class="projects__content swiper-slide">
+                            <img src="assets/img/project3.gif" alt="projects image" class="projects__img">
+
+                            <div>
+                                <span class="projects__subtitle">Web Portfolio</span>
+                                <h1 class="projects__title">Portfolio 1.0</h1>
+
+                                <a href="https://nauqh.github.io/portfolioV1/" class="projects__button">
+                                    Live view <i class="ri-arrow-right-line"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!--==================== PROJECTS 4 ====================-->
+                        <div class="projects__content swiper-slide">
+                            <img src="assets/img/project4.gif" alt="projects image" class="projects__img">
+
+                            <div>
+                                <span class="projects__subtitle">Hikari Discord Bot</span>
+                                <h1 class="projects__title">Tiamut</h1>
+
+                                <a href="https://github.com/nauqh/Tiamut" class="projects__button">
+                                    View demo <i class="ri-arrow-right-line"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-button-next">
+                        <i class="ri-arrow-right-s-line"></i>
+                    </div>
+                    <div class="swiper-button-prev">
+                        <i class="ri-arrow-left-s-line"></i>
+                    </div>
+
+                    <div class="swiper-pagination"></div>
                 </div>
-
-                <div class="work__card mix movil">
-                    <img src="assets/img/cybercity.gif" alt="" class="work__img">
-
-                    <h3 class="work__title">Resonance</h3>
-
-                    <a href="https://github.com/nauqh/Resonance" target="_blank" class="work__button">
-                        Demo <i class='bx bx-right-arrow-alt work__icon'></i>
-                    </a>
-                </div>
-
-                <div class="work__card mix web">
-                    <img src="assets/img/nightcity.gif" alt="" class="work__img">
-
-                    <h3 class="work__title">Portfolio 1.0</h3>
-
-                    <a href="https://nauqh.github.io/portfolioV1/" target="_blank" class="work__button">
-                        Demo <i class='bx bx-right-arrow-alt work__icon'></i>
-                    </a>
-                </div>
-
-                <!-- <div class="work__card mix design">
-                    <iframe src="https://open.spotify.com/embed/playlist/3tXls2OGqH3VjwmIC6prC2?utm_source=generator"
-                        width="100%" height="300" frameBorder="0" allowfullscreen=""
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-                    <h3 class="work__title">Wintear</h3>
-
-                    <a href="https://open.spotify.com/playlist/3tXls2OGqH3VjwmIC6prC2?si=1407e2c4044543b5"
-                        class="work__button" target="_blank">
-                        Demo <i class='bx bx-right-arrow-alt work__icon'></i>
-                    </a>
-                </div> -->
             </div>
         </section>
 
+        <!--==================== TESTIMONIAL ====================-->
+        <!-- <section class="testimonial section">
+
+        </section> -->
+
+        <!--==================== CONTACT ====================-->
+        <!-- <section class="contact section" id="contact">
+
+        </section> -->
     </main>
 
-    <!--=============== FOOTER ===============-->
+    <!--==================== FOOTER ====================-->
     <footer class="footer">
         <div class="footer__container container">
+            <h1 class="footer__title">Nauqh</h1>
+            <p>Data Engineer</p>
+
+            <ul class="footer__list">
+                <li>
+                    <a href="#home" class="footer__link">Home</a>
+                </li>
+
+                <li>
+                    <a href="#skills" class="footer__link">Skills</a>
+                </li>
+
+                <li>
+                    <a href="#projects" class="footer__link">Projects</a>
+                </li>
+            </ul>
+
+            <ul class="footer__social">
+                <a href="https://www.facebook.com/profile.php?id=100012103698354" target="_blank"
+                    class="footer__social-link">
+                    <i class="ri-facebook-circle-fill"></i>
+                </a>
+
+                <a href="https://github.com/nauqh" target="_blank" class="footer__social-link">
+                    <i class="ri-github-fill"></i>
+                </a>
+
+                <a href="https://www.instagram.com/nauqh_/" target="_blank" class="footer__social-link">
+                    <i class="ri-instagram-fill"></i>
+                </a>
+            </ul>
+
             <span class="footer__copy">
-                Designed & Built by <a href="https://github.com/nauqh" target="_blank">Nauqh</a>
+                Designed & Built by Nauqh
             </span>
         </div>
     </footer>
+
+
+    <!--========== SCROLL UP ==========-->
+    <a href="" class="scrollup" id="scroll-up">
+        <i class="ri-arrow-up-line"></i>
+    </a>
 
     <!--=============== SCROLLREVEAL ===============-->
     <script src="assets/js/scrollreveal.min.js"></script>
@@ -349,17 +490,11 @@
     <!--=============== SWIPER JS ===============-->
     <script src="assets/js/swiper-bundle.min.js"></script>
 
-    <!--=============== MIXITUP FILTER ===============-->
-    <script src="assets/js/mixitup.min.js"></script>
+    <!--=============== EMAIL JS ===============-->
+
 
     <!--=============== MAIN JS ===============-->
     <script src="assets/js/main.js"></script>
-
-    <!-- =============== Animation svg ===================== -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenLite.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/plugins/CSSPlugin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/easing/EasePack.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenLite.min.js"></script>
 
 </body>
 
