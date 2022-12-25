@@ -522,6 +522,7 @@ body.dark-theme {
 
 .projects__img {
   width: 250px;
+  height: 15rem;
   border-radius: 0.75rem;
   margin-bottom: 1.25rem;
 }
@@ -950,6 +951,9 @@ body.dark-theme {
     grid-template-rows: repeat(3, 130px);
     row-gap: 4rem;
     margin-top: 16rem;
+  }
+  .large-screen {
+    margin-top: 14rem;
   }
 
   .skills__container {
