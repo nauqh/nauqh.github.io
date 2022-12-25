@@ -42,6 +42,10 @@ let swiperProjects = new Swiper(".projects__container", {
       el: ".swiper-pagination",
     },
     breakpoints: {
+      1023: {
+        slidesPerView: 2,
+        spaceBetween: 50,
+      },
       1200: {
         slidesPerView: 2,
         spaceBetween: -56,
