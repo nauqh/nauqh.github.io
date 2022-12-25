@@ -342,11 +342,21 @@ body.dark-theme {
 }
 
 #home__box-second {
+  width: 120px;
+  height: 140px;
+}
+
+#home__box-second img {
+  width: 90px;
+}
+
+#home__box-third {
+  margin-left: 1rem;
   width: 130px;
   height: 150px;
 }
 
-#home__box-second img {
+#home__box-third img {
   width: 100px;
 }
 
