@@ -262,6 +262,30 @@ body.dark-theme {
   margin-bottom: 0.5rem;
 }
 
+.animation {
+  color: var(--title-color);
+  font-size: var(--h2-font-size);
+  letter-spacing: 7px;
+  cursor: pointer;
+}
+.animation span {
+  transition: 0.5s linear;
+}
+.animation:hover span:nth-child(1) {
+  margin-right: 5px;
+}
+.animation:hover span:nth-child(1):after {
+  content: "'";
+}
+.animation:hover span:nth-child(2) {
+  margin-left: 30px;
+}
+.animation:hover span {
+  color: var(--title-color);
+  text-shadow: 0 0 10px hsla(207, 24%, 35%, 0.1),
+    0 0 20px hsla(207, 24%, 35%, 0.1), 0 0 40px hsla(207, 24%, 35%, 0.1);
+}
+
 .home__blob {
   position: relative;
   width: 200px;
