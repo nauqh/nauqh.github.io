@@ -364,6 +364,10 @@ body.dark-theme {
   width: 80px;
 }
 
+.home__box:hover img {
+  animation: bounce-skills 0.6s;
+}
+
 #home__box-second {
   width: 120px;
   height: 140px;
