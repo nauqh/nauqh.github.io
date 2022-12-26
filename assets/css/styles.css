@@ -592,6 +592,38 @@ body.dark-theme {
   transform: translateX(0.25rem);
 }
 
+/* Image container */
+.img-container {
+  cursor: pointer;
+}
+.img-2 {
+  display: none;
+  background-color: var(--text-color-light);
+  opacity: 0.5;
+}
+.img-2 a {
+  font-size: 4rem;
+  color: white;
+}
+
+.img-2 a:hover {
+  animation: bounce-skills 0.6s;
+}
+
+.img-container:hover {
+  transition: all 0.3s ease;
+}
+
+.img-container:hover .img-1 {
+  display: none;
+}
+
+.img-container:hover .img-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Swiper class */
 .projects__container .swiper-button-prev::after,
 .projects__container .swiper-button-next::after {
