@@ -606,7 +606,6 @@ body.dark-theme {
   padding: 2rem 1.5rem 5rem;
   visibility: hidden;
   opacity: 0;
-  transition: 0.3s ease-in-out;
 
   display: flex;
   flex-direction: column;
