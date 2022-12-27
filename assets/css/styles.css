@@ -551,6 +551,7 @@ body.dark-theme {
   position: relative;
   justify-content: center;
   margin-bottom: 5rem;
+  margin-top: 8rem;
 }
 
 .work__card {
@@ -755,7 +756,6 @@ body.dark-theme {
 
   .work__container {
     row-gap: 5rem;
-    margin-top: 5rem;
   }
 }
 
@@ -832,7 +832,6 @@ body.dark-theme {
     grid-template-columns: repeat(2, max-content);
     column-gap: 2rem;
     row-gap: 5rem;
-    margin-top: 5rem;
   }
 }
 /* For large devices */
@@ -911,8 +910,6 @@ body.dark-theme {
 
   .work__container {
     grid-template-columns: repeat(3, 300px);
-    column-gap: 2rem;
-    row-gap: 5rem;
   }
 }
 
