@@ -29,33 +29,6 @@ const linkAction = () =>{
 }
 navLink.forEach(n => n.addEventListener('click', linkAction))
 
-/*=============== SWIPER PROJECTS ===============*/
-let swiperProjects = new Swiper(".projects__container", {
-    loop: true,
-    spaceBetween: 24,
-
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    pagination: {
-      el: ".swiper-pagination",
-    },
-    breakpoints: {
-      1023: {
-        slidesPerView: 2,
-        spaceBetween: 50,
-      },
-      1200: {
-        slidesPerView: 2,
-        spaceBetween: -56,
-      },
-    },
-  });
-
-/*=============== SWIPER TESTIMONIAL ===============*/
-
-
 /*=============== EMAIL JS ===============*/
 
 
@@ -110,7 +83,7 @@ const sr = ScrollReveal({
   // reset: true
 })
 
-sr.reveal('.home__data, .projects__container, .footer__container')
+sr.reveal('.home__data, .work__container, .footer__container')
 sr.reveal('.home__info div', {delay: 400, origin: 'bottom', interval: 100})
 sr.reveal('.skills__content:nth-child(1)', {origin: 'left'})
 sr.reveal('.skills__content:nth-child(2)', {origin: 'right'})
