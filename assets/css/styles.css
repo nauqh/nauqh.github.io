@@ -776,7 +776,7 @@ body.dark-theme {
 
 @media screen and (min-width: 767px) {
   .home__container {
-    grid-template-columns: 1fr 1.5fr 1fr;
+    grid-template-columns: 1.25fr 1.5fr 1fr;
   }
 
   .home__data {
@@ -794,6 +794,7 @@ body.dark-theme {
 
   .home__info-description {
     padding-right: 0;
+    text-align: left;
   }
 
   .home__peril {
