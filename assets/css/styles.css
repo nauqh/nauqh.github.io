@@ -865,6 +865,11 @@ img {
     column-gap: 10rem;
   }
 
+  .skills__container {
+    grid-template-columns: repeat(2, 350px);
+    column-gap: 3.5rem;
+  }
+
   .work__container {
     grid-template-columns: repeat(2, max-content);
   }
