@@ -867,7 +867,7 @@ img {
 
   .skills__container {
     grid-template-columns: repeat(2, 350px);
-    column-gap: 3.5rem;
+    column-gap: 3rem;
   }
 
   .work__container {
