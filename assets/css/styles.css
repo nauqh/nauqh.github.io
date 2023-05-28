@@ -4,23 +4,12 @@
 /*=============== VARIABLES CSS ===============*/
 :root {
   --header-height: 3.5rem;
-
-  /*========== Colors ==========*/
-  /*Color mode HSL(hue, saturation, lightness)*/
-  /*
-        Purple: hsl(250, 66%, 75%)
-        Blue: hsl(207, 90%, 72%)
-        Pink: hsl(356, 66%, 75%)
-        Teal: hsl(174, 63%, 62%)
-  */
   --first-hue: 250;
   --sat: 66%;
   --lig: 75%;
   --second-hue: 219;
 
-  /* --first-color: hsl(var(--first-hue), var(--sat), var(--lig)); */
   --first-color: #64ffda;
-  /* --first-color-alt: hsl(var(--first-hue), var(--sat), 71%);  */
   --first-color-alt: #99d98c;
   --title-color: hsl(var(--second-hue), 15%, 95%);
 
@@ -30,7 +19,6 @@
   --container-color: hsl(var(--second-hue), 32%, 12%);
 
   /*========== Font and typography ==========*/
-  /*.5rem = 8px | 1rem = 16px ...*/
   --body-font: "Poppins", sans-serif;
   --biggest-font-size: 1.75rem;
   --h1-font-size: 1.5rem;
@@ -86,7 +74,7 @@ textarea {
 body {
   background-color: var(--body-color);
   color: var(--text-color);
-  transition: 0.4s; /* for light mode animation */
+  transition: 0.4s;
 }
 
 h1,
@@ -160,7 +148,7 @@ img {
   width: 100%;
   background-color: var(--body-color);
   z-index: var(--z-fixed);
-  transition: 0.4s; /* for light mode animation */
+  transition: 0.4s;
 }
 
 .nav {
@@ -188,7 +176,7 @@ img {
   border-radius: 4rem;
   padding: 1rem 2.25rem;
   backdrop-filter: blur(10px);
-  transition: 0.4s; /* for light mode animation */
+  transition: 0.4s;
 }
 
 .nav__list {
@@ -577,7 +565,6 @@ img {
   font-size: var(--small-font-size);
 }
 
-/* Swiper class */
 .swiper-pagination-bullet {
   background-color: var(--text-color-light);
 }
@@ -769,7 +756,6 @@ img {
 }
 
 /*=============== BREAKPOINTS ===============*/
-/* For small devices */
 @media screen and (max-width: 320px) {
   .nav__menu {
     padding: 1rem 1.5rem;
@@ -807,7 +793,6 @@ img {
   }
 }
 
-/* For medium devices */
 @media screen and (min-width: 576px) {
   .nav__menu {
     width: 328px;
@@ -891,7 +876,6 @@ img {
   }
 }
 
-/* For large devices */
 @media screen and (min-width: 992px) {
   .container {
     margin-left: auto;
