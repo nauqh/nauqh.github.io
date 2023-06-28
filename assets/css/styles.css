@@ -379,6 +379,7 @@ img {
 }
 
 .about__description {
+	text-align: left;
 	margin-bottom: 2rem;
 }
 
