@@ -606,6 +606,7 @@ img {
 /*=============== WORK ===============*/
 .work__container {
 	padding-top: 1rem;
+	margin-bottom: 5rem;
 }
 
 .work__filters {
