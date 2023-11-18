@@ -204,11 +204,6 @@ img {
 	color: var(--title-color);
 }
 
-/* Change background header */
-.scroll-header {
-	box-shadow: 0 4px 4px hsla(0, 0%, 4%, 0.3);
-}
-
 /*=============== HOME ===============*/
 .home__container {
 	position: relative;
@@ -238,7 +233,6 @@ img {
 }
 
 .home__quote {
-	margin-bottom: 2.5rem;
 	font-size: 1.25rem;
 	color: #abb3c2;
 }
@@ -768,38 +762,60 @@ img {
 	font-weight: var(--font-medium);
 }
 
-/*=============== SCROLL BAR ===============*/
-::-webkit-scrollbar {
-	width: 0.6rem;
-	border-radius: 0.5rem;
-	background-color: hsl(var(--second-hue), 8%, 38%);
-}
-
-::-webkit-scrollbar-thumb {
-	background-color: hsl(var(--second-hue), 8%, 26%);
-	border-radius: 0.5rem;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background-color: hsl(var(--second-hue), 8%, 20%);
-}
-
 /*=============== BREAKPOINTS ===============*/
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
+	.section__title {
+		text-align: left;
+		margin-left: 2rem;
+	}
+
+	.section__subtitle {
+		display: none;
+	}
 	.nav__menu {
 		padding: 1rem 1.5rem;
 	}
 
+	.home__container {
+		padding-top: 0;
+		display: block;
+	}
+
+	.home__data {
+		width: auto;
+	}
+	.home__name {
+		font-size: 2.25rem;
+	}
+
+	.home__quote {
+		font-size: 1rem;
+	}
+
 	.home__buttons {
-		flex-direction: column;
+		margin-top: 2rem;
+		font-size: 0.75rem;
+	}
+
+	.home__scroll,
+	.home__social {
+		display: none;
+	}
+
+	.home__education {
+		font-size: 1.2rem;
 	}
 
 	.home__img {
 		width: 130px;
 	}
 
+	.about {
+		margin-top: 1rem;
+	}
+
 	.about__info {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 	}
 
 	.skills__box {
