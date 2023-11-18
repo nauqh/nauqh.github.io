@@ -878,6 +878,7 @@ img {
 	.services__container {
 		grid-template-columns: repeat(2, 160px);
 		justify-content: center;
+		column-gap: 2rem;
 	}
 	.services__modal-content {
 		width: 500px;
@@ -947,6 +948,16 @@ img {
 	}
 }
 
+@media screen and (min-width: 800px) {
+	.about {
+		margin-top: 3rem;
+	}
+
+	.home__buttons {
+		margin-top: 1rem;
+	}
+}
+
 @media screen and (min-width: 992px) {
 	.container {
 		margin-left: auto;
@@ -980,6 +991,7 @@ img {
 
 	.home__buttons {
 		font-size: 1.25rem;
+		margin-top: 3rem;
 	}
 
 	.home__social-link {
