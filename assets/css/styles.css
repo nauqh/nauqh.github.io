@@ -836,7 +836,7 @@ img {
 	}
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 510px) {
 	.nav__menu {
 		width: 328px;
 		left: 0;
@@ -854,6 +854,10 @@ img {
 
 	.home__education {
 		font-size: 1.5rem;
+	}
+
+	.home__quote {
+		margin-bottom: 2rem;
 	}
 
 	.about__info {
@@ -880,7 +884,14 @@ img {
 		padding: 4.5rem 2.5rem 2.5rem;
 	}
 
+	.qualification__container {
+		grid-template-columns: repeat(2, 240px);
+		justify-content: center;
+		column-gap: 2rem;
+	}
+
 	.work__container {
+		grid-template-columns: repeat(2, 250px);
 		justify-content: center;
 	}
 	.work__img {
@@ -889,6 +900,28 @@ img {
 }
 
 @media screen and (min-width: 767px) {
+	.about__container {
+		grid-template-columns: repeat(2, 1fr);
+		align-items: center;
+		column-gap: 4rem;
+	}
+	.about__img {
+		width: 350px;
+	}
+	.about__data {
+		text-align: initial;
+	}
+	.about__info {
+		justify-content: initial;
+	}
+	.about__box {
+		text-align: center;
+		padding: 1rem 1.25rem;
+	}
+	.about__description {
+		padding: 0 4rem 0 0;
+		margin-bottom: 2.5rem;
+	}
 	.qualification__container {
 		grid-template-columns: repeat(2, max-content);
 	}
@@ -958,29 +991,6 @@ img {
 	}
 	.home__scroll-icon {
 		font-size: 2rem;
-	}
-
-	.about__container {
-		grid-template-columns: repeat(2, 1fr);
-		align-items: center;
-		column-gap: 4rem;
-	}
-	.about__img {
-		width: 350px;
-	}
-	.about__data {
-		text-align: initial;
-	}
-	.about__info {
-		justify-content: initial;
-	}
-	.about__box {
-		text-align: center;
-		padding: 1rem 1.25rem;
-	}
-	.about__description {
-		padding: 0 4rem 0 0;
-		margin-bottom: 2.5rem;
 	}
 
 	.skills__container {
