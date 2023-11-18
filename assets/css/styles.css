@@ -493,7 +493,6 @@ img {
 .services__container {
 	grid-template-columns: repeat(2, 1fr);
 	gap: 1.5rem;
-	padding-top: 1rem;
 }
 
 .services__card {
@@ -766,7 +765,7 @@ img {
 @media screen and (max-width: 500px) {
 	.section__title {
 		text-align: left;
-		margin-left: 2rem;
+		margin-left: 1rem;
 	}
 
 	.section__subtitle {
@@ -785,7 +784,7 @@ img {
 		width: auto;
 	}
 	.home__name {
-		font-size: 2.25rem;
+		font-size: 2rem;
 	}
 
 	.home__quote {
@@ -826,8 +825,7 @@ img {
 	}
 
 	.services__container {
-		grid-template-columns: 145px;
-		justify-content: center;
+		grid-template-columns: repeat(2, 150px);
 	}
 
 	.work__item {
