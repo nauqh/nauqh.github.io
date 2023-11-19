@@ -653,7 +653,7 @@ img {
 	font-weight: var(--font-medium);
 	font-size: 0.75rem;
 	border-radius: 1rem;
-	background-color: var(--body-color);
+	background-color: #023047;
 	color: var(--first-color);
 }
 
