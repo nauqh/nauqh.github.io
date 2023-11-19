@@ -633,7 +633,6 @@ img {
 	width: max-content;
 	color: #fafafa;
 	font-size: 1rem;
-	font-weight: var(--font-medium);
 	display: flex;
 	align-items: center;
 	column-gap: 0.25rem;
