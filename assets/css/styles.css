@@ -633,6 +633,7 @@ img {
 	width: max-content;
 	color: #fafafa;
 	font-size: 1rem;
+	font-weight: var(--font-medium);
 	display: flex;
 	align-items: center;
 	column-gap: 0.25rem;
@@ -663,6 +664,7 @@ img {
 
 .work__card:hover .work__button {
 	color: var(--first-color);
+	filter: grayscale(40%);
 }
 
 .work__card:hover .work__img {
@@ -672,6 +674,17 @@ img {
 
 .work__card:hover {
 	cursor: pointer;
+}
+
+.work__description {
+	margin: 1rem 0;
+	width: 300px;
+}
+
+.card-flex {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 /* Active item work*/
@@ -848,9 +861,6 @@ img {
 		grid-template-columns: repeat(3, 140px);
 		justify-content: center;
 	}
-	.about__description {
-		padding: 0 5rem;
-	}
 
 	.skills__container {
 		justify-content: center;
@@ -902,10 +912,6 @@ img {
 	.about__box {
 		text-align: center;
 		padding: 1rem 1.25rem;
-	}
-	.about__description {
-		padding: 0 4rem 0 0;
-		margin-bottom: 2.5rem;
 	}
 	.qualification__container {
 		grid-template-columns: repeat(2, max-content);
