@@ -823,6 +823,7 @@ img {
 
 	.services__container {
 		grid-template-columns: repeat(2, 150px);
+		justify-content: center;
 	}
 
 	.work__item {
