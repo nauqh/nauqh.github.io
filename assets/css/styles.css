@@ -1095,10 +1095,10 @@ img {
 
 	.work__card {
 		padding: 1.25rem;
-		height: 320px;
+		height: 300px;
 		width: 320px;
 	}
 	.work__description {
-		width: 300px;
+		width: 290px;
 	}
 }
