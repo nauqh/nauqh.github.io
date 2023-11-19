@@ -463,8 +463,8 @@ img {
 	justify-content: center;
 	align-items: center;
 	column-gap: 0.5rem;
-	font-size: var(--small-font-size);
-	font-weight: var(--font-semi-bold);
+	font-size: 1rem;
+	font-weight: var(--font-medium);
 	margin-bottom: 2rem;
 }
 
@@ -684,7 +684,7 @@ img {
 .card-flex {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-around;
 }
 
 /* Active item work*/
@@ -1045,14 +1045,19 @@ img {
 	}
 
 	.work__container {
-		gap: 3rem;
+		gap: 2rem;
 	}
 	.work__card {
 		padding: 1.25rem;
-		height: 350px;
+		height: 320px;
+		width: 285px;
 	}
 	.work__img {
 		margin-bottom: 1rem;
+	}
+
+	.work__description {
+		width: 245px;
 	}
 
 	.testimonial__container {
@@ -1066,5 +1071,16 @@ img {
 		font-size: 1.25rem;
 		padding: 0.4rem;
 		border-radius: 0.5rem;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.work__container {
+		gap: 3rem;
+	}
+	.work__card {
+		padding: 1.25rem;
+		height: 350px;
+		width: 335px;
 	}
 }
