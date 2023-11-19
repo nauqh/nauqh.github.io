@@ -1043,6 +1043,7 @@ img {
 	}
 	.work__card {
 		padding: 1.25rem;
+		height: 350px;
 	}
 	.work__img {
 		margin-bottom: 1rem;
