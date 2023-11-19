@@ -839,11 +839,20 @@ img {
 		justify-content: center;
 	}
 
+	.work__container {
+		justify-content: center;
+		row-gap: 2rem;
+	}
+
 	.work__item {
 		font-size: var(--small-font-size);
 	}
 	.work__filters {
 		column-gap: 0.25rem;
+	}
+	.work__card {
+		height: 300px;
+		width: 320px;
 	}
 }
 
