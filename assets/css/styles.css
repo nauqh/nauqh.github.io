@@ -629,28 +629,14 @@ img {
 	filter: grayscale(100%);
 }
 
-.work__img:hover {
-	filter: none;
-	transition-duration: 1s;
-}
-
-.work__title {
-	font-size: var(--normal-font-size);
-	font-weight: var(--font-medium);
-	margin-bottom: 0.25rem;
-}
-
 .work__button {
 	width: max-content;
-	color: var(--first-color);
-	font-size: var(--small-font-size);
+	color: #fafafa;
+	font-size: 1rem;
+	font-weight: var(--font-medium);
 	display: flex;
 	align-items: center;
 	column-gap: 0.25rem;
-}
-
-.work__button:hover .work__icon {
-	transform: translateX(0.25rem);
 }
 
 .work__icon {
@@ -658,42 +644,41 @@ img {
 	transition: 0.4s;
 }
 
+.work__tech-list {
+	margin-top: 1rem;
+}
+
+.work__tech {
+	cursor: pointer;
+	padding: 0.25rem 0.75rem;
+	font-weight: var(--font-medium);
+	font-size: 0.75rem;
+	border-radius: 1rem;
+	background-color: var(--body-color);
+	color: var(--first-color);
+}
+
+.work__card:hover .work__icon {
+	transform: translateX(0.25rem);
+}
+
+.work__card:hover .work__button {
+	color: var(--first-color);
+}
+
+.work__card:hover .work__img {
+	filter: none;
+	transition-duration: 1s;
+}
+
+.work__card:hover {
+	cursor: pointer;
+}
+
 /* Active item work*/
 .active-work {
 	background-color: var(--first-color);
 	color: var(--body-color);
-}
-
-/*=============== TESTIMONIAL ===============*/
-.testimonial__card {
-	background-color: var(--container-color);
-	padding: 1.25rem 1.5rem;
-	border-radius: 1.5rem;
-	margin-bottom: 3rem;
-}
-
-.testimonial__img {
-	width: 60px;
-	border-radius: 3rem;
-	margin-bottom: 1rem;
-}
-
-.testimonial__name {
-	font-size: var(--normal-font-size);
-	font-weight: var(--font-medium);
-	margin-bottom: 0.25rem;
-}
-
-.testimonial__description {
-	font-size: var(--small-font-size);
-}
-
-.swiper-pagination-bullet {
-	background-color: var(--text-color-light);
-}
-
-.swiper-pagination-bullet-active {
-	background-color: var(--first-color);
 }
 
 /*=============== FOOTER ===============*/
@@ -1062,9 +1047,6 @@ img {
 	}
 	.work__img {
 		margin-bottom: 1rem;
-	}
-	.work__title {
-		margin-bottom: 0.5rem;
 	}
 
 	.testimonial__container {
