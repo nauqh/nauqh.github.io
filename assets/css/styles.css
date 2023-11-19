@@ -658,13 +658,26 @@ img {
 	color: var(--first-color);
 }
 
+.work__card-title {
+	display: flex;
+	justify-content: space-between;
+}
+
+.title-icon {
+	font-size: 1.5rem;
+	color: var(--text-color);
+}
+
+.title-icon:hover {
+	color: var(--first-color);
+}
+
 .work__card:hover .work__icon {
 	transform: translateX(0.25rem);
 }
 
 .work__card:hover .work__button {
 	color: var(--first-color);
-	filter: grayscale(40%);
 }
 
 .work__card:hover .work__img {
