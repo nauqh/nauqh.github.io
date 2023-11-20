@@ -965,6 +965,7 @@ img {
 	.nav__menu {
 		height: 3rem;
 		padding: 0.5rem 1.5rem;
+		width: 280px;
 	}
 	.about {
 		margin-top: 3rem;
@@ -1102,6 +1103,9 @@ img {
 }
 
 @media screen and (min-width: 1200px) {
+	.nav__menu {
+		width: 320px;
+	}
 	.work__container {
 		gap: 3rem;
 	}
