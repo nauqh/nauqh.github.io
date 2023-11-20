@@ -1103,9 +1103,6 @@ img {
 }
 
 @media screen and (min-width: 1200px) {
-	.nav__menu {
-		width: 320px;
-	}
 	.work__container {
 		gap: 3rem;
 	}
