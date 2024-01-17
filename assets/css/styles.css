@@ -1,5 +1,6 @@
 /*=============== GOOGLE FONTS ===============*/
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
 
 /*=============== VARIABLES CSS ===============*/
 :root {
@@ -138,6 +139,7 @@ img {
 	display: block;
 	font-size: var(--smaller-font-size);
 	color: var(--text-color-light);
+	margin-top: 2rem;
 }
 
 /*=============== HEADER & NAV===============*/
@@ -168,42 +170,6 @@ img {
 	color: var(--first-color-alt);
 }
 
-.nav__menu {
-	position: fixed;
-	bottom: 1rem;
-	background-color: hsla(var(--second-hue), 32%, 16%, 0.8);
-	width: 90%;
-	border-radius: 4rem;
-	padding: 1rem 2.25rem;
-	backdrop-filter: blur(10px);
-	transition: 0.4s;
-}
-
-.nav__list {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.nav__link {
-	color: var(--text-color);
-	font-size: 1.25rem;
-	padding: 0.4rem;
-	display: flex;
-	border-radius: 5rem;
-}
-
-/* Active link */
-.active-link {
-	background: linear-gradient(
-		180deg,
-		hsla(166, 100%, 70%, 1),
-		hsla(166, 100%, 70%, 0.2)
-	);
-	box-shadow: 0 0 16px hsla(166, 100%, 70%, 0.4);
-	color: var(--title-color);
-}
-
 /*=============== HOME ===============*/
 .home__container {
 	position: relative;
@@ -221,7 +187,6 @@ img {
 }
 
 .home__name {
-	font-size: var(--h1-font-size);
 	font-weight: 600;
 }
 
@@ -245,8 +210,18 @@ img {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	gap: 1.5rem;
+	gap: 2rem;
 	font-size: 0.75rem;
+}
+
+.button-link {
+	font-family: "Nanum Pen Script", cursive;
+	font-size: 1.5rem;
+	color: #fafafa;
+}
+
+.button-link:hover {
+	text-decoration: underline;
 }
 
 .home__social,
@@ -709,65 +684,25 @@ img {
 /*=============== FOOTER ===============*/
 .footer {
 	background-color: var(--first-color);
+	margin-top: 10rem;
 }
 
 .footer__container {
-	padding: 2rem 0 6rem;
-}
-
-.footer__title,
-.footer__link {
-	color: var(--body-color);
-}
-
-.footer__link:hover {
-	font-weight: var(--font-medium);
-}
-
-.footer__title {
-	text-align: center;
-	margin-bottom: 2rem;
-}
-
-.footer__list {
-	display: flex;
-	justify-content: center;
-	column-gap: 1.5rem;
-	margin-bottom: 2rem;
-}
-
-.footer__social {
-	display: flex;
-	justify-content: center;
-	column-gap: 1.25rem;
-}
-
-.footer__social-link {
-	background-color: var(--body-color);
-	color: var(--first-color);
-	padding: 0.25rem;
-	border-radius: 0.25rem;
-	font-size: 1rem;
-	display: inline-flex;
-}
-
-.footer__social-link:hover {
-	color: #fff;
+	padding: 1.2rem;
 }
 
 .footer__copy {
 	display: block;
-	margin-top: 4.5rem;
 	color: var(--body-color);
 	text-align: center;
-	font-size: var(--small-font-size);
+	font-size: 0.9rem;
 }
 
 .footer__copy a {
 	color: var(--body-color);
 }
 
-.footer__copy:hover {
+.footer__copy a:hover {
 	font-weight: var(--font-medium);
 }
 
@@ -781,9 +716,6 @@ img {
 	.section__subtitle {
 		display: none;
 	}
-	.nav__menu {
-		padding: 1rem 1.5rem;
-	}
 
 	.home__container {
 		padding-top: 0;
@@ -794,7 +726,7 @@ img {
 		width: auto;
 	}
 	.home__name {
-		font-size: 2rem;
+		font-size: 1.5rem;
 	}
 
 	.home__quote {
@@ -857,13 +789,6 @@ img {
 }
 
 @media screen and (min-width: 510px) {
-	.nav__menu {
-		width: 328px;
-		left: 0;
-		right: 0;
-		margin: 0 auto;
-	}
-
 	.home__data {
 		width: 450px;
 	}
@@ -962,11 +887,6 @@ img {
 }
 
 @media screen and (min-width: 800px) {
-	.nav__menu {
-		height: 3rem;
-		padding: 0.5rem 1.5rem;
-		width: 260px;
-	}
 	.about {
 		margin-top: 3rem;
 	}
@@ -981,6 +901,14 @@ img {
 }
 
 @media screen and (min-width: 992px) {
+	.button {
+		font-size: 1rem;
+	}
+
+	.button-link {
+		font-size: 1.8rem;
+	}
+
 	.container {
 		margin-left: auto;
 		margin-right: auto;
@@ -998,13 +926,18 @@ img {
 		height: calc(var(--header-height) + 1rem);
 	}
 
+	.home__container {
+		margin-top: 3rem;
+		margin-bottom: 4rem;
+	}
+
 	.home__data {
 		width: 650px;
 		height: 300px;
 	}
 
 	.home__name {
-		font-size: 3.5rem;
+		font-size: 3rem;
 	}
 
 	.home__education {
@@ -1042,7 +975,7 @@ img {
 	}
 
 	.skills__name {
-		font-size: var(--h3-font-size);
+		font-size: 1.2rem;
 	}
 
 	.qualification__container {

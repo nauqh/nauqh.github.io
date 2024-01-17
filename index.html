@@ -27,34 +27,6 @@
             <a href="index.html" class="nav__logo">
                 Nauqh
             </a>
-
-            <div class="nav__menu">
-                <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="#home" class="nav__link active-link">
-                            <i class='bx bx-home-alt nav__icon'></i>
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#about" class="nav__link">
-                            <i class='bx bx-user nav__icon'></i>
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#skills" class="nav__link">
-                            <i class='bx bx-book-bookmark nav__icon'></i>
-                        </a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#work" class="nav__link">
-                            <i class='bx bx-desktop nav__icon'></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
         </nav>
     </header>
 
@@ -64,16 +36,16 @@
         <section class="home section" id="home">
             <div class="home__container container grid">
                 <div class="home__data">
-                    <h1 class="home__name">Minh Quan</h1>
-                    <h3 class="home__education">Passionate Junior Data Engineer</h3>
-                    <span class="home__quote">I build data solutions to
-                        drive user engagement.</span>
+                    <h1 class="home__name">I'm Minh Quan</h1>
+                    <h3 class="home__education">Data engineer - Web developer</h3>
+                    <span class="home__quote">I build data solutions to drive innovation
+                    </span>
 
                     <div class="home__buttons">
-                        <a download="" href="assets/pdf/resume.pdf" class="button button--ghost">
-                            Download CV
+                        <a download="" href="assets/pdf/resume.pdf" class="button-link">
+                            -> Download CV
                         </a>
-                        <a href="#about" class="button">About me</a>
+                        <a href="https://github.com/nauqh" class="button-link">-> See my projects</a>
                     </div>
                 </div>
 
@@ -99,7 +71,7 @@
         <!--=============== ABOUT ===============-->
         <section class="about section" id="about">
             <span class="section__subtitle">__init__</span>
-            <h2 class="section__title">About</h2>
+            <h2 class="section__title">About me</h2>
 
             <div class="about__container container grid">
                 <img src="assets/img/nauqh.jpg" alt="" class="about__img">
@@ -107,7 +79,7 @@
                 <div class="about__data">
                     <div class="about__info">
                         <div class="about__box">
-                            <i class='bx bxl-google about__icon'></i>
+                            <i class='bx bx-code about__icon'></i>
                             <h3 class="about__title">Experience</h3>
                             <span class="about__subtitle">GDSC Member</span>
                         </div>
@@ -142,8 +114,8 @@
 
         <!--=============== SKILLS ===============-->
         <section class="skills section" id="skills">
-            <span class="section__subtitle">__repr__</span>
-            <h2 class="section__title">Skills</h2>
+            <span class="section__subtitle">__len__</span>
+            <h2 class="section__title">My toolkit</h2>
 
             <div class="skills__container container grid">
                 <div class="skills__content">
@@ -156,16 +128,15 @@
 
                                 <div>
                                     <h3 class="skills__name">Python/R</h3>
-                                    <span class="skills__level">Programming</span>
+                                    <span class="skills__level">Program</span>
                                 </div>
                             </div>
 
                             <div class="skills__data">
-                                <i class='bx bx-chart check-icon'></i>
-
+                                <i class='bx bx-star check-icon'></i>
                                 <div>
-                                    <h3 class="skills__name">Dagster</h3>
-                                    <span class="skills__level">Orchestration</span>
+                                    <h3 class="skills__name">Spark</h3>
+                                    <span class="skills__level">Analytics</span>
                                 </div>
                             </div>
 
@@ -174,7 +145,7 @@
 
                                 <div>
                                     <h3 class="skills__name">Tableau</h3>
-                                    <span class="skills__level">Visualization</span>
+                                    <span class="skills__level">Visualize</span>
                                 </div>
                             </div>
                         </div>
@@ -189,18 +160,10 @@
                             </div>
 
                             <div class="skills__data">
-                                <i class='bx bx-chalkboard check-icon'></i>
+                                <i class='bx bxs-dashboard check-icon'></i>
                                 <div>
                                     <h3 class="skills__name">Snowflake</h3>
                                     <span class="skills__level">Warehouse</span>
-                                </div>
-                            </div>
-
-                            <div class="skills__data">
-                                <i class='bx bx-star check-icon'></i>
-                                <div>
-                                    <h3 class="skills__name">Spark</h3>
-                                    <span class="skills__level">Analytics</span>
                                 </div>
                             </div>
 
@@ -218,7 +181,7 @@
 
                                 <div>
                                     <h3 class="skills__name">Typescript</h3>
-                                    <span class="skills__level">Programming</span>
+                                    <span class="skills__level">Program</span>
                                 </div>
                             </div>
 
@@ -276,8 +239,8 @@
 
         <!--=============== SERVICES ===============-->
         <section class="services section">
-            <span class="section__subtitle">__len__</span>
-            <h2 class="section__title">Services</h2>
+            <span class="section__subtitle">__repr__</span>
+            <h2 class="section__title">Skills</h2>
 
             <div class="services__container container grid">
                 <div class="services__card">
@@ -510,7 +473,7 @@
 
 
         <!--=============== Qualifications ===============-->
-        <section class="qualification section">
+        <section class="qualification section" id="qualification">
             <span class="section__subtitle">__str__</span>
             <h2 class="section__title">Qualifications</h2>
 
@@ -721,35 +684,8 @@
     <!--=============== FOOTER ===============-->
     <footer class="footer">
         <div class="footer__container container">
-            <h1 class="footer__title">Portfolio</h1>
-
-            <ul class="footer__list">
-                <li>
-                    <a href="#about" class="footer__link">About</a>
-                </li>
-                <li>
-                    <a href="#skills" class="footer__link">Skills</a>
-                </li>
-                <li>
-                    <a href="#work" class="footer__link">Projects</a>
-                </li>
-            </ul>
-
-            <ul class="footer__social">
-                <a href="https://www.facebook.com/profile.php?id=100012103698354" target="_blank"
-                    class="footer__social-link">
-                    <i class='bx bxl-facebook'></i>
-                </a>
-                <a href="https://www.instagram.com/nauqh_/" target="_blank" class="footer__social-link">
-                    <i class='bx bxl-instagram'></i>
-                </a>
-                <a href="error.html" class="footer__social-link">
-                    <i class='bx bxl-twitter'></i>
-                </a>
-            </ul>
-
             <span class="footer__copy">
-                <a href="index.html">Design & Built by Nauqh</a>
+                Designed & developed by <a href="index.html">Nauqh</a>
             </span>
         </div>
     </footer>
