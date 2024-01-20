@@ -416,7 +416,7 @@ img {
 }
 
 .skills__name {
-	font-size: var(--normal-font-size);
+	font-size: 1rem;
 	font-weight: var(--font-medium);
 	line-height: 18px;
 }
@@ -757,13 +757,6 @@ img {
 
 	.about__info {
 		grid-template-columns: repeat(3, 1fr);
-	}
-
-	.skills__box {
-		column-gap: 1rem;
-	}
-	.skills__name {
-		font-size: var(--small-font-size);
 	}
 
 	.services__container {
