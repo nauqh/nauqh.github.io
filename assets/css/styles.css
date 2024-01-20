@@ -709,7 +709,6 @@ img {
 /*=============== BREAKPOINTS ===============*/
 @media screen and (max-width: 500px) {
 	.section__title {
-		text-align: left;
 		margin-left: 1rem;
 	}
 
