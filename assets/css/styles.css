@@ -1,5 +1,5 @@
 /*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
 
 /*=============== VARIABLES CSS ===============*/
@@ -314,6 +314,11 @@ img {
 	border-radius: 1.5rem;
 	justify-self: center;
 }
+.featured__img {
+	width: 220px;
+	border-radius: 1.5rem;
+	justify-self: center;
+}
 
 .about__data {
 	text-align: center;
@@ -576,6 +581,30 @@ img {
 	margin-bottom: 5rem;
 }
 
+.work__featured-container {
+	margin-bottom: 8rem;
+}
+
+.featured__info {
+	margin-bottom: 2rem;
+}
+
+.featured__subtitle {
+	display: block;
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+
+.featured__title:hover {
+	color: var(--first-color);
+}
+
+.featured__title {
+	color: #e1e1e1;
+	font-weight: 800;
+	font-size: 1.8rem;
+}
+
 .work__filters {
 	display: flex;
 	justify-content: center;
@@ -624,7 +653,6 @@ img {
 }
 
 .work__tech {
-	cursor: pointer;
 	padding: 0.25rem 0.75rem;
 	font-weight: var(--font-medium);
 	font-size: 0.75rem;
@@ -840,8 +868,12 @@ img {
 		align-items: center;
 		column-gap: 4rem;
 	}
+
 	.about__img {
 		width: 350px;
+	}
+	.featured__img {
+		width: 400px;
 	}
 	.about__data {
 		text-align: initial;
@@ -879,10 +911,6 @@ img {
 }
 
 @media screen and (min-width: 800px) {
-	.about {
-		margin-top: 3rem;
-	}
-
 	.home__buttons {
 		margin-top: 1rem;
 	}
@@ -916,11 +944,6 @@ img {
 
 	.nav {
 		height: calc(var(--header-height) + 1rem);
-	}
-
-	.home__container {
-		margin-top: 3rem;
-		margin-bottom: 4rem;
 	}
 
 	.home__data {
@@ -995,6 +1018,10 @@ img {
 
 	.work__container {
 		grid-template-columns: repeat(3, max-content);
+	}
+
+	#feature__container {
+		column-gap: 0;
 	}
 
 	.work__container {
