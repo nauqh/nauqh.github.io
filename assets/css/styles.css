@@ -366,6 +366,17 @@ img {
 	border-radius: 1.25rem;
 }
 
+.skills__content:hover {
+	cursor: pointer;
+	transform: translateY(-10px);
+	transition: transform 0.3s ease-in-out;
+}
+
+.skills__content:not(:hover) {
+	transition: transform 0.3s ease-in-out;
+	transform: translateY(0px);
+}
+
 .skills__title {
 	font-size: var(--normal-font-size);
 	font-weight: var(--font-medium);
