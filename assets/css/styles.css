@@ -636,6 +636,17 @@ img {
 	border-radius: 1rem;
 }
 
+.work__card:hover {
+	cursor: pointer;
+	transform: translateY(-10px);
+	transition: transform 0.3s ease-in-out;
+}
+
+.work__card:not(:hover) {
+	transition: transform 0.3s ease-in-out;
+	transform: translateY(0px);
+}
+
 .work__img {
 	border-radius: 1rem;
 	margin-bottom: 0.75rem;
