@@ -215,8 +215,6 @@ img {
 }
 
 .button-link {
-	font-family: "Nanum Pen Script", cursive;
-	font-size: 1.5rem;
 	color: #fafafa;
 }
 
@@ -923,10 +921,6 @@ img {
 @media screen and (min-width: 992px) {
 	.button {
 		font-size: 1rem;
-	}
-
-	.button-link {
-		font-size: 1.8rem;
 	}
 
 	.container {
