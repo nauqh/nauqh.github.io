@@ -219,7 +219,14 @@ img {
 }
 
 .button-link:hover {
-	text-decoration: underline;
+	cursor: pointer;
+	transform: translateY(-5px);
+	transition: transform 0.3s ease-in-out;
+}
+
+.button-link:not(:hover) {
+	transition: transform 0.3s ease-in-out;
+	transform: translateY(0px);
 }
 
 .home__social,
@@ -591,7 +598,7 @@ img {
 }
 
 .work__featured-container {
-	margin-bottom: 8rem;
+	margin-bottom: 5rem;
 }
 
 .featured__info {
@@ -606,6 +613,10 @@ img {
 
 .featured__title:hover {
 	color: var(--first-color);
+	font-size: 1.9rem;
+}
+.featured__title {
+	transition: color 0.3s ease-in-out, font-size 0.3s ease-in-out;
 }
 
 .featured__title {
