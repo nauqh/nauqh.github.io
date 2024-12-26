@@ -324,6 +324,13 @@ img {
 	border-radius: 1.5rem;
 	justify-self: center;
 }
+.featured__img2 {
+	width: 220px;
+	border-radius: 1rem;
+	border: 1px solid #fefefe;
+	margin-top: 1rem;
+	margin-right: 1rem;
+}
 
 .about__data {
 	text-align: center;
@@ -817,6 +824,11 @@ img {
 		justify-content: center;
 	}
 
+	.featured__img2 {
+		display: block;
+		justify-self: center;
+	}
+
 	.work__container {
 		justify-content: center;
 		row-gap: 2rem;
@@ -899,6 +911,9 @@ img {
 		width: 350px;
 	}
 	.featured__img {
+		width: 400px;
+	}
+	.featured__img2 {
 		width: 400px;
 	}
 	.about__data {
