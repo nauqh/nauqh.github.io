@@ -476,6 +476,11 @@ img {
 	row-gap: 2rem;
 }
 
+.qualification__info p {
+	font-size: 0.9rem;
+	margin-top: 1rem;
+}
+
 .qualification__name {
 	font-size: 1.2rem;
 	margin-bottom: 1.25rem;
@@ -892,11 +897,6 @@ img {
 	}
 	.qualification__info {
 		width: 400px;
-	}
-
-	.qualification__info p {
-		font-size: 0.9rem;
-		margin-top: 1rem;
 	}
 
 	.work__container {
