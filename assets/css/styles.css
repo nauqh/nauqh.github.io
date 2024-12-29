@@ -496,6 +496,15 @@ img {
 	margin-bottom: 1.25rem;
 }
 
+.qualification__name a {
+	color: #fafafa;
+	transition: color 0.3s ease-in-out;
+}
+
+.qualification__name a:hover {
+	color: var(--first-color);
+}
+
 .qualification__country,
 .qualification__year {
 	display: block;
