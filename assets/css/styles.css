@@ -933,6 +933,10 @@ img {
 		align-items: center;
 		column-gap: 4rem;
 	}
+	.about__container2 {
+		grid-template-columns: 0.4fr 0.6fr;
+		align-items: center;
+	}
 
 	.about__img {
 		width: 350px;
