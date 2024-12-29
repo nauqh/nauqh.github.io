@@ -496,6 +496,14 @@ img {
 	margin-bottom: 1.25rem;
 }
 
+.qualification__name:hover .work__icon {
+	transform: translateX(0.25rem);
+}
+
+.qualification__name:hover .work__button {
+	color: var(--first-color);
+}
+
 .qualification__name a {
 	color: #fafafa;
 	transition: color 0.3s ease-in-out;
@@ -768,7 +776,7 @@ img {
 
 /*=============== FOOTER ===============*/
 .footer {
-	background-color: var(--first-color);
+	background-color: var(--body-color);
 	margin-top: 10rem;
 }
 
@@ -778,17 +786,17 @@ img {
 
 .footer__copy {
 	display: block;
-	color: var(--body-color);
+	color: var(--text-color-light);
 	text-align: center;
 	font-size: 0.9rem;
 }
 
 .footer__copy a {
-	color: var(--body-color);
+	color: var(--text-color);
 }
 
 .footer__copy a:hover {
-	font-weight: var(--font-medium);
+	color: #fafafa;
 }
 
 /*=============== BREAKPOINTS ===============*/
@@ -1110,12 +1118,6 @@ img {
 	}
 	.testimonial__card {
 		padding: 1.5rem 2rem;
-	}
-
-	.footer__social-link {
-		font-size: 1.25rem;
-		padding: 0.4rem;
-		border-radius: 0.5rem;
 	}
 }
 
