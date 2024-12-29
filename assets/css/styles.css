@@ -467,6 +467,16 @@ img {
 	margin-bottom: 2rem;
 }
 
+.qualification__card {
+	padding: 1rem;
+	border-radius: 0.5rem;
+	transition: background-color 0.3s ease-in-out;
+}
+
+.qualification__card:hover {
+	background-color: var(--container-color);
+}
+
 .qualification__content {
 	margin-top: 3rem;
 }
