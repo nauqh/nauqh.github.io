@@ -988,6 +988,10 @@ img {
 	.work__container {
 		grid-template-columns: repeat(2, max-content);
 	}
+
+	#project_exam_system {
+		padding: 1rem;
+	}
 }
 
 @media screen and (min-width: 800px) {
