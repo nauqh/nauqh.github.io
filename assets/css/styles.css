@@ -104,6 +104,24 @@ img {
 	height: auto;
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--container-color);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--text-color-light);
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--text-color);
+}
+
 /*=============== REUSABLE CSS CLASSES ===============*/
 .container {
 	max-width: 968px;
@@ -142,7 +160,7 @@ img {
 	margin-top: 2rem;
 }
 
-/*=============== HEADER & NAV===============*/
+/*=============== HEADER & NAV ===============*/
 .header {
 	position: fixed;
 	top: 0;
@@ -321,7 +339,7 @@ img {
 }
 .featured__img {
 	width: 220px;
-	border-radius: 1.5rem;
+	border-radius: 0.5rem;
 	justify-self: center;
 }
 .featured__img2 {
@@ -333,6 +351,8 @@ img {
 
 .about__data {
 	text-align: center;
+	/* For hover effect positioning */
+	position: relative;
 }
 
 .about__info {
@@ -1145,4 +1165,61 @@ img {
 	.qualification__info {
 		width: 800px;
 	}
+}
+
+/*=============== Hover Instruction Note ===============*/
+.hover-instruction {
+	text-align: center;
+	font-size: 0.9rem;
+	color: var(--text-color-light);
+}
+
+/*=============== Featured Project Hover Effect ===============*/
+/* Within .about__data of the featured project, we split the content into two parts:
+   .text-content (default text) and .hover-images (extra images that appear on hover) */
+.hover-images img {
+	border-radius: 0.5rem;
+}
+.about__data .text-content {
+	opacity: 1;
+	transition: opacity 0.3s ease;
+}
+
+.about__data .hover-images {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+.about__data .hover-images img {
+	position: absolute;
+	width: 60%; /* increased size */
+	opacity: 0;
+	transform: scale(0.8);
+	transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Position one image at top left */
+.about__data .hover-images img:first-child {
+	top: 10px;
+	left: 10px;
+}
+
+/* Position the other image at bottom right */
+.about__data .hover-images img:last-child {
+	bottom: 10px;
+	right: 10px;
+}
+
+/* When hovering over the main image, hide the text and show the hover images */
+.featured__img:hover ~ .about__data .text-content {
+	opacity: 0;
+}
+
+.featured__img:hover ~ .about__data .hover-images img {
+	opacity: 1;
+	transform: scale(1);
 }
