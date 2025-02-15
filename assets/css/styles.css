@@ -1347,7 +1347,7 @@ img {
 
 .timeline-title {
 	font-weight: var(--font-medium);
-	font-size: 1rem;
+	font-size: 0.9rem;
 	color: var(--title-color);
 	margin: 0;
 }
