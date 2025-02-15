@@ -1650,6 +1650,7 @@ img {
 @media screen and (max-width: 768px) {
 	.about__container2 {
 		grid-template-columns: 1fr;
+		gap: 4rem;
 		min-height: auto;
 	}
 
