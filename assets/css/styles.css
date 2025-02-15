@@ -350,7 +350,8 @@ img {
 }
 
 .about__data {
-	text-align: center;
+	display: flex;
+	flex-direction: column;
 	/* For hover effect positioning */
 	position: relative;
 }
@@ -384,7 +385,6 @@ img {
 
 .about__description {
 	text-align: left;
-	margin-bottom: 2rem;
 }
 
 /*=============== ABOUT SECTION ENHANCEMENTS ===============*/
@@ -392,25 +392,20 @@ img {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	gap: 1rem;
+	height: 100%;
+	justify-content: flex-start;
 }
 
 .about__stats {
 	display: flex;
 	gap: 1rem;
-	margin-top: 1rem;
-	background: var(--container-color);
-	padding: 1rem;
+	margin-top: 2rem;
 	border-radius: 0.75rem;
-	width: fit-content;
 }
-
 .stat__item {
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-	font-size: var(--small-font-size);
 	color: var(--text-color);
 }
 
@@ -474,7 +469,7 @@ img {
 	align-items: center;
 	gap: 0.5rem;
 	color: var(--text-color);
-	font-size: var(--small-font-size);
+	font-size: 1.1rem;
 	transition: 0.3s;
 }
 
@@ -484,17 +479,128 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-	.about__stats {
-		flex-direction: column;
-		width: 100%;
-	}
-
 	.about__quick-links {
 		flex-direction: column;
 	}
 
 	.interest__tags {
 		justify-content: center;
+	}
+}
+
+/*=============== CURRENT WORK STYLES ===============*/
+.about__current-work {
+	background: var(--container-color);
+	padding: 1.5rem;
+	border-radius: 0.75rem;
+	margin-top: 1rem;
+}
+
+.current-work__title {
+	color: var(--title-color);
+	font-size: var(--normal-font-size);
+	margin-bottom: 1rem;
+}
+
+.current-work__item {
+	background: rgba(100, 255, 218, 0.05);
+	padding: 1rem;
+	border-radius: 0.5rem;
+	margin-top: 1rem;
+}
+
+.work-status {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.status-dot {
+	width: 8px;
+	height: 8px;
+	background: var(--first-color);
+	border-radius: 50%;
+	animation: pulse 2s infinite;
+}
+
+.current-work__link {
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+.current-work__link h5 {
+	font-size: 1.1rem;
+	color: var(--title-color);
+	transition: color 0.3s ease;
+}
+
+.current-work__link:hover h5 {
+	color: var(--first-color);
+}
+
+.current-work__item p {
+	color: var(--text-color);
+	font-size: var(--small-font-size);
+	margin-bottom: 1rem;
+}
+
+.work-progress {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.progress-bar {
+	flex: 1;
+	height: 4px;
+	background: var(--body-color);
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.progress-fill {
+	height: 100%;
+	background: var(--first-color);
+	border-radius: 2px;
+	transition: width 1s ease-in-out;
+}
+
+.progress-text {
+	font-size: var(--smaller-font-size);
+	color: var(--text-color-light);
+}
+
+.tech-stack {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	50% {
+		transform: scale(1.5);
+		opacity: 0.5;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+/* Add this to your existing media queries */
+@media screen and (max-width: 768px) {
+	.about__current-work {
+		margin-top: 2rem;
+	}
+
+	.tech-stack {
+		justify-content: flex-start;
 	}
 }
 
@@ -1075,7 +1181,9 @@ img {
 	}
 	.about__container2 {
 		grid-template-columns: 0.4fr 0.6fr;
-		align-items: center;
+		align-items: start; /* Change from center to start */
+		gap: 2rem;
+		min-height: 500px; /* Set minimum height */
 	}
 
 	.about__img {
@@ -1089,6 +1197,9 @@ img {
 	}
 	.about__data {
 		text-align: initial;
+		height: 100%; /* Fill container height */
+		justify-content: flex-start;
+		gap: 2rem;
 	}
 	.about__info {
 		justify-content: initial;
@@ -1475,7 +1586,7 @@ img {
 	clear: both;
 	padding-top: 1rem;
 	font-size: var(--small-font-size);
-	color: var(--text-color-light);
+	color: var (--text-color-light);
 }
 .timeline-subtitle2 {
 	clear: both;
@@ -1530,5 +1641,17 @@ img {
 
 	.timeline-position {
 		text-align: left;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.about__container2 {
+		grid-template-columns: 1fr;
+		min-height: auto;
+	}
+
+	.about__image-container,
+	.about__data {
+		height: auto;
 	}
 }
