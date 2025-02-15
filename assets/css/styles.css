@@ -460,6 +460,7 @@ img {
 }
 
 .about__quick-links {
+	margin-top: 2rem;
 	display: flex;
 	gap: 1rem;
 }
