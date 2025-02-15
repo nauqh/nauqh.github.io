@@ -336,6 +336,7 @@ img {
 	width: 220px;
 	border-radius: 1.5rem;
 	justify-self: center;
+	margin: auto;
 }
 .featured__img {
 	width: 220px;
@@ -418,7 +419,6 @@ img {
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
-	margin-top: 2rem;
 }
 
 .highlight {
