@@ -1379,6 +1379,9 @@ img {
 }
 
 @media screen and (max-width: 768px) {
+	.featured__img {
+		width: 80%;
+	}
 	.timeline::after {
 		left: 10px; /* Move the vertical line to the side */
 	}
