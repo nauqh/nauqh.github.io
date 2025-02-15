@@ -1042,14 +1042,6 @@ img {
 
 /*=============== BREAKPOINTS ===============*/
 @media screen and (max-width: 500px) {
-	.section__title {
-		margin-left: 1rem;
-	}
-
-	.section__subtitle {
-		display: none;
-	}
-
 	.home__container {
 		padding-top: 0;
 		display: block;
