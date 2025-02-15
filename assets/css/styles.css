@@ -396,6 +396,7 @@ img {
 	flex-direction: column;
 	height: 100%;
 	justify-content: space-around;
+	gap: 1rem;
 }
 
 .about__stats {
