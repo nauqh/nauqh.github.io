@@ -1002,7 +1002,6 @@ img {
 	.services__container {
 		grid-template-columns: repeat(4, 180px);
 		justify-content: center;
-		column-gap: 0.5rem;
 	}
 
 	.work__container {
@@ -1196,7 +1195,7 @@ img {
 
 .about__data .hover-images img {
 	position: absolute;
-	width: 60%; /* increased size */
+	width: 65%; /* increased size */
 	opacity: 0;
 	transform: scale(0.8);
 	transition: opacity 0.3s ease, transform 0.3s ease;
@@ -1214,14 +1213,42 @@ img {
 	right: 10px;
 }
 
-/* When hovering over the main image, hide the text and show the hover images */
-.featured__img:hover ~ .about__data .text-content {
-	opacity: 0;
+@media (hover: hover) {
+	/* Only apply hover effects on devices that support hover */
+	.featured__img:hover ~ .about__data .text-content {
+		opacity: 0;
+	}
+
+	.featured__img:hover ~ .about__data .hover-images img {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
-.featured__img:hover ~ .about__data .hover-images img {
-	opacity: 1;
-	transform: scale(1);
+@media screen and (max-width: 768px) {
+	/* For mobile devices */
+	.about__data .hover-images img {
+		width: 80%; /* Make images larger on mobile */
+		position: static; /* Remove absolute positioning */
+		display: block;
+		margin: 1rem auto; /* Center images */
+		opacity: 1; /* Always show images */
+		transform: scale(1);
+	}
+
+	.about__data .hover-images {
+		position: static;
+		margin-top: 2rem;
+	}
+
+	.text-content {
+		opacity: 1 !important; /* Always show text */
+	}
+
+	/* Remove hover instruction on mobile */
+	.hover-instruction {
+		display: none;
+	}
 }
 
 /*========================
@@ -1229,7 +1256,7 @@ img {
 =========================*/
 .timeline {
 	position: relative;
-	max-width: 80vw; /* Adjust to fit your layout */
+	max-width: 90vw;
 	margin: 4rem auto; /* Center and add top/bottom space */
 }
 
@@ -1295,25 +1322,23 @@ img {
 }
 
 /* Timeline text styles */
-/* Left container: title right, date left */
-.timeline-container.left .timeline-date {
-	float: left;
+.timeline-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.5rem;
 }
 
-.timeline-container.left .timeline-title {
-	float: right;
+/* Left container: title right, date left */
+.timeline-container.left .timeline-header {
+	flex-direction: row;
 }
 
 /* Right container: title left, date right */
-.timeline-container.right .timeline-date {
-	float: right;
+.timeline-container.right .timeline-header {
+	flex-direction: row-reverse;
 }
 
-.timeline-container.right .timeline-title {
-	float: left;
-}
-
-/* Common styles for both */
 .timeline-date {
 	font-size: 0.75rem;
 	color: var(--first-color);
@@ -1321,10 +1346,9 @@ img {
 }
 
 .timeline-title {
-	font-size: var(--normal-font-size);
 	font-weight: var(--font-medium);
 	color: var(--title-color);
-	margin-bottom: 0.25rem;
+	margin: 0;
 }
 
 .timeline-position {
@@ -1332,7 +1356,6 @@ img {
 	font-size: 1.1rem;
 	font-weight: var(--font-semibold);
 	color: var(--title-color);
-	margin-bottom: 0.25rem;
 }
 
 .timeline-subtitle {
@@ -1372,5 +1395,24 @@ img {
 	.timeline-container.left::before,
 	.timeline-container.right::before {
 		left: 0;
+	}
+
+	.timeline-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
+	}
+
+	.timeline-container.left .timeline-header,
+	.timeline-container.right .timeline-header {
+		flex-direction: column;
+	}
+
+	.timeline-container .content {
+		padding: 1rem;
+	}
+
+	.timeline-position {
+		text-align: left;
 	}
 }
