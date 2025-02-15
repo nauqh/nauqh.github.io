@@ -336,7 +336,8 @@ img {
 	width: 220px;
 	border-radius: 1.5rem;
 	justify-self: center;
-	margin: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 .featured__img {
 	width: 220px;
@@ -394,7 +395,7 @@ img {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	justify-content: flex-start;
+	justify-content: space-around;
 }
 
 .about__stats {
@@ -1181,7 +1182,7 @@ img {
 		column-gap: 4rem;
 	}
 	.about__container2 {
-		grid-template-columns: 0.4fr 0.6fr;
+		grid-template-columns: 1fr 1fr;
 		align-items: start; /* Change from center to start */
 		gap: 2rem;
 		min-height: 500px; /* Set minimum height */
@@ -1655,4 +1656,49 @@ img {
 	.about__data {
 		height: auto;
 	}
+}
+
+/*=============== ABOUT SECTION ENHANCEMENTS ===============*/
+.contact-button {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--first-color);
+	font-weight: var(--font-medium);
+	padding: 1rem;
+	border: 1px solid var(--first-color);
+	border-radius: 1rem;
+	background: transparent;
+	overflow: hidden;
+	transition: all 0.3s ease;
+}
+
+.contact-button::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background-color: var(--first-color);
+	transition: width 0.3s ease;
+	z-index: -1;
+}
+
+.contact-button:hover {
+	color: var(--body-color);
+}
+
+.contact-button:hover::before {
+	width: 100%;
+}
+
+.contact-button i {
+	font-size: 1.25rem;
+	transition: transform 0.3s ease;
+}
+
+.contact-button:hover i {
+	transform: translateX(4px);
 }
