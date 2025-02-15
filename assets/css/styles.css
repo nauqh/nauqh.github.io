@@ -704,6 +704,7 @@ img {
 	background-color: var(--container-color);
 	padding: 1rem;
 	border-radius: 1rem;
+	transition: all 0.3s ease-in-out;
 }
 
 .work__card:hover {
