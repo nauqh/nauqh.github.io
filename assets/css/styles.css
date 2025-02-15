@@ -1454,7 +1454,7 @@ img {
 @media screen and (max-width: 768px) {
 	/* For mobile devices */
 	.about__data .hover-images img {
-		width: 80%; /* Make images larger on mobile */
+		width: 90%; /* Make images larger on mobile */
 		position: static; /* Remove absolute positioning */
 		display: block;
 		margin: 1rem auto; /* Center images */
@@ -1606,7 +1606,7 @@ img {
 
 @media screen and (max-width: 768px) {
 	.featured__img {
-		width: 80%;
+		width: 100%;
 	}
 	.timeline::after {
 		left: 10px; /* Move the vertical line to the side */
