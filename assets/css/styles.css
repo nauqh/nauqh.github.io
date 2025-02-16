@@ -1666,6 +1666,15 @@ img {
 	background: transparent;
 	overflow: hidden;
 	transition: all 0.3s ease;
+	z-index: 2;
+}
+
+.contact-button.highlight {
+	color: var(--body-color);
+}
+
+.contact-button.highlight::before {
+	width: 100%;
 }
 
 .contact-button::before {
@@ -1694,5 +1703,23 @@ img {
 }
 
 .contact-button:hover i {
+	transform: translateX(4px);
+}
+
+.job-span {
+	cursor: pointer;
+	position: relative;
+	z-index: 1;
+}
+
+.contact-button.hover-effect {
+	color: var(--body-color);
+}
+
+.contact-button.hover-effect::before {
+	width: 100%;
+}
+
+.contact-button.hover-effect i {
 	transform: translateX(4px);
 }

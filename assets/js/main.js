@@ -60,3 +60,25 @@ sr.reveal(`.home__data`);
 sr.reveal(`.home__handle`, { delay: 500 });
 sr.reveal(`.home__social, .home__scroll`, { delay: 700, origin: "bottom" });
 sr.reveal(`.about`, { delay: 1000 });
+
+// Remove duplicate handlers and replace with this single one
+document.getElementById("jobSpan").addEventListener("click", function (e) {
+	e.preventDefault();
+	e.stopPropagation(); // Stop event bubbling
+	const contactButton = document.getElementById("contactButton");
+	contactButton.classList.add("hover-effect");
+
+	// Remove the effect after 0.5 seconds
+	setTimeout(() => {
+		contactButton.classList.remove("hover-effect");
+	}, 500);
+});
+
+// Handle regular hover for contact button
+const contactButton = document.getElementById("contactButton");
+contactButton.addEventListener("mouseenter", () => {
+	contactButton.classList.add("hover-effect");
+});
+contactButton.addEventListener("mouseleave", () => {
+	contactButton.classList.remove("hover-effect");
+});
