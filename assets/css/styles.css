@@ -890,18 +890,35 @@ img {
 	font-weight: 600;
 }
 
-.featured__title:hover {
-	color: var(--first-color);
-	font-size: 1.9rem;
-}
 .featured__title {
-	transition: color 0.3s ease-in-out, font-size 0.3s ease-in-out;
-}
-
-.featured__title {
-	color: #e1e1e1;
+	position: relative; /* Required for proper positioning of the pseudo-element */
+	display: inline-block; /* Ensures the pseudo-element aligns with the text */
+	color: #fff; /* Keep the text color the same */
 	font-weight: 800;
 	font-size: 1.8rem;
+	transition: font-size 0.3s ease-in-out; /* Only animate font-size on hover */
+}
+
+/* Pseudo-element that acts as the highlighter */
+.featured__title::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0.15em; /* Adjust to position the highlight behind the text */
+	width: 100%;
+	height: 0.8em; /* Thickness of the highlighter effect */
+	background: var(--first-color-alt); /* Highlighter color */
+	transform: scaleX(0); /* Start hidden (no width) */
+	transform-origin: left; /* Animate from left to right */
+	transition: transform 0.3s ease-in-out;
+	z-index: -1; /* Place behind the text */
+	border-radius: 0.1em; /* Optional: smooths the edges of the highlight */
+}
+
+/* Hover state: increase font-size and reveal the highlighter */
+
+.featured__title:hover::before {
+	transform: scaleX(1); /* Expand the highlight to full width */
 }
 
 .work__filters {
