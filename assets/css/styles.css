@@ -702,9 +702,10 @@ img {
 	justify-content: center;
 	align-items: center;
 	column-gap: 0.5rem;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	font-weight: var(--font-medium);
-	margin-bottom: 2rem;
+	margin: 3rem 0 2rem 0;
+	color: var(--title-color);
 }
 
 .qualification__card {
@@ -1485,153 +1486,126 @@ img {
 }
 
 /*========================
-   VERTICAL TIMELINE
+   MINIMAL EDUCATION TIMELINE
 =========================*/
 .timeline {
 	position: relative;
-	max-width: 90vw;
-	margin: 4rem auto; /* Center and add top/bottom space */
+	max-width: 800px;
+	margin: 2rem auto;
 }
 
+/* Remove the vertical line */
 .timeline::after {
-	content: "";
-	position: absolute;
-	width: 2px;
-	background-color: var(--text-color-light);
-	top: 0;
-	bottom: 0;
-	left: 50%;
-	transform: translateX(-1px); /* Center the line exactly at 50% */
+	display: none;
 }
 
-/* Each side container (left or right) */
+/* Simplified container */
 .timeline-container {
 	position: relative;
-	width: 50%;
-	padding: 1rem 2rem;
+	width: 100%;
+	padding: 0;
+	margin-bottom: 2rem;
 	box-sizing: border-box;
 }
 
-/* Left-aligned container */
-.timeline-container.left {
-	left: 0;
-	text-align: right;
-}
-
-/* Right-aligned container */
+/* Remove left/right positioning */
+.timeline-container.left,
 .timeline-container.right {
-	left: 50%;
+	left: 0;
 	text-align: left;
 }
 
-/* Content box for each timeline item */
+/* Minimal content box */
 .timeline-container .content {
 	position: relative;
-	background-color: var(--container-color);
-	padding: 1.5rem;
-	border-radius: 0.5rem;
+	background-color: transparent;
+	padding: 0;
+	border-radius: 0;
+	border-left: 2px solid var(--first-color);
+	padding-left: 1.5rem;
 }
 
-/* Dots on the timeline line */
+/* Remove dots */
 .timeline-container::before {
-	content: "";
-	position: absolute;
-	top: 1.5rem; /* vertically aligns with .content padding */
-	width: 15px;
-	height: 15px;
-	border-radius: 50%;
-	background-color: var(--first-color);
-	border: 2px solid var(--container-color);
-	z-index: 1;
+	display: none;
 }
 
-/* Dot positioning for left vs right cards */
-.timeline-container.left::before {
-	right: -8px;
-}
-
-.timeline-container.right::before {
-	left: -8px;
-}
-
-/* Timeline text styles */
+/* Simplified header */
 .timeline-header {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 	margin-bottom: 0.5rem;
-}
-
-/* Left container: title right, date left */
-.timeline-container.left .timeline-header {
 	flex-direction: row;
 }
 
-/* Right container: title left, date right */
-.timeline-container.right .timeline-header {
-	flex-direction: row-reverse;
-}
-
 .timeline-date {
-	font-size: 0.75rem;
+	font-size: 0.8rem;
 	color: var(--first-color);
 	font-weight: var(--font-medium);
+	background-color: var(--container-color);
+	padding: 0.25rem 0.75rem;
+	border-radius: 1rem;
 }
 
 .timeline-title {
 	font-weight: var(--font-medium);
-	font-size: 0.9rem;
+	font-size: 1rem;
 	color: var(--title-color);
 	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.timeline-title img {
+	height: 24px;
+	padding: 0.1rem;
+	border-radius: 0.3rem;
+	vertical-align: middle;
 }
 
 .timeline-position {
-	clear: both;
-	font-size: 1.1rem;
-	font-weight: var(--font-semibold);
-	color: var(--title-color);
+	font-size: 1rem;
+	font-weight: var(--font-medium);
+	color: var(--text-color);
+	margin: 0.5rem 0;
 }
 
-.timeline-subtitle {
-	clear: both;
-	padding-top: 1rem;
-	font-size: var(--small-font-size);
-	color: var (--text-color-light);
-}
 .timeline-subtitle2 {
-	clear: both;
-	padding-top: 1rem;
 	font-size: var(--small-font-size);
 	color: var(--text-color-light);
 	text-align: left;
+	margin: 0.5rem 0;
+	line-height: 1.5;
 }
 
 .timeline-footer {
-	margin-top: 1rem;
-	font-size: 0.9rem;
+	margin-top: 0.5rem;
+	font-size: 0.85rem;
+	color: var(--text-color-light);
+}
+
+/* Qualification title styling */
+.qualification__title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	column-gap: 0.5rem;
+	font-size: 1.2rem;
+	font-weight: var(--font-medium);
+	margin: 3rem 0 2rem 0;
+	color: var(--title-color);
 }
 
 @media screen and (max-width: 768px) {
-	.featured__img {
-		width: 100%;
+	.timeline {
+		max-width: 100%;
+		margin: 1.5rem auto;
 	}
-	.timeline::after {
-		left: 10px; /* Move the vertical line to the side */
-	}
-	.timeline-container {
-		width: 100%;
-		padding-left: 2.5rem;
-		padding-right: 0;
-		text-align: left;
-	}
-	.timeline-container.left,
-	.timeline-container.right {
-		left: 0;
-		padding: 1rem;
-	}
-	.timeline-container.left::before,
-	.timeline-container.right::before {
-		left: 0;
+
+	.timeline-container .content {
+		padding-left: 1rem;
 	}
 
 	.timeline-header {
@@ -1640,30 +1614,30 @@ img {
 		gap: 0.5rem;
 	}
 
-	.timeline-container.left .timeline-header,
-	.timeline-container.right .timeline-header {
-		flex-direction: column;
+	.timeline-title {
+		font-size: 0.9rem;
 	}
 
-	.timeline-container .content {
-		padding: 1rem;
+	.timeline-title img {
+		height: 20px;
+	}
+
+	.timeline-date {
+		font-size: 0.75rem;
+		padding: 0.2rem 0.6rem;
 	}
 
 	.timeline-position {
-		text-align: left;
-	}
-}
-
-@media screen and (max-width: 768px) {
-	.about__container2 {
-		grid-template-columns: 1fr;
-		gap: 4rem;
-		min-height: auto;
+		font-size: 0.9rem;
 	}
 
-	.about__image-container,
-	.about__data {
-		height: auto;
+	.timeline-subtitle2 {
+		font-size: 0.8rem;
+	}
+
+	.qualification__title {
+		font-size: 1.1rem;
+		margin: 2rem 0 1.5rem 0;
 	}
 }
 
