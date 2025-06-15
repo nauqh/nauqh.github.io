@@ -662,25 +662,7 @@ img {
 }
 
 .skills .check-icon:hover {
-	animation: bounce-skills 0.6s;
-}
-
-@keyframes bounce-skills {
-	0% {
-		transform: translate(0);
-	}
-	20% {
-		transform: translateY(-6px);
-	}
-	40% {
-		transform: 0;
-	}
-	60% {
-		transform: translateY(-3px);
-	}
-	80% {
-		transform: 0;
-	}
+	transform: translateY(-6px);
 }
 
 .skills__name {
