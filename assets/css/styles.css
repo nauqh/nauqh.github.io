@@ -1566,7 +1566,7 @@ img {
 .timeline-position {
 	font-size: 1rem;
 	font-weight: var(--font-medium);
-	color: var(--text-color);
+	color: #fafafa;
 	margin: 0.5rem 0;
 }
 
