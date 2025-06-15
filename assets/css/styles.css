@@ -617,16 +617,15 @@ img {
 	background-color: var(--container-color);
 	padding: 1.5rem;
 	border-radius: 1.25rem;
+	transition: transform 0.3s ease-in-out;
 }
 
 .skills__content:hover {
 	cursor: pointer;
-	transform: translateY(-10px);
-	transition: transform 0.3s ease-in-out;
+	transform: translateY(-5px);
 }
 
 .skills__content:not(:hover) {
-	transition: transform 0.3s ease-in-out;
 	transform: translateY(0px);
 }
 
@@ -653,11 +652,13 @@ img {
 .skills__data {
 	display: flex;
 	column-gap: 0.5rem;
+	align-items: center;
 }
 
 .skills .check-icon {
 	font-size: 1.5rem;
 	color: var(--first-color);
+	transition: transform 0.3s ease;
 }
 
 .skills .check-icon:hover {
@@ -686,10 +687,12 @@ img {
 	font-size: 1rem;
 	font-weight: var(--font-medium);
 	line-height: 18px;
+	color: var(--title-color);
 }
 
 .skills__level {
 	font-size: var(--tiny-font-size);
+	color: var(--text-color-light);
 }
 
 /*=============== QUALIFICATION ===============*/
@@ -1100,6 +1103,15 @@ img {
 		grid-template-columns: repeat(3, 1fr);
 	}
 
+	.skills__container {
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	.skills__content {
+		padding: 1.5rem;
+	}
+
 	.services__container {
 		grid-template-columns: repeat(2, 150px);
 		justify-content: center;
@@ -1151,9 +1163,11 @@ img {
 
 	.skills__container {
 		justify-content: center;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
 	}
 	.skills__content {
-		padding: 2rem 4rem;
+		padding: 2rem 1.5rem;
 	}
 
 	.services__container {
@@ -1221,8 +1235,9 @@ img {
 	}
 
 	.skills__container {
-		grid-template-columns: repeat(2, 350px);
-		column-gap: 3rem;
+		grid-template-columns: repeat(2, 1fr);
+		column-gap: 2rem;
+		row-gap: 2rem;
 	}
 
 	.qualification__info {
@@ -1313,8 +1328,9 @@ img {
 	}
 
 	.skills__container {
-		grid-template-columns: repeat(2, 450px);
-		column-gap: 3.5rem;
+		grid-template-columns: repeat(2, 1fr);
+		column-gap: 3rem;
+		row-gap: 2.5rem;
 	}
 
 	.skills__box {
@@ -1602,20 +1618,90 @@ img {
 	.timeline {
 		max-width: 100%;
 		margin: 1.5rem auto;
+		padding: 0 1rem;
+	}
+
+	.timeline-container {
+		margin-bottom: 1.5rem;
 	}
 
 	.timeline-container .content {
 		padding-left: 1rem;
+		border-left-width: 3px;
 	}
 
 	.timeline-header {
 		flex-direction: column;
 		align-items: flex-start;
+		gap: 0.75rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.timeline-title {
+		font-size: 0.95rem;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+
+	.timeline-title img {
+		height: 22px;
+		padding: 0.1rem;
+		border-radius: 0.25rem;
+	}
+
+	.timeline-date {
+		font-size: 0.7rem;
+		padding: 0.2rem 0.6rem;
+		border-radius: 0.8rem;
+		align-self: flex-start;
+	}
+
+	.timeline-position {
+		font-size: 0.9rem;
+		margin: 0.75rem 0 0.5rem 0;
+		font-weight: var(--font-semibold);
+	}
+
+	.timeline-subtitle2 {
+		font-size: 0.8rem;
+		margin: 0.4rem 0;
+		line-height: 1.6;
+		text-align: left;
+	}
+
+	.timeline-footer {
+		margin-top: 0.75rem;
+		font-size: 0.8rem;
+		color: var(--text-color-light);
+	}
+
+	.qualification__title {
+		font-size: 1.1rem;
+		margin: 2.5rem 0 1.5rem 0;
+		text-align: center;
+	}
+}
+
+/* Additional mobile optimizations for very small screens */
+@media screen and (max-width: 480px) {
+	.timeline {
+		padding: 0 0.5rem;
+		margin: 1rem auto;
+	}
+
+	.timeline-container .content {
+		padding-left: 0.75rem;
+		border-left-width: 2px;
+	}
+
+	.timeline-header {
 		gap: 0.5rem;
+		margin-bottom: 0.5rem;
 	}
 
 	.timeline-title {
 		font-size: 0.9rem;
+		gap: 0.3rem;
 	}
 
 	.timeline-title img {
@@ -1623,21 +1709,44 @@ img {
 	}
 
 	.timeline-date {
-		font-size: 0.75rem;
-		padding: 0.2rem 0.6rem;
+		font-size: 0.65rem;
+		padding: 0.15rem 0.5rem;
 	}
 
 	.timeline-position {
-		font-size: 0.9rem;
+		font-size: 0.85rem;
+		margin: 0.5rem 0 0.4rem 0;
 	}
 
 	.timeline-subtitle2 {
-		font-size: 0.8rem;
+		font-size: 0.75rem;
+		margin: 0.3rem 0;
+		line-height: 1.5;
+	}
+
+	.timeline-footer {
+		margin-top: 0.5rem;
+		font-size: 0.75rem;
 	}
 
 	.qualification__title {
-		font-size: 1.1rem;
-		margin: 2rem 0 1.5rem 0;
+		font-size: 1rem;
+		margin: 2rem 0 1rem 0;
+	}
+}
+
+/* Landscape mobile optimization */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+	.timeline {
+		margin: 1rem auto;
+	}
+
+	.timeline-container {
+		margin-bottom: 1rem;
+	}
+
+	.qualification__title {
+		margin: 1.5rem 0 1rem 0;
 	}
 }
 
