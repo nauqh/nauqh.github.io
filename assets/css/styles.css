@@ -1803,3 +1803,83 @@ img {
 .contact-button.hover-effect i {
 	transform: translateX(4px);
 }
+
+.chat-bubble {
+	position: absolute;
+	top: -25px;
+	left: 65%;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: linear-gradient(135deg, #4285f4, #34a853);
+	color: white;
+	padding: 0.5rem 1rem;
+	border-radius: 1.5rem;
+	font-size: var(--smaller-font-size);
+	font-weight: var(--font-medium);
+	cursor: pointer;
+	animation: bubbleFloat 3s ease-in-out infinite;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	z-index: var(--z-tooltip);
+	transition: transform 0.3s ease, background 0.3s ease;
+	white-space: nowrap;
+}
+
+.chat-bubble:hover {
+	transform: translateX(-50%) scale(1.05) translateY(-3px);
+	background: linear-gradient(135deg, #3367d6, #2d7e32);
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+	animation-play-state: paused;
+}
+
+/* Fix triangle shape and placement */
+.chat-bubble::after {
+	content: "";
+	position: absolute;
+	bottom: -6px;
+	left: 16px; /* fine-tuned left placement */
+	width: 12px;
+	height: 8px;
+	background: linear-gradient(135deg, #4285f4, #34a853);
+	clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+}
+
+.chat-bubble:hover::after {
+	background: linear-gradient(135deg, #3367d6, #2d7e32);
+}
+
+.chat-bubble i {
+	font-size: 1rem;
+	transition: transform 0.3s ease;
+}
+
+.chat-bubble:hover i {
+	transform: translateX(2px);
+}
+
+@keyframes bubbleFloat {
+	0%,
+	100% {
+		transform: translateX(-50%) translateY(0px);
+	}
+	50% {
+		transform: translateX(-50%) translateY(-6px);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.chat-bubble {
+		top: -18px;
+		left: 70%;
+		font-size: var(--tiny-font-size);
+		padding: 0.4rem 0.8rem;
+	}
+
+	.chat-bubble::after {
+		bottom: -5px;
+		left: 14px;
+		width: 10px;
+		height: 6px;
+	}
+}
