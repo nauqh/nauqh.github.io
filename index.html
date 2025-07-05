@@ -187,233 +187,227 @@
             <span class="section__subtitle">__len__</span>
             <h2 class="section__title">My toolkit</h2>
 
-            <div class="skills__container container grid">
-                <!-- Languages -->
-                <div class="skills__content">
-                    <h3 class="skills__title">Languages</h3>
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxl-python check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Python</h3>
-                                    <span class="skills__level">Primary</span>
+            <div class="skills__dual-explorer container">
+
+                <!-- Left Explorer -->
+                <div class="skills__explorer">
+                    <div class="explorer__header">
+                        <div class="explorer__breadcrumb">
+                            <span>~/core-skills</span>
+                        </div>
+                        <div class="explorer__toolbar">
+                            <button class="toolbar__btn toggle-btn" data-target="left">
+                                <i class="bx bx-expand-alt expand-icon"></i>
+                                <i class="bx bx-collapse-alt collapse-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="explorer__content">
+                        <div class="folder__tree">
+
+                            <!-- Languages Folder -->
+                            <div class="folder__item" data-folder="languages">
+                                <div class="folder__header">
+                                    <i class="bx bx-folder folder__icon"></i>
+                                    <i class="bx bx-folder-open folder__icon--open"></i>
+                                    <i class="bx bx-chevron-right folder__chevron"></i>
+                                    <span class="folder__name">Languages</span>
+                                    <span class="folder__count">6 items</span>
+                                </div>
+                                <div class="folder__content">
+                                    <div class="file__item" data-skill="python">
+                                        <i class="bx bxl-python file__icon"></i>
+                                        <span class="file__name">Python</span>
+                                        <span class="file__meta">Primary</span>
+                                    </div>
+                                    <div class="file__item" data-skill="typescript">
+                                        <i class="bx bxl-typescript file__icon"></i>
+                                        <span class="file__name">TypeScript</span>
+                                        <span class="file__meta">Primary</span>
+                                    </div>
+                                    <div class="file__item" data-skill="sql">
+                                        <i class="bx bxl-postgresql file__icon"></i>
+                                        <span class="file__name">SQL</span>
+                                        <span class="file__meta">Database</span>
+                                    </div>
+                                    <div class="file__item" data-skill="java">
+                                        <i class="bx bxl-java file__icon"></i>
+                                        <span class="file__name">Java</span>
+                                        <span class="file__meta">Secondary</span>
+                                    </div>
+                                    <div class="file__item" data-skill="html">
+                                        <i class="bx bxl-html5 file__icon"></i>
+                                        <span class="file__name">HTML</span>
+                                        <span class="file__meta">Frontend</span>
+                                    </div>
+                                    <div class="file__item" data-skill="css">
+                                        <i class="bx bxl-css3 file__icon"></i>
+                                        <span class="file__name">CSS</span>
+                                        <span class="file__meta">Frontend</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="skills__data">
-                                <i class="bx bxl-postgresql check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">SQL</h3>
-                                    <span class="skills__level">Database</span>
+                            <!-- Analytics & Engineering Folder -->
+                            <div class="folder__item" data-folder="analytics">
+                                <div class="folder__header">
+                                    <i class="bx bx-folder folder__icon"></i>
+                                    <i class="bx bx-folder-open folder__icon--open"></i>
+                                    <i class="bx bx-chevron-right folder__chevron"></i>
+                                    <span class="folder__name">Analytics & Engineering</span>
+                                    <span class="folder__count">8 items</span>
+                                </div>
+                                <div class="folder__content">
+                                    <div class="file__item" data-skill="pandas">
+                                        <i class="bx bxs-objects-vertical-bottom file__icon"></i>
+                                        <span class="file__name">Pandas</span>
+                                        <span class="file__meta">Data Manipulation</span>
+                                    </div>
+                                    <div class="file__item" data-skill="numpy">
+                                        <i class="bx bxs-cube file__icon"></i>
+                                        <span class="file__name">NumPy</span>
+                                        <span class="file__meta">Numerical Computing</span>
+                                    </div>
+                                    <div class="file__item" data-skill="scikit">
+                                        <i class="bx bxs-brain file__icon"></i>
+                                        <span class="file__name">Scikit-learn</span>
+                                        <span class="file__meta">Machine Learning</span>
+                                    </div>
+                                    <div class="file__item" data-skill="pytorch">
+                                        <i class="bx bxs-hot file__icon"></i>
+                                        <span class="file__name">PyTorch</span>
+                                        <span class="file__meta">Deep Learning</span>
+                                    </div>
+                                    <div class="file__item" data-skill="langchain">
+                                        <i class="bx bx-link file__icon"></i>
+                                        <span class="file__name">Langchain</span>
+                                        <span class="file__meta">LLM Framework</span>
+                                    </div>
+                                    <div class="file__item" data-skill="pyspark">
+                                        <i class="bx bx-star file__icon"></i>
+                                        <span class="file__name">PySpark</span>
+                                        <span class="file__meta">Big Data</span>
+                                    </div>
+                                    <div class="file__item" data-skill="airflow">
+                                        <i class="bx bxs-hourglass file__icon"></i>
+                                        <span class="file__name">Airflow</span>
+                                        <span class="file__meta">Orchestration</span>
+                                    </div>
+                                    <div class="file__item" data-skill="actions">
+                                        <i class="bx bxl-github file__icon"></i>
+                                        <span class="file__name">Actions</span>
+                                        <span class="file__meta">Scheduling</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="skills__data">
-                                <i class="bx bxl-java check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Java</h3>
-                                    <span class="skills__level">Secondary</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxl-typescript check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">TypeScript</h3>
-                                    <span class="skills__level">Primary</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxl-html5 check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">HTML</h3>
-                                    <span class="skills__level">Frontend</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxl-css3 check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">CSS</h3>
-                                    <span class="skills__level">Frontend</span>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
 
-                <!-- Data Science & Engineering -->
-                <div class="skills__content">
-                    <h3 class="skills__title">Data Science & Engineering</h3>
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxs-objects-vertical-bottom check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Pandas</h3>
-                                    <span class="skills__level">Data Manipulation</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxs-cube check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">NumPy</h3>
-                                    <span class="skills__level">Numerical Computing</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxs-brain check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Scikit-learn</h3>
-                                    <span class="skills__level">Machine Learning</span>
-                                </div>
-                            </div>
+                <!-- Right Explorer -->
+                <div class="skills__explorer">
+                    <div class="explorer__header">
+                        <div class="explorer__breadcrumb">
+                            <span>~/dev-tools</span>
                         </div>
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxs-hot check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">PyTorch</h3>
-                                    <span class="skills__level">Deep Learning</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bx-link check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Langchain</h3>
-                                    <span class="skills__level">LLM Framework</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bx-star check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">PySpark</h3>
-                                    <span class="skills__level">Big Data</span>
-                                </div>
-                            </div>
+                        <div class="explorer__toolbar">
+                            <button class="toolbar__btn toggle-btn" data-target="right">
+                                <i class="bx bx-expand-alt expand-icon"></i>
+                                <i class="bx bx-collapse-alt collapse-icon"></i>
+                            </button>
                         </div>
                     </div>
-                    <hr style="margin: 1.5rem; border-color: var(--text-color-light);">
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxs-hourglass check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Airflow</h3>
-                                    <span class="skills__level">Orchestration</span>
+
+                    <div class="explorer__content">
+                        <div class="folder__tree">
+
+                            <!-- Software Development Folder -->
+                            <div class="folder__item" data-folder="software">
+                                <div class="folder__header">
+                                    <i class="bx bx-folder folder__icon"></i>
+                                    <i class="bx bx-folder-open folder__icon--open"></i>
+                                    <i class="bx bx-chevron-right folder__chevron"></i>
+                                    <span class="folder__name">Software Development</span>
+                                    <span class="folder__count">6 items</span>
+                                </div>
+                                <div class="folder__content">
+                                    <div class="file__item" data-skill="react">
+                                        <i class="bx bxl-react file__icon"></i>
+                                        <span class="file__name">React</span>
+                                        <span class="file__meta">Frontend Framework</span>
+                                    </div>
+                                    <div class="file__item" data-skill="nextjs">
+                                        <i class="bx bx-up-arrow file__icon"></i>
+                                        <span class="file__name">Next.js</span>
+                                        <span class="file__meta">Full-Stack Framework</span>
+                                    </div>
+                                    <div class="file__item" data-skill="fastapi">
+                                        <i class="bx bxs-bolt-circle file__icon"></i>
+                                        <span class="file__name">FastAPI</span>
+                                        <span class="file__meta">API Development</span>
+                                    </div>
+                                    <div class="file__item" data-skill="streamlit">
+                                        <i class="bx bxs-crown file__icon"></i>
+                                        <span class="file__name">Streamlit</span>
+                                        <span class="file__meta">Web Framework</span>
+                                    </div>
+                                    <div class="file__item" data-skill="tailwind">
+                                        <i class="bx bxl-tailwind-css file__icon"></i>
+                                        <span class="file__name">Tailwind CSS</span>
+                                        <span class="file__meta">Styling Framework</span>
+                                    </div>
+                                    <div class="file__item" data-skill="shadcn">
+                                        <i class="bx bxs-bolt file__icon"></i>
+                                        <span class="file__name">Shadcn UI</span>
+                                        <span class="file__meta">Component Library</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxl-github check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Actions</h3>
-                                    <span class="skills__level">Scheduling</span>
+
+                            <!-- Databases & Cloud Folder -->
+                            <div class="folder__item" data-folder="databases">
+                                <div class="folder__header">
+                                    <i class="bx bx-folder folder__icon"></i>
+                                    <i class="bx bx-folder-open folder__icon--open"></i>
+                                    <i class="bx bx-chevron-right folder__chevron"></i>
+                                    <span class="folder__name">Databases & Cloud</span>
+                                    <span class="folder__count">5 items</span>
+                                </div>
+                                <div class="folder__content">
+                                    <div class="file__item" data-skill="postgresql">
+                                        <i class="bx bxl-postgresql file__icon"></i>
+                                        <span class="file__name">PostgreSQL</span>
+                                        <span class="file__meta">Relational DB</span>
+                                    </div>
+                                    <div class="file__item" data-skill="mongodb">
+                                        <i class="bx bxl-mongodb file__icon"></i>
+                                        <span class="file__name">MongoDB</span>
+                                        <span class="file__meta">NoSQL DB</span>
+                                    </div>
+                                    <div class="file__item" data-skill="aws">
+                                        <i class="bx bxl-aws file__icon"></i>
+                                        <span class="file__name">AWS</span>
+                                        <span class="file__meta">S3, EC2, Lambda</span>
+                                    </div>
+                                    <div class="file__item" data-skill="docker">
+                                        <i class="bx bxl-docker file__icon"></i>
+                                        <span class="file__name">Docker</span>
+                                        <span class="file__meta">Container</span>
+                                    </div>
+                                    <div class="file__item" data-skill="git">
+                                        <i class="bx bxl-git file__icon"></i>
+                                        <span class="file__name">Git</span>
+                                        <span class="file__meta">Version Control</span>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
 
-                <!-- Software Development -->
-                <div class="skills__content">
-                    <h3 class="skills__title">Software Development</h3>
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxl-react check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">React</h3>
-                                    <span class="skills__level">Frontend Framework</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bx-up-arrow check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Next.js</h3>
-                                    <span class="skills__level">Full-Stack Framework</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxs-bolt-circle check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">FastAPI</h3>
-                                    <span class="skills__level">API Development</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxs-crown check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Streamlit</h3>
-                                    <span class="skills__level">Web Framework</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxl-tailwind-css check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Tailwind CSS</h3>
-                                    <span class="skills__level">Styling Framework</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxs-bolt check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Shadcn UI</h3>
-                                    <span class="skills__level">Component Library</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Databases & Cloud -->
-                <div class="skills__content">
-                    <h3 class="skills__title">Databases & Cloud</h3>
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxl-postgresql check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">PostgreSQL</h3>
-                                    <span class="skills__level">Relational DB</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxl-mongodb check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">MongoDB</h3>
-                                    <span class="skills__level">NoSQL DB</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxl-aws check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">AWS</h3>
-                                    <span class="skills__level">S3, EC2, Lambda</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class="bx bxl-docker check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Docker</h3>
-                                    <span class="skills__level">Container</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class="bx bxl-git check-icon"></i>
-                                <div>
-                                    <h3 class="skills__name">Git</h3>
-                                    <span class="skills__level">Version</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
