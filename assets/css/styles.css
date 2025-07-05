@@ -3080,7 +3080,7 @@ img {
 .skills__dual-explorer {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 0.5rem; /* Changed from 1.5rem to 0.5rem */
+	gap: 0.5rem;
 	margin-top: 1rem;
 	align-items: start;
 	grid-auto-rows: min-content;
@@ -3368,25 +3368,14 @@ img {
 @media screen and (max-width: 1200px) {
 	.skills__dual-explorer {
 		grid-template-columns: repeat(3, 1fr);
-		gap: 0.5rem; /* Changed from 1.25rem to 0.5rem */
-	}
-
-	.skills__explorer:nth-child(4) {
-		grid-column: 1;
-		grid-row: 2;
+		gap: 0.5rem;
 	}
 }
 
 @media screen and (max-width: 968px) {
 	.skills__dual-explorer {
 		grid-template-columns: repeat(2, 1fr);
-		gap: 0.5rem; /* Changed from 1rem to 0.5rem */
-	}
-
-	/* Reset grid positioning for 2-column layout */
-	.skills__explorer:nth-child(4) {
-		grid-column: auto;
-		grid-row: auto;
+		gap: 0.5rem;
 	}
 
 	.skills__explorer {
@@ -3397,13 +3386,7 @@ img {
 @media screen and (max-width: 768px) {
 	.skills__dual-explorer {
 		grid-template-columns: 1fr;
-		gap: 0.5rem; /* Changed from 1rem to 0.5rem */
-	}
-
-	/* Reset grid positioning for single column */
-	.skills__explorer:nth-child(4) {
-		grid-column: auto;
-		grid-row: auto;
+		gap: 0.5rem;
 	}
 
 	.skills__explorer {
@@ -3414,12 +3397,7 @@ img {
 @media screen and (max-width: 480px) {
 	.skills__dual-explorer {
 		grid-template-columns: 1fr;
-		gap: 0.25rem; /* Changed from 0.75rem to 0.25rem */
-	}
-
-	.skills__explorer:nth-child(4) {
-		grid-column: auto;
-		grid-row: auto;
+		gap: 0.25rem;
 	}
 
 	.skills__explorer {
