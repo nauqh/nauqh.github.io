@@ -514,7 +514,7 @@ img {
 	}
 
 	.interest__tags {
-		justify-content: center;
+		justify-content: flex-start;
 	}
 }
 
@@ -2226,7 +2226,7 @@ img {
 /*=============== ENHANCED CHAT BUBBLE ===============*/
 .chat-bubble {
 	position: absolute;
-	top: -30px;
+	top: -40px;
 	left: 50%;
 	transform: translateX(-50%);
 	display: flex;
@@ -2277,7 +2277,7 @@ img {
 
 @media screen and (max-width: 768px) {
 	.chat-bubble {
-		top: -20px;
+		top: -35px;
 		left: 50%;
 		font-size: 0.7rem;
 		padding: 0.5rem 1rem;
@@ -2316,14 +2316,14 @@ img {
 	}
 
 	.chat-bubble {
-		top: -20px;
+		top: -35px;
 		left: 50%;
 		font-size: 0.7rem;
 		padding: 0.5rem 1rem;
 	}
 
 	.about__interests .interest__tags {
-		justify-content: center;
+		justify-content: flex-start;
 	}
 
 	.about__current-work .current-work__item {
