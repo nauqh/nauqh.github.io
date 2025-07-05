@@ -3079,10 +3079,11 @@ img {
 /*=============== SKILLS DUAL EXPLORER - REFINED VERSION ===============*/
 .skills__dual-explorer {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 1.5rem;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.5rem; /* Changed from 1.5rem to 0.5rem */
 	margin-top: 1rem;
 	align-items: start;
+	grid-auto-rows: min-content;
 }
 
 .skills__explorer {
@@ -3092,7 +3093,14 @@ img {
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 	font-family: "Courier New", monospace;
 	transition: transform 0.3s ease;
-	height: fit-content;
+	height: auto;
+	width: 100%;
+}
+
+/* Position the fourth card in the first column */
+.skills__explorer:nth-child(4) {
+	grid-column: 1;
+	grid-row: 2;
 }
 
 .explorer__header {
@@ -3357,10 +3365,28 @@ img {
 }
 
 /*=============== RESPONSIVE DESIGN ===============*/
+@media screen and (max-width: 1200px) {
+	.skills__dual-explorer {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.5rem; /* Changed from 1.25rem to 0.5rem */
+	}
+
+	.skills__explorer:nth-child(4) {
+		grid-column: 1;
+		grid-row: 2;
+	}
+}
+
 @media screen and (max-width: 968px) {
 	.skills__dual-explorer {
-		grid-template-columns: 1fr;
-		gap: 1rem;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.5rem; /* Changed from 1rem to 0.5rem */
+	}
+
+	/* Reset grid positioning for 2-column layout */
+	.skills__explorer:nth-child(4) {
+		grid-column: auto;
+		grid-row: auto;
 	}
 
 	.skills__explorer {
@@ -3369,159 +3395,34 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-	.explorer__header {
-		padding: 1rem;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
+	.skills__dual-explorer {
+		grid-template-columns: 1fr;
+		gap: 0.5rem; /* Changed from 1rem to 0.5rem */
 	}
 
-	.explorer__breadcrumb {
-		font-size: 0.8rem;
-		flex-shrink: 1;
-		min-width: 0;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+	/* Reset grid positioning for single column */
+	.skills__explorer:nth-child(4) {
+		grid-column: auto;
+		grid-row: auto;
 	}
 
-	.explorer__toolbar {
-		flex-shrink: 0;
-		margin-left: 1rem;
-	}
-
-	.toggle-btn {
-		width: 32px;
-		height: 32px;
-		padding: 0;
-	}
-
-	.toggle-btn .expand-icon,
-	.toggle-btn .collapse-icon {
-		font-size: 0.9rem;
-		left: 55%;
-		transform: translate(-50%, -50%);
-	}
-
-	.toggle-btn.all-expanded .expand-icon {
-		left: 55%;
-		transform: translate(-50%, -50%) rotate(-180deg);
-	}
-
-	.toggle-btn.all-expanded .collapse-icon {
-		left: 55%;
-		transform: translate(-50%, -50%) rotate(0deg);
-	}
-
-	.explorer__content {
-		padding: 0.75rem 1rem;
-	}
-
-	.folder__tree {
-		padding-bottom: 0.5rem;
-	}
-
-	.folder__header {
-		padding: 0.5rem 0.75rem;
-		gap: 0.5rem;
-	}
-
-	.folder__name {
-		font-size: 1rem;
-	}
-
-	.file__item {
-		padding: 0.5rem 0.75rem 0.5rem 2.5rem;
-		gap: 0.5rem;
-		margin: 0.1rem 0;
-	}
-
-	.file__item::before {
-		left: 1.75rem;
-	}
-
-	.file__item::after {
-		left: 1.75rem;
-	}
-
-	.file__name {
-		font-size: 0.9rem;
+	.skills__explorer {
+		margin-bottom: 1rem;
 	}
 }
 
 @media screen and (max-width: 480px) {
-	.explorer__header {
-		padding: 0.75rem;
-		gap: 0.5rem;
+	.skills__dual-explorer {
+		grid-template-columns: 1fr;
+		gap: 0.25rem; /* Changed from 0.75rem to 0.25rem */
 	}
 
-	.explorer__breadcrumb {
-		font-size: 0.75rem;
-		max-width: calc(100% - 50px);
+	.skills__explorer:nth-child(4) {
+		grid-column: auto;
+		grid-row: auto;
 	}
 
-	.explorer__toolbar {
-		margin-left: 0.5rem;
+	.skills__explorer {
+		margin-bottom: 0.75rem;
 	}
-
-	.toggle-btn {
-		width: 28px;
-		height: 28px;
-		padding: 0;
-	}
-
-	.toggle-btn .expand-icon,
-	.toggle-btn .collapse-icon {
-		font-size: 0.8rem;
-		left: 55%;
-		transform: translate(-50%, -50%);
-	}
-
-	.toggle-btn.all-expanded .expand-icon {
-		left: 55%;
-		transform: translate(-50%, -50%) rotate(-180deg);
-	}
-
-	.toggle-btn.all-expanded .collapse-icon {
-		left: 55%;
-		transform: translate(-50%, -50%) rotate(0deg);
-	}
-
-	.explorer__content {
-		padding: 0.5rem 0.75rem;
-	}
-
-	.folder__header {
-		padding: 0.4rem 0.5rem;
-	}
-
-	.folder__name {
-		font-size: 0.9rem;
-	}
-
-	.file__item {
-		padding: 0.4rem 0.5rem 0.4rem 2rem;
-		margin: 0.1rem 0;
-	}
-
-	.file__item::before {
-		left: 1.25rem;
-	}
-
-	.file__item::after {
-		left: 1.25rem;
-	}
-
-	.file__name {
-		font-size: 0.85rem;
-	}
-}
-
-/*=============== REMOVE OLD SKILLS STYLES ===============*/
-.skills__container {
-	display: none;
-}
-
-.skills__content {
-	display: none;
 }
