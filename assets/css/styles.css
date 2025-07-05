@@ -2175,22 +2175,21 @@ img {
 /*=============== ENHANCED CONTACT BUTTON ===============*/
 .contact-button {
 	position: relative;
-	display: inline-flex;
+	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 0.75rem;
+	width: 80%;
 	color: var(--first-color);
 	font-weight: 600;
 	padding: 1rem 1.5rem;
 	border: 2px solid var(--first-color);
-	border-radius: 2rem;
+	border-radius: 1rem;
 	background: transparent;
 	overflow: hidden;
 	transition: all 0.4s ease;
 	z-index: 2;
 	font-size: 0.95rem;
-	text-transform: uppercase;
-	letter-spacing: 0.5px;
-	align-self: flex-start;
 	cursor: pointer;
 }
 
@@ -2212,7 +2211,6 @@ img {
 
 .contact-button:hover {
 	color: var(--body-color);
-	transform: translateY(-2px);
 	box-shadow: 0 10px 30px rgba(100, 255, 218, 0.3);
 	cursor: pointer;
 }
