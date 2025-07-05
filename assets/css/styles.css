@@ -1146,10 +1146,6 @@ img {
 		width: 130px;
 	}
 
-	.about {
-		margin-top: 4rem;
-	}
-
 	.about__info {
 		grid-template-columns: repeat(3, 1fr);
 	}
