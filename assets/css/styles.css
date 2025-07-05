@@ -296,7 +296,6 @@ img {
 }
 
 .home__scroll:hover {
-	color: var(--first-color-alt);
 	transform: translateY(-5px);
 }
 
@@ -1137,11 +1136,6 @@ img {
 	.home__buttons {
 		margin-top: 2rem;
 		font-size: 0.75rem;
-	}
-
-	.home__scroll,
-	.home__social {
-		display: none !important;
 	}
 
 	.home__education {
@@ -2174,6 +2168,7 @@ img {
 
 /*=============== ENHANCED CONTACT BUTTON ===============*/
 .contact-button {
+	margin-top: 1rem;
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -2719,7 +2714,6 @@ img {
 }
 
 .home__scroll:hover {
-	color: var(--first-color-alt);
 	transform: translateY(-5px);
 }
 
@@ -2834,7 +2828,6 @@ img {
 }
 
 .home__scroll:hover {
-	color: var(--first-color-alt);
 	transform: translateY(-5px);
 }
 
@@ -3208,6 +3201,8 @@ img {
 
 .folder__icon--open {
 	display: none;
+	font-size: 1.5rem;
+	color: var(--first-color);
 }
 
 .folder__item.expanded .folder__icon {
@@ -3216,7 +3211,6 @@ img {
 
 .folder__item.expanded .folder__icon--open {
 	display: block;
-	color: var(--first-color-alt);
 }
 
 .folder__chevron {
@@ -3313,7 +3307,6 @@ img {
 
 .file__item:hover .file__icon {
 	transform: scale(1.1);
-	color: var(--first-color-alt);
 }
 
 .file__name {
@@ -3608,7 +3601,7 @@ img {
 .folder__icon--open {
 	display: none;
 	font-size: 1.5rem;
-	color: var(--first-color-alt);
+	color: var(--first-color);
 }
 
 .folder__item.expanded .folder__icon {
@@ -3732,10 +3725,6 @@ img {
 	font-size: 1.2rem;
 	color: var(--first-color);
 	transition: color 0.3s ease;
-}
-
-.file__item:hover .file__icon {
-	color: var(--first-color-alt);
 }
 
 .file__name {
@@ -4025,7 +4014,7 @@ img {
 .folder__icon--open {
 	display: none;
 	font-size: 1.5rem;
-	color: var(--first-color-alt);
+	color: var(--first-color);
 }
 
 .folder__item.expanded .folder__icon {
@@ -4149,10 +4138,6 @@ img {
 	font-size: 1.2rem;
 	color: var(--first-color);
 	transition: color 0.3s ease;
-}
-
-.file__item:hover .file__icon {
-	color: var(--first-color-alt);
 }
 
 .file__name {
