@@ -149,26 +149,10 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		});
 
-		// Auto-expand specific folders on load
-		setTimeout(() => {
-			if (index === 0) {
-				// Left explorer - expand "Languages" folder (first folder)
-				const languagesFolder = explorer.querySelector(
-					'[data-folder="languages"]'
-				);
-				if (languagesFolder) {
-					toggleFolder(languagesFolder);
-				}
-			} else if (index === 1) {
-				// Right explorer - expand "Databases & Cloud" folder (second folder)
-				const databasesFolder = explorer.querySelector(
-					'[data-folder="databases"]'
-				);
-				if (databasesFolder) {
-					toggleFolder(databasesFolder);
-				}
-			}
-		}, 500 + index * 200);
+		// Auto-expand all folders on load
+		folderItems.forEach((folder) => {
+			toggleFolder(folder);
+		});
 	}
 
 	// Setup each explorer independently
