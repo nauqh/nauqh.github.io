@@ -2168,7 +2168,7 @@ img {
 	align-items: center;
 	justify-content: center;
 	gap: 0.75rem;
-	width: 80%;
+	width: 100%;
 	color: var(--first-color);
 	font-weight: 600;
 	padding: 1rem 1.5rem;
