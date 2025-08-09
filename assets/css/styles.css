@@ -2994,6 +2994,104 @@ img {
 	}
 }
 
+/*=============== FEATURED HOVER IMAGES – 3 IMAGE LAYOUT (FINAL OVERRIDES) ===============*/
+/* Base overlay container */
+.about__data .hover-images {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+/* Common image styling */
+.about__data .hover-images img {
+	position: absolute;
+	width: 62%;
+	max-width: 460px;
+	border-radius: 0.6rem;
+	box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+	opacity: 0;
+	transform: scale(0.92);
+	transition: opacity 0.35s ease, transform 0.45s ease;
+}
+
+/* First image: top-left */
+.about__data .hover-images img:first-child {
+	top: 0.5rem;
+	left: 0.5rem;
+	transform-origin: left top;
+	z-index: 2;
+}
+
+/* Last image: bottom-right */
+.about__data .hover-images img:last-child {
+	right: 0.5rem;
+	bottom: 0.5rem;
+	transform-origin: right bottom;
+	z-index: 1;
+}
+
+/* Middle image only when there are exactly 3 images */
+.about__data .hover-images img:nth-child(2):nth-last-child(2) {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0.92);
+	transform-origin: center;
+	z-index: 3;
+}
+
+/* Reveal on hover of the featured image */
+@media (hover: hover) {
+	.featured__img:hover ~ .about__data .text-content {
+		opacity: 0.02;
+	}
+
+	.featured__img:hover ~ .about__data .hover-images img {
+		opacity: 1;
+	}
+
+	.featured__img:hover ~ .about__data .hover-images img:first-child {
+		transform: scale(1) translate(-6%, -4%) rotate(-2.5deg);
+	}
+
+	.featured__img:hover
+		~ .about__data
+		.hover-images
+		img:nth-child(2):nth-last-child(2) {
+		transform: translate(-50%, -50%) scale(1) rotate(0deg);
+	}
+
+	.featured__img:hover ~ .about__data .hover-images img:last-child {
+		transform: scale(1) translate(6%, 4%) rotate(2.5deg);
+	}
+}
+
+/* Mobile/tablet: convert overlay into an inline gallery and ensure visibility */
+@media screen and (max-width: 768px) {
+	.about__data .hover-images {
+		position: static !important;
+		display: grid !important;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.75rem;
+		margin-top: 1rem;
+		pointer-events: auto;
+	}
+
+	.about__data .hover-images img {
+		position: static !important;
+		width: 100% !important;
+		max-width: none !important;
+		opacity: 1 !important;
+		transform: none !important;
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+		border-radius: 0.5rem;
+	}
+
+	/* Keep text visible on mobile */
+	.about__data .text-content {
+		opacity: 1 !important;
+	}
+}
+
 @media screen and (max-width: 480px) {
 	.work__featured-container {
 		margin-bottom: 2rem;
