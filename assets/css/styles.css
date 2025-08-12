@@ -183,10 +183,6 @@ img {
 	transition: 0.4s;
 }
 
-.nav__logo:hover {
-	color: var(--first-color-alt);
-}
-
 /*=============== HOME ===============*/
 .home__container {
 	position: relative;
