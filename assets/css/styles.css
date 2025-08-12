@@ -1508,12 +1508,16 @@ img {
 	pointer-events: none;
 }
 
+/* Base hover images – unified defaults (same as featured #1) */
 .about__data .hover-images img {
 	position: absolute;
-	width: 65%; /* increased size */
+	width: 62%;
+	max-width: 460px;
+	border-radius: 0.6rem;
+	box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
 	opacity: 0;
-	transform: scale(0.8);
-	transition: opacity 0.3s ease, transform 0.3s ease;
+	transform: scale(0.92);
+	transition: opacity 0.35s ease, transform 0.45s ease;
 }
 
 /* Position one image at top left */
@@ -1531,12 +1535,12 @@ img {
 @media (hover: hover) {
 	/* Only apply hover effects on devices that support hover */
 	.featured__img:hover ~ .about__data .text-content {
-		opacity: 0;
+		opacity: 0.02;
 	}
 
+	/* Let specific image rules control transforms */
 	.featured__img:hover ~ .about__data .hover-images img {
 		opacity: 1;
-		transform: scale(1);
 	}
 }
 
