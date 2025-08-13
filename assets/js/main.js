@@ -160,3 +160,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		setupExplorer(explorer, index);
 	});
 });
+
+// Set current year in footer
+document.addEventListener("DOMContentLoaded", function () {
+	const yearEl = document.getElementById("currentYear");
+	if (yearEl) {
+		yearEl.textContent = new Date().getFullYear();
+	}
+});
