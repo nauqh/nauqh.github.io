@@ -2749,7 +2749,6 @@ img {
 /*=============== FEATURED PROJECTS CONSISTENCY ===============*/
 .featured__img:hover {
 	transform: scale(1.02);
-	filter: brightness(1.1);
 }
 
 .featured__subtitle {
