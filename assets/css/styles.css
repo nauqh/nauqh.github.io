@@ -2890,7 +2890,6 @@ img {
 @media screen and (max-width: 480px) {
 	.home__container {
 		text-align: center;
-		padding: 2rem 0;
 	}
 
 	.home__data {
