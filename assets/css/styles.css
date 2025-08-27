@@ -2013,10 +2013,13 @@ img {
 	border-radius: 0.75rem;
 	margin-bottom: 1.5rem;
 	border: 1px solid rgba(100, 255, 218, 0.1);
-	transition: all 0.3s ease;
+	transition: transform 0.6s ease, box-shadow 0.3s ease,
+		border-color 0.3s ease, height 0.35s ease;
 	position: relative;
-	overflow: hidden;
+	overflow: visible;
 	cursor: pointer;
+	perspective: 1000px;
+	height: 240px;
 }
 
 .about__current-work .current-work__item::before {
@@ -2038,7 +2041,71 @@ img {
 	transform: translateX(5px) scale(1.02);
 	box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
 	border-color: rgba(100, 255, 218, 0.3);
-	cursor: pointer;
+	height: 360px;
+}
+
+/* Flip faces wrapper */
+.about__current-work .current-work__faces {
+	position: relative;
+	transform-style: preserve-3d;
+	transition: transform 0.8s ease;
+	height: 100%;
+}
+
+.about__current-work .current-work__item:hover .current-work__faces {
+	transform: rotateY(180deg);
+}
+
+.about__current-work .current-work__front,
+.about__current-work .current-work__back {
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	position: relative;
+	height: 100%;
+}
+
+.about__current-work .current-work__back {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	/* mirror base card styles */
+	background: linear-gradient(
+		135deg,
+		rgba(100, 255, 218, 0.08),
+		rgba(100, 255, 218, 0.03)
+	);
+	border-radius: 0.75rem;
+	border: 1px solid rgba(100, 255, 218, 0.1);
+	padding: 1.5rem;
+	transform: rotateY(180deg);
+	overflow: auto;
+}
+
+.about__current-work .work-back__content h5 {
+	color: var(--first-color);
+	font-size: 1.1rem;
+	margin-bottom: 0.5rem;
+}
+
+.about__current-work .work-back__content p {
+	color: var(--text-color);
+	font-size: var(--small-font-size);
+	margin-bottom: 1rem;
+}
+
+.about__current-work .work-back__button {
+	display: inline-block;
+	color: var(--body-color);
+	background: var(--first-color);
+	padding: 0.5rem 0.75rem;
+	border-radius: 0.5rem;
+	font-size: var(--smaller-font-size);
+	transition: filter 0.2s ease;
+}
+
+.about__current-work .work-back__button:hover {
+	filter: brightness(0.9);
 }
 
 .about__current-work .current-work__item:last-child {

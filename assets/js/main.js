@@ -168,3 +168,56 @@ document.addEventListener("DOMContentLoaded", function () {
 		yearEl.textContent = new Date().getFullYear();
 	}
 });
+
+/*=============== FLIP CARD FUNCTIONALITY ===============*/
+document.addEventListener("DOMContentLoaded", function () {
+	const flipCards = document.querySelectorAll(".flip-card");
+
+	// Check if device supports touch
+	const isTouchDevice =
+		"ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+	if (isTouchDevice) {
+		// For touch devices, use click to flip
+		flipCards.forEach((card) => {
+			card.addEventListener("click", function (e) {
+				// Don't flip if clicking on project link
+				if (e.target.closest(".project-link")) {
+					return;
+				}
+
+				this.classList.toggle("flipped");
+			});
+		});
+
+		// Add visual indicator for touch devices
+		flipCards.forEach((card) => {
+			const hint = card.querySelector(".flip-hint");
+			if (hint) {
+				hint.textContent = "Tap to see details";
+			}
+		});
+	} else {
+		// For desktop, keep hover effect and add click functionality as backup
+		flipCards.forEach((card) => {
+			card.addEventListener("click", function (e) {
+				// Don't flip if clicking on project link
+				if (e.target.closest(".project-link")) {
+					return;
+				}
+
+				// Toggle flipped state on click as backup
+				this.classList.toggle("flipped");
+			});
+		});
+	}
+
+	// Reset flip state when clicking outside
+	document.addEventListener("click", function (e) {
+		if (!e.target.closest(".flip-card")) {
+			flipCards.forEach((card) => {
+				card.classList.remove("flipped");
+			});
+		}
+	});
+});
