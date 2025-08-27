@@ -161,6 +161,65 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 });
 
+/*=============== TOUCH FLIP FOR CURRENT WORK CARDS (PREVENT NAV ON FIRST TAP) ===============*/
+document.addEventListener("DOMContentLoaded", function () {
+	const isTouchDevice =
+		"ontouchstart" in window || navigator.maxTouchPoints > 0;
+	if (!isTouchDevice) return;
+
+	const cards = document.querySelectorAll(
+		".about__current-work .current-work__item"
+	);
+
+	function ensureCardInView(card) {
+		const rect = card.getBoundingClientRect();
+		const header = document.getElementById("header");
+		const headerH = header ? header.offsetHeight : 0;
+		const topSafe = headerH + 50;
+		const bottomSafe = window.innerHeight - 50;
+		if (rect.top < topSafe) {
+			window.scrollBy({ top: rect.top - topSafe, behavior: "smooth" });
+		} else if (rect.bottom > bottomSafe) {
+			window.scrollBy({
+				top: rect.bottom - bottomSafe,
+				behavior: "smooth",
+			});
+		}
+	}
+
+	cards.forEach((card) => {
+		// Intercept taps on entire card
+		card.addEventListener("click", function (e) {
+			const clickedLink = e.target.closest("a");
+			if (!this.classList.contains("flipped")) {
+				// First tap flips and blocks navigation
+				e.preventDefault();
+				e.stopPropagation();
+				this.classList.add("flipped");
+				ensureCardInView(this);
+				return;
+			}
+			// Already flipped: allow link taps to navigate; tapping non-link toggles back
+			if (!clickedLink) {
+				e.preventDefault();
+				this.classList.remove("flipped");
+			}
+		});
+
+		// Also guard links inside the card so first tap flips instead of navigating
+		card.querySelectorAll("a").forEach((a) => {
+			a.addEventListener("click", function (e) {
+				const parentCard = this.closest(".current-work__item");
+				if (parentCard && !parentCard.classList.contains("flipped")) {
+					e.preventDefault();
+					parentCard.classList.add("flipped");
+					ensureCardInView(parentCard);
+				}
+			});
+		});
+	});
+});
+
 // Set current year in footer
 document.addEventListener("DOMContentLoaded", function () {
 	const yearEl = document.getElementById("currentYear");

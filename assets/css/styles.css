@@ -2044,6 +2044,14 @@ img {
 	height: 360px;
 }
 
+/* Support click-to-flip on touch devices */
+.about__current-work .current-work__item.flipped {
+	transform: translateX(5px) scale(1.02);
+	box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
+	border-color: rgba(100, 255, 218, 0.3);
+	height: 360px;
+}
+
 /* Flip faces wrapper */
 .about__current-work .current-work__faces {
 	position: relative;
@@ -2053,6 +2061,10 @@ img {
 }
 
 .about__current-work .current-work__item:hover .current-work__faces {
+	transform: rotateY(180deg);
+}
+
+.about__current-work .current-work__item.flipped .current-work__faces {
 	transform: rotateY(180deg);
 }
 
