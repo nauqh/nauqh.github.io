@@ -221,3 +221,48 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	});
 });
+
+/*=============== AUTO-SCROLL CURRENT WORK CARD ON HOVER ===============*/
+document.addEventListener("DOMContentLoaded", function () {
+	const workCards = document.querySelectorAll(
+		".about__current-work .current-work__item"
+	);
+
+	function scrollCardIntoView(card) {
+		const rect = card.getBoundingClientRect();
+		const header = document.getElementById("header");
+		const headerH = header ? header.offsetHeight : 0;
+		const topSafe = headerH + 50; // keep a small gap below header
+		const bottomSafe = window.innerHeight - 50; // bottom padding
+
+		// If top is hidden under header, scroll up
+		if (rect.top < topSafe) {
+			const delta = rect.top - topSafe; // negative -> scroll up
+			window.scrollBy({ top: delta, behavior: "smooth" });
+			return; // avoid double scroll this tick
+		}
+
+		// If bottom is clipped, scroll down
+		if (rect.bottom > bottomSafe) {
+			const delta = rect.bottom - bottomSafe;
+			window.scrollBy({ top: delta, behavior: "smooth" });
+		}
+	}
+
+	workCards.forEach((card) => {
+		let hoverTimer = null;
+		card.addEventListener("mouseenter", () => {
+			// Wait for the flip/resize animation to start before scrolling
+			hoverTimer = setTimeout(() => scrollCardIntoView(card), 380);
+		});
+		card.addEventListener("mouseleave", () => {
+			if (hoverTimer) clearTimeout(hoverTimer);
+		});
+		// Ensure we scroll after the height transition completes as well
+		card.addEventListener("transitionend", (e) => {
+			if (e.propertyName === "height") {
+				scrollCardIntoView(card);
+			}
+		});
+	});
+});
