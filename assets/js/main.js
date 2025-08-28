@@ -205,9 +205,16 @@ document.addEventListener("DOMContentLoaded", function () {
 		card.addEventListener("mouseenter", () => {
 			// Wait for the flip/resize animation to start before scrolling
 			hoverTimer = setTimeout(() => scrollCardIntoView(card), 380);
+			// Clear any leaving hold if user re-enters quickly
+			card.classList.remove("leaving");
 		});
 		card.addEventListener("mouseleave", () => {
 			if (hoverTimer) clearTimeout(hoverTimer);
+			// Add a short hold to smooth height collapse vs face flip
+			card.classList.add("leaving");
+			setTimeout(() => {
+				card.classList.remove("leaving");
+			}, 180); // delay outer resize slightly
 		});
 		// Ensure we scroll after the height transition completes as well
 		card.addEventListener("transitionend", (e) => {

@@ -57,6 +57,8 @@
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
+	scrollbar-width: thin;
+	scrollbar-color: var(--text-color-light) transparent;
 }
 
 html {
@@ -2013,6 +2015,8 @@ img {
 	border-radius: 0.75rem;
 	margin-bottom: 1.5rem;
 	border: 1px solid rgba(100, 255, 218, 0.1);
+	border-left-width: 4px;
+	border-left-color: var(--first-color);
 	transition: transform 0.6s ease, box-shadow 0.3s ease,
 		border-color 0.3s ease, height 0.35s ease;
 	position: relative;
@@ -2022,25 +2026,15 @@ img {
 }
 
 .about__current-work .current-work__item::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 4px;
-	height: 100%;
-	background: linear-gradient(
-		180deg,
-		var(--first-color),
-		var(--first-color-alt)
-	);
-	border-radius: 0 2px 2px 0;
+	display: none;
 }
 
 .about__current-work .current-work__item:hover {
 	transform: translateX(5px) scale(1.02);
 	box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
 	border-color: rgba(100, 255, 218, 0.3);
-	height: 360px;
+	border-left-color: var(--first-color);
+	height: auto;
 }
 
 /* Support click-to-flip on touch devices */
@@ -2048,7 +2042,8 @@ img {
 	transform: translateX(5px) scale(1.02);
 	box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
 	border-color: rgba(100, 255, 218, 0.3);
-	height: 360px;
+	border-left-color: var(--first-color);
+	height: auto;
 }
 
 /* Flip faces wrapper */
@@ -2102,10 +2097,7 @@ img {
 	border: 1px solid rgba(100, 255, 218, 0.1);
 	padding: 1.5rem;
 	transform: rotateY(180deg);
-	overflow: auto;
-	/* Slim, subtle scrollbar scoped to back face */
-	scrollbar-width: thin; /* Firefox */
-	scrollbar-color: var(--text-color-light) transparent; /* Firefox */
+	overflow: visible; /* let content define height */
 }
 
 /* WebKit scrollbar styling for the back face only */
@@ -2137,6 +2129,32 @@ img {
 .about__current-work .current-work__item:hover .current-work__front,
 .about__current-work .current-work__item.flipped .current-work__front {
 	pointer-events: none;
+}
+
+/* On reveal, make back participate in layout height while keeping front stacked */
+.about__current-work .current-work__item:hover .current-work__front,
+.about__current-work .current-work__item.flipped .current-work__front {
+	position: absolute;
+	width: 100%;
+}
+
+.about__current-work .current-work__item:hover .current-work__back,
+.about__current-work .current-work__item.flipped .current-work__back {
+	position: relative;
+}
+
+/* Leave animation: hold height briefly after hover-out */
+.about__current-work .current-work__item.leaving {
+	height: auto;
+}
+
+.about__current-work .current-work__item.leaving .current-work__front {
+	position: absolute;
+	width: 100%;
+}
+
+.about__current-work .current-work__item.leaving .current-work__back {
+	position: relative;
 }
 
 .about__current-work .work-back__content h5 {
