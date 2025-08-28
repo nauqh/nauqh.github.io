@@ -3662,3 +3662,120 @@ img {
 		margin-bottom: 0.75rem;
 	}
 }
+
+/*=============== CONTACT ===============*/
+.contact {
+	background: var(--body-color);
+}
+
+.contact .section__subtitle {
+	margin-top: 0;
+}
+
+.contact__container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	text-align: center;
+	background: var(--container-color);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 0.75rem;
+	padding: 2rem 1.25rem;
+}
+
+.contact__title {
+	font-size: 1.2rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--title-color);
+	margin-bottom: 0.25rem;
+}
+
+.contact__subtitle {
+	color: var(--text-color-light);
+	font-size: 0.9rem;
+	margin-bottom: 1rem;
+}
+
+.contact__form {
+	width: 100%;
+	max-width: 560px;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.contact__input,
+.contact__textarea {
+	width: 100%;
+	min-height: 160px;
+	padding: 1rem;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 0.5rem;
+	background: var(--body-color);
+	color: var(--title-color);
+	outline: none;
+	resize: vertical;
+	transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact__input {
+	min-height: auto;
+	resize: none;
+}
+
+.contact__textarea::placeholder {
+	color: var(--text-color-light);
+}
+
+.contact__textarea:focus {
+	border-color: var(--first-color);
+	box-shadow: 0 0 0 4px rgba(100, 255, 218, 0.08);
+}
+
+.contact__button {
+	align-self: center;
+	background: var(--first-color);
+	color: var(--body-color);
+	border-radius: 0.5rem;
+	padding: 0.9rem 2.5rem;
+	width: 100%;
+	transition: box-shadow 0.2s ease, transform 0.05s ease, filter 0.2s ease;
+}
+
+.contact__button:hover {
+	filter: brightness(1.05);
+	box-shadow: 0 10px 30px rgba(100, 255, 218, 0.15);
+}
+
+.contact__button:active {
+	transform: translateY(1px);
+}
+
+.contact__note {
+	min-height: 1.2em;
+	font-size: 0.85rem;
+	color: var(--text-color-light);
+}
+
+@media screen and (min-width: 968px) {
+	.contact__title {
+		font-size: 1.4rem;
+	}
+}
+
+/* Full-bleed contact card, keep inner form constrained */
+.contact__container.container {
+	max-width: none;
+	width: 100%;
+	margin-left: 0;
+	margin-right: 0;
+	border-radius: 0;
+	padding: 3rem 1rem;
+}
+
+.contact__form {
+	max-width: 680px;
+	margin: 0 auto;
+}

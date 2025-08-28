@@ -22,6 +22,70 @@ modalBtns.forEach((mb, i) => {
 	});
 });
 
+/*=============== CONTACT FORM (simple client-side ack) ===============*/
+document.addEventListener("DOMContentLoaded", function () {
+	const form = document.getElementById("contactForm");
+	const nameInput = document.getElementById("contactName");
+	const textarea = document.getElementById("contactMessage");
+	const note = document.getElementById("contactNote");
+	if (!form) return;
+
+	const DISCORD_WEBHOOK =
+		"https://discord.com/api/webhooks/1410494471929466963/DDOq095Uv-N04wCrEX2Ff7WLwu4oTiJH-wtCGQzHPwSC8lHAG3x0fvtV6TpY0HiV-C7k";
+
+	form.addEventListener("submit", async function (e) {
+		e.preventDefault();
+		const msg = (textarea.value || "").trim();
+		const sender = (
+			nameInput && nameInput.value ? nameInput.value : ""
+		).trim();
+		if (!msg) {
+			note.textContent = "Please enter a message.";
+			return;
+		}
+
+		const btn = form.querySelector(".contact__button");
+		if (btn) {
+			btn.disabled = true;
+			btn.textContent = "Sending...";
+		}
+		note.textContent = "";
+
+		try {
+			const payload = {
+				username: "nauqh.dev",
+				embeds: [
+					{
+						title: `From ${sender ? sender : "Anonymous"}`,
+						description: msg,
+						timestamp: new Date().toISOString(),
+					},
+				],
+			};
+
+			const res = await fetch(DISCORD_WEBHOOK, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload),
+			});
+
+			if (!res.ok) throw new Error("Request failed: " + res.status);
+
+			textarea.value = "";
+			if (nameInput) nameInput.value = "";
+			note.textContent = "Thank you for your message!";
+			setTimeout(() => (note.textContent = ""), 4000);
+		} catch (err) {
+			note.textContent = "Hmm. Something went wrong. Please try again.";
+		} finally {
+			if (btn) {
+				btn.disabled = false;
+				btn.textContent = "Send";
+			}
+		}
+	});
+});
+
 modalClose.forEach((mc) => {
 	mc.addEventListener("click", () => {
 		modalViews.forEach((mv) => {
