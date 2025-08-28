@@ -2075,6 +2075,18 @@ img {
 	height: 100%;
 }
 
+/* Ensure correct hit-testing: front handles events by default,
+   back only when card is flipped/hovered */
+.about__current-work .current-work__front {
+	z-index: 2;
+	pointer-events: auto;
+}
+
+.about__current-work .current-work__back {
+	z-index: 1;
+	pointer-events: none;
+}
+
 .about__current-work .current-work__back {
 	position: absolute;
 	top: 0;
@@ -2091,6 +2103,40 @@ img {
 	padding: 1.5rem;
 	transform: rotateY(180deg);
 	overflow: auto;
+	/* Slim, subtle scrollbar scoped to back face */
+	scrollbar-width: thin; /* Firefox */
+	scrollbar-color: var(--text-color-light) transparent; /* Firefox */
+}
+
+/* WebKit scrollbar styling for the back face only */
+.about__current-work .current-work__back::-webkit-scrollbar {
+	width: 4px;
+}
+
+.about__current-work .current-work__back::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.about__current-work .current-work__back::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.25);
+	border-radius: 4px;
+}
+
+.about__current-work .current-work__back::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.35);
+}
+
+/* When flipped (hover on desktop or .flipped on touch),
+   the back should receive pointer events and sit above */
+.about__current-work .current-work__item:hover .current-work__back,
+.about__current-work .current-work__item.flipped .current-work__back {
+	pointer-events: auto;
+	z-index: 3;
+}
+
+.about__current-work .current-work__item:hover .current-work__front,
+.about__current-work .current-work__item.flipped .current-work__front {
+	pointer-events: none;
 }
 
 .about__current-work .work-back__content h5 {
@@ -2125,7 +2171,7 @@ img {
 
 /* Remove the old link styling since the whole card is now a link */
 .about__current-work .current-work__link {
-	display: contents;
+	display: block;
 }
 
 /* Ensure all child elements inherit the link color */
@@ -2255,7 +2301,7 @@ img {
 	display: block;
 	color: inherit;
 	text-decoration: none;
-	cursor: pointer;
+	cursor: default;
 	width: 100%;
 	height: 100%;
 }

@@ -161,64 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 });
 
-/*=============== TOUCH FLIP FOR CURRENT WORK CARDS (PREVENT NAV ON FIRST TAP) ===============*/
-document.addEventListener("DOMContentLoaded", function () {
-	const isTouchDevice =
-		"ontouchstart" in window || navigator.maxTouchPoints > 0;
-	if (!isTouchDevice) return;
-
-	const cards = document.querySelectorAll(
-		".about__current-work .current-work__item"
-	);
-
-	function ensureCardInView(card) {
-		const rect = card.getBoundingClientRect();
-		const header = document.getElementById("header");
-		const headerH = header ? header.offsetHeight : 0;
-		const topSafe = headerH + 50;
-		const bottomSafe = window.innerHeight - 50;
-		if (rect.top < topSafe) {
-			window.scrollBy({ top: rect.top - topSafe, behavior: "smooth" });
-		} else if (rect.bottom > bottomSafe) {
-			window.scrollBy({
-				top: rect.bottom - bottomSafe,
-				behavior: "smooth",
-			});
-		}
-	}
-
-	cards.forEach((card) => {
-		// Intercept taps on entire card
-		card.addEventListener("click", function (e) {
-			const clickedLink = e.target.closest("a");
-			if (!this.classList.contains("flipped")) {
-				// First tap flips and blocks navigation
-				e.preventDefault();
-				e.stopPropagation();
-				this.classList.add("flipped");
-				ensureCardInView(this);
-				return;
-			}
-			// Already flipped: allow link taps to navigate; tapping non-link toggles back
-			if (!clickedLink) {
-				e.preventDefault();
-				this.classList.remove("flipped");
-			}
-		});
-
-		// Also guard links inside the card so first tap flips instead of navigating
-		card.querySelectorAll("a").forEach((a) => {
-			a.addEventListener("click", function (e) {
-				const parentCard = this.closest(".current-work__item");
-				if (parentCard && !parentCard.classList.contains("flipped")) {
-					e.preventDefault();
-					parentCard.classList.add("flipped");
-					ensureCardInView(parentCard);
-				}
-			});
-		});
-	});
-});
+/*=============== TOUCH FLIP DISABLED: hover-only ===============*/
 
 // Set current year in footer
 document.addEventListener("DOMContentLoaded", function () {
@@ -228,58 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
-/*=============== FLIP CARD FUNCTIONALITY ===============*/
-document.addEventListener("DOMContentLoaded", function () {
-	const flipCards = document.querySelectorAll(".flip-card");
-
-	// Check if device supports touch
-	const isTouchDevice =
-		"ontouchstart" in window || navigator.maxTouchPoints > 0;
-
-	if (isTouchDevice) {
-		// For touch devices, use click to flip
-		flipCards.forEach((card) => {
-			card.addEventListener("click", function (e) {
-				// Don't flip if clicking on project link
-				if (e.target.closest(".project-link")) {
-					return;
-				}
-
-				this.classList.toggle("flipped");
-			});
-		});
-
-		// Add visual indicator for touch devices
-		flipCards.forEach((card) => {
-			const hint = card.querySelector(".flip-hint");
-			if (hint) {
-				hint.textContent = "Tap to see details";
-			}
-		});
-	} else {
-		// For desktop, keep hover effect and add click functionality as backup
-		flipCards.forEach((card) => {
-			card.addEventListener("click", function (e) {
-				// Don't flip if clicking on project link
-				if (e.target.closest(".project-link")) {
-					return;
-				}
-
-				// Toggle flipped state on click as backup
-				this.classList.toggle("flipped");
-			});
-		});
-	}
-
-	// Reset flip state when clicking outside
-	document.addEventListener("click", function (e) {
-		if (!e.target.closest(".flip-card")) {
-			flipCards.forEach((card) => {
-				card.classList.remove("flipped");
-			});
-		}
-	});
-});
+/*=============== CLICK-TO-FLIP DISABLED: hover-only ===============*/
 
 /*=============== AUTO-SCROLL CURRENT WORK CARD ON HOVER ===============*/
 document.addEventListener("DOMContentLoaded", function () {
