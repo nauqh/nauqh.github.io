@@ -2019,7 +2019,6 @@ img {
 	overflow: visible;
 	cursor: pointer;
 	perspective: 1000px;
-	height: 240px;
 }
 
 .about__current-work .current-work__item::before {
