@@ -492,7 +492,12 @@ img {
 }
 
 .interest__tag {
-	background: var(--body-color);
+	background: rgba(
+		100,
+		255,
+		218,
+		0.1
+	); /* Your first color with transparency */
 	color: var(--first-color);
 	padding: 0.25rem 0.75rem;
 	border-radius: 1rem;
@@ -501,8 +506,8 @@ img {
 }
 
 .interest__tag:hover {
-	background: var(--first-color);
-	color: var(--body-color);
+	background: rgba(100, 255, 218, 0.2); /* Slightly more opaque on hover */
+	color: var(--first-color);
 	transform: translateY(-2px);
 }
 
@@ -551,10 +556,36 @@ img {
 }
 
 .current-work__item {
-	background: rgba(100, 255, 218, 0.05);
-	padding: 1rem;
-	border-radius: 0.5rem;
-	margin-top: 1rem;
+	background: linear-gradient(
+		135deg,
+		rgba(100, 255, 218, 0.08),
+		rgba(100, 255, 218, 0.03)
+	);
+	padding: 1.5rem;
+	border-radius: 0.75rem;
+	margin-bottom: 1.5rem;
+	border: 1px solid rgba(100, 255, 218, 0.1);
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
+	transform-origin: center;
+}
+
+.about__current-work .current-work__item::before {
+	display: none;
+}
+
+.about__current-work .current-work__item:hover {
+	transform: translateY(-3px) scale(1.02);
+	box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
+	border-color: rgba(100, 255, 218, 0.3);
+}
+
+.about__current-work .current-work__item.expanded {
+	transform: translateY(-3px) scale(1.02);
+	box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
+	border-color: rgba(100, 255, 218, 0.3);
 }
 
 .work-status {
@@ -1021,9 +1052,14 @@ img {
 	font-weight: 500;
 	font-size: 0.75rem;
 	border-radius: 1.5rem;
-	background: linear-gradient(135deg, #023047, #0077be);
+	background: rgba(
+		100,
+		255,
+		218,
+		0.1
+	); /* Your first color with transparency */
 	color: var(--first-color);
-	border: 1px solid rgba(100, 255, 218, 0.2);
+	border: none;
 	transition: all 0.3s ease;
 	position: relative;
 	overflow: hidden;
@@ -1050,6 +1086,7 @@ img {
 .work__tech:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+	background: rgba(100, 255, 218, 0.2); /* Slightly more opaque on hover */
 }
 
 .work__tech:hover::before {
@@ -2015,14 +2052,11 @@ img {
 	border-radius: 0.75rem;
 	margin-bottom: 1.5rem;
 	border: 1px solid rgba(100, 255, 218, 0.1);
-	border-left-width: 4px;
-	border-left-color: var(--first-color);
-	transition: transform 0.6s ease, box-shadow 0.3s ease,
-		border-color 0.3s ease, height 0.35s ease;
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
-	overflow: visible;
+	overflow: hidden;
 	cursor: pointer;
-	perspective: 1000px;
+	transform-origin: center;
 }
 
 .about__current-work .current-work__item::before {
@@ -2030,11 +2064,15 @@ img {
 }
 
 .about__current-work .current-work__item:hover {
-	transform: translateX(5px) scale(1.02);
+	transform: translateY(-3px) scale(1.02);
 	box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
 	border-color: rgba(100, 255, 218, 0.3);
-	border-left-color: var(--first-color);
-	height: auto;
+}
+
+.about__current-work .current-work__item.expanded {
+	transform: translateY(-3px) scale(1.02);
+	box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
+	border-color: rgba(100, 255, 218, 0.3);
 }
 
 /* Support click-to-flip on touch devices */
@@ -2042,7 +2080,6 @@ img {
 	transform: translateX(5px) scale(1.02);
 	box-shadow: 0 15px 40px rgba(100, 255, 218, 0.2);
 	border-color: rgba(100, 255, 218, 0.3);
-	border-left-color: var(--first-color);
 	height: auto;
 }
 
@@ -2281,9 +2318,14 @@ img {
 	font-weight: 500;
 	font-size: 0.75rem;
 	border-radius: 1.5rem;
-	background: linear-gradient(135deg, #023047, #0077be);
+	background: rgba(
+		100,
+		255,
+		218,
+		0.1
+	); /* Your first color with transparency */
 	color: var(--first-color);
-	border: 1px solid rgba(100, 255, 218, 0.2);
+	border: none;
 	transition: all 0.3s ease;
 	position: relative;
 	overflow: hidden;
@@ -2309,6 +2351,7 @@ img {
 .about__current-work .work__tech:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+	background: rgba(100, 255, 218, 0.2); /* Slightly more opaque on hover */
 }
 
 .about__current-work .work__tech:hover::before {
@@ -2547,9 +2590,14 @@ img {
 	font-weight: 500;
 	font-size: 0.75rem;
 	border-radius: 1.5rem;
-	background: linear-gradient(135deg, #023047, #0077be);
+	background: rgba(
+		100,
+		255,
+		218,
+		0.1
+	); /* Your first color with transparency */
 	color: var(--first-color);
-	border: 1px solid rgba(100, 255, 218, 0.2);
+	border: none;
 	transition: all 0.3s ease;
 	position: relative;
 	overflow: hidden;
@@ -2576,6 +2624,7 @@ img {
 .work__tech:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+	background: rgba(100, 255, 218, 0.2); /* Slightly more opaque on hover */
 }
 
 .work__tech:hover::before {
