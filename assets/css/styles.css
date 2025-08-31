@@ -3979,14 +3979,25 @@ img {
 	.experience-container {
 		grid-template-columns: 1fr;
 		gap: 2rem;
+		padding: 0 1rem;
 	}
 
 	.company-list {
 		flex-direction: row;
 		overflow-x: auto;
-		padding-bottom: 1rem;
+		padding: 0.5rem 0;
 		margin-bottom: 2rem;
 		height: auto;
+		/* Prevent wrapping */
+		flex-wrap: nowrap;
+		/* Hide scrollbar but keep functionality */
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	/* Hide scrollbar for webkit browsers */
+	.company-list::-webkit-scrollbar {
+		display: none;
 	}
 
 	.company-list::before,
@@ -3999,6 +4010,19 @@ img {
 		border-bottom: 2px solid transparent;
 		height: auto;
 		margin-left: 0;
+		/* Prevent shrinking */
+		flex-shrink: 0;
+		/* Add proper spacing between tabs */
+		margin-right: 1rem;
+		/* Ensure minimum width for touch targets */
+		min-width: 120px;
+		/* Center text in tabs */
+		justify-content: center;
+		text-align: center;
+	}
+
+	.company-tab:last-child {
+		margin-right: 0;
 	}
 
 	.company-tab.active {
