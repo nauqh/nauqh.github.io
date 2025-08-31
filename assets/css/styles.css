@@ -2038,7 +2038,7 @@ img {
 }
 
 .about__current-work .current-work__item {
-	background: rgba(100, 255, 218, 0.1);
+	background: var(--container-color);
 	padding: 1.5rem;
 	border-radius: 0.75rem;
 	margin-bottom: 1.5rem;
@@ -2116,7 +2116,7 @@ img {
 	left: 0;
 	width: 100%;
 	/* mirror base card styles */
-	background: rgba(100, 255, 218, 0.1);
+	background: var(--container-color);
 	border-radius: 0.75rem;
 	border: none;
 	padding: 1.5rem;
