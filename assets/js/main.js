@@ -288,3 +288,35 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	});
 });
+
+// Experience tab functionality with sliding highlight
+document.addEventListener("DOMContentLoaded", function () {
+	const companyTabs = document.querySelectorAll(".company-tab");
+	const jobContents = document.querySelectorAll(".job-content");
+	const companyList = document.querySelector(".company-list");
+
+	if (companyTabs.length > 0 && companyList) {
+		companyTabs.forEach((tab) => {
+			tab.addEventListener("click", () => {
+				// Remove active class from all tabs and contents
+				companyTabs.forEach((t) => t.classList.remove("active"));
+				jobContents.forEach((content) =>
+					content.classList.remove("active")
+				);
+
+				// Add active class to clicked tab
+				tab.classList.add("active");
+
+				// Update the data-active attribute to move the highlight bar
+				const companyId = tab.getAttribute("data-company");
+				companyList.setAttribute("data-active", companyId);
+
+				// Show corresponding content
+				const content = document.getElementById(companyId);
+				if (content) {
+					content.classList.add("active");
+				}
+			});
+		});
+	}
+});

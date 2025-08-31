@@ -1969,17 +1969,13 @@ img {
 }
 
 .about__interests .interest__tag {
-	background: linear-gradient(
-		135deg,
-		var(--container-color),
-		rgba(100, 255, 218, 0.05)
-	);
+	background: rgba(100, 255, 218, 0.1);
 	color: var(--first-color);
 	padding: 0.5rem 1rem;
 	border-radius: 2rem;
 	font-size: 0.85rem;
 	font-weight: 500;
-	border: 1px solid rgba(100, 255, 218, 0.2);
+	border: none;
 	transition: all 0.3s ease;
 	position: relative;
 	overflow: hidden;
@@ -2003,10 +1999,9 @@ img {
 }
 
 .about__interests .interest__tag:hover {
-	background: var(--first-color);
-	color: var(--body-color);
-	transform: translateY(-3px) scale(1.05);
-	box-shadow: 0 8px 25px rgba(100, 255, 218, 0.3);
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+	background: rgba(100, 255, 218, 0.2);
 }
 
 .about__interests .interest__tag:hover::before {
@@ -2043,15 +2038,11 @@ img {
 }
 
 .about__current-work .current-work__item {
-	background: linear-gradient(
-		135deg,
-		rgba(100, 255, 218, 0.08),
-		rgba(100, 255, 218, 0.03)
-	);
+	background: rgba(100, 255, 218, 0.1);
 	padding: 1.5rem;
 	border-radius: 0.75rem;
 	margin-bottom: 1.5rem;
-	border: 1px solid rgba(100, 255, 218, 0.1);
+	border: none;
 	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
@@ -2125,13 +2116,9 @@ img {
 	left: 0;
 	width: 100%;
 	/* mirror base card styles */
-	background: linear-gradient(
-		135deg,
-		rgba(100, 255, 218, 0.08),
-		rgba(100, 255, 218, 0.03)
-	);
+	background: rgba(100, 255, 218, 0.1);
 	border-radius: 0.75rem;
-	border: 1px solid rgba(100, 255, 218, 0.1);
+	border: none;
 	padding: 1.5rem;
 	transform: rotateY(180deg);
 	overflow: visible; /* let content define height */
@@ -2318,12 +2305,7 @@ img {
 	font-weight: 500;
 	font-size: 0.75rem;
 	border-radius: 1.5rem;
-	background: rgba(
-		100,
-		255,
-		218,
-		0.1
-	); /* Your first color with transparency */
+	background: rgba(100, 255, 218, 0.1);
 	color: var(--first-color);
 	border: none;
 	transition: all 0.3s ease;
@@ -2351,7 +2333,7 @@ img {
 .about__current-work .work__tech:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
-	background: rgba(100, 255, 218, 0.2); /* Slightly more opaque on hover */
+	background: rgba(100, 255, 218, 0.2);
 }
 
 .about__current-work .work__tech:hover::before {
@@ -2590,12 +2572,7 @@ img {
 	font-weight: 500;
 	font-size: 0.75rem;
 	border-radius: 1.5rem;
-	background: rgba(
-		100,
-		255,
-		218,
-		0.1
-	); /* Your first color with transparency */
+	background: rgba(100, 255, 218, 0.1);
 	color: var(--first-color);
 	border: none;
 	transition: all 0.3s ease;
@@ -2624,7 +2601,7 @@ img {
 .work__tech:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
-	background: rgba(100, 255, 218, 0.2); /* Slightly more opaque on hover */
+	background: rgba(100, 255, 218, 0.2);
 }
 
 .work__tech:hover::before {
@@ -3827,4 +3804,204 @@ img {
 .contact__form {
 	max-width: 680px;
 	margin: 0 auto;
+}
+
+/* Continuous connecting line - make it very visible */
+.company-list::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 3px; /* Make it thicker */
+	background: var(--text-color); /* Use full opacity text color */
+	opacity: 0.8; /* Make it very visible */
+}
+
+/*=============== EXPERIENCE SECTION ===============*/
+.experience-container {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 3rem;
+	margin-top: 2rem;
+	max-width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Company List Styling */
+.company-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	position: relative;
+	/* Make the container only as tall as its content */
+	height: fit-content;
+	align-self: start;
+}
+
+/* Continuous connecting line - only spans the company list height */
+.company-list::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	/* Use height: 100% instead of bottom: 0 to only span the company list */
+	height: 100%;
+	width: 2px;
+	background: var(--text-color-light);
+	opacity: 0.6;
+}
+
+/* Sliding highlight bar */
+.company-list::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 2px;
+	height: 3rem;
+	background: var(--first-color);
+	transition: top 0.3s ease;
+	z-index: 2;
+}
+
+/* Position the highlight bar for each company */
+.company-list[data-active="coderschool"]::after {
+	top: 0;
+}
+
+.company-list[data-active="gdg"]::after {
+	top: 3.5rem;
+}
+
+.company-list[data-active="monash"]::after {
+	top: 7rem;
+}
+
+.company-tab {
+	background: transparent;
+	border: none;
+	color: var(--text-color);
+	padding: 1rem 1.5rem;
+	text-align: left;
+	font-size: 0.9rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	position: relative;
+	height: 3rem;
+	display: flex;
+	align-items: center;
+	margin-left: 1rem;
+}
+
+.company-tab:hover {
+	color: var(--first-color);
+	background: rgba(100, 255, 218, 0.1);
+}
+
+.company-tab.active {
+	color: var(--first-color);
+	background: #172a45;
+}
+
+/* Job Details Styling */
+.job-details {
+	position: relative;
+	/* Allow this to grow independently */
+	min-height: 0;
+}
+
+.job-content {
+	display: none;
+	animation: fadeIn 0.5s ease;
+}
+
+.job-content.active {
+	display: block;
+}
+
+.job-title {
+	font-size: 1.2rem;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+}
+
+.job-dates {
+	color: var(--text-color-light);
+	font-size: 0.9rem;
+	margin-bottom: 1.5rem;
+	font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+}
+
+.job-description {
+	list-style: none;
+	padding: 0;
+}
+
+.job-description li {
+	color: var(--text-color);
+	margin-bottom: 1rem;
+	position: relative;
+	padding-left: 1.5rem;
+	line-height: 1.6;
+}
+
+.job-description li::before {
+	content: "▹";
+	position: absolute;
+	left: 0;
+	color: var(--first-color);
+	font-size: 0.9rem;
+}
+
+.job-subtitle {
+	color: var(--title-color);
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 1.5rem 0 1rem 0;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+	.experience-container {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.company-list {
+		flex-direction: row;
+		overflow-x: auto;
+		padding-bottom: 1rem;
+		margin-bottom: 2rem;
+		height: auto;
+	}
+
+	.company-list::before,
+	.company-list::after {
+		display: none;
+	}
+
+	.company-tab {
+		white-space: nowrap;
+		border-bottom: 2px solid transparent;
+		height: auto;
+		margin-left: 0;
+	}
+
+	.company-tab.active {
+		border-bottom: 2px solid var(--first-color);
+	}
 }
