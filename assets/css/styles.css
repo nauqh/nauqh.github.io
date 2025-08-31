@@ -3990,14 +3990,9 @@ img {
 		height: auto;
 		/* Prevent wrapping */
 		flex-wrap: nowrap;
-		/* Hide scrollbar but keep functionality */
-		scrollbar-width: none;
-		-ms-overflow-style: none;
-	}
-
-	/* Hide scrollbar for webkit browsers */
-	.company-list::-webkit-scrollbar {
-		display: none;
+		/* Show scrollbar for horizontal scrolling */
+		scrollbar-width: thin;
+		-ms-overflow-style: auto;
 	}
 
 	.company-list::before,
