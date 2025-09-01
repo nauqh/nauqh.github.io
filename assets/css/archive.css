@@ -1,0 +1,492 @@
+/*=============== ARCHIVE PAGE STYLES ===============*/
+
+/*=============== ARCHIVE HEADER ===============*/
+.archive__header {
+	text-align: center;
+	margin-bottom: 4rem;
+}
+
+.archive__title {
+	font-size: var(--h1-font-size);
+	color: var(--first-color);
+	font-weight: var(--font-semibold);
+	margin-bottom: 1rem;
+}
+
+.archive__subtitle {
+	font-size: var(--normal-font-size);
+	color: var(--text-color-light);
+	font-weight: var(--font-medium);
+}
+
+/*=============== ARCHIVE CONTENT ===============*/
+.archive__content {
+	max-width: 1000px;
+	margin: 0 auto;
+	position: relative;
+}
+
+/*=============== ARCHIVE TABLE ===============*/
+.archive__table {
+	background: transparent;
+	border-radius: 0;
+	overflow: visible;
+	box-shadow: none;
+}
+
+/*=============== TABLE HEADER ===============*/
+.archive__table-header {
+	display: grid;
+	grid-template-columns: 80px 2fr 1fr 2fr 100px;
+	gap: 1.5rem;
+	background: transparent;
+	border-bottom: none;
+	margin-bottom: 1rem;
+	padding: 0 1.5rem;
+}
+
+.archive__col {
+	font-size: var(--small-font-size);
+	color: var(--text-color-light);
+	font-weight: var(--font-medium);
+	letter-spacing: 0.5px;
+}
+
+/*=============== TABLE BODY ===============*/
+.archive__table-body {
+	padding: 0;
+}
+
+/*=============== TABLE ROWS ===============*/
+.archive__row {
+	display: grid;
+	grid-template-columns: 80px 2fr 1fr 2fr 100px;
+	gap: 1.5rem;
+	padding: 1.5rem;
+	border-bottom: none;
+	transition: all 0.3s ease;
+	cursor: default;
+	position: relative;
+	border-radius: 0.5rem;
+}
+
+.archive__row:last-child {
+	border-bottom: none;
+}
+
+.archive__row:hover {
+	background: rgba(255, 255, 255, 0.03);
+	transform: translateX(5px);
+}
+
+/* Remove featured projects styling */
+/* .archive__row.featured {
+	background: rgba(100, 255, 218, 0.05);
+	border-left: 3px solid var(--first-color);
+	border-radius: 0.5rem;
+}
+
+.archive__row.featured:hover {
+	background: rgba(100, 255, 218, 0.08);
+	transform: translateX(8px);
+}
+
+.archive__row.featured:hover .archive__title-link {
+	color: var(--first-color);
+} */
+
+/* Add title highlight on row hover */
+.archive__row:hover .archive__title-link {
+	color: var(--first-color);
+}
+
+/*=============== COLUMN CONTENT ===============*/
+.archive__col {
+	display: flex;
+	align-items: center;
+	font-size: var(--normal-font-size);
+	color: var(--text-color);
+}
+
+/* Year column */
+.archive__row .archive__col:first-child {
+	color: var(--text-color-light);
+	font-weight: var(--font-medium);
+	font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+}
+
+/* Title column */
+.archive__title-link {
+	color: var(--title-color);
+	font-weight: var(--font-semibold);
+	transition: color 0.3s ease;
+	cursor: pointer;
+}
+
+.archive__title-link:hover {
+	color: var(--first-color);
+}
+
+/* Category column */
+.archive__row .archive__col:nth-child(3) {
+	color: var(--text-color-light);
+	font-size: var(--small-font-size);
+}
+
+/* Built with column */
+.archive__row .archive__col:nth-child(4) {
+	color: var(--text-color-light);
+	font-size: var(--small-font-size);
+	line-height: 1.4;
+}
+
+/* Links column */
+.archive__row .archive__col:last-child {
+	justify-content: flex-start;
+	gap: 0.75rem;
+}
+
+/*=============== LINK ICONS ===============*/
+.archive__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	color: var(--text-color-light);
+	background: transparent;
+	border-radius: 0;
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+.archive__link:hover {
+	color: var(--first-color);
+	background: transparent;
+	transform: translateY(-2px);
+}
+
+.archive__link i {
+	font-size: 1rem;
+}
+
+/*=============== BACK HOME BUTTON ===============*/
+.back-home {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--text-color);
+	font-size: var(--normal-font-size);
+	font-weight: var(--font-medium);
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+.back-home:hover {
+	color: var(--first-color);
+	transform: translateX(-5px);
+}
+
+.back-home i {
+	font-size: 1.2rem;
+	transition: transform 0.3s ease;
+}
+
+.back-home:hover i {
+	transform: translateX(-3px);
+}
+
+/*=============== LEFT SIDEBAR - SOCIAL MEDIA ===============*/
+.archive__social {
+	position: fixed;
+	left: 2rem;
+	bottom: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	z-index: var(--z-fixed);
+}
+
+.archive__social-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	color: var(--text-color-light);
+	background: transparent;
+	border-radius: 0.5rem;
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+.archive__social-link:hover {
+	color: var(--first-color);
+	transform: translateY(-3px);
+}
+
+.archive__social-link i {
+	font-size: 1.2rem;
+}
+
+/* Social media line */
+.archive__social::after {
+	content: "";
+	width: 1px;
+	height: 90px;
+	background: var(--text-color-light);
+	margin: 0 auto;
+	margin-top: 1rem;
+}
+
+/*=============== RIGHT SIDEBAR - EMAIL ===============*/
+.archive__email {
+	position: fixed;
+	right: 2rem;
+	bottom: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	z-index: var(--z-fixed);
+}
+
+.archive__email-link {
+	writing-mode: vertical-rl;
+	color: var(--text-color-light);
+	font-size: var(--small-font-size);
+	font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	letter-spacing: 0.1em;
+}
+
+.archive__email-link:hover {
+	color: var(--first-color);
+	transform: translateY(-3px);
+}
+
+/* Email line */
+.archive__email::after {
+	content: "";
+	width: 1px;
+	height: 90px;
+	background: var(--text-color-light);
+	margin: 0 auto;
+	margin-top: 1rem;
+}
+
+/*=============== RESPONSIVE DESIGN ===============*/
+@media screen and (max-width: 968px) {
+	.archive__table-header,
+	.archive__row {
+		grid-template-columns: 60px 1.5fr 1fr 1.5fr 80px;
+		gap: 1rem;
+		padding: 1.25rem;
+	}
+
+	.archive__table-header {
+		padding: 0 1.25rem;
+	}
+
+	.archive__col {
+		font-size: var(--small-font-size);
+	}
+
+	.archive__title-link {
+		font-size: var(--normal-font-size);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.archive__content {
+		margin: 0 1rem;
+	}
+
+	.archive__table-header,
+	.archive__row {
+		grid-template-columns: 1fr;
+		gap: 0.75rem;
+		padding: 1rem 0;
+		text-align: left;
+	}
+
+	.archive__table-header {
+		display: none; /* Hide header on mobile */
+	}
+
+	.archive__row {
+		background: transparent;
+		border-radius: 0.5rem;
+		margin-bottom: 2rem;
+		border: none;
+		padding: 1rem;
+	}
+
+	/* Remove featured styling for mobile */
+	/* .archive__row.featured {
+		border-left: none;
+		border-top: 3px solid var(--first-color);
+		background: rgba(100, 255, 218, 0.05);
+	}
+
+	.archive__row.featured:hover {
+		background: rgba(100, 255, 218, 0.08);
+	} */
+
+	.archive__col {
+		padding: 0.25rem 0;
+	}
+
+	/* Add labels for mobile */
+	.archive__col:first-child::before {
+		content: "Year: ";
+		color: var(--first-color);
+		font-weight: var(--font-medium);
+		margin-right: 0.5rem;
+	}
+
+	.archive__col:nth-child(2)::before {
+		content: "Title: ";
+		color: var(--first-color);
+		font-weight: var(--font-medium);
+		margin-right: 0.5rem;
+	}
+
+	.archive__col:nth-child(3)::before {
+		content: "Category: ";
+		color: var(--first-color);
+		font-weight: var(--font-medium);
+		margin-right: 0.5rem;
+	}
+
+	.archive__col:nth-child(4)::before {
+		content: "Built with: ";
+		color: var(--first-color);
+		font-weight: var(--font-medium);
+		margin-right: 0.5rem;
+	}
+
+	.archive__col:last-child::before {
+		content: "Links: ";
+		color: var(--first-color);
+		font-weight: var(--font-medium);
+		margin-right: 0.5rem;
+	}
+
+	.archive__row:hover {
+		transform: translateY(-3px);
+	}
+
+	/* Remove featured hover transform */
+	/* .archive__row.featured:hover {
+		transform: translateY(-3px);
+	} */
+
+	/* Hide sidebars on mobile */
+	.archive__social,
+	.archive__email {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.archive__header {
+		margin-bottom: 2rem;
+	}
+
+	.archive__title {
+		font-size: var(--h2-font-size);
+	}
+
+	.archive__subtitle {
+		font-size: var(--small-font-size);
+	}
+
+	.archive__content {
+		margin: 0 0.5rem;
+	}
+
+	.archive__row {
+		padding: 0.75rem 0;
+		margin-bottom: 1.5rem;
+	}
+
+	.archive__title-link {
+		font-size: var(--small-font-size);
+	}
+
+	.archive__link {
+		width: 28px;
+		height: 28px;
+	}
+
+	.archive__link i {
+		font-size: 0.9rem;
+	}
+}
+
+/*=============== ANIMATIONS ===============*/
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.archive__row {
+	animation: fadeInUp 0.6s ease forwards;
+}
+
+.archive__row:nth-child(1) {
+	animation-delay: 0.1s;
+}
+.archive__row:nth-child(2) {
+	animation-delay: 0.2s;
+}
+.archive__row:nth-child(3) {
+	animation-delay: 0.3s;
+}
+.archive__row:nth-child(4) {
+	animation-delay: 0.4s;
+}
+.archive__row:nth-child(5) {
+	animation-delay: 0.5s;
+}
+.archive__row:nth-child(6) {
+	animation-delay: 0.6s;
+}
+.archive__row:nth-child(7) {
+	animation-delay: 0.7s;
+}
+.archive__row:nth-child(8) {
+	animation-delay: 0.8s;
+}
+.archive__row:nth-child(9) {
+	animation-delay: 0.9s;
+}
+.archive__row:nth-child(10) {
+	animation-delay: 1s;
+}
+
+/*=============== SCROLLBAR STYLING ===============*/
+.archive__content::-webkit-scrollbar {
+	width: 6px;
+}
+
+.archive__content::-webkit-scrollbar-track {
+	background: var(--container-color);
+}
+
+.archive__content::-webkit-scrollbar-thumb {
+	background: var(--text-color-light);
+	border-radius: 3px;
+}
+
+.archive__content::-webkit-scrollbar-thumb:hover {
+	background: var(--text-color);
+}
