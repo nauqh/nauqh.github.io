@@ -1047,7 +1047,7 @@ img {
 }
 
 .work__tech-list {
-	margin-top: auto;
+	margin-top: 1rem;
 	cursor: default;
 	display: flex;
 	flex-wrap: wrap;
@@ -1495,7 +1495,6 @@ img {
 	}
 	.work__card {
 		padding: 1.5rem;
-		min-height: 320px;
 		width: 100%;
 		max-width: 100%;
 	}
@@ -1518,7 +1517,6 @@ img {
 @media screen and (min-width: 1200px) {
 	.work__card {
 		padding: 1.5rem;
-		min-height: 320px;
 		width: 100%;
 		max-width: 100%;
 	}
@@ -2127,7 +2125,7 @@ img {
 	background: var(--container-color);
 	border-radius: 0.75rem;
 	border: none;
-	padding: 1rem;
+	padding: 0.5rem;
 	transform: rotateY(180deg);
 	overflow: visible; /* let content define height */
 }
@@ -3128,7 +3126,6 @@ img {
 
 	.work__tech-list {
 		justify-content: flex-start;
-		margin-top: 1.5rem;
 	}
 
 	.work__tech {
@@ -3716,9 +3713,7 @@ img {
 	align-items: center;
 	gap: 0.5rem;
 	text-align: center;
-	background: var(--container-color);
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	border-radius: 0.75rem;
+	background: var(--body-color);
 	padding: 2rem 1.25rem;
 }
 
@@ -3767,7 +3762,8 @@ img {
 	color: var(--text-color-light);
 }
 
-.contact__textarea:focus {
+.contact__textarea:focus,
+.contact__input:focus {
 	border-color: var(--first-color);
 	box-shadow: 0 0 0 4px rgba(100, 255, 218, 0.08);
 }
@@ -4140,8 +4136,6 @@ img {
 .view-all-projects {
 	display: flex;
 	justify-content: center;
-	margin-top: 4rem;
-	margin-bottom: 2rem;
 }
 
 .view-all-button {
@@ -4177,11 +4171,6 @@ img {
 
 /*=============== RESPONSIVE DESIGN FOR VIEW ALL PROJECTS ===============*/
 @media screen and (max-width: 768px) {
-	.view-all-projects {
-		margin-top: 3rem;
-		margin-bottom: 1.5rem;
-	}
-
 	.view-all-button {
 		font-size: var(--small-font-size);
 		padding: 0.6rem 1.2rem;
@@ -4189,11 +4178,6 @@ img {
 }
 
 @media screen and (max-width: 480px) {
-	.view-all-projects {
-		margin-top: 2rem;
-		margin-bottom: 1rem;
-	}
-
 	.view-all-button {
 		font-size: var(--smaller-font-size);
 		padding: 0.5rem 1rem;
