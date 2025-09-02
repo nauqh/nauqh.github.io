@@ -101,9 +101,10 @@ const sr = ScrollReveal({
 	duration: 2500,
 });
 
-sr.reveal(`.home__data`);
-sr.reveal(`.home__handle`, { delay: 500 });
-sr.reveal(`.home__social, .home__scroll`, { delay: 700, origin: "bottom" });
+sr.reveal(`.home__left-panel`);
+sr.reveal(`.home__right-panel`, { delay: 500 });
+sr.reveal(`.home__social-sidebar`, { delay: 500 });
+sr.reveal(`.home__email-sidebar`, { delay: 700 });
 sr.reveal(`.about`, { delay: 1000 });
 
 // Remove duplicate handlers and replace with this single one
