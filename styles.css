@@ -1,0 +1,496 @@
+/* Google fonts */
+/* Ref: https://www.notion.com/ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+/* ========== Global CSS ========= */
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: "Inter", sans-serif;
+	overflow-x: hidden;
+	background-color: #f5f4f0;
+}
+
+img {
+	max-width: 100%;
+	border-radius: 0.5rem;
+}
+
+h2 {
+	font-size: 4rem;
+	font-weight: 700;
+	margin-bottom: 1rem;
+	letter-spacing: 0.1rem;
+}
+
+p {
+	line-height: 1.8;
+	margin-bottom: 1rem;
+	font-size: 1.2rem;
+}
+
+a {
+	color: grey;
+	text-decoration: underline;
+}
+
+/* ========== Container layout ========== */
+/* Overall container */
+#content {
+	width: 100%;
+	max-width: 1600px;
+	margin: 0 auto;
+}
+
+/* Section container */
+.container {
+	margin: 3rem auto;
+	padding: 0 2rem;
+}
+
+/* ========== Header ========== */
+.header {
+	padding: 5rem 3rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	/* Ref: https://codepen.io/LauraAddams/pen/eBjrgj */
+	/* Ref: https://css-tricks.com/a-complete-guide-to-css-gradients/ */
+	/* From bottom left to top right, add % to minimse the blue color */
+	background: linear-gradient(120deg, #6dd5fa 0%, #f5f4f0 30%, #f4d6db 100%);
+}
+
+/* ========== Heading containers ========== */
+.heading-container {
+	padding: 8rem 3rem;
+}
+
+.heading-content {
+	display: flex;
+	gap: 3rem;
+	align-items: center;
+}
+
+/* Right container has more space than left */
+.heading-left {
+	flex: 1;
+}
+
+.heading-right {
+	flex: 1.5;
+}
+
+.heading-subtitle {
+	font-size: 0.9rem;
+	font-weight: 700;
+	letter-spacing: 0.1rem;
+	margin-bottom: 0.5rem;
+}
+
+/* Ref: https://uigradients.com/#CalmDarya */
+#heading-genres {
+	background: linear-gradient(140deg, #ebf4f5, #6dd5fa);
+}
+/* Ref: https://uigradients.com/#Cherryblossoms */
+#heading-sound {
+	background: linear-gradient(140deg, #fbd3e9, #ffafbd);
+}
+/* Ref: https://uigradients.com/#HoneyDew */
+#heading-collaboration {
+	background: linear-gradient(140deg, #f8ffae, #43c6ac);
+}
+
+.header-content {
+	display: flex;
+	gap: 3rem;
+}
+
+.header-left {
+	flex: 1;
+}
+
+.title {
+	font-size: 5rem;
+	font-weight: 700;
+	line-height: 1.1;
+}
+
+.header-left h3 {
+	font-size: 2rem;
+	font-weight: 400;
+	margin-top: 0.5rem;
+	letter-spacing: 0.1rem;
+}
+
+.header-right {
+	flex: 1;
+}
+
+.header-subtitle {
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+	line-height: 1.6;
+}
+
+.header-info {
+	display: flex;
+	gap: 1rem;
+	font-size: 1.1rem;
+}
+
+.header-images {
+	margin-top: 6rem; /* Make the header span the whole viewpoint height*/
+	display: flex;
+	gap: 1rem;
+	align-items: flex-end;
+	justify-content: center;
+}
+
+.header-image-item {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.header-image-item span {
+	font-size: 1.5rem;
+	font-weight: 600;
+	letter-spacing: 0.1rem;
+	margin-bottom: 0.5rem;
+}
+
+.header-image-item img {
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+
+/* ========== end Heading containers ========== */
+
+/* ========== Header metrics ========== */
+.metrics-intro {
+	font-weight: 600;
+	letter-spacing: 0.2rem;
+	color: #666;
+	margin-top: 4rem;
+}
+
+.header-metrics {
+	display: flex;
+	justify-content: space-around;
+	padding-top: 3rem;
+	margin-bottom: 4rem;
+}
+
+.metric-item {
+	text-align: center;
+}
+
+.metric-number {
+	font-size: 6rem;
+	font-weight: 700;
+}
+
+.metric-label {
+	font-size: 1.2rem;
+	font-weight: 400;
+	color: #666;
+	letter-spacing: 0.1rem;
+}
+/* ========== end Header metrics ========== */
+
+/* ========== Quote section ========== */
+blockquote {
+	margin: 5rem auto;
+	max-width: 1200px;
+}
+
+blockquote p {
+	text-align: center;
+	font-size: 2rem;
+	color: #666;
+}
+
+blockquote cite {
+	display: block;
+	text-align: right;
+	color: #666;
+}
+
+/* ========== end Quote section ========== */
+
+/* ========== Chart containers ========== */
+#genre-bar-chart-container {
+	position: relative;
+}
+
+/* Genre bar chart annotation box */
+#genre-bar-chart-annotation {
+	width: 38%;
+	padding: 1rem;
+	background-color: transparent;
+}
+
+.chart-note {
+	margin-top: 1rem;
+	font-size: 0.9rem;
+	color: #666;
+	text-align: right;
+}
+
+/* Genre bar chart toggle */
+#genre-bar-chart-toggle {
+	position: absolute;
+	display: flex;
+	gap: 0.5rem;
+}
+
+#genre-bar-chart-toggle input[type="checkbox"] {
+	cursor: pointer;
+}
+
+#genre-bar-chart-toggle label {
+	cursor: pointer;
+	user-select: none;
+}
+
+/* ========= Tracks and Genres wrapper ========== */
+#tracks-genres-wrapper {
+	display: flex;
+	gap: 2rem;
+}
+
+#genre-line-bar-chart-container {
+	flex: 2;
+}
+
+#tracks-genres-text-container {
+	flex: 1;
+}
+
+/* ========= Charts container for radar and loudness ========== */
+#charts-container {
+	display: flex;
+	gap: 2rem;
+}
+
+#audio-radar-chart-container {
+	flex: 1.2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
+}
+
+#audio-loudness-chart-container {
+	flex: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Tooltip */
+/* Ref: https://d3-graph-gallery.com/graph/interactivity_tooltip.html */
+/* Ref: https://css-tricks.com/the-power-of-rgba/ */
+.tooltip {
+	position: absolute;
+	background: rgba(0, 0, 0, 0.8); /* 80% opacity */
+	color: #ffffff;
+	border: 1px solid #ffffff;
+	padding: 0.5rem;
+	font-size: 0.9rem;
+	pointer-events: none;
+}
+
+/* ========= Audio line chart ========== */
+#audio-line-chart .line-hover {
+	stroke-width: 20;
+	cursor: pointer;
+	pointer-events: stroke;
+}
+
+#audio-line-chart .line-visible {
+	stroke-width: 2.5;
+	pointer-events: none;
+}
+
+.feature-point {
+	r: 4;
+	stroke: #fff;
+	stroke-width: 1;
+	cursor: pointer;
+}
+
+.axis text {
+	font-size: 0.9rem;
+}
+
+.axis-label {
+	text-anchor: middle;
+	font-weight: 600;
+}
+
+.chart-title {
+	text-anchor: middle; /* Use text-anchor since we are working in svg elements */
+	font-size: 1.2rem;
+	font-weight: 600;
+}
+
+/* Network section wrapper */
+#network-wrapper {
+	display: flex;
+	gap: 3rem;
+}
+
+#network-left {
+	flex: 1;
+}
+
+#network-right {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Network chart container */
+#artist-network-chart-container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #ccc;
+	border-radius: 0.5rem;
+}
+
+/* Network section */
+#network-decade-filter {
+	margin: 3rem 0;
+	display: flex;
+	align-items: center;
+}
+
+#network-decade-filter label {
+	font-size: 1.2rem;
+}
+
+/* Ref: https://codepen.io/andreruffert/pen/XJbxVzo */
+#decade-slider {
+	flex: 1;
+	margin: 1rem;
+	cursor: pointer;
+}
+
+/* ========== Network chart =========  */
+.label {
+	user-select: none;
+	pointer-events: none;
+}
+.link {
+	stroke: #ccc;
+}
+
+.node {
+	stroke: #fff;
+	stroke-width: 1.5px;
+	cursor: grab;
+}
+
+.node:active {
+	cursor: grabbing;
+}
+
+.hint {
+	color: #666;
+	margin-top: 2rem;
+	text-align: center;
+}
+
+.data-source {
+	font-size: 0.8rem;
+	color: grey;
+	margin-top: 1rem;
+}
+
+/* Toggle Switch CSS */
+/* Ref: PE3 template code */
+.switch-container {
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+}
+
+.switch-label {
+	padding: 0 8px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 24px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	inset: 0;
+	background-color: #ccc;
+	transition: 0.4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 16px;
+	width: 16px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	transition: 0.4s;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+	transform: translateX(36px);
+}
+
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+
+/* ========== Footer ========== */
+.footer {
+	margin-top: 4rem;
+	text-align: center;
+}
+
+.footer p {
+	font-size: 0.9rem;
+	color: #666;
+}

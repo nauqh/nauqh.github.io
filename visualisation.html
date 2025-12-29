@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Data Visualisation Project | Ho Do Minh Quan</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="content">
+        <!-- Title section (Header) -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="title">A Century of <br>
+                        <span style="color: #4a7ba7; font-style: italic;">Sound</span>
+                        and <span style="color: #c97a8f; font-style: italic;">Rhythm</span>
+                    </h1>
+                    <h3>From Vinyl to Streaming</h3>
+                </div>
+                <div class="header-right">
+                    <p class="header-subtitle">
+                        Exploring the transformation of music trends, genres, and artists collaborations across the
+                        century.
+                    </p>
+                    <span class="header-info">
+                        <span>By Ho Do Minh Quan</span>
+                        <span>November 8, 2025</span>
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="header-images">
+                <div class="header-image-item">
+                    <span>1920s</span>
+                    <img src="https://i.gifer.com/XnHa.gif">
+                </div>
+                <div class="header-image-item">
+                    <span>1950s</span>
+                    <img src="https://i.pinimg.com/originals/74/71/e1/7471e1d0f80e48d05dc1ac7591a26716.gif">
+                </div>
+                <div class="header-image-item">
+                    <span>1980s</span>
+                    <img src="https://media.tenor.com/Sra9w5D2pQgAAAAM/walkman-sony-walkman.gif">
+                </div>
+            </div>
+        </header>
+        <!-- end Title section (Header) -->
+
+        <!-- ========== Introduction section ========== -->
+        <div class="container">
+            <p>
+                Throughout human history, in both good times and hard times, people have always found joy
+                in expressing their ideas and feelings through music. We were born with music through the songs from our
+                childhood, we grow up with the music of our time, and we enjoy the music from the generations before us.
+            </p>
+
+            <div class="metrics-intro">THROUGHOUT THE 20TH CENTURY</div>
+            <div class="header-metrics">
+                <div class="metric-item">
+                    <div class="metric-number">586,672</div>
+                    <div class="metric-label">TRACKS</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-number">4,672</div>
+                    <div class="metric-label">GENRES</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-number">1,162,095</div>
+                    <div class="metric-label">ARTISTS</div>
+                </div>
+            </div>
+
+            <p>
+                No one knows exactly how many songs have been made or all the people behind them, but we all know how
+                music has been and always will be an important part of our lives. Today, we embark on a
+                journey into a slice of our long music history, exploring the story of
+                <span style="color: #4a7ba7; font-style: italic; font-weight: 700;">Sound</span> and
+                <span style="color: #c97a8f; font-style: italic; font-weight: 700;">Rhythm</span>.
+            </p>
+        </div>
+
+        <blockquote>
+            <p>"Without music, life would be a mistake."</p>
+            <cite>- Friedrich Nietzsche</cite>
+        </blockquote>
+        <!-- ========== end Introduction section ========== -->
+
+        <!-- ========== Section 1: A Legacy of Genres ========== -->
+        <div class="heading-container" id="heading-genres">
+            <div class="heading-content">
+                <div class="heading-left">
+                    <p class="heading-subtitle">MUSIC DIVERSITY ACROSS DECADES</p>
+                    <h2>A Legacy <br> of <span style="font-style: italic;">Genres</span></h2>
+                </div>
+                <div class="heading-right">
+                    <p class="heading-discussion">
+                        As we journey through the decades, we see how different types of music emerged and evolved. Jazz
+                        filled the speakeasies of the 1920s, rock exploded in the 1960s, and the 2000s and 2010s brought
+                        a diversity with countless new genres. Each era left its mark, and together they tell the
+                        story of how music production and diversity changed over time.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracks and Genres chart -->
+        <div class="container" id="tracks-genres-wrapper">
+            <div id="genre-line-bar-chart-container">
+                <!-- Toggle Switch -->
+                <div class="switch-container">
+                    <div class="switch-item">
+                        <span class="switch-label">Tracks</span>
+                        <label class="switch">
+                            <input type="checkbox" id="tracks-genres-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="switch-label">Genres</span>
+                    </div>
+                </div>
+                <!-- end Toggle Switch -->
+            </div>
+            <div id="tracks-genres-text-container">
+                <p style="margin: 2rem 0;">
+                    As technology advanced, allowing music to be shared among wider groups of people, more music was
+                    produced. The visualization shows this dramatic growth from the early decades through to the 2010s,
+                    reflecting how recording technology and distribution methods democratized music creation.
+                </p>
+                <p>
+                    As production increased, so did genres, which became richer over time as new genres emerged from the
+                    combination of older ones.
+                </p>
+            </div>
+        </div>
+
+        <!-- Top Genres by Decade chart -->
+        <div class="container" id="genre-bar-chart-container">
+            <p class="chart-note">
+                ℹ️ Hover each bar to reveal the genre details and decade summary
+            </p>
+        </div>
+
+        <div class="container">
+            <p>
+                Music is a legacy that is passed onto us by the last generation. Each generation’s music built upon
+                the last and further enhanced it with the taste of the current cultural movement. This happens
+                alongside other pop culture like fashion and films, creating a continuous stream where music from
+                one decade influences the next and connects people across all eras
+            </p>
+        </div>
+        <!-- ========== end Section 1 ========== -->
+
+
+        <!-- ========== Section 2: A Journey Through Sound ========== -->
+        <div class="heading-container" id="heading-sound">
+            <div class="heading-content">
+                <div class="heading-left">
+                    <p class="heading-subtitle">TRACKS AND GENRES EVOLUTION</p>
+                    <h2>A Journey <br> Through <span style="font-style: italic;">Sound</span></h2>
+                </div>
+                <div class="heading-right">
+                    <p class="heading-discussion">
+                        The sound of music itself has transformed over time. What started as acoustic recordings
+                        gradually gave way to electronic production. Music became louder and more energetic, and the
+                        emotional tone shifted with each decade. Through danceability, energy, acousticness, and other
+                        characteristics, we can hear how the very nature of music changed across the century.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Radar and Loudness charts -->
+        <div class="container" id="charts-container">
+            <div id="audio-radar-chart-container"></div>
+            <div id="audio-loudness-chart-container"></div>
+        </div>
+        <div class="container" style="margin: 0 3rem">
+            <p class="chart-note">
+                ℹ️ Hover the bars to show the decade music shape in the radar chart
+            </p>
+        </div>
+
+        <!-- Tempo chart -->
+        <div class="container" id="audio-tempo-chart-container">
+        </div>
+
+        <blockquote>
+            <p>"Music is the literature of the heart; it commences where speech ends."</p>
+            <cite>- Alphonse de Lamartine</cite>
+        </blockquote>
+
+        <!-- Audio Features chart -->
+        <div class="container" id="audio-line-chart-container">
+            <p class="chart-note">
+                ℹ️ Hover the lines to reveal the music features details
+            </p>
+        </div>
+
+        <!-- ========== end Section 2 ========== -->
+
+        <!-- ========== Section 3: A Lens Into Collaboration ========== -->
+        <div class="heading-container" id="heading-collaboration">
+            <div class="heading-content">
+                <div class="heading-left">
+                    <p class="heading-subtitle">ARTIST NETWORKS AND CONNECTIONS</p>
+                    <h2>A Lens <br> Into <span style="font-style: italic;">Collaboration</span></h2>
+                </div>
+                <div class="heading-right">
+                    <p class="heading-discussion">
+                        Artists work by mixing different sounds into rhythms to create the music we hear. In earlier
+                        decades, artists often worked alone or within small local groups. But as digital technology
+                        emerged, these networks grew bigger. Artists began connecting across different styles, different
+                        eras, and different places.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network chart -->
+        <div class="container" id="network-section">
+            <div id="network-decade-filter">
+                <label for="decade-slider">Select decade:</label>
+                <!-- Default to 1960s -->
+                <input type="range" id="decade-slider" min="0" max="10" value="3" step="1">
+            </div>
+            <div id="network-wrapper">
+                <div id="network-left">
+                    <h2 id="decade-value">1950s</h2>
+
+                    <div id="network-playlist-container" style="margin-top: 2rem;">
+                        <!-- Playlist embed iframe from Spotify 
+                         Ref: https://developer.spotify.com/documentation/embeds/tutorials/using-the-iframe-api -->
+                        <iframe data-testid="embed-iframe" style="border-radius:12px"
+                            src="https://open.spotify.com/embed/playlist/00OCAGNhdjGijo6wJS7pEV?utm_source=generator"
+                            width="100%" height="600" frameBorder="0" allowfullscreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy">
+                        </iframe>
+                        <p class="data-source">Playlist source: Spotify. Retrieved from
+                            <a href="https://open.spotify.com/playlist/00OCAGNhdjGijo6wJS7pEV"
+                                target="blank">open.spotify.com/playlist/1NAvBnDnwslhdNC9gNJ16D</a>
+                        </p>
+                    </div>
+                </div>
+                <div id="network-right">
+
+                    <div id="artist-network-chart-container"></div>
+                    <p class="hint">
+                        Use mouse scroll to zoom.
+                        <b>Node size</b> represents number of collaborations.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- ========== end Section 3 ========== -->
+
+        <!-- ========== Footer ========== -->
+        <footer class="footer">
+            <p>Designed and Developed by Ho Do Minh Quan</p>
+        </footer>
+        <!-- ========== end Footer ========== -->
+    </div>
+
+    <div class="tooltip"></div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+    <script>
+        // Reveal header elements
+        // Ref: https://scrollrevealjs.org/guide/customization.html
+        // Ref: https://medium.com/@matthewdtotheg/animations-with-scrollreveal-js-e4062961cbb9
+
+        ScrollReveal().reveal('.header-left', { delay: 500 });  // Reveal after 500ms
+        ScrollReveal().reveal('.header-right', { delay: 1000 });  // after 1000ms
+        // Reveal header images with 200ms intervals each
+        ScrollReveal().reveal('.header-image-item', {
+            delay: 1200,
+            interval: 200
+        });
+
+        // Reveal header metrics with 200ms intervals each
+        ScrollReveal().reveal('.metric-item', {
+            delay: 200,
+            interval: 200,
+            origin: 'bottom',   // Start from bottom
+            distance: '30px',   // Move distance of 30px
+            viewOffset: { top: 100 }    // Only start revealing when scroll into view (100px from top)
+        });
+    </script>
+    <script type="module" src="main.js"></script>
+    <script type="module" src="network.js"></script>
+</body>
+
+</html>
