@@ -107,26 +107,31 @@ sr.reveal(`.home__social-sidebar`, { delay: 500 });
 sr.reveal(`.home__email-sidebar`, { delay: 700 });
 sr.reveal(`.about`, { delay: 1000 });
 
-// Remove duplicate handlers and replace with this single one
-document.getElementById("jobSpan").addEventListener("click", function (e) {
-	e.preventDefault();
-	e.stopPropagation(); // Stop event bubbling
+// Set up job span and contact button interactions safely
+document.addEventListener("DOMContentLoaded", function () {
+	const jobSpan = document.getElementById("jobSpan");
 	const contactButton = document.getElementById("contactButton");
-	contactButton.classList.add("hover-effect");
 
-	// Remove the effect after 0.5 seconds
-	setTimeout(() => {
-		contactButton.classList.remove("hover-effect");
-	}, 500);
-});
+	if (jobSpan && contactButton) {
+		jobSpan.addEventListener("click", function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			contactButton.classList.add("hover-effect");
 
-// Handle regular hover for contact button
-const contactButton = document.getElementById("contactButton");
-contactButton.addEventListener("mouseenter", () => {
-	contactButton.classList.add("hover-effect");
-});
-contactButton.addEventListener("mouseleave", () => {
-	contactButton.classList.remove("hover-effect");
+			setTimeout(() => {
+				contactButton.classList.remove("hover-effect");
+			}, 500);
+		});
+	}
+
+	if (contactButton) {
+		contactButton.addEventListener("mouseenter", () => {
+			contactButton.classList.add("hover-effect");
+		});
+		contactButton.addEventListener("mouseleave", () => {
+			contactButton.classList.remove("hover-effect");
+		});
+	}
 });
 
 /*=============== SKILLS DUAL EXPLORER FUNCTIONALITY - WITH DEFAULT EXPANSION ===============*/
@@ -147,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		// Update toggle button state
 		function updateToggleButton() {
 			const expandedCount = explorer.querySelectorAll(
-				".folder__item.expanded"
+				".folder__item.expanded",
 			).length;
 			const totalCount = folderItems.length;
 
@@ -174,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			e.stopPropagation();
 
 			const expandedCount = explorer.querySelectorAll(
-				".folder__item.expanded"
+				".folder__item.expanded",
 			).length;
 			const totalCount = folderItems.length;
 
@@ -222,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
 /*=============== AUTO-SCROLL CURRENT WORK CARD ON HOVER ===============*/
 document.addEventListener("DOMContentLoaded", function () {
 	const workCards = document.querySelectorAll(
-		".about__current-work .current-work__item"
+		".about__current-work .current-work__item",
 	);
 
 	function scrollCardIntoView(card) {
@@ -283,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				// Remove active class from all tabs and contents
 				companyTabs.forEach((t) => t.classList.remove("active"));
 				jobContents.forEach((content) =>
-					content.classList.remove("active")
+					content.classList.remove("active"),
 				);
 
 				// Add active class to clicked tab
