@@ -7,6 +7,30 @@ function scrollHeader() {
 }
 window.addEventListener("scroll", scrollHeader);
 
+/*=============== MOBILE NAV MENU ===============*/
+document.addEventListener("DOMContentLoaded", function () {
+	const navMenu = document.getElementById("nav-menu");
+	const navToggle = document.getElementById("nav-toggle");
+	const navClose = document.getElementById("nav-close");
+	const navLinks = document.querySelectorAll(".nav__link");
+
+	if (!navMenu || !navToggle || !navClose) return;
+
+	navToggle.addEventListener("click", () => {
+		navMenu.classList.add("show-menu");
+	});
+
+	navClose.addEventListener("click", () => {
+		navMenu.classList.remove("show-menu");
+	});
+
+	navLinks.forEach((link) => {
+		link.addEventListener("click", () => {
+			navMenu.classList.remove("show-menu");
+		});
+	});
+});
+
 /*=============== SERVICES MODAL ===============*/
 const modalViews = document.querySelectorAll(".services__modal"),
 	modalBtns = document.querySelectorAll(".services__button"),
@@ -101,10 +125,19 @@ const sr = ScrollReveal({
 	duration: 2500,
 });
 
+sr.reveal(`.nav__logo`, {
+	origin: "left",
+	distance: "20px",
+	duration: 1200,
+});
+sr.reveal(`.nav__list`, {
+	origin: "right",
+	distance: "20px",
+	duration: 1200,
+	delay: 150,
+});
 sr.reveal(`.home__left-panel`);
 sr.reveal(`.home__right-panel`, { delay: 500 });
-sr.reveal(`.home__social-sidebar`, { delay: 500 });
-sr.reveal(`.home__email-sidebar`, { delay: 700 });
 sr.reveal(`.about`, { delay: 1000 });
 
 // Set up job span and contact button interactions safely
@@ -223,58 +256,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /*=============== CLICK-TO-FLIP DISABLED: hover-only ===============*/
-
-/*=============== AUTO-SCROLL CURRENT WORK CARD ON HOVER ===============*/
-document.addEventListener("DOMContentLoaded", function () {
-	const workCards = document.querySelectorAll(
-		".about__current-work .current-work__item",
-	);
-
-	function scrollCardIntoView(card) {
-		const rect = card.getBoundingClientRect();
-		const header = document.getElementById("header");
-		const headerH = header ? header.offsetHeight : 0;
-		const topSafe = headerH + 50; // keep a small gap below header
-		const bottomSafe = window.innerHeight - 50; // bottom padding
-
-		// If top is hidden under header, scroll up
-		if (rect.top < topSafe) {
-			const delta = rect.top - topSafe; // negative -> scroll up
-			window.scrollBy({ top: delta, behavior: "smooth" });
-			return; // avoid double scroll this tick
-		}
-
-		// If bottom is clipped, scroll down
-		if (rect.bottom > bottomSafe) {
-			const delta = rect.bottom - bottomSafe;
-			window.scrollBy({ top: delta, behavior: "smooth" });
-		}
-	}
-
-	workCards.forEach((card) => {
-		let hoverTimer = null;
-		card.addEventListener("mouseenter", () => {
-			// Wait for the flip/resize animation to start before scrolling
-			hoverTimer = setTimeout(() => scrollCardIntoView(card), 380);
-			// Clear any leaving hold if user re-enters quickly
-			card.classList.remove("leaving");
-		});
-		card.addEventListener("mouseleave", () => {
-			if (hoverTimer) clearTimeout(hoverTimer);
-			// Add a short hold to smooth height collapse vs face flip
-			card.classList.add("leaving");
-			setTimeout(() => {
-				card.classList.remove("leaving");
-			}, 180); // delay outer resize slightly
-		});
-		// Ensure we scroll after the height transition completes as well
-		card.addEventListener("transitionend", (e) => {
-			if (e.propertyName === "height") {
-				scrollCardIntoView(card);
-			}
-		});
-	});
-});
 
 // Experience tab functionality with sliding highlight
 document.addEventListener("DOMContentLoaded", function () {

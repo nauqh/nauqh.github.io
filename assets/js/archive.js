@@ -145,27 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	});
 
-	// Add smooth reveal for social sidebars
-	const socialSidebar = document.querySelector(".home__social-sidebar");
-	const emailSidebar = document.querySelector(".home__email-sidebar");
-
-	if (socialSidebar) {
-		sr.reveal(socialSidebar, {
-			origin: "left",
-			distance: "30px",
-			duration: 1000,
-			delay: 1200,
-		});
-	}
-
-	if (emailSidebar) {
-		sr.reveal(emailSidebar, {
-			origin: "right",
-			distance: "30px",
-			duration: 1000,
-			delay: 1200,
-		});
-	}
 });
 
 // Add smooth scrolling for the entire page
