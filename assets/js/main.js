@@ -292,7 +292,9 @@ document.addEventListener("DOMContentLoaded", function () {
 /*=============== PROJECT GALLERY SIDEBAR ===============*/
 document.addEventListener("DOMContentLoaded", function () {
 	const cards = document.querySelectorAll(".project-card");
-	const filterButtons = document.querySelectorAll(".work__filters .work__item");
+	const filterButtons = document.querySelectorAll(
+		".work__filters .work__item",
+	);
 	const sidebar = document.getElementById("projectSidebar");
 	const backdrop = document.getElementById("projectSidebarBackdrop");
 	const closeBtn = document.getElementById("projectSidebarClose");
@@ -441,7 +443,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	filterButtons.forEach((btn) => {
 		btn.addEventListener("click", () => {
-			filterButtons.forEach((item) => item.classList.remove("active-work"));
+			filterButtons.forEach((item) =>
+				item.classList.remove("active-work"),
+			);
 			btn.classList.add("active-work");
 			applyWorkFilter(btn.dataset.filter);
 			positionWorkFilterPill();
@@ -461,6 +465,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	closeBtn.addEventListener("click", () => toggleSidebar(false));
 	backdrop.addEventListener("click", () => toggleSidebar(false));
+
+	const backLink = sidebar.querySelector(".project-sidebar__back-link");
+	if (backLink) {
+		backLink.addEventListener("click", (e) => {
+			e.preventDefault();
+			toggleSidebar(false);
+			const workSection = document.getElementById("work");
+			if (workSection) {
+				workSection.scrollIntoView({
+					behavior: "smooth",
+					block: "start",
+				});
+			}
+			history.replaceState(null, "", "#work");
+		});
+	}
 
 	document.addEventListener("keydown", (event) => {
 		if (event.key === "Escape") toggleSidebar(false);
