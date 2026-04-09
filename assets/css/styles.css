@@ -1309,15 +1309,24 @@ img {
 	border: 1px solid rgba(255, 255, 255, 0.06);
 	cursor: pointer;
 	transition:
-		transform 0.25s ease,
+		opacity 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+		transform 0.38s cubic-bezier(0.4, 0, 0.2, 1),
 		box-shadow 0.25s ease,
 		border-color 0.25s ease;
 }
 
-.project-card:hover {
+.project-card:hover:not(.is-leaving):not(.is-entering) {
 	transform: translateY(-4px);
 	box-shadow: 0 18px 38px rgba(0, 0, 0, 0.35);
 	border-color: rgba(255, 255, 255, 0.12);
+}
+
+.project-card.is-leaving,
+.project-card.is-entering {
+	opacity: 0;
+	transform: scale(0.97);
+	pointer-events: none;
+	box-shadow: none;
 }
 
 .project-card.is-hidden {
@@ -1648,6 +1657,7 @@ img {
 
 /* Filter bar polish */
 .work__filters {
+	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -1657,16 +1667,34 @@ img {
 	margin-bottom: 1.25rem;
 }
 
+.work__filter-pill {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 0;
+	background: #64ffda;
+	border-radius: 0.6rem;
+	pointer-events: none;
+	will-change: left, top, width, height;
+	transition:
+		left 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+		top 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+		width 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+		height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .work__filters .work__item {
+	position: relative;
+	z-index: 1;
 	border: none;
 	background: transparent;
 	color: #d6d8de;
-	border-radius: 0;
-	padding: 0.2rem 0.2rem;
+	border-radius: 0.6rem;
+	padding: 0.45rem 1rem;
 	line-height: 1;
 	font-weight: 500;
 	transition:
-		color 0.2s ease,
+		color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
 		transform 0.2s ease;
 }
 
@@ -1677,10 +1705,8 @@ img {
 }
 
 .work__filters .work__item.active-work {
-	background: #64ffda;
+	background: transparent;
 	color: #021225;
-	border-radius: 0.6rem;
-	padding: 0.45rem 1rem;
 }
 
 @media screen and (max-width: 480px) {
@@ -1689,12 +1715,8 @@ img {
 	}
 
 	.work__filters .work__item {
-		padding: 0.2rem 0.2rem;
-		font-size: 0.8rem;
-	}
-
-	.work__filters .work__item.active-work {
 		padding: 0.4rem 0.75rem;
+		font-size: 0.8rem;
 	}
 }
 
@@ -3464,6 +3486,7 @@ img {
 
 /*=============== WORK FILTERS CONSISTENCY ===============*/
 .work__filters {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;

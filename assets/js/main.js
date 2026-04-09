@@ -364,18 +364,92 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 
+	const filterBar = document.querySelector(".work__filters");
+	const filterPill = filterBar?.querySelector(".work__filter-pill");
+	const filterTransitionCleanup = new WeakMap();
+
+	function positionWorkFilterPill() {
+		if (!filterBar || !filterPill) return;
+		const active = filterBar.querySelector(".work__item.active-work");
+		if (!active) return;
+		const barRect = filterBar.getBoundingClientRect();
+		const btnRect = active.getBoundingClientRect();
+		filterPill.style.left = `${btnRect.left - barRect.left + filterBar.scrollLeft}px`;
+		filterPill.style.top = `${btnRect.top - barRect.top + filterBar.scrollTop}px`;
+		filterPill.style.width = `${btnRect.width}px`;
+		filterPill.style.height = `${btnRect.height}px`;
+	}
+
+	let filterResizeTimer;
+	window.addEventListener("resize", () => {
+		clearTimeout(filterResizeTimer);
+		filterResizeTimer = setTimeout(positionWorkFilterPill, 120);
+	});
+
+	function applyWorkFilter(selected) {
+		cards.forEach((card) => {
+			const category = card.dataset.category;
+			const show = selected === "all" || selected === category;
+
+			const prevCleanup = filterTransitionCleanup.get(card);
+			if (prevCleanup) {
+				prevCleanup();
+				filterTransitionCleanup.delete(card);
+			}
+
+			if (show) {
+				const wasHidden = card.classList.contains("is-hidden");
+				card.classList.remove("is-hidden", "is-leaving");
+				if (wasHidden) {
+					card.classList.add("is-entering");
+					void card.offsetHeight;
+					requestAnimationFrame(() => {
+						card.classList.remove("is-entering");
+					});
+				}
+				return;
+			}
+
+			if (card.classList.contains("is-hidden")) return;
+
+			card.classList.add("is-leaving");
+			let settled = false;
+			const finishHide = () => {
+				if (settled) return;
+				settled = true;
+				card.classList.add("is-hidden");
+				card.classList.remove("is-leaving");
+				filterTransitionCleanup.delete(card);
+			};
+			const onEnd = (e) => {
+				if (e.target !== card) return;
+				if (!["opacity", "transform"].includes(e.propertyName)) return;
+				card.removeEventListener("transitionend", onEnd);
+				if (card.classList.contains("is-leaving")) finishHide();
+			};
+			card.addEventListener("transitionend", onEnd);
+			const tid = setTimeout(() => {
+				card.removeEventListener("transitionend", onEnd);
+				if (card.classList.contains("is-leaving")) finishHide();
+			}, 480);
+			filterTransitionCleanup.set(card, () => {
+				clearTimeout(tid);
+				card.removeEventListener("transitionend", onEnd);
+			});
+		});
+	}
+
 	filterButtons.forEach((btn) => {
 		btn.addEventListener("click", () => {
 			filterButtons.forEach((item) => item.classList.remove("active-work"));
 			btn.classList.add("active-work");
-
-			const selected = btn.dataset.filter;
-			cards.forEach((card) => {
-				const category = card.dataset.category;
-				const show = selected === "all" || selected === category;
-				card.classList.toggle("is-hidden", !show);
-			});
+			applyWorkFilter(btn.dataset.filter);
+			positionWorkFilterPill();
 		});
+	});
+
+	requestAnimationFrame(() => {
+		requestAnimationFrame(positionWorkFilterPill);
 	});
 
 	cards.forEach((card) => {
