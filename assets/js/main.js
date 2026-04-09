@@ -288,3 +288,107 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 });
+
+/*=============== PROJECT GALLERY SIDEBAR ===============*/
+document.addEventListener("DOMContentLoaded", function () {
+	const cards = document.querySelectorAll(".project-card");
+	const filterButtons = document.querySelectorAll(".work__filters .work__item");
+	const sidebar = document.getElementById("projectSidebar");
+	const backdrop = document.getElementById("projectSidebarBackdrop");
+	const closeBtn = document.getElementById("projectSidebarClose");
+
+	if (!cards.length || !sidebar || !backdrop || !closeBtn) return;
+
+	const titleEl = document.getElementById("projectSidebarTitle");
+	const descEl = document.getElementById("projectSidebarDesc");
+	const aboutEl = document.getElementById("projectSidebarAbout");
+	const techEl = document.getElementById("projectSidebarTech");
+	const websiteEl = document.getElementById("projectSidebarWebsite");
+	const githubEl = document.getElementById("projectSidebarGithub");
+	const primaryEl = document.getElementById("projectSidebarPrimary");
+	const imageEl = document.getElementById("projectSidebarImage");
+
+	function toggleSidebar(isOpen) {
+		sidebar.classList.toggle("is-open", isOpen);
+		backdrop.classList.toggle("is-open", isOpen);
+		document.body.style.overflow = isOpen ? "hidden" : "";
+		sidebar.setAttribute("aria-hidden", isOpen ? "false" : "true");
+	}
+
+	function fillProjectDetails(card) {
+		const title = card.dataset.title || "";
+		const desc = card.dataset.desc || "";
+		const about = card.dataset.about || "";
+		const tech = (card.dataset.tech || "").split(",").filter(Boolean);
+		const website = card.dataset.website || "";
+		const github = card.dataset.github || "";
+		const image = card.querySelector("img");
+
+		titleEl.textContent = title;
+		descEl.textContent = desc;
+		aboutEl.textContent = about;
+
+		techEl.innerHTML = "";
+		tech.forEach((item) => {
+			const chip = document.createElement("span");
+			chip.className = "work__tech";
+			chip.textContent = item.trim();
+			techEl.appendChild(chip);
+		});
+
+		if (website) {
+			websiteEl.textContent = website;
+			websiteEl.href = website;
+			websiteEl.style.display = "inline";
+			primaryEl.href = website;
+		} else {
+			websiteEl.textContent = "Private / not deployed";
+			websiteEl.removeAttribute("href");
+			websiteEl.style.display = "inline";
+			primaryEl.href = github || "#work";
+		}
+
+		if (github) {
+			githubEl.textContent = github;
+			githubEl.href = github;
+			githubEl.style.display = "inline";
+		} else {
+			githubEl.textContent = "Private repository";
+			githubEl.removeAttribute("href");
+			githubEl.style.display = "inline";
+		}
+
+		if (imageEl && image) {
+			imageEl.src = image.src;
+			imageEl.alt = title;
+		}
+	}
+
+	filterButtons.forEach((btn) => {
+		btn.addEventListener("click", () => {
+			filterButtons.forEach((item) => item.classList.remove("active-work"));
+			btn.classList.add("active-work");
+
+			const selected = btn.dataset.filter;
+			cards.forEach((card) => {
+				const category = card.dataset.category;
+				const show = selected === "all" || selected === category;
+				card.classList.toggle("is-hidden", !show);
+			});
+		});
+	});
+
+	cards.forEach((card) => {
+		card.addEventListener("click", () => {
+			fillProjectDetails(card);
+			toggleSidebar(true);
+		});
+	});
+
+	closeBtn.addEventListener("click", () => toggleSidebar(false));
+	backdrop.addEventListener("click", () => toggleSidebar(false));
+
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape") toggleSidebar(false);
+	});
+});

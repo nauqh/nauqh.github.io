@@ -65,10 +65,33 @@
                     </button>
                 </div>
                 <ul class="nav__list">
-                    <li class="nav__item"><a href="#home" class="nav__link">Home</a></li>
-                    <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-                    <li class="nav__item"><a href="#work" class="nav__link">Projects</a></li>
-                    <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+                    <li class="nav__item">
+                        <a href="#about" class="nav__link">
+                            <span class="nav__index">01.</span>
+                            <span class="nav__label">About</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#experience" class="nav__link">
+                            <span class="nav__index">02.</span>
+                            <span class="nav__label">Experience</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#work" class="nav__link">
+                            <span class="nav__index">03.</span>
+                            <span class="nav__label">Work</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#contact" class="nav__link">
+                            <span class="nav__index">04.</span>
+                            <span class="nav__label">Contact</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="assets/pdf/resume.pdf" class="nav__link nav__resume" target="_blank" rel="noopener noreferrer">Resume</a>
+                    </li>
                 </ul>
             </div>
             <button class="nav__toggle" id="nav-toggle" aria-label="Open menu">
@@ -95,9 +118,6 @@
                         <div class="about__quick-links">
                             <a href="https://github.com/nauqh" class="quick-link">
                                 <i class='bx bxl-github'></i> GitHub profile
-                            </a>
-                            <a href="assets/pdf/resume.pdf" class="quick-link">
-                                <i class='bx bx-file'></i> Resume
                             </a>
                         </div>
                     </div>
@@ -613,281 +633,120 @@
         <!--=============== WORK ===============-->
         <section class="work section" id="work">
             <h2 class="section__title">Projects.</h2>
-            <p class="hover-instruction">Hover over the image <i class="bx bx-down-arrow-alt"></i></p>
-
-            <div class="work__featured-container">
-                <div class="about__container container grid" style="margin-top: 4rem;" id="feature__container">
-                    <img src="assets/img/exam.png" alt="" class="featured__img">
-
-                    <div class="about__data">
-                        <div class="text-content">
-                            <div class="featured__info">
-                                <span class="featured__subtitle">Featured project</span>
-                                <a class="featured__title" href="https://csassessment.it.com/">Online Assessment
-                                    Platform</a>
-                            </div>
-
-                            <p class="about__description" style="margin-bottom: 2rem;">
-                                The project reimagines the existing exam management system, addressing longstanding
-                                issues related to content quality, reliability, and usability. This new exam system
-                                builds on the core functionalities of the legacy platform while introducing greater
-                                control of content, consistency, and adaptability to meet current needs.
-                            </p>
-                            <p class="about__description">
-                                The exam platform delivers a secure, modern testing environment designed to enhance
-                                academic performance. It features AI-powered proctoring, live code execution, and
-                                instant feedback to create an engaging exam experience.
-                            </p>
-                            <div class="work__tech-list">
-                                <span class="work__tech">Nexjs</span>
-                                <span class="work__tech">Shadcn</span>
-                                <span class="work__tech">Clerk</span>
-                                <span class="work__tech">FastAPI</span>
-                            </div>
-                        </div>
-                        <div class="hover-images">
-                            <img src="assets/img/exam1.png" alt="Hover Image 3">
-                            <img src="assets/img/exam3.png" alt="Hover Image 1">
-                            <img src="assets/img/exam4.png" alt="Hover Image 4">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="work__featured-container">
-                <div class="about__container container grid" style="margin-top: 4rem;" id="feature__container">
-                    <!-- <video class="featured__img" autoplay muted loop playsinline>
-                        <source
-                            src="https://www.dropbox.com/scl/fi/8zwy8aw5q4hhilf329mhn/sample.mp4?rlkey=9un5nr7hzqrf7rkomf0yil76d&st=65x5rtmc&raw=1"
-                            type="video/mp4">
-
-                        Your browser does not support the video tag.
-                    </video> -->
-                    <img src="assets/img/ass1.png" alt="" class="featured__img">
-
-                    <div class="about__data">
-                        <div class="text-content">
-                            <div class="featured__info">
-                                <span class="featured__subtitle">Featured project</span>
-                                <a class="featured__title" href="https://github.com/nauqh/ti">AI Teaching Assistant</a>
-                            </div>
-
-                            <p class="about__description" style="margin-bottom: 2rem;">
-                                An intelligent Discord bot that serves as a teaching assistant for Coderschool's online
-                                learning community. It leverages <span style=" color:#64ffda">OpenAI's models</span>
-                                to provide contextual responses, real-time debugging assistance, and personalized
-                                learning support across multiple courses.
-                            </p>
-                            <p class="about__description" style="margin-bottom: 2rem;">
-                                Key features include an advanced code analysis engine using <span
-                                    style=" color:#64ffda">GitHub API</span> for automated feedback, image-based
-                                debugging capabilities, and a <span style="color:#64ffda">knowledge retrieval</span>
-                                system powered by a vector database that curates educational content via real-time
-                                searches of YouTube content and local documents.
-                            </p>
-                            <p class="about__description">
-                                The assistant currently resolves 90% of forum threads monthly, significantly reducing
-                                teaching staff workload. It is also integrated into the
-                                homepage to handle administrative queries and assist new learners.
-                            </p>
-                            <div class="work__tech-list">
-                                <span class="work__tech">OpenAI</span>
-                                <span class="work__tech">Nextjs</span>
-                                <span class="work__tech">GitHub</span>
-                                <span class="work__tech">ChromaDB</span>
-                                <span class="work__tech">Discord.py</span>
-                            </div>
-                        </div>
-                        <div class="hover-images">
-                            <img src="assets/img/ass.png" alt="Hover Image 1">
-                            <img src="assets/img/assistant.png" alt="Hover Image 1">
-                            <img src="assets/img/ass2.png" alt="Hover Image 2">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="work__featured-container">
-                <div class="about__container container grid" style="margin-top: 4rem;" id="feature__container">
-                    <img src="assets/img/kel.png" alt="" class="featured__img">
-
-                    <div class="about__data">
-                        <div class="text-content">
-                            <div class="featured__info">
-                                <span class="featured__subtitle">Featured project</span>
-                                <a class="featured__title" href="https://keleidoscope.vercel.app/">Keleidoscope</a>
-                            </div>
-
-                            <p class="about__description" style="margin-bottom: 2rem;">
-                                Keleidoscope is a personal writing platform I built for my partner, Kel, a digital home
-                                that mirrors her eclectic, vibrant worldview. Through close collaboration, we created
-                                something beyond a typical blog: a space where subtle interactivity and thoughtful
-                                design amplify her voice while preserving her quirky charm.
-                            </p>
-                            <p class="about__description"">
-                                The project reflects our journey of finding common ground across different fields, learning from contrasting perspectives, and building something meaningful together outside our comfort zones.
-                            </p>
-                            <div class=" work__tech-list">
-                                <span class="work__tech">Nextjs</span>
-                                <span class="work__tech">Shadcn</span>
-                                <span class="work__tech">Tailwind</span>
-                        </div>
-                    </div>
-                    <div class="hover-images">
-                        <img src="assets/img/kel1.png" alt="Hover Image 1">
-                        <img src="assets/img/kel2.png" alt="Hover Image 2">
-                    </div>
-                </div>
-            </div>
-            </div>
-
-            <div class="work__featured-container">
-                <div class="about__container container grid" style="margin-top: 4rem;" id="feature__container">
-                    <img src="assets/img/hym.png" alt="" class="featured__img">
-
-                    <div class="about__data">
-                        <div class="text-content">
-                            <div class="featured__info">
-                                <span class="featured__subtitle">Featured project</span>
-                                <a class="featured__title" href="https://hymaram.streamlit.app/">ARAM Analysis</a>
-                            </div>
-
-                            <p class="about__description" style="margin-bottom: 2rem;">
-                                A data analytics application that provides insights into League of Legends player
-                                performance of my team, leveraging the <span style="color:#64ffda">Riot API</span> to
-                                collect and process match data.
-                            </p>
-                            <p class="about__description">
-                                The project's key features include player performance tracking, match data analysis,
-                                interactive dashboards and real-time updates.
-                            </p>
-                            <div class=" work__tech-list">
-                                <span class="work__tech">Streamlit</span>
-                                <span class="work__tech">RiotAPI</span>
-                                <span class="work__tech">Pandas</span>
-                                <span class="work__tech">Plotly</span>
-                            </div>
-                        </div>
-                        <div class="hover-images">
-                            <img src="assets/img/hym1.png" alt="Hover Image 1">
-                            <img src="assets/img/hym2.png" alt="Hover Image 2">
-                            <img src="assets/img/hym3.png" alt="Hover Image 3">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="work__featured-container">
-                <div class="about__container container grid" style="margin-top: 4rem;" id="feature__container">
-                    <img src="assets/img/vis0.png" alt="" class="featured__img">
-
-                    <div class="about__data">
-                        <div class="text-content">
-                            <div class="featured__info">
-                                <span class="featured__subtitle">Featured project</span>
-                                <a class="featured__title" href="visualisation.html">Data Visualisation Project</a>
-                            </div>
-
-                            <p class="about__description" style="margin-bottom: 2rem;">
-                                An interactive visualisation exploring the transformation of music,
-                                genres, and artist collaborations across the 20th century. The project analyzes over
-                                586,000 tracks, 4,672 genres, and 1.1 million artists to reveal how music evolved from
-                                vinyl to streaming.
-                            </p>
-                            <p class="about__description">
-                                Built with <span style="color:#64ffda">D3.js</span> for interactive visualizations, the
-                                project features genre evolution charts, audio feature analysis, and artist
-                                collaboration networks. It integrates <span style="color:#64ffda">Spotify</span> data to
-                                provide comprehensive insights into music's journey through the decades.
-                            </p>
-                            <div class="work__tech-list">
-                                <span class="work__tech">Spotify</span>
-                                <span class="work__tech">Javascript</span>
-                                <span class="work__tech">D3.js</span>
-                            </div>
-                        </div>
-                        <div class="hover-images">
-                            <img src="assets/img/vis1.png" alt="Hover Image 1">
-                            <img src="assets/img/vis2.png" alt="Hover Image 2">
-                            <img src="assets/img/vis3.png" alt="Hover Image 3">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Simplified Project Section -->
-            <h2 class="section__title" style="color: #fafafa; font-size: 1.5rem;">Other Noteworthy Projects</h2>
-            <div class="work__container container grid">
-                <div class="work__card">
-                    <div class="work__card-title">
-                        <a href="https://github.com/nauqh/resonance" target="_blank" class="work__button">
-                            Musicotherapy <i class="bx bx-right-arrow-alt work__icon"></i>
-                        </a>
-                        <div class="card-icons">
-                            <a class="title-icon" href="https://github.com/nauqh/resonance"><i
-                                    class="bx bxl-github"></i></a>
-                        </div>
-                    </div>
-                    <p class="work__description">
-                        A music recommender that analyzes your music taste and provides suggestions on artists
-                        and tracks that align with your music characteristics.
-                    </p>
-                    <div class="work__tech-list">
-                        <span class="work__tech">React</span>
-                        <span class="work__tech">FastAPI</span>
-                        <span class="work__tech">OpenAI</span>
-                    </div>
-                </div>
-
-                <div class="work__card">
-                    <div class="work__card-title">
-                        <a href="https://github.com/nauqh/Echodb-app" target="_blank" class="work__button">
-                            Echodb <i class="bx bx-right-arrow-alt work__icon"></i>
-                        </a>
-                        <div class="card-icons">
-                            <a class="title-icon" href="error.html"><i class="bx bx-link-alt"></i></a>
-                            <a class="title-icon" href="error.html"><i class="bx bxl-github"></i></a>
-                        </div>
-                    </div>
-                    <p class="work__description">
-                        A compact ELT system designed to gather and orchestrate music data pipelines from <span
-                            style="color: #64ffda;">Spotify</span>, specifically targeting playlists such as Discovery
-                        Weekly, Release Radar.
-                    </p>
-                    <div class="work__tech-list">
-                        <span class="work__tech">Fastapi</span>
-                        <span class="work__tech">Airflow</span>
-                        <span class="work__tech">PostgreSQL</span>
-                    </div>
-                </div>
-
-                <div class="work__card">
-                    <div class="work__card-title">
-                        <a href="https://github.com/nauqh/Ashema" target="_blank" class="work__button">
-                            Phonobot <i class="bx bx-right-arrow-alt work__icon"></i>
-                        </a>
-                        <div class="card-icons">
-                            <a class="title-icon" href=""><i class="bx bx-link-alt"></i></a>
-                            <a class="title-icon" href=""><i class="bx bxl-github"></i></a>
-                        </div>
-                    </div>
-                    <p class="work__description">
-                        A multifunctional <span style="color: #64ffda;">Discord</span> bot designed for playing music,
-                        equipped with a comprehensive range of commands to enhance the audio experience within server.
-                    </p>
-                    <div class="work__tech-list">
-                        <span class="work__tech">Hikari</span>
-                        <span class="work__tech">Discord API</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- View All Projects Button -->
-            <div class="view-all-projects">
-                <a href="archive.html" class="view-all-button">
-                    View projects archive <i class="bx bx-right-arrow-alt"></i>
+            <div class="work__archive container">
+                <a href="archive.html" class="work__archive-link">
+                    View the archive
                 </a>
             </div>
+
+            <div class="work__filters">
+                <button class="work__item active-work" data-filter="all">All</button>
+                <button class="work__item" data-filter="projects">Projects</button>
+                <button class="work__item" data-filter="devtools">Dev Tools</button>
+                <button class="work__item" data-filter="opensource">Open Source</button>
+                <button class="work__item" data-filter="designs">Designs</button>
+            </div>
+
+            <div class="work__gallery container" id="work-gallery">
+                <article class="project-card" data-category="projects" data-title="Online Assessment Platform"
+                    data-desc="A secure online exam platform with AI-powered proctoring, instant feedback, and scalable assessment workflows."
+                    data-about="The project reimagines legacy exam delivery by improving content control, reliability, and usability for modern teaching teams."
+                    data-tech="Next.js,Shadcn UI,Clerk,FastAPI" data-website="https://csassessment.it.com/"
+                    data-github="https://github.com/nauqh">
+                    <img src="assets/img/exam.png" alt="Online Assessment Platform" class="project-card__image">
+                    <div class="project-card__overlay">
+                        <h3>Online Assessment Platform</h3>
+                    </div>
+                </article>
+
+                <article class="project-card" data-category="devtools" data-title="AI Teaching Assistant"
+                    data-desc="An intelligent Discord teaching assistant that provides contextual support, debugging help, and knowledge retrieval."
+                    data-about="Designed for CoderSchool communities, it automates support with LLM workflows, GitHub-powered code analysis, and vector search."
+                    data-tech="OpenAI,Next.js,Discord.py,GitHub API,ChromaDB" data-website=""
+                    data-github="https://github.com/nauqh/ti">
+                    <img src="assets/img/ass1.png" alt="AI Teaching Assistant" class="project-card__image">
+                    <div class="project-card__overlay">
+                        <h3>AI Teaching Assistant</h3>
+                    </div>
+                </article>
+
+                <article class="project-card" data-category="designs" data-title="Keleidoscope"
+                    data-desc="A custom personal writing platform with playful interactions and editorial-first design."
+                    data-about="Built in close collaboration for storytelling, with a visual system that balances personality and readability."
+                    data-tech="Next.js,Shadcn UI,Tailwind CSS" data-website="https://keleidoscope.vercel.app/"
+                    data-github="https://github.com/nauqh">
+                    <img src="assets/img/kel.png" alt="Keleidoscope" class="project-card__image">
+                    <div class="project-card__overlay">
+                        <h3>Keleidoscope</h3>
+                    </div>
+                </article>
+
+                <article class="project-card" data-category="projects" data-title="ARAM Analysis"
+                    data-desc="A League of Legends analytics app for tracking player and match performance."
+                    data-about="The app transforms Riot API data into interactive dashboards to monitor trends, team strengths, and match-level insights."
+                    data-tech="Streamlit,Riot API,Pandas,Plotly" data-website="https://hymaram.streamlit.app/"
+                    data-github="https://github.com/nauqh">
+                    <img src="assets/img/hym.png" alt="ARAM Analysis" class="project-card__image">
+                    <div class="project-card__overlay">
+                        <h3>ARAM Analysis</h3>
+                    </div>
+                </article>
+
+                <article class="project-card" data-category="designs" data-title="Data Visualisation Project"
+                    data-desc="An interactive data story about music evolution across the 20th century."
+                    data-about="Explores genres, artist collaboration networks, and audio trends from a large-scale Spotify dataset."
+                    data-tech="JavaScript,D3.js,Spotify" data-website="visualisation.html"
+                    data-github="https://github.com/nauqh">
+                    <img src="assets/img/vis0.png" alt="Data Visualisation Project" class="project-card__image">
+                    <div class="project-card__overlay">
+                        <h3>Data Visualisation Project</h3>
+                    </div>
+                </article>
+
+                <article class="project-card" data-category="opensource" data-title="Musicotherapy"
+                    data-desc="A recommendation engine that learns music taste and suggests aligned artists and tracks."
+                    data-about="Uses user listening characteristics to map similarity and improve discovery quality."
+                    data-tech="React,FastAPI,OpenAI" data-website="" data-github="https://github.com/nauqh/resonance">
+                    <img src="assets/img/vis1.png" alt="Musicotherapy" class="project-card__image">
+                    <div class="project-card__overlay">
+                        <h3>Musicotherapy</h3>
+                    </div>
+                </article>
+            </div>
+
+            <div class="project-sidebar-backdrop" id="projectSidebarBackdrop"></div>
+            <aside class="project-sidebar" id="projectSidebar" aria-hidden="true">
+                <button class="project-sidebar__close" id="projectSidebarClose" aria-label="Close project details">
+                    <i class='bx bx-x'></i>
+                </button>
+                <a class="project-sidebar__back-link" href="#work">Back to projects.</a>
+
+                <div class="project-sidebar__content">
+                    <h3 id="projectSidebarTitle">Project title</h3>
+                    <p id="projectSidebarDesc"></p>
+
+                    <img id="projectSidebarImage" src="" alt="" class="project-sidebar__image">
+
+                    <h4>About</h4>
+                    <p id="projectSidebarAbout"></p>
+
+                    <h4>Technologies</h4>
+                    <div class="work__tech-list" id="projectSidebarTech"></div>
+
+                    <h4>Website</h4>
+                    <a id="projectSidebarWebsite" href="#" target="_blank" rel="noopener noreferrer"></a>
+
+                    <h4>Github</h4>
+                    <a id="projectSidebarGithub" href="#" target="_blank" rel="noopener noreferrer"></a>
+                </div>
+
+                <div class="project-sidebar__footer">
+                    <a id="projectSidebarPrimary" href="#" class="project-sidebar__open-btn" target="_blank"
+                        rel="noopener noreferrer">
+                        Open Project <i class='bx bx-link-external'></i>
+                    </a>
+                </div>
+            </aside>
         </section>
     </main>
 
