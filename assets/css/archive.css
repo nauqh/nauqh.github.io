@@ -1,5 +1,11 @@
 /*=============== ARCHIVE PAGE STYLES ===============*/
 
+/* Override global .section top padding so the heading sits under the nav */
+.archive.section {
+	padding-top: 0;
+	padding-bottom: 1rem;
+}
+
 /*=============== ARCHIVE HEADER ===============*/
 .archive__header {
 	text-align: center;
