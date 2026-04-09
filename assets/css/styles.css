@@ -63,6 +63,7 @@
 
 html {
 	scroll-behavior: smooth;
+	background-color: var(--body-color);
 }
 
 body,
@@ -4853,5 +4854,50 @@ img {
 	.view-all-button {
 		font-size: var(--smaller-font-size);
 		padding: 0.5rem 1rem;
+	}
+}
+
+/* Full-bleed on small screens: remove outer side margins (avoids light gutters beside the dark theme) */
+@media screen and (max-width: 768px) {
+	.container {
+		max-width: none;
+		width: 100%;
+		margin-left: 0;
+		margin-right: 0;
+		padding-left: max(1rem, env(safe-area-inset-left, 0px));
+		padding-right: max(1rem, env(safe-area-inset-right, 0px));
+	}
+
+	.header .nav {
+		max-width: none;
+		width: 100%;
+		padding-left: max(1rem, env(safe-area-inset-left, 0px));
+		padding-right: max(1rem, env(safe-area-inset-right, 0px));
+	}
+
+	.section__title {
+		width: 100%;
+		max-width: none;
+		margin-left: 0;
+		margin-right: 0;
+		padding-left: max(1rem, env(safe-area-inset-left, 0px));
+		padding-right: max(1rem, env(safe-area-inset-right, 0px));
+		box-sizing: border-box;
+	}
+
+	/* Slightly tighter navbar → hero on mobile only (default .section top is 4.5rem) */
+	.home.section {
+		padding-top: 1rem;
+	}
+
+	.home__container {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.home__data {
+		width: 100%;
+		max-width: 100%;
+		margin-top: 1rem;
 	}
 }
