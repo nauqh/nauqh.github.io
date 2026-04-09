@@ -310,10 +310,6 @@ img {
 	min-height: 60vh;
 }
 
-.home.section {
-	padding-top: 2rem;
-}
-
 /* Left Panel Styles */
 .home__left-panel {
 	display: flex;
