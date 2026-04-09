@@ -1397,10 +1397,9 @@ img {
 	transform: translateX(calc(100% + 2px));
 	transition: transform 0.28s ease;
 	z-index: 999;
-	display: grid;
-	grid-template-columns: auto 1fr;
-	grid-template-rows: auto 1fr auto;
-	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 	pointer-events: none;
 }
 
@@ -1414,6 +1413,14 @@ img {
 	visibility: visible;
 }
 
+.project-sidebar__header {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: start;
+	flex-shrink: 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .project-sidebar__close {
 	position: static;
 	background: rgba(255, 255, 255, 0.08);
@@ -1423,9 +1430,8 @@ img {
 	border-radius: 50%;
 	display: grid;
 	place-items: center;
-	margin: 1rem 0 0 1rem;
+	margin: 1rem 0 0.75rem 1rem;
 	grid-column: 1;
-	grid-row: 1;
 	align-self: start;
 	transition:
 		background-color 0.2s ease,
@@ -1442,9 +1448,8 @@ img {
 	color: var(--text-color-light);
 	font-weight: 600;
 	font-size: 0.95rem;
-	margin: 1.2rem 1.2rem 0 0;
+	margin: 1.2rem 1.2rem 0.85rem 0;
 	grid-column: 2;
-	grid-row: 1;
 	justify-self: end;
 	align-self: start;
 	transition:
@@ -1458,10 +1463,11 @@ img {
 }
 
 .project-sidebar__content {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
 	padding: 1.25rem 1.75rem 1.5rem;
-	overflow-y: visible;
-	grid-column: 1 / -1;
-	grid-row: 2;
+	scrollbar-gutter: stable;
 }
 
 .project-sidebar__content h3 {
@@ -1477,20 +1483,20 @@ img {
 }
 
 .project-sidebar__content p,
-.project-sidebar__content a {
+.project-sidebar__content a:not(.project-sidebar__open-btn) {
 	color: var(--text-color);
 	line-height: 1.5;
 	font-size: 0.9rem;
 }
 
-.project-sidebar__content a {
+.project-sidebar__content a:not(.project-sidebar__open-btn) {
 	word-break: break-word;
 	transition:
 		color 0.2s ease,
 		opacity 0.2s ease;
 }
 
-.project-sidebar__content a:hover {
+.project-sidebar__content a:not(.project-sidebar__open-btn):hover {
 	color: #ffffff;
 	opacity: 0.95;
 }
@@ -1503,44 +1509,57 @@ img {
 }
 
 .project-sidebar__footer {
-	padding: 1rem;
+	margin-top: 1.5rem;
+	padding-top: 1.25rem;
 	border-top: 1px solid rgba(255, 255, 255, 0.08);
-	background: rgba(58, 79, 110, 0.85);
-	grid-column: 1 / -1;
-	grid-row: 3;
 }
 
 .project-sidebar__open-btn {
 	width: 100%;
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	gap: 0.5rem;
-	color: #f3f5f9;
+	color: #0a1622;
 	font-weight: 600;
-	font-size: 0.9rem;
-	padding: 0.75rem 1rem;
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	border-radius: 0.6rem;
+	font-size: 0.92rem;
+	padding: 0.85rem 1.15rem;
+	border: none;
+	border-radius: 0.65rem;
+	background: var(--first-color);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset;
 	transition:
 		background-color 0.2s ease,
-		border-color 0.2s ease,
-		transform 0.2s ease;
+		box-shadow 0.2s ease,
+		transform 0.2s ease,
+		filter 0.2s ease;
 }
 
 .project-sidebar__open-btn:hover {
-	background: rgba(255, 255, 255, 0.08);
-	border-color: rgba(255, 255, 255, 0.28);
+	background: hsl(168, 100%, 52%);
+	color: #061018;
+	filter: brightness(1.05);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.32) inset;
 	transform: translateY(-1px);
+}
+
+.project-sidebar__open-btn:active {
+	transform: translateY(0);
+	filter: brightness(0.97);
 }
 
 .project-sidebar__close:focus-visible,
 .project-sidebar__back-link:focus-visible,
-.project-sidebar__content a:focus-visible,
-.project-sidebar__open-btn:focus-visible {
+.project-sidebar__content a:not(.project-sidebar__open-btn):focus-visible {
 	outline: 2px solid rgba(100, 255, 218, 0.75);
 	outline-offset: 2px;
 	border-radius: 0.4rem;
+}
+
+.project-sidebar__open-btn:focus-visible {
+	outline: 2px solid #041016;
+	outline-offset: 3px;
+	border-radius: 0.65rem;
 }
 
 .work__archive {
@@ -1600,7 +1619,12 @@ img {
 	}
 
 	.project-sidebar__content {
-		padding: 1rem 1rem 1rem;
+		padding: 1rem 1rem 1.25rem;
+	}
+
+	.project-sidebar__footer {
+		margin-top: 1.25rem;
+		padding-top: 1.1rem;
 	}
 
 	.project-sidebar__content h3 {
@@ -1612,7 +1636,7 @@ img {
 	}
 
 	.project-sidebar__content p,
-	.project-sidebar__content a {
+	.project-sidebar__content a:not(.project-sidebar__open-btn) {
 		font-size: 0.85rem;
 		line-height: 1.45;
 	}

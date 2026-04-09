@@ -90,7 +90,8 @@
                         </a>
                     </li>
                     <li class="nav__item">
-                        <a href="assets/pdf/resume.pdf" class="nav__link nav__resume" target="_blank" rel="noopener noreferrer">Resume</a>
+                        <a href="assets/pdf/resume.pdf" class="nav__link nav__resume" target="_blank"
+                            rel="noopener noreferrer">Resume</a>
                     </li>
                 </ul>
             </div>
@@ -663,7 +664,7 @@
                     data-about="Designed for CoderSchool communities, it automates support with LLM workflows, GitHub-powered code analysis, and vector search."
                     data-tech="OpenAI,Next.js,Discord.py,GitHub API,ChromaDB" data-website=""
                     data-github="https://github.com/nauqh/ti">
-                    <img src="assets/img/ass1.png" alt="AI Teaching Assistant" class="project-card__image">
+                    <img src="assets/img/agent-thumbnail.jpg" alt="AI Teaching Assistant" class="project-card__image">
                     <div class="project-card__overlay">
                         <h3>AI Teaching Assistant</h3>
                     </div>
@@ -706,7 +707,7 @@
                     data-desc="A recommendation engine that learns music taste and suggests aligned artists and tracks."
                     data-about="Uses user listening characteristics to map similarity and improve discovery quality."
                     data-tech="React,FastAPI,OpenAI" data-website="" data-github="https://github.com/nauqh/resonance">
-                    <img src="assets/img/vis1.png" alt="Musicotherapy" class="project-card__image">
+                    <img src="assets/img/vinyl.jpeg" alt="Musicotherapy" class="project-card__image">
                     <div class="project-card__overlay">
                         <h3>Musicotherapy</h3>
                     </div>
@@ -715,10 +716,12 @@
 
             <div class="project-sidebar-backdrop" id="projectSidebarBackdrop"></div>
             <aside class="project-sidebar" id="projectSidebar" aria-hidden="true">
-                <button class="project-sidebar__close" id="projectSidebarClose" aria-label="Close project details">
-                    <i class='bx bx-x'></i>
-                </button>
-                <a class="project-sidebar__back-link" href="#work">Back to projects.</a>
+                <div class="project-sidebar__header">
+                    <button class="project-sidebar__close" id="projectSidebarClose" aria-label="Close project details">
+                        <i class='bx bx-x'></i>
+                    </button>
+                    <a class="project-sidebar__back-link" href="#work">Back to projects.</a>
+                </div>
 
                 <div class="project-sidebar__content">
                     <h3 id="projectSidebarTitle">Project title</h3>
@@ -737,13 +740,13 @@
 
                     <h4>Github</h4>
                     <a id="projectSidebarGithub" href="#" target="_blank" rel="noopener noreferrer"></a>
-                </div>
 
-                <div class="project-sidebar__footer">
-                    <a id="projectSidebarPrimary" href="#" class="project-sidebar__open-btn" target="_blank"
-                        rel="noopener noreferrer">
-                        Open Project <i class='bx bx-link-external'></i>
-                    </a>
+                    <div class="project-sidebar__footer">
+                        <a id="projectSidebarPrimary" href="#" class="project-sidebar__open-btn" target="_blank"
+                            rel="noopener noreferrer">
+                            Open project <i class='bx bx-link-external' aria-hidden="true"></i>
+                        </a>
+                    </div>
                 </div>
             </aside>
         </section>
