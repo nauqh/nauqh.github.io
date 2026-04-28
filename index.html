@@ -57,7 +57,12 @@
     <!--=============== HEADER ===============-->
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="index.html" class="nav__logo" aria-label="Nauqh"></a>
+            <div class="nav__meta" aria-label="Current location and time">
+                <span class="nav__meta-item"><span class="meta-strip__dot" aria-hidden="true"></span><span
+                        id="metaLocation">MELBOURNE, AU</span></span>
+                <span class="nav__meta-item" id="metaTime">--:-- --</span>
+                <span class="nav__meta-item" id="metaTimezone">GMT+0</span>
+            </div>
             <div class="nav__menu" id="nav-menu">
                 <div class="nav__menu-header">
                     <button class="nav__close" id="nav-close" aria-label="Close menu">

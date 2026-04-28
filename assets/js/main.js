@@ -255,6 +255,41 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
+/*=============== LOCATION / TIME / TIMEZONE STRIP ===============*/
+document.addEventListener("DOMContentLoaded", function () {
+	const locationEl = document.getElementById("metaLocation");
+	const timeEl = document.getElementById("metaTime");
+	const timezoneEl = document.getElementById("metaTimezone");
+	if (!locationEl || !timeEl || !timezoneEl) return;
+
+	const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+
+	function getGMTOffsetLabel(date) {
+		const parts = new Intl.DateTimeFormat("en-US", {
+			timeZone,
+			timeZoneName: "shortOffset",
+		}).formatToParts(date);
+		const offsetPart = parts.find((part) => part.type === "timeZoneName");
+		const label = offsetPart ? offsetPart.value : "GMT+0";
+		return label.replace("UTC", "GMT");
+	}
+
+	function updateTime() {
+		const now = new Date();
+		timeEl.textContent = new Intl.DateTimeFormat("en-US", {
+			timeZone,
+			hour: "numeric",
+			minute: "2-digit",
+			hour12: true,
+		}).format(now);
+		timezoneEl.textContent = getGMTOffsetLabel(now);
+	}
+
+	updateTime();
+	setInterval(updateTime, 1000);
+	locationEl.textContent = "MELBOURNE, AU";
+});
+
 /*=============== CLICK-TO-FLIP DISABLED: hover-only ===============*/
 
 // Experience tab functionality with sliding highlight
