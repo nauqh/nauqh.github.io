@@ -52,6 +52,12 @@
 	}
 }
 
+@media screen and (min-width: 1500px) {
+	html {
+		zoom: 1.2;
+	}
+}
+
 /*=============== BASE ===============*/
 * {
 	box-sizing: border-box;
@@ -2225,7 +2231,6 @@ img {
 		text-transform: none;
 		align-self: flex-start;
 	}
-
 }
 
 @media screen and (min-width: 1200px) {
