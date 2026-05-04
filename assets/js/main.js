@@ -1,3 +1,11 @@
+/*=============== LENIS SMOOTH SCROLL ===============*/
+const lenis = new Lenis({
+	autoRaf: true,
+	lerp: 0.1,
+	smoothWheel: true,
+	smoothTouch: false,
+});
+
 /*=============== CHANGE BACKGROUND HEADER ===============*/
 function scrollHeader() {
 	const header = document.getElementById("header");
@@ -25,8 +33,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	navLinks.forEach((link) => {
-		link.addEventListener("click", () => {
+		link.addEventListener("click", (e) => {
 			navMenu.classList.remove("show-menu");
+			const href = link.getAttribute("href");
+			if (href && href.startsWith("#")) {
+				e.preventDefault();
+				const target = document.querySelector(href);
+				if (target) lenis.scrollTo(target);
+			}
 		});
 	});
 });
@@ -348,7 +362,13 @@ document.addEventListener("DOMContentLoaded", function () {
 	function toggleSidebar(isOpen) {
 		sidebar.classList.toggle("is-open", isOpen);
 		backdrop.classList.toggle("is-open", isOpen);
-		document.body.style.overflow = isOpen ? "hidden" : "";
+		if (isOpen) {
+			lenis.stop();
+			document.body.style.overflow = "hidden";
+		} else {
+			lenis.start();
+			document.body.style.overflow = "";
+		}
 		sidebar.setAttribute("aria-hidden", isOpen ? "false" : "true");
 	}
 
@@ -507,12 +527,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			e.preventDefault();
 			toggleSidebar(false);
 			const workSection = document.getElementById("work");
-			if (workSection) {
-				workSection.scrollIntoView({
-					behavior: "smooth",
-					block: "start",
-				});
-			}
+			if (workSection) lenis.scrollTo(workSection);
 			history.replaceState(null, "", "#work");
 		});
 	}
