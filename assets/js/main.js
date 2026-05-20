@@ -103,8 +103,6 @@ const sr = ScrollReveal({
 
 sr.reveal(`.home__left-panel`);
 sr.reveal(`.home__right-panel`, { delay: 500 });
-sr.reveal(`.home__social-sidebar`, { delay: 500 });
-sr.reveal(`.home__email-sidebar`, { delay: 700 });
 sr.reveal(`.about`, { delay: 1000 });
 
 // Set up job span and contact button interactions safely
