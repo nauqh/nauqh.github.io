@@ -57,8 +57,11 @@
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
-	scrollbar-width: thin;
-	scrollbar-color: var(--text-color-light) transparent;
+	scrollbar-width: none;
+}
+
+*::-ms-scrollbar {
+	display: none;
 }
 
 html {
@@ -105,22 +108,8 @@ img {
 	height: auto;
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
-	width: 8px;
-}
-
-::-webkit-scrollbar-track {
-	background: var(--container-color);
-}
-
-::-webkit-scrollbar-thumb {
-	background: var(--text-color-light);
-	border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: var(--text-color);
+	display: none;
 }
 
 /*=============== REUSABLE CSS CLASSES ===============*/
@@ -2082,23 +2071,6 @@ img {
 	overflow: visible; /* let content define height */
 }
 
-/* WebKit scrollbar styling for the back face only */
-.about__current-work .current-work__back::-webkit-scrollbar {
-	width: 4px;
-}
-
-.about__current-work .current-work__back::-webkit-scrollbar-track {
-	background: transparent;
-}
-
-.about__current-work .current-work__back::-webkit-scrollbar-thumb {
-	background: rgba(255, 255, 255, 0.25);
-	border-radius: 4px;
-}
-
-.about__current-work .current-work__back::-webkit-scrollbar-thumb:hover {
-	background: rgba(255, 255, 255, 0.35);
-}
 
 /* When flipped (hover on desktop or .flipped on touch),
    the back should receive pointer events and sit above */
