@@ -1,11 +1,22 @@
-/*=============== CHANGE BACKGROUND HEADER ===============*/
-function scrollHeader() {
-	const header = document.getElementById("header");
-	// When the scroll is greater than 50 viewport height, add the scroll-header class to the header tag
-	if (this.scrollY >= 50) header.classList.add("scroll-header");
-	else header.classList.remove("scroll-header");
+/*=============== LENIS SMOOTH SCROLL ===============*/
+const lenis = new Lenis({
+	duration: 1.2,
+	easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+	smoothWheel: true,
+});
+
+function raf(time) {
+	lenis.raf(time);
+	requestAnimationFrame(raf);
 }
-window.addEventListener("scroll", scrollHeader);
+requestAnimationFrame(raf);
+
+/*=============== CHANGE BACKGROUND HEADER ===============*/
+lenis.on("scroll", ({ scroll }) => {
+	const header = document.getElementById("header");
+	if (scroll >= 50) header.classList.add("scroll-header");
+	else header.classList.remove("scroll-header");
+});
 
 /*=============== SERVICES MODAL ===============*/
 const modalViews = document.querySelectorAll(".services__modal"),
@@ -238,14 +249,14 @@ document.addEventListener("DOMContentLoaded", function () {
 		// If top is hidden under header, scroll up
 		if (rect.top < topSafe) {
 			const delta = rect.top - topSafe; // negative -> scroll up
-			window.scrollBy({ top: delta, behavior: "smooth" });
+			lenis.scrollTo(window.scrollY + delta, { duration: 0.8 });
 			return; // avoid double scroll this tick
 		}
 
 		// If bottom is clipped, scroll down
 		if (rect.bottom > bottomSafe) {
 			const delta = rect.bottom - bottomSafe;
-			window.scrollBy({ top: delta, behavior: "smooth" });
+			lenis.scrollTo(window.scrollY + delta, { duration: 0.8 });
 		}
 	}
 
