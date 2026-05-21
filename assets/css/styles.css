@@ -2076,6 +2076,11 @@ img {
 
 /*=============== MOBILE RESPONSIVE FIXES ===============*/
 @media screen and (max-width: 768px) {
+	.nav {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
 	.home__scroll,
 	.home__social {
 		display: none !important;
@@ -2086,6 +2091,8 @@ img {
 		min-height: auto;
 		padding-top: calc(var(--header-height) + 2rem);
 		padding-bottom: 3rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
 		gap: 0;
 	}
 
