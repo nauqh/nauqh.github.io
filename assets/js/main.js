@@ -11,11 +11,51 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-/*=============== CHANGE BACKGROUND HEADER ===============*/
+/*=============== NAV OVERLAY ===============*/
+const navOverlay  = document.getElementById("navOverlay");
+const navBackdrop = document.getElementById("navBackdrop");
+const navMenuBtn  = document.getElementById("navMenuBtn");
+const navClose    = document.getElementById("navClose");
+
+function openNav() {
+	navOverlay.classList.add("active");
+	navBackdrop.classList.add("active");
+	document.body.style.overflow = "hidden";
+	lenis.stop();
+}
+
+function closeNav() {
+	navOverlay.classList.remove("active");
+	navBackdrop.classList.remove("active");
+	document.body.style.overflow = "";
+	lenis.start();
+}
+
+navMenuBtn.addEventListener("click", openNav);
+navClose.addEventListener("click", closeNav);
+
+document.querySelectorAll("[data-close]").forEach(link => {
+	link.addEventListener("click", closeNav);
+});
+
+navBackdrop.addEventListener("click", closeNav);
+
+document.addEventListener("keydown", e => {
+	if (e.key === "Escape") closeNav();
+});
+
+/*=============== HIDE/SHOW HEADER ON SCROLL ===============*/
+let lastScroll = 0;
 lenis.on("scroll", ({ scroll }) => {
 	const header = document.getElementById("header");
-	if (scroll >= 50) header.classList.add("scroll-header");
-	else header.classList.remove("scroll-header");
+	if (scroll <= 50) {
+		header.classList.remove("header--hidden");
+	} else if (scroll > lastScroll) {
+		header.classList.add("header--hidden");
+	} else {
+		header.classList.remove("header--hidden");
+	}
+	lastScroll = scroll;
 });
 
 /*=============== SERVICES MODAL ===============*/
@@ -104,17 +144,6 @@ modalClose.forEach((mc) => {
 		});
 	});
 });
-
-/*=============== SCROLL REVEAL ANIMATION ===============*/
-const sr = ScrollReveal({
-	origin: "top",
-	distance: "60px",
-	duration: 2500,
-});
-
-sr.reveal(`.home__left-panel`);
-sr.reveal(`.home__right-panel`, { delay: 500 });
-sr.reveal(`.about`, { delay: 1000 });
 
 // Set up job span and contact button interactions safely
 document.addEventListener("DOMContentLoaded", function () {
@@ -229,60 +258,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (yearEl) {
 		yearEl.textContent = new Date().getFullYear();
 	}
-});
-
-/*=============== CLICK-TO-FLIP DISABLED: hover-only ===============*/
-
-/*=============== AUTO-SCROLL CURRENT WORK CARD ON HOVER ===============*/
-document.addEventListener("DOMContentLoaded", function () {
-	const workCards = document.querySelectorAll(
-		".about__current-work .current-work__item",
-	);
-
-	function scrollCardIntoView(card) {
-		const rect = card.getBoundingClientRect();
-		const header = document.getElementById("header");
-		const headerH = header ? header.offsetHeight : 0;
-		const topSafe = headerH + 50; // keep a small gap below header
-		const bottomSafe = window.innerHeight - 50; // bottom padding
-
-		// If top is hidden under header, scroll up
-		if (rect.top < topSafe) {
-			const delta = rect.top - topSafe; // negative -> scroll up
-			lenis.scrollTo(window.scrollY + delta, { duration: 0.8 });
-			return; // avoid double scroll this tick
-		}
-
-		// If bottom is clipped, scroll down
-		if (rect.bottom > bottomSafe) {
-			const delta = rect.bottom - bottomSafe;
-			lenis.scrollTo(window.scrollY + delta, { duration: 0.8 });
-		}
-	}
-
-	workCards.forEach((card) => {
-		let hoverTimer = null;
-		card.addEventListener("mouseenter", () => {
-			// Wait for the flip/resize animation to start before scrolling
-			hoverTimer = setTimeout(() => scrollCardIntoView(card), 380);
-			// Clear any leaving hold if user re-enters quickly
-			card.classList.remove("leaving");
-		});
-		card.addEventListener("mouseleave", () => {
-			if (hoverTimer) clearTimeout(hoverTimer);
-			// Add a short hold to smooth height collapse vs face flip
-			card.classList.add("leaving");
-			setTimeout(() => {
-				card.classList.remove("leaving");
-			}, 180); // delay outer resize slightly
-		});
-		// Ensure we scroll after the height transition completes as well
-		card.addEventListener("transitionend", (e) => {
-			if (e.propertyName === "height") {
-				scrollCardIntoView(card);
-			}
-		});
-	});
 });
 
 // Experience tab functionality with sliding highlight

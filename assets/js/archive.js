@@ -1,43 +1,6 @@
-/*=============== ARCHIVE PAGE ANIMATIONS ===============*/
+/*=============== ARCHIVE PAGE ===============*/
 
-// Initialize ScrollReveal for archive page
-const sr = ScrollReveal({
-	origin: "top",
-	distance: "60px",
-	duration: 2500,
-	delay: 200,
-	reset: false,
-});
-
-// Archive page specific animations
 document.addEventListener("DOMContentLoaded", function () {
-	// Animate archive header
-	sr.reveal(".archive__header", {
-		origin: "top",
-		distance: "40px",
-		duration: 1000,
-		delay: 100,
-	});
-
-	// Animate table header
-	sr.reveal(".archive__table-header", {
-		origin: "left",
-		distance: "50px",
-		duration: 1000,
-		delay: 500,
-	});
-
-	// Animate table rows with staggered delay
-	const archiveRows = document.querySelectorAll(".archive__row");
-	archiveRows.forEach((row, index) => {
-		sr.reveal(row, {
-			origin: "bottom",
-			distance: "30px",
-			duration: 800,
-			delay: 800 + index * 100,
-		});
-	});
-
 	// Add hover effects for project links
 	const projectLinks = document.querySelectorAll(".archive__title-link");
 	projectLinks.forEach((link) => {

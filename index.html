@@ -12,7 +12,7 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
 
-<!--=============== CSS ===============-->
+    <!--=============== CSS ===============-->
     <link rel="stylesheet" href="assets/css/styles.css" />
 
     <title>Minh Quan | Full Stack Engineer</title>
@@ -55,55 +55,77 @@
     <header class="header" id="header">
         <nav class="nav container">
             <a href="index.html" class="nav__logo" aria-label="Nauqh"></a>
+            <button class="nav__menu-btn" id="navMenuBtn" aria-label="Open menu">
+                <span class="nav__menu-btn-text"><span
+                        class="nav__menu-btn-text-roller"><span>Menu</span><span>Menu</span></span></span>
+                <span class="nav__menu-btn-icon"><span class="nav__menu-icon-roller"><span
+                            class="nav__menu-icon-face"><span class="nav__menu-bars"></span></span><span
+                            class="nav__menu-icon-face nav__menu-icon-face--hover"><span
+                                class="nav__menu-bars"></span></span></span></span>
+            </button>
         </nav>
     </header>
+
+    <!--=============== NAV BACKDROP ===============-->
+    <div class="nav-backdrop" id="navBackdrop"></div>
+
+    <!--=============== NAV OVERLAY ===============-->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay__header">
+            <a href="index.html" class="nav-overlay__logo" aria-label="Nauqh"></a>
+            <button class="nav-overlay__close" id="navClose" aria-label="Close menu">
+                ✕
+            </button>
+        </div>
+
+        <nav class="nav-overlay__menu">
+            <a href="#about" class="nav-overlay__link" data-close>About</a>
+            <a href="#skills" class="nav-overlay__link" data-close>Tech Stack</a>
+            <a href="#qualification" class="nav-overlay__link" data-close>Qualifications</a>
+            <a href="#experience" class="nav-overlay__link" data-close>Experience</a>
+            <a href="#work" class="nav-overlay__link" data-close>Projects</a>
+        </nav>
+
+        <div class="nav-overlay__footer">
+            <div class="nav-overlay__footer-col">
+                <a href="https://github.com/nauqh" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/nauqh/" target="_blank">LinkedIn</a>
+            </div>
+            <div class="nav-overlay__footer-col">
+                <a href="assets/pdf/resume.pdf" target="_blank">Resume</a>
+            </div>
+        </div>
+    </div>
 
     <!--=============== MAIN ===============-->
     <main class="main">
         <!--=============== HOME ===============-->
         <section class="home section" id="home">
-            <div class="home__container container grid">
-                <!-- Left Panel - Text Content -->
-                <div class="home__left-panel">
-                    <div class="home__data">
-                        <!-- <div class="home__greeting">
-                            <span class="greeting-bubble">Hi There! I'm Minh Quan</span>
-                        </div> -->
-                        <h1 class="home__name">I'm Minh Quan</h1>
-                        <h3 class="home__education">Full Stack Engineer</h3>
-                        <span class="home__quote">Building Scalable Data Pipelines & Intelligent Workflows</span>
-
-                        <div class="about__quick-links">
-                            <a href="https://github.com/nauqh" class="quick-link">
-                                <i class='bx bxl-github'></i> GitHub profile
-                            </a>
-                            <a href="assets/pdf/resume.pdf" class="quick-link">
-                                <i class='bx bx-file'></i> Resume
-                            </a>
-                        </div>
+            <div class="home__container container">
+                <div class="home__data">
+                    <h1 class="home__name">
+                        <span class="home__name-light">Hi, I'm</span>
+                        <span class="home__name-bold home__name-indent">Minh Quan</span>
+                        <span class="home__name-bold">A Software Engineer</span>
+                    </h1>
+                    <p class="home__quote">I build scalable data pipelines &amp; intelligent workflows</p>
+                    <div class="about__quick-links">
+                        <a href="https://github.com/nauqh" class="quick-link">
+                            <i class='bx bxl-github'></i> GitHub
+                        </a>
+                        <a href="assets/pdf/resume.pdf" class="quick-link">
+                            <i class='bx bx-file'></i> Resume
+                        </a>
                     </div>
                 </div>
 
-                <!-- Right Panel - Illustration/Image -->
-                <div class="home__right-panel">
-                    <div class="home__illustration">
-                        <img src="assets/img/octocat.png" alt="Minh Quan" class="home__img">
-                        <div class="speech-bubbles">
-                            <div class="speech-bubble code-bubble">
-                                <i class='bx bx-code-block'></i>
-                            </div>
-                            <div class="speech-bubble tech-bubble">
-                                <i class='bx bx-terminal'></i>
-                            </div>
-                        </div>
-                    </div>
+                <div class="home__sticky-notes">
+                    <div class="sticky-note">Data Pipelines &amp; ETL</div>
+                    <div class="sticky-note sticky-note--teal">AI / LLM Systems</div>
+                    <div class="sticky-note">Full Stack Platforms</div>
+                    <div class="sticky-note sticky-note--teal">Workflow Automation</div>
+                    <div class="sticky-note sticky-note--status"><span class="status-dot"></span>Open to work</div>
                 </div>
-
-                <!-- Scroll Down Button -->
-                <!-- <a href="#about" class="home__scroll">
-                    <i class="bx bx-mouse home__scroll-icon"></i>
-                    <span class="home__scroll-name">Scroll Down</span>
-                </a> -->
             </div>
         </section>
 
@@ -120,7 +142,7 @@
 
                     <div class="about__content">
                         <p class="about__description">
-                            I'm a <span style="color:#fafafa;font-weight:600">Full Stack Engineer</span> with a
+                            I'm a <span class="highlight">Full Stack Engineer</span> with a
                             postgraduate background in Computer Science at Monash University, specialising in LLM
                             integration, data pipelines, and building intelligent systems that ship to real users.
                         </p>
@@ -131,179 +153,25 @@
                             across live courses.
                         </p>
                         <p class="about__description">
-                            Beyond shipping code, I've led community at <span
-                                style="color:#fafafa;font-weight:600">Google Developer Student Club</span> — organising
+                            Beyond shipping code, I've led community at <span class="highlight">Google Developer Student
+                                Club</span> — organising
                             technical workshops and networking events that connected Monash students with industry
                             practitioners and Google technologies.
                         </p>
                         <p class="about__description">
                             What I work with: Python · FastAPI · Next.js · PostgreSQL · LLMs · Kafka · Spark · AWS ·
-                            Docker. Check out my work in the <a href="#work"
-                                style="color:#fafafa;font-weight:600">Projects</a> section.
+                            Docker. Check out my work in the <a href="#work" class="highlight">Projects</a> section.
                         </p>
 
                         <a href="https://www.linkedin.com/in/nauqh/" class="contact-button" id="contactButton">
-                            Contact me <i class='bx bx-send'></i>
+                            <span class="contact-button__roller">
+                                <span>Contact me</span>
+                                <span>Contact me</span>
+                            </span>
                         </a>
 
 
                     </div>
-                </div>
-
-                <div class="about__data">
-                    <div class="about__current-work">
-                        <h4 class="current-work__title">Currently working on</h4>
-                        <p style="color: var(--text-color-light); font-size: 0.7rem; margin-bottom: 1rem;">
-                            Touch to flip
-                            <i class="bx bx-down-arrow-alt"></i>
-                        </p>
-
-                        <div class="current-work__item">
-                            <div class="current-work__faces">
-                                <div class="current-work__front">
-                                    <div class="current-work__card-link">
-                                        <div class="work-status">
-                                            <span class="status-dot"></span>
-                                            <span style="font-size: 0.9rem;">Active development</span>
-                                        </div>
-                                        <h5>Tierra Customer Service Chatbot</h5>
-                                        <p>Building an intelligent AI chatbot for comprehensive customer
-                                            support and technical assistance at Tierra.vn
-                                        </p>
-                                        <div class="work-progress">
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 75%;"></div>
-                                            </div>
-                                            <span class="progress-text">75%</span>
-                                        </div>
-                                        <div class="tech-stack">
-                                            <span class="work__tech">n8n</span>
-                                            <span class="work__tech">OpenAI</span>
-                                            <span class="work__tech">Supabase</span>
-                                            <span class="work__tech">Fastapi</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="current-work__back">
-                                    <div class="work-back__content">
-                                        <div class="work-back__header">
-                                            <div class="work-back__icon">
-                                                <i class='bx bx-bot'></i>
-                                            </div>
-                                            <h5>Tierra Customer Service Chatbot</h5>
-                                        </div>
-
-                                        <div class="work-back__description">
-                                            <p>The chatbot autonomously handles customer inquiries while maintaining
-                                                natural
-                                                conversation flow, significantly reducing support workload.</p>
-                                            <p>It provides immediate responses to common questions while intelligently
-                                                identifying
-                                                complex cases requiring human intervention, ensuring optimal customer
-                                                experience.</p>
-                                        </div>
-
-                                        <div class="work-back__features">
-                                            <div class="feature-item">
-                                                <i class='bx bx-check-circle'></i>
-                                                <span>24/7 Automated Support</span>
-                                            </div>
-                                            <div class="feature-item">
-                                                <i class='bx bx-brain'></i>
-                                                <span>AI-Powered Intelligence</span>
-                                            </div>
-                                            <div class="feature-item">
-                                                <i class='bx bx-trending-up'></i>
-                                                <span>90% Query Resolution</span>
-                                            </div>
-                                        </div>
-
-
-                                        <a href="https://tierra.up.railway.app/" class="work-back__button">
-                                            <i class='bx bx-link-external'></i>
-                                            Visit website
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="current-work__item">
-                            <div class="current-work__faces">
-                                <div class="current-work__front">
-                                    <div class="current-work__card-link">
-                                        <div class="work-status">
-                                            <span class="status-dot"></span>
-                                            <span style="font-size: 0.9rem;">Active development</span>
-                                        </div>
-                                        <h5>NAVER Vietnam AI Hackathon 2025</h5>
-                                        <p>Developing assessment framework and organising Discord community to
-                                            support hackathon participants</p>
-                                        <div class="work-progress">
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 90%;"></div>
-                                            </div>
-                                            <span class="progress-text">90%</span>
-                                        </div>
-                                        <div class="tech-stack">
-                                            <span class="work__tech">OpenAI</span>
-                                            <span class="work__tech">Github Actions</span>
-                                            <span class="work__tech">Github Classroom</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="current-work__back">
-                                    <div class="work-back__content">
-                                        <div class="work-back__header">
-                                            <div class="work-back__icon">
-                                                <i class='bx bx-trophy'></i>
-                                            </div>
-                                            <h5>NAVER Vietnam AI Hackathon 2025</h5>
-                                        </div>
-
-                                        <div class="work-back__description">
-                                            <p>Developing a clear and transparent scoring framework that evaluates
-                                                projects
-                                                on innovation, technical execution, presentation quality, and real-world
-                                                impact—providing guidance for both participants and organizers.</p>
-                                            <p>Organising a Discord community to support hackathon participants,
-                                                providing
-                                                resources, and fostering collaboration.</p>
-                                        </div>
-
-                                        <div class="work-back__features">
-                                            <div class="feature-item">
-                                                <i class='bx bx-target-lock'></i>
-                                                <span>Assessment Framework</span>
-                                            </div>
-                                            <div class="feature-item">
-                                                <i class='bx bx-group'></i>
-                                                <span>Community Building</span>
-                                            </div>
-                                            <div class="feature-item">
-                                                <i class='bx bx-code-alt'></i>
-                                                <span>Automated Grading</span>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="work-back__tech-highlight">
-                                            <span class="tech-highlight">
-                                                <i class='bx bx-cog'></i>
-                                                Automated Evaluation System
-                                            </span>
-                                        </div>
-
-                                        <a href="https://event.navercorp.vn/event/naver-vietnam-ai-hackathon-2025/"
-                                            class="work-back__button">
-                                            <i class='bx bx-link-external'></i>
-                                            Visit website
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -678,7 +546,8 @@
                 <div class="job-details">
                     <!-- CoderSchool Details -->
                     <div class="job-content active" id="coderschool">
-                        <h3 class="job-title">Automation Engineer <span style="color: #64ffda">@ CoderSchool</span></h3>
+                        <h3 class="job-title">Automation Engineer <span style="color: var(--first-color)">@
+                                CoderSchool</span></h3>
                         <p class="job-dates">Nov 2023 ~ Present</p>
                         <ul class="job-description">
                             <li>Maintained the Learning Management System and developed a centralised content
@@ -714,7 +583,8 @@
 
                     <!-- GDG Details -->
                     <div class="job-content" id="gdg">
-                        <h3 class="job-title">Operations Officer <span style="color: #64ffda">@ Google Developer Group
+                        <h3 class="job-title">Operations Officer <span style="color: var(--first-color)">@ Google
+                                Developer Group
                                 on Campus</span></h3>
                         <p class="job-dates">Oct 2020 ~ Present</p>
                         <ul class="job-description">
@@ -731,7 +601,8 @@
 
                     <!-- Monash Details -->
                     <div class="job-content" id="monash">
-                        <h3 class="job-title">Peer Mentor <span style="color: #64ffda">@ Monash IT Faculty</span></h3>
+                        <h3 class="job-title">Peer Mentor <span style="color: var(--first-color)">@ Monash IT
+                                Faculty</span></h3>
                         <p class="job-dates">Mar ~ Nov 2023</p>
                         <ul class="job-description">
                             <li>Provided comprehensive knowledge across multiple domains in data science and computer
@@ -808,6 +679,16 @@
                 </div>
             </div>
 
+            <div class="work__all container">
+                <a href="archive.html" class="work__all-link">
+                    <svg class="work__all-arrow" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="work__all-curve" d="M 15 20 C 20 2 78 2 70 58" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path class="work__all-head" d="M 63 50 L 70 60 L 77 50" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                    <span>all works here</span>
+                </a>
+            </div>
+
         </section>
     </main>
 
@@ -834,9 +715,6 @@
             </span>
         </div>
     </footer>
-
-    <!--=============== SCROLLREVEAL ===============-->
-    <script src="assets/js/scrollreveal.min.js"></script>
 
     <!--=============== LENIS SMOOTH SCROLL ===============-->
     <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>
