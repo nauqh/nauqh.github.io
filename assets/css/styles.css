@@ -2813,4 +2813,16 @@ img {
 	}
 }
 
+/*=============== SCROLL PROGRESS BAR ===============*/
+#scroll-progress {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 0%;
+	height: 3px;
+	background: var(--first-color);
+	z-index: 9999;
+	transition: width 0.1s linear;
+}
+
 

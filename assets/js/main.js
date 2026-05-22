@@ -307,4 +307,12 @@ const titleObserver = new IntersectionObserver(
 document.querySelectorAll(".section__title").forEach((title) => {
 	titleObserver.observe(title);
 });
+
+/*=============== SCROLL PROGRESS BAR ===============*/
+const scrollProgress = document.getElementById("scroll-progress");
+window.addEventListener("scroll", () => {
+	const scrollTop = document.documentElement.scrollTop;
+	const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+	scrollProgress.style.width = (scrollTop / scrollHeight * 100) + "%";
+});
 });

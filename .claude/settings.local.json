@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(del *)"
+      "Bash(del *)",
+      "Bash(git tag *)",
+      "Bash(git push *)",
+      "Bash(gh release *)"
     ]
   }
 }
