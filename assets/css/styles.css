@@ -663,7 +663,6 @@ img {
     position: absolute;
     inset: 0;
     transform: translate(9px, 9px);
-    border-radius: 0.75rem;
     background-color: rgba(0, 0, 0, 0.18);
 }
 
@@ -671,7 +670,6 @@ img {
     position: absolute;
     inset: 0;
     transform: translate(5px, 5px);
-    border-radius: 0.75rem;
     background-color: rgba(0, 0, 0, 0.38);
     transition: transform 0.2s ease-out;
 }
@@ -688,7 +686,6 @@ img {
     justify-content: center;
     height: 3rem;
     padding: 0 1.75rem;
-    border-radius: 0.75rem;
     border: 1px solid rgba(0, 0, 0, 0.2);
     background-color: var(--body-color);
     color: var(--title-color);
@@ -2244,6 +2241,7 @@ img {
 	border: 1px solid var(--title-color);
 	font-family: "Courier New", "Menlo", monospace;
 	overflow: hidden;
+	box-shadow: 6px 6px 0 var(--title-color);
 }
 
 .terminal__titlebar {
