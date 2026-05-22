@@ -2272,7 +2272,7 @@ img {
 
 .terminal__path {
 	font-size: 0.9rem;
-	color: var(--text-color-light);
+	color: var(--title-color);
 	letter-spacing: 0.02em;
 }
 
@@ -2350,8 +2350,7 @@ img {
 }
 
 .terminal__prompt-symbol {
-	color: var(--first-color);
-	font-weight: 700;
+	color: var(--title-color);
 	flex-shrink: 0;
 }
 
@@ -2363,7 +2362,7 @@ img {
 	display: inline-block;
 	width: 9px;
 	height: 1em;
-	background: var(--first-color);
+	background: var(--title-color);
 	vertical-align: text-bottom;
 	margin-left: 1px;
 	animation: termBlink 1s step-end infinite;
@@ -2393,7 +2392,7 @@ img {
 }
 
 .term-category__label {
-	color: var(--title-color);
+	color: var(--text-color);
 	font-size: 0.8rem;
 	font-weight: 600;
 	text-transform: uppercase;
@@ -2433,14 +2432,33 @@ img {
 	flex-shrink: 0;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
+	.terminal__body {
+		flex-direction: column;
+	}
+
 	.terminal__sidebar {
-		width: 145px;
+		width: 100%;
+		flex-direction: row;
+		overflow-x: auto;
+		border-right: none;
+		border-bottom: 1px solid var(--title-color);
 	}
 
 	.terminal__tab {
+		flex-shrink: 0;
+		width: auto;
 		font-size: 0.9rem;
-		padding-left: 1.5rem;
+		padding: 0.65rem 1.25rem;
+		justify-content: center;
+	}
+
+	.terminal__tab::before {
+		display: none;
+	}
+
+	.terminal__output {
+		padding: 1.25rem;
 	}
 }
 
