@@ -1789,23 +1789,37 @@ img {
 		max-width: 100%;
 		margin: 1.5rem auto;
 		padding: 0 1rem;
-		padding-left: 2rem;
+	}
+
+	.timeline::after {
+		display: none;
+	}
+
+	.timeline-container::before {
+		display: none;
 	}
 
 	.timeline-container {
-		margin-bottom: 1.5rem;
+		margin-bottom: 1.25rem;
 	}
 
 	.timeline-container .content {
-		padding-left: 1rem;
-		box-shadow: 3px 3px 0 var(--title-color);
+		box-shadow: 4px 4px 0 var(--title-color);
+		border-left: 1px solid var(--title-color);
 	}
 
 	.timeline-header {
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 0.75rem;
+		gap: 0.4rem;
 		margin-bottom: 0.75rem;
+	}
+
+	.timeline-date {
+		font-size: 0.75rem;
+		background: var(--container-color);
+		padding: 0.15rem 0.5rem;
+		order: -1;
 	}
 
 	.timeline-title {
@@ -1816,40 +1830,24 @@ img {
 
 	.timeline-title img {
 		height: 22px;
-		padding: 0.1rem;
-		border-radius: 0;
-	}
-
-	.timeline-date {
-		font-size: 0.7rem;
-		padding: 0.2rem 0.6rem;
-		border-radius: 0;
-		align-self: flex-start;
 	}
 
 	.timeline-position {
-		font-size: 0.9rem;
-		margin: 0.75rem 0 0.5rem 0;
+		font-size: 0.95rem;
 		font-weight: var(--font-semibold);
+		margin: 0.5rem 0 0.25rem;
 	}
 
 	.timeline-subtitle2 {
 		font-size: 0.8rem;
-		margin: 0.4rem 0;
-		line-height: 1.6;
-		text-align: left;
+		margin: 0.35rem 0;
+		line-height: 1.5;
 	}
 
 	.timeline-footer {
-		margin-top: 0.75rem;
 		font-size: 0.8rem;
-		color: var(--text-color-light);
-	}
-
-	.qualification__title {
-		font-size: 1.1rem;
-		margin: 2.5rem 0 1.5rem 0;
-		text-align: center;
+		margin-top: 0.25rem;
+		margin-bottom: 0.5rem;
 	}
 }
 
@@ -1862,7 +1860,6 @@ img {
 
 	.timeline-container .content {
 		padding-left: 0.75rem;
-		border-left-width: 2px;
 	}
 
 	.timeline-header {
@@ -2773,7 +2770,6 @@ img {
 
 	.company-tab {
 		white-space: nowrap;
-		border-bottom: 2px solid transparent;
 		height: auto;
 		margin-left: 0;
 		/* Prevent shrinking */
@@ -2792,7 +2788,6 @@ img {
 	}
 
 	.company-tab.active {
-		border-bottom: 2px solid var(--first-color);
 	}
 }
 
