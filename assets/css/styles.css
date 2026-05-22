@@ -488,15 +488,13 @@ img {
 /*=============== HOME ===============*/
 .home__container {
 	position: relative;
-	display: grid;
-	grid-template-columns: 8fr 2fr;
-	gap: 3rem;
+	display: flex;
 	align-items: center;
 	min-height: 100vh;
 	max-height: 900px;
 	padding-top: calc(var(--header-height) + 3rem);
 	padding-bottom: 4rem;
-	max-width: 1200px;
+	max-width: 968px;
 	padding-left: 2rem;
 	padding-right: 2rem;
 	margin-left: auto;
@@ -598,6 +596,11 @@ img {
 	font-weight: 600;
 }
 
+.home__name-bold em {
+	font-style: italic;
+	font-weight: 400;
+}
+
 .home__name-indent {
 	margin-left: 4rem;
 }
@@ -635,6 +638,72 @@ img {
 	color: var(--first-color);
 	border-color: var(--first-color);
 	transform: translateY(-2px);
+}
+
+/* Stack Button */
+.stack-btn-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.stack-btn__shadow-back {
+    position: absolute;
+    inset: 0;
+    transform: translate(9px, 9px);
+    border-radius: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.18);
+}
+
+.stack-btn__shadow-mid {
+    position: absolute;
+    inset: 0;
+    transform: translate(5px, 5px);
+    border-radius: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.38);
+    transition: transform 0.2s ease-out;
+}
+
+.stack-btn-wrapper:hover .stack-btn__shadow-mid {
+    transform: translate(8px, 8px);
+}
+
+.stack-btn {
+    position: relative;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    padding: 0 1.75rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: var(--body-color);
+    color: var(--title-color);
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0.03em;
+    transition: transform 0.2s ease-out;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.stack-btn-wrapper:hover .stack-btn {
+    transform: translate(7px, 7px);
+}
+
+.stack-btn--dark {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.3);
+}
+
+.stack-btn-wrapper--dark .stack-btn__shadow-back {
+    background-color: rgba(0, 0, 0, 0.18);
+}
+
+.stack-btn-wrapper--dark .stack-btn__shadow-mid {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Right Panel Styles */
