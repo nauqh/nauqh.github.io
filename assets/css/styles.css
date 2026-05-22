@@ -142,7 +142,7 @@ img {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
-	font-size: 3rem;
+	font-size: clamp(1.8rem, 7.5vw, 4rem);
 	color: var(--title-color);
 	margin-bottom: 2rem;
 	padding-left: 0.5rem;
@@ -152,7 +152,6 @@ img {
 .section__title em {
 	font-style: normal;
 	font-weight: var(--font-semibold);
-	display: inline-block;
 }
 
 .section__title.is-visible em {
@@ -265,7 +264,7 @@ img {
 	display: flex;
 	align-items: center;
 	padding: 0 4rem 0 1.5rem;
-	font-size: 0.85rem;
+	font-size: 1rem;
 	font-weight: 600;
 	letter-spacing: 0.04em;
 	flex-shrink: 0;
@@ -689,8 +688,8 @@ img {
     border: 1px solid rgba(0, 0, 0, 0.2);
     background-color: var(--body-color);
     color: var(--title-color);
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 600;
     text-transform: none;
     letter-spacing: 0.03em;
     transition: transform 0.2s ease-out;
@@ -1565,7 +1564,6 @@ img {
 		padding: 6.5rem 0 1rem;
 	}
 	.section__title {
-		font-size: 4rem;
 		padding-left: 0;
 		padding-right: 0;
 	}
@@ -2130,8 +2128,8 @@ img {
 		width: 180px;
 	}
 
-	.contact-button {
-		padding: 0.8rem 1.2rem;
+	.contact-button__roller span {
+		padding: 0 1.5rem;
 		font-size: 0.85rem;
 	}
 }
@@ -2208,11 +2206,16 @@ img {
 	}
 
 	.home__name {
-		font-size: clamp(2.5rem, 11vw, 4rem);
+		font-size: clamp(2rem, 9vw, 4rem);
+		letter-spacing: -0.05em;
 	}
 
 	.home__name-indent {
 		margin-left: 1.5rem;
+	}
+
+	.stack-btn {
+		font-size: 0.8rem;
 	}
 
 	.home__sticky-notes {
@@ -2798,7 +2801,7 @@ img {
 	left: 0;
 	width: 0%;
 	height: 3px;
-	background: var(--first-color);
+	background: #000;
 	z-index: 9999;
 	transition: width 0.1s linear;
 }
