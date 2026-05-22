@@ -172,82 +172,158 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
-/*=============== SKILLS DUAL EXPLORER FUNCTIONALITY - WITH DEFAULT EXPANSION ===============*/
+/*=============== TERMINAL TECH STACK ===============*/
 document.addEventListener("DOMContentLoaded", function () {
-	const explorers = document.querySelectorAll(".skills__explorer");
+	const DISCIPLINES = {
+		languages: {
+			cmd: "ls ~/languages",
+			categories: [
+				{
+					label: null,
+					items: [
+						{ name: "Python",     icon: "assets/img/icons/python.svg" },
+						{ name: "TypeScript", icon: "assets/img/icons/typescript.svg" },
+						{ name: "Java",       icon: "assets/img/icons/java.svg" },
+						{ name: "HTML",       icon: "assets/img/icons/html.svg" },
+						{ name: "CSS",        icon: "assets/img/icons/css.svg" },
+					],
+				},
+			],
+		},
+		software: {
+			cmd: "ls ~/software",
+			categories: [
+				{
+					label: "Frontend",
+					items: [
+						{ name: "React",       icon: "assets/img/icons/react.svg" },
+						{ name: "Next.js",     icon: "assets/img/icons/nextjs.png" },
+						{ name: "Tailwind",    icon: "assets/img/icons/tailwind.svg" },
+						{ name: "Shadcn UI",   icon: "assets/img/icons/shadcn.png" },
+						{ name: "Supabase",    icon: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/supabase-icon.png" },
+					],
+				},
+				{
+					label: "Backend",
+					items: [
+						{ name: "FastAPI",    icon: "assets/img/icons/fastapi.svg" },
+						{ name: "Nest.js",    icon: "assets/img/icons/nestjs.png" },
+						{ name: "PostgreSQL", icon: "assets/img/icons/postgresql.svg" },
+						{ name: "Drizzle",    icon: "assets/img/icons/drizzle.png" },
+					],
+				},
+				{
+					label: "DevOps",
+					items: [
+						{ name: "Docker",     icon: "assets/img/icons/docker.png" },
+						{ name: "Kubernetes", icon: "assets/img/icons/kubernetes.png" },
+						{ name: "AWS",        icon: "assets/img/icons/aws.webp" },
+					],
+				},
+			],
+		},
+		data: {
+			cmd: "ls ~/data",
+			categories: [
+				{
+					label: "Engineering",
+					items: [
+						{ name: "PySpark",        icon: "assets/img/icons/spark.png" },
+						{ name: "Airflow",        icon: "assets/img/icons/airflow.png" },
+						{ name: "GitHub Actions", icon: "assets/img/icons/actions.svg" },
+					],
+				},
+				{
+					label: "Analytics",
+					items: [
+						{ name: "SQL",      icon: "assets/img/icons/sql.svg" },
+						{ name: "Pandas",   icon: "assets/img/icons/pandas.svg" },
+						{ name: "NumPy",    icon: "assets/img/icons/numpy.png" },
+						{ name: "Power BI", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/New_Power_BI_Logo.svg/1200px-New_Power_BI_Logo.svg.png" },
+					],
+				},
+			],
+		},
+		ai: {
+			cmd: "ls ~/ai",
+			categories: [
+				{
+					label: null,
+					items: [
+						{ name: "OpenAI",    icon: "assets/img/icons/openai.png" },
+						{ name: "Anthropic", icon: "assets/img/icons/anthropic.png" },
+						{ name: "n8n",       icon: "https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/n8n-color.png" },
+						{ name: "Langchain", icon: "assets/img/icons/langchain.png" },
+						{ name: "PyTorch",   icon: "assets/img/icons/pytorch.png" },
+					],
+				},
+			],
+		},
+	};
 
-	// Function to setup individual explorer
-	function setupExplorer(explorer, index) {
-		const folderItems = explorer.querySelectorAll(".folder__item");
-		const toggleBtn = explorer.querySelector(".toggle-btn");
+	const tabs      = document.querySelectorAll(".terminal__tab");
+	const cmdEl     = document.getElementById("termCmd");
+	const cursorEl  = document.getElementById("termCursor");
+	const contentEl = document.getElementById("termContent");
 
-		// Toggle folder function
-		function toggleFolder(folderItem) {
-			folderItem.classList.toggle("expanded");
-			updateToggleButton();
-		}
+	if (!tabs.length || !cmdEl) return;
 
-		// Update toggle button state
-		function updateToggleButton() {
-			const expandedCount = explorer.querySelectorAll(
-				".folder__item.expanded",
-			).length;
-			const totalCount = folderItems.length;
+	let typingTimer = null;
 
-			if (expandedCount === totalCount) {
-				toggleBtn.classList.add("all-expanded");
+	function renderContent(discipline) {
+		const data = DISCIPLINES[discipline];
+		contentEl.innerHTML = data.categories
+			.map((cat) => {
+				const label = cat.label
+					? `<div class="term-category__label">${cat.label}/</div>`
+					: "";
+				const items = cat.items
+					.map(
+						(item) =>
+							`<span class="term-item"><img src="${item.icon}" alt="${item.name}">${item.name}</span>`,
+					)
+					.join("");
+				return `<div class="term-category">${label}<div class="term-category__grid">${items}</div></div>`;
+			})
+			.join("");
+	}
+
+	function typeCommand(text, onDone) {
+		clearTimeout(typingTimer);
+		cmdEl.textContent = "";
+		contentEl.classList.remove("visible");
+		cursorEl.classList.add("typing");
+
+		let i = 0;
+		function tick() {
+			if (i < text.length) {
+				cmdEl.textContent += text[i++];
+				typingTimer = setTimeout(tick, 38);
 			} else {
-				toggleBtn.classList.remove("all-expanded");
+				cursorEl.classList.remove("typing");
+				onDone();
 			}
 		}
+		tick();
+	}
 
-		// Add click event to folder headers (scoped to this explorer only)
-		folderItems.forEach((folder) => {
-			const header = folder.querySelector(".folder__header");
-			header.addEventListener("click", (e) => {
-				e.preventDefault();
-				e.stopPropagation();
-				toggleFolder(folder);
-			});
-		});
-
-		// Toggle button functionality
-		toggleBtn.addEventListener("click", (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-
-			const expandedCount = explorer.querySelectorAll(
-				".folder__item.expanded",
-			).length;
-			const totalCount = folderItems.length;
-
-			if (expandedCount === totalCount) {
-				// All expanded - collapse all
-				folderItems.forEach((folder) => {
-					if (folder.classList.contains("expanded")) {
-						toggleFolder(folder);
-					}
-				});
-			} else {
-				// Not all expanded - expand all
-				folderItems.forEach((folder) => {
-					if (!folder.classList.contains("expanded")) {
-						toggleFolder(folder);
-					}
-				});
-			}
-		});
-
-		// Auto-expand all folders on load
-		folderItems.forEach((folder) => {
-			toggleFolder(folder);
+	function activate(discipline) {
+		const data = DISCIPLINES[discipline];
+		typeCommand(data.cmd, () => {
+			renderContent(discipline);
+			requestAnimationFrame(() => contentEl.classList.add("visible"));
 		});
 	}
 
-	// Setup each explorer independently
-	explorers.forEach((explorer, index) => {
-		setupExplorer(explorer, index);
+	tabs.forEach((tab) => {
+		tab.addEventListener("click", () => {
+			tabs.forEach((t) => t.classList.remove("active"));
+			tab.classList.add("active");
+			activate(tab.dataset.discipline);
+		});
 	});
+
+	activate("software");
 });
 
 /*=============== TOUCH FLIP DISABLED: hover-only ===============*/
