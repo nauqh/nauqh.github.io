@@ -432,7 +432,7 @@ img {
 	color: var(--title-color);
 	letter-spacing: -0.01em;
 	line-height: 1;
-	padding: 1rem 1.25rem;
+	padding: 1.4rem 1.25rem;
 	margin: 0 -2rem;
 	clip-path: inset(0 0 100% 0);
 	transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1), color 0.1s;
