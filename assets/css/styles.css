@@ -1662,11 +1662,17 @@ img {
 	position: relative;
 	max-width: 800px;
 	margin: 2rem auto;
+	padding-left: 2rem;
 }
 
-/* Remove the vertical line */
 .timeline::after {
-	display: none;
+	content: "";
+	position: absolute;
+	left: 5px;
+	top: 0;
+	bottom: 0;
+	width: 2px;
+	background: var(--title-color);
 }
 
 /* Simplified container */
@@ -1689,10 +1695,10 @@ img {
 .timeline-container .content {
 	position: relative;
 	background-color: transparent;
-	padding: 0;
+	padding: 1rem 1.5rem;
 	border-radius: 0;
-	border-left: 2px solid var(--first-color);
-	padding-left: 1.5rem;
+	border: 1px solid var(--title-color);
+	box-shadow: 4px 4px 0 var(--title-color);
 	transition: all 0.3s ease;
 }
 
@@ -1700,9 +1706,16 @@ img {
 	transform: translateX(5px);
 }
 
-/* Remove dots */
 .timeline-container::before {
-	display: none;
+	content: "";
+	position: absolute;
+	left: -2rem;
+	top: 1.25rem;
+	width: 12px;
+	height: 12px;
+	background: var(--title-color);
+	border-radius: 50%;
+	z-index: 1;
 }
 
 /* Simplified header */
@@ -1716,10 +1729,8 @@ img {
 
 .timeline-date {
 	font-size: 0.8rem;
-	color: var(--first-color);
+	color: var(--title-color);
 	font-weight: var(--font-medium);
-	background-color: var(--container-color);
-	padding: 0.25rem 0.75rem;
 	border-radius: 0;
 }
 
@@ -1778,6 +1789,7 @@ img {
 		max-width: 100%;
 		margin: 1.5rem auto;
 		padding: 0 1rem;
+		padding-left: 2rem;
 	}
 
 	.timeline-container {
@@ -1786,7 +1798,7 @@ img {
 
 	.timeline-container .content {
 		padding-left: 1rem;
-		border-left-width: 3px;
+		box-shadow: 3px 3px 0 var(--title-color);
 	}
 
 	.timeline-header {
