@@ -142,7 +142,7 @@ img {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
-	font-size: clamp(1.8rem, 7.5vw, 4rem);
+	font-size: clamp(2.2rem, 8.5vw, 4rem);
 	color: var(--title-color);
 	margin-bottom: 2rem;
 	padding-left: 0.5rem;
@@ -167,7 +167,7 @@ img {
 	}
 	100% {
 		font-style: italic;
-		font-weight: 400;
+		font-weight: var(--font-semibold);
 		color: var(--first-color);
 		letter-spacing: 0.03em;
 	}
@@ -615,6 +615,7 @@ img {
 
 .home__name-indent {
 	margin-left: 4rem;
+	font-size: 1.4em;
 }
 
 
@@ -2017,8 +2018,8 @@ img {
 	align-items: center;
 	justify-content: center;
 	height: 3.5rem;
-	padding: 0 3rem;
-	font-size: 0.95rem;
+	padding: 0 5rem;
+	font-size: 1rem;
 	font-weight: 600;
 	white-space: nowrap;
 	flex-shrink: 0;
@@ -2129,8 +2130,8 @@ img {
 	}
 
 	.contact-button__roller span {
-		padding: 0 1.5rem;
-		font-size: 0.85rem;
+		padding: 0 5rem;
+		font-size: 1rem;
 	}
 }
 
@@ -2212,10 +2213,11 @@ img {
 
 	.home__name-indent {
 		margin-left: 1.5rem;
+		font-size: 1.4em;
 	}
 
 	.stack-btn {
-		font-size: 0.8rem;
+		font-size: 1rem;
 	}
 
 	.home__sticky-notes {
