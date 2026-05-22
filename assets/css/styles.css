@@ -2241,7 +2241,7 @@ img {
 	border: 1px solid var(--title-color);
 	font-family: "Courier New", "Menlo", monospace;
 	overflow: hidden;
-	box-shadow: 6px 6px 0 var(--title-color);
+	box-shadow: 10px 10px 0 var(--title-color);
 }
 
 .terminal__titlebar {
