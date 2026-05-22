@@ -2393,8 +2393,9 @@ img {
 }
 
 .term-category__label {
-	color: var(--text-color-light);
+	color: var(--title-color);
 	font-size: 0.8rem;
+	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.12em;
 	margin-bottom: 0.6rem;
