@@ -137,13 +137,36 @@ img {
 }
 
 .section__title {
-	text-align: center;
-}
-
-.section__title {
-	font-size: var(--h2-font-size);
+	max-width: 968px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	font-size: 3rem;
 	color: var(--title-color);
 	margin-bottom: 2rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+
+.section__title em {
+	font-style: normal;
+	font-weight: var(--font-semibold);
+	display: inline-block;
+}
+
+.section__title.is-visible em {
+	animation: titleEmphasis 0.3s ease 0.5s forwards;
+}
+
+@keyframes titleEmphasis {
+	0% {
+		font-style: normal;
+		font-weight: var(--font-semibold);
+	}
+	100% {
+		font-style: italic;
+		font-weight: 400;
+	}
 }
 
 
@@ -222,7 +245,8 @@ img {
 }
 
 .nav__menu-btn:hover .nav__menu-btn-text {
-	background: var(--first-color-alt);
+	background: var(--first-color);
+	color: #fff;
 }
 
 .nav__menu-btn-text-roller {
@@ -256,7 +280,7 @@ img {
 }
 
 .nav__menu-btn:hover .nav__menu-btn-icon {
-	background: var(--text-color-light);
+	background: var(--title-color);
 }
 
 .nav__menu-icon-roller {
@@ -399,7 +423,7 @@ img {
 	padding: 1rem 1.25rem;
 	margin: 0 -2rem;
 	clip-path: inset(0 0 100% 0);
-	transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1), color 0.2s;
+	transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1), color 0.1s;
 }
 
 .nav-overlay.active .nav-overlay__link {
@@ -1176,8 +1200,8 @@ img {
 }
 
 .project-card__title {
-	font-size: 1.3rem;
-	font-weight: 700;
+	font-size: 1.5rem;
+	font-weight: 600;
 	color: var(--title-color);
 	line-height: 1.3;
 	transition: color 0.3s ease;
@@ -1204,8 +1228,6 @@ img {
 .work__all {
 	display: flex;
 	justify-content: center;
-	margin-top: 3rem;
-	margin-bottom: 2rem;
 }
 
 .work__all-link {
@@ -1409,7 +1431,7 @@ img {
 		gap: 3rem;
 		min-height: 500px;
 		position: relative;
-		padding: 2rem 0;
+
 	}
 
 	.about__img {
@@ -1464,7 +1486,9 @@ img {
 		padding: 6.5rem 0 1rem;
 	}
 	.section__title {
-		font-size: 2rem;
+		font-size: 4rem;
+		padding-left: 0;
+		padding-right: 0;
 	}
 
 	.nav {
@@ -1813,7 +1837,6 @@ img {
 	gap: 3rem;
 	min-height: 500px;
 	position: relative;
-	padding: 2rem 0;
 }
 
 .about__image-container {
@@ -1993,7 +2016,7 @@ img {
 		grid-template-columns: 1fr;
 		gap: 2rem;
 		min-height: auto;
-		padding: 1rem 0;
+		padding: 0;
 	}
 
 	.about__image-container {

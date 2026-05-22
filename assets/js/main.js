@@ -290,4 +290,21 @@ document.addEventListener("DOMContentLoaded", function () {
 			});
 		});
 	}
+
+/*=============== SECTION TITLE EMPHASIS ===============*/
+const titleObserver = new IntersectionObserver(
+	(entries) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				entry.target.classList.add("is-visible");
+				titleObserver.unobserve(entry.target);
+			}
+		});
+	},
+	{ threshold: 0.3 }
+);
+
+document.querySelectorAll(".section__title").forEach((title) => {
+	titleObserver.observe(title);
+});
 });
