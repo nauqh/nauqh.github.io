@@ -367,22 +367,39 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-/*=============== SECTION TITLE EMPHASIS ===============*/
-const titleObserver = new IntersectionObserver(
-	(entries) => {
-		entries.forEach((entry) => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add("is-visible");
-				titleObserver.unobserve(entry.target);
-			}
-		});
-	},
-	{ threshold: 0.3 }
-);
+/*=============== SCROLL REVEAL ===============*/
+const revealEls = [
+	...document.querySelectorAll(".section__title"),
+	...document.querySelectorAll(".about__content p"),
+	...document.querySelectorAll(".about__content a"),
+	document.querySelector(".terminal"),
+	...document.querySelectorAll(".timeline-container"),
+	document.querySelector(".experience-container"),
+	...document.querySelectorAll(".projects-col"),
+	document.querySelector(".contact__container"),
+].filter(Boolean);
 
-document.querySelectorAll(".section__title").forEach((title) => {
-	titleObserver.observe(title);
+revealEls.forEach(el => el.setAttribute("data-reveal", ""));
+
+[".about__content p", ".about__content a", ".timeline-container", ".projects-col"].forEach(sel => {
+	document.querySelectorAll(sel).forEach((el, i) => {
+		el.style.transitionDelay = `${i * 0.1}s`;
+	});
 });
+
+const revealObserver = new IntersectionObserver((entries) => {
+	entries.forEach(entry => {
+		if (entry.isIntersecting) {
+			entry.target.classList.add("revealed");
+			if (entry.target.classList.contains("section__title")) {
+				entry.target.classList.add("is-visible");
+			}
+			revealObserver.unobserve(entry.target);
+		}
+	});
+}, { threshold: 0.08, rootMargin: "0px 0px -20px 0px" });
+
+revealEls.forEach(el => revealObserver.observe(el));
 
 /*=============== SCROLL PROGRESS BAR ===============*/
 const scrollProgress = document.getElementById("scroll-progress");
