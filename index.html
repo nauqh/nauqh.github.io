@@ -107,7 +107,7 @@
             <div class="home__container container">
                 <div class="home__data">
                     <h1 class="home__name">
-                        <span class="home__name-light">hi, I'm</span>
+                        <span class="home__name-light">hi, i'm</span>
                         <span class="home__name-bold home__name-indent">Minh Quan</span>
                         <span class="home__name-bold">a software <em>engineer</em></span>
                     </h1>
@@ -129,6 +129,7 @@
                         </div>
                     </div>
                 </div>
+
 
             </div>
         </section>
@@ -189,22 +190,17 @@
 
             <div class="terminal container">
                 <div class="terminal__titlebar">
-                    <div class="terminal__dots">
-                        <span class="terminal__dot terminal__dot--red"></span>
-                        <span class="terminal__dot terminal__dot--yellow"></span>
-                        <span class="terminal__dot terminal__dot--green"></span>
-                    </div>
                     <span class="terminal__path">~/tech-stack</span>
                 </div>
                 <div class="terminal__body">
                     <nav class="terminal__sidebar">
-                        <button class="terminal__tab" data-discipline="languages"><i class='bx bx-terminal'></i>
+                        <button class="terminal__tab active" data-discipline="languages"><i class='bx bx-code-alt'></i>
                             languages</button>
-                        <button class="terminal__tab active" data-discipline="software"><i class='bx bx-terminal'></i>
+                        <button class="terminal__tab" data-discipline="software"><i class='bx bx-package'></i>
                             software</button>
-                        <button class="terminal__tab" data-discipline="data"><i class='bx bx-terminal'></i>
+                        <button class="terminal__tab" data-discipline="data"><i class='bx bx-data'></i>
                             data</button>
-                        <button class="terminal__tab" data-discipline="ai"><i class='bx bx-terminal'></i> ai</button>
+                        <button class="terminal__tab" data-discipline="ai"><i class='bx bx-brain'></i> ai</button>
                     </nav>
                     <div class="terminal__output">
                         <div class="terminal__prompt-line">
@@ -397,34 +393,40 @@
             <div class="projects-grid container">
                 <div class="projects-col">
                     <a href="https://csassessment.it.com/" class="project-card" target="_blank">
-                        <div class="project-card__img">
-                            <img src="assets/img/exam.png" alt="Online Assessment Platform">
+                        <div class="project-card__thumbnail">
+                            <span class="project-card__tag">web application</span>
+                            <div class="project-card__img">
+                                <img src="assets/img/exam.png" alt="Online Assessment Platform">
+                            </div>
                         </div>
                         <div class="project-card__info">
                             <h3 class="project-card__title">Online Assessment Platform</h3>
-                            <span class="project-card__category">web application</span>
                             <span class="project-card__year">2024</span>
                         </div>
                     </a>
 
                     <a href="https://keleidoscope.vercel.app/" class="project-card" target="_blank">
-                        <div class="project-card__img">
-                            <img src="assets/img/kel.png" alt="Keleidoscope">
+                        <div class="project-card__thumbnail">
+                            <span class="project-card__tag">web design</span>
+                            <div class="project-card__img">
+                                <img src="assets/img/kel.png" alt="Keleidoscope">
+                            </div>
                         </div>
                         <div class="project-card__info">
                             <h3 class="project-card__title">Keleidoscope</h3>
-                            <span class="project-card__category">web design</span>
                             <span class="project-card__year">2024</span>
                         </div>
                     </a>
 
                     <a href="visualisation.html" class="project-card">
-                        <div class="project-card__img">
-                            <img src="assets/img/vis0.png" alt="Data Visualisation Project">
+                        <div class="project-card__thumbnail">
+                            <span class="project-card__tag">data visualisation</span>
+                            <div class="project-card__img">
+                                <img src="assets/img/vis0.png" alt="Data Visualisation Project">
+                            </div>
                         </div>
                         <div class="project-card__info">
                             <h3 class="project-card__title">Data Visualisation Project</h3>
-                            <span class="project-card__category">data visualisation</span>
                             <span class="project-card__year">2023</span>
                         </div>
                     </a>
@@ -432,23 +434,27 @@
 
                 <div class="projects-col">
                     <a href="https://github.com/nauqh/ti" class="project-card" target="_blank">
-                        <div class="project-card__img">
-                            <img src="assets/img/ass1.png" alt="AI Teaching Assistant">
+                        <div class="project-card__thumbnail">
+                            <span class="project-card__tag">ai / tooling</span>
+                            <div class="project-card__img">
+                                <img src="assets/img/ass1.png" alt="AI Teaching Assistant">
+                            </div>
                         </div>
                         <div class="project-card__info">
                             <h3 class="project-card__title">AI Teaching Assistant</h3>
-                            <span class="project-card__category">ai / tooling</span>
                             <span class="project-card__year">2024</span>
                         </div>
                     </a>
 
                     <a href="https://hymaram.streamlit.app/" class="project-card" target="_blank">
-                        <div class="project-card__img">
-                            <img src="assets/img/hym.png" alt="ARAM Analysis">
+                        <div class="project-card__thumbnail">
+                            <span class="project-card__tag">data analytics</span>
+                            <div class="project-card__img">
+                                <img src="assets/img/hym.png" alt="ARAM Analysis">
+                            </div>
                         </div>
                         <div class="project-card__info">
                             <h3 class="project-card__title">ARAM Analysis</h3>
-                            <span class="project-card__category">data analytics</span>
                             <span class="project-card__year">2023</span>
                         </div>
                     </a>
@@ -472,27 +478,44 @@
 
     <!--=============== CONTACT ===============-->
     <section class="contact section" id="contact">
-        <div class="contact__container container">
-            <h2 class="contact__title">SEND ME YOUR THOUGHTS</h2>
-            <p class="contact__subtitle">Roast me (or hype me up) - anonymously</p>
+        <div class="contact__wrapper container">
 
-            <form class="contact__form" id="contactForm">
-                <input id="contactName" class="contact__input" type="text" placeholder="Your name (optional)" />
-                <textarea id="contactMessage" class="contact__textarea" placeholder="Your message" required></textarea>
-                <button type="submit" class="contact__button">Send</button>
-                <p class="contact__note" id="contactNote"></p>
-            </form>
+            <div class="contact__left">
+                <h2 class="contact__big-title">let's <em>talk</em></h2>
+                <p class="contact__desc">Got an idea, a question, or just want to say hi? I'm always down for a good
+                    conversation.</p>
+                <div class="contact__links">
+                    <a href="https://github.com/nauqh" target="_blank" class="contact__link">
+                        <i class='bx bxl-github'></i> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/nauqh/" target="_blank" class="contact__link">
+                        <i class='bx bxl-linkedin'></i> LinkedIn
+                    </a>
+                    <a href="assets/pdf/resume.pdf" target="_blank" class="contact__link">
+                        <i class='bx bx-file'></i> Resume
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact__right">
+                <p class="contact__form-label">or drop a message —</p>
+                <form class="contact__form" id="contactForm">
+                    <input id="contactName" class="contact__input" type="text" placeholder="Your name (optional)" />
+                    <textarea id="contactMessage" class="contact__textarea" placeholder="Your message"
+                        required></textarea>
+                    <button type="submit" class="contact__button">send it</button>
+                    <p class="contact__note" id="contactNote"></p>
+                </form>
+            </div>
+
         </div>
-    </section>
 
-    <!--=============== FOOTER ===============-->
-    <footer class="footer">
-        <div class="footer__container container">
+        <div class="contact__footer">
             <span class="footer__copy">
                 Designed and Built by <a href="index.html">Nauqh</a>
             </span>
         </div>
-    </footer>
+    </section>
 
     <!--=============== LENIS SMOOTH SCROLL ===============-->
     <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>
