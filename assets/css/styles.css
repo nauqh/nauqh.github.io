@@ -2229,7 +2229,49 @@ img {
 	}
 
 	.nav__logo {
-		height: 2.5rem;
+		height: 3.5rem;
+	}
+
+	/* Fix 3: terminal shadow within screen bounds */
+	.terminal {
+		box-shadow: 6px 6px 0 var(--title-color);
+		margin-right: 6px;
+	}
+
+	/* Fix 4: section padding balance */
+	.section {
+		padding: 3rem 0 2rem;
+	}
+
+	/* Fix 5: container side breathing room */
+	.container {
+		margin-left: 1.25rem;
+		margin-right: 1.25rem;
+	}
+}
+
+/* Fix 1: hero buttons stack on small phones */
+@media screen and (max-width: 480px) {
+	.about__quick-links {
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.about__quick-links .stack-btn-wrapper {
+		width: 70%;
+	}
+
+	.about__quick-links .stack-btn-wrapper:first-child {
+		margin-right: auto;
+	}
+
+	.about__quick-links .stack-btn-wrapper:last-child {
+		margin-left: auto;
+	}
+
+	.about__quick-links .stack-btn {
+		width: 100%;
+		justify-content: center;
 	}
 }
 
@@ -2305,7 +2347,7 @@ img {
 .terminal__tab {
 	display: flex; align-items: center; gap: 0.5rem;
 	width: 100%;
-	padding: 0.55rem 1rem 0.55rem 1.75rem;
+	padding: 0.9rem 1rem 0.9rem 1.75rem;
 	background: none;
 	border: none;
 	color: var(--title-color);
@@ -2455,6 +2497,7 @@ img {
 		overflow-x: auto;
 		border-right: none;
 		border-bottom: 1px solid var(--title-color);
+		background-color: var(--container-color);
 	}
 
 	.terminal__tab {
@@ -2761,11 +2804,10 @@ img {
 		padding: 0.5rem 0;
 		margin-bottom: 2rem;
 		height: auto;
-		/* Prevent wrapping */
 		flex-wrap: nowrap;
-		/* Show scrollbar for horizontal scrolling */
 		scrollbar-width: thin;
 		-ms-overflow-style: auto;
+		background-color: var(--body-color);
 	}
 
 	.company-list::before,
