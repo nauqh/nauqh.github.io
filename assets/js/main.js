@@ -46,16 +46,35 @@ document.addEventListener("keydown", e => {
 
 /*=============== HIDE/SHOW HEADER ON SCROLL ===============*/
 let lastScroll = 0;
+const _header = document.getElementById("header");
+const _colorSections = Array.from(document.querySelectorAll("section[data-header-color]"));
+
+function syncHeaderColor() {
+	const headerBottom = _header.offsetHeight;
+	let activeSection = _colorSections[0] ?? null;
+	for (const section of _colorSections) {
+		if (section.getBoundingClientRect().top <= headerBottom) {
+			activeSection = section;
+		}
+	}
+	if (activeSection) {
+		_header.style.backgroundColor = activeSection.dataset.headerColor;
+		_header.style.setProperty("--section-color", activeSection.dataset.headerAccent ?? activeSection.dataset.headerColor);
+	}
+}
+
+syncHeaderColor();
+
 lenis.on("scroll", ({ scroll }) => {
-	const header = document.getElementById("header");
 	if (scroll <= 50) {
-		header.classList.remove("header--hidden");
+		_header.classList.remove("header--hidden");
 	} else if (scroll > lastScroll) {
-		header.classList.add("header--hidden");
+		_header.classList.add("header--hidden");
 	} else {
-		header.classList.remove("header--hidden");
+		_header.classList.remove("header--hidden");
 	}
 	lastScroll = scroll;
+	syncHeaderColor();
 });
 
 /*=============== SERVICES MODAL ===============*/

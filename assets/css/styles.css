@@ -191,7 +191,7 @@ img {
 	width: 100%;
 	background-color: var(--body-color);
 	z-index: var(--z-fixed);
-	transition: transform 0.3s ease;
+	transition: transform 0.3s ease, background-color 0.4s ease;
 }
 
 .header--hidden {
@@ -256,7 +256,7 @@ img {
 }
 
 .nav__menu-btn:hover .nav__menu-btn-text {
-	background: var(--first-color);
+	background: var(--section-color, var(--first-color));
 	color: #fff;
 }
 
@@ -1290,6 +1290,13 @@ img {
 	color: var(--title-color);
 	white-space: nowrap;
 	box-shadow: 3px 3px 0 var(--title-color);
+	transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover .project-card__tag {
+	background: var(--title-color);
+	color: var(--body-color);
+	box-shadow: 3px 3px 0 var(--body-color);
 }
 
 .project-card__img {
