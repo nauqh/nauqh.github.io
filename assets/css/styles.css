@@ -130,7 +130,7 @@ img {
 }
 
 .section {
-	padding: 4.5rem 0;
+	padding: 7rem 0;
 }
 
 .home.section {
@@ -138,13 +138,13 @@ img {
 }
 
 /*=============== SECTION BACKGROUNDS ===============*/
-.home.section          { background-color: #FFFFFF; }
-.about.section         { background-color: #EDF7F0; }
-.skills.section        { background-color: #EDF4FF; }
-.qualification.section { background-color: #FDE8F0; }
-.experience.section    { background-color: #FEFCE8; }
-.work.section          { background-color: #EDF4FF; }
-.contact.section       { background-color: #ffffff; padding-bottom: 0; }
+.home.section          { background-color: #FFFFFF; --section-accent: #6B7280; }
+.about.section         { background-color: #EDF7F0; --section-accent: #059669; min-height: 100vh; display: grid; align-content: center; }
+.skills.section        { background-color: #EDF4FF; --section-accent: #3B82F6; }
+.qualification.section { background-color: #FDE8F0; --section-accent: #DB2777; }
+.experience.section    { background-color: #FEFCE8; --section-accent: #D97706; }
+.work.section          { background-color: #EDF4FF; --section-accent: #3B82F6; }
+.contact.section       { background-color: #ffffff; --section-accent: #0D9488; padding-bottom: 0; }
 
 .section__title {
 	max-width: 968px;
@@ -177,7 +177,7 @@ img {
 	100% {
 		font-style: italic;
 		font-weight: var(--font-semibold);
-		color: var(--first-color);
+		color: var(--section-accent, var(--first-color));
 		letter-spacing: 0.03em;
 	}
 }
@@ -958,17 +958,23 @@ img {
 .highlight {
 	background: linear-gradient(
 		104deg,
-		rgba(204, 251, 241, 0.3) 0%,
-		rgba(204, 251, 241, 0.85) 15%,
-		rgba(204, 251, 241, 0.9) 70%,
-		rgba(204, 251, 241, 0.4) 100%
-	);
+		transparent 1%,
+		#6ee7b7 2%,
+		#6ee7b7 97%,
+		transparent 98%
+	) no-repeat left center;
+	background-size: 0% 100%;
 	color: inherit;
 	font-weight: var(--font-semibold);
-	padding: 0.05em 0.4em;
+	padding: 0.15em 0.5em;
 	display: inline;
 	-webkit-box-decoration-break: clone;
 	box-decoration-break: clone;
+	transition: background-size 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
+}
+
+.revealed .highlight {
+	background-size: 100% 100%;
 }
 
 .about__quick-links {
@@ -1329,11 +1335,22 @@ img {
 	font-weight: 600;
 	color: var(--title-color);
 	line-height: 1.3;
-	transition: color 0.3s ease;
+	width: fit-content;
+	padding: 0.05em 0.3em;
+	background: linear-gradient(
+		104deg,
+		transparent 1%,
+		#93c5fd 2%,
+		#93c5fd 97%,
+		transparent 98%
+	) no-repeat left center;
+	background-size: 0% 100%;
+	transition: color 0.3s ease, background-size 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .project-card:hover .project-card__title {
-	color: var(--first-color);
+	color: var(--title-color);
+	background-size: 100% 100%;
 }
 
 .project-card__year {
@@ -1599,9 +1616,6 @@ img {
 		margin-right: auto;
 	}
 
-	.section {
-		padding: 6.5rem 0;
-	}
 	.section__title {
 		padding-left: 0;
 		padding-right: 0;
@@ -1960,7 +1974,6 @@ img {
 	grid-template-columns: 1fr;
 	align-items: center;
 	gap: 3rem;
-	min-height: 70vh;
 	position: relative;
 }
 
@@ -2000,6 +2013,7 @@ img {
 .about__content {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	gap: 1.5rem;
 	flex-grow: 1;
 	cursor: default;
@@ -2278,7 +2292,7 @@ img {
 
 	/* Fix 4: section padding balance */
 	.section {
-		padding: 3rem 0;
+		padding: 7rem 0;
 	}
 
 	/* Fix 5: container side breathing room */
@@ -2871,13 +2885,18 @@ img {
 	.company-list {
 		flex-direction: row;
 		overflow-x: auto;
-		padding: 0.5rem 0;
+		padding: 0.5rem 0 0.75rem;
 		margin-bottom: 2rem;
 		height: auto;
 		flex-wrap: nowrap;
-		scrollbar-width: thin;
-		-ms-overflow-style: auto;
-		background-color: var(--body-color);
+		gap: 0.75rem;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+		background-color: transparent;
+	}
+
+	.company-list::-webkit-scrollbar {
+		display: none;
 	}
 
 	.company-list::before,
@@ -2889,22 +2908,22 @@ img {
 		white-space: nowrap;
 		height: auto;
 		margin-left: 0;
-		/* Prevent shrinking */
+		margin-right: 0;
 		flex-shrink: 0;
-		/* Add proper spacing between tabs */
-		margin-right: 1rem;
-		/* Ensure minimum width for touch targets */
-		min-width: 120px;
-		/* Center text in tabs */
 		justify-content: center;
 		text-align: center;
-	}
-
-	.company-tab:last-child {
-		margin-right: 0;
+		background: transparent;
+		color: var(--title-color);
+		border: 1px solid var(--title-color);
+		box-shadow: 2px 2px 0 var(--title-color);
+		padding: 0.4rem 1.25rem;
+		transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 	}
 
 	.company-tab.active {
+		background: var(--title-color);
+		color: var(--body-color);
+		box-shadow: none;
 	}
 }
 
