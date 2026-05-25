@@ -47,7 +47,8 @@ document.addEventListener("keydown", e => {
 /*=============== HIDE/SHOW HEADER ON SCROLL ===============*/
 let lastScroll = 0;
 const _header = document.getElementById("header");
-const _colorSections = Array.from(document.querySelectorAll("section[data-header-color]"));
+const _colorSections = Array.from(document.querySelectorAll("section[data-header-color]"))
+	.filter(s => getComputedStyle(s).position !== "fixed");
 
 function syncHeaderColor() {
 	const headerBottom = _header.offsetHeight;
@@ -65,9 +66,11 @@ function syncHeaderColor() {
 
 syncHeaderColor();
 
-lenis.on("scroll", ({ scroll }) => {
+lenis.on("scroll", ({ scroll, limit }) => {
 	if (scroll <= 50) {
 		_header.classList.remove("header--hidden");
+	} else if (scroll >= limit - 10) {
+		_header.classList.add("header--hidden");
 	} else if (scroll > lastScroll) {
 		_header.classList.add("header--hidden");
 	} else {
