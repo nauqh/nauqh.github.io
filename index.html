@@ -99,6 +99,7 @@
                             screen.classList.add('loading--exit');
                             screen.addEventListener('transitionend', function () {
                                 screen.remove();
+                                document.dispatchEvent(new CustomEvent('loadingComplete'));
                             }, { once: true });
                         }, 160);
                     }
@@ -133,7 +134,7 @@
     <!--=============== NAV OVERLAY ===============-->
     <div class="nav-overlay" id="navOverlay">
         <div class="nav-overlay__header">
-            <a href="index.html" class="nav-overlay__logo" aria-label="Nauqh"></a>
+            <a href="index.html" class="nav-overlay__brand">Minh Quan</a>
             <button class="nav-overlay__close" id="navClose" aria-label="Close menu">
                 ✕
             </button>
@@ -445,7 +446,9 @@
 
             <div class="projects-grid container">
                 <div class="projects-col">
-                    <a href="https://csassessment.it.com/" class="project-card" target="_blank">
+                    <a href="https://csassessment.it.com/" class="project-card" target="_blank"
+                       data-description="A full-stack platform for running automated computer science assessments, featuring real-time code execution and instant grading."
+                       data-tech="FastAPI, React, PostgreSQL, Docker">
                         <div class="project-card__thumbnail">
                             <span class="project-card__tag">web application</span>
                             <div class="project-card__img">
@@ -458,7 +461,9 @@
                         </div>
                     </a>
 
-                    <a href="https://keleidoscope.vercel.app/" class="project-card" target="_blank">
+                    <a href="https://keleidoscope.vercel.app/" class="project-card" target="_blank"
+                       data-description="A creative web project exploring visual identity through typography, motion, and generative layouts."
+                       data-tech="Next.js, Framer Motion, Tailwind CSS">
                         <div class="project-card__thumbnail">
                             <span class="project-card__tag">web design</span>
                             <div class="project-card__img">
@@ -471,7 +476,9 @@
                         </div>
                     </a>
 
-                    <a href="visualisation.html" class="project-card">
+                    <a href="visualisation.html" class="project-card"
+                       data-description="Interactive charts surfacing a decade of Spotify streaming trends — genre shifts, artist arcs, and listener behaviour over time."
+                       data-tech="D3.js, JavaScript, Python, Pandas">
                         <div class="project-card__thumbnail">
                             <span class="project-card__tag">data visualisation</span>
                             <div class="project-card__img">
@@ -486,7 +493,10 @@
                 </div>
 
                 <div class="projects-col">
-                    <a href="https://github.com/nauqh/ti" class="project-card" target="_blank">
+                    <a href="https://github.com/nauqh/ti" class="project-card" target="_blank"
+                       data-description="An LLM-powered assistant embedded in student workflows, delivering context-aware Q&amp;A and automated assignment feedback."
+                       data-tech="Python, FastAPI, LangChain, OpenAI"
+                       data-github="https://github.com/nauqh/ti">
                         <div class="project-card__thumbnail">
                             <span class="project-card__tag">ai / tooling</span>
                             <div class="project-card__img">
@@ -499,7 +509,9 @@
                         </div>
                     </a>
 
-                    <a href="https://hymaram.streamlit.app/" class="project-card" target="_blank">
+                    <a href="https://hymaram.streamlit.app/" class="project-card" target="_blank"
+                       data-description="An analytics dashboard for exploring League of Legends ARAM matches — win rates, champion stats, and player performance breakdowns."
+                       data-tech="Python, Streamlit, Pandas, Riot API">
                         <div class="project-card__thumbnail">
                             <span class="project-card__tag">data analytics</span>
                             <div class="project-card__img">
@@ -569,6 +581,40 @@
             </span>
         </div>
     </section>
+
+    <!--=============== PROJECT DRAWER ===============-->
+    <div id="project-drawer" aria-hidden="true">
+        <div class="project-drawer__backdrop" id="drawerBackdrop"></div>
+        <aside class="project-drawer__panel">
+            <div class="project-drawer__head">
+                <span class="project-drawer__tag" id="drawerTag"></span>
+                <button class="project-drawer__close" id="drawerClose" aria-label="Close">✕</button>
+            </div>
+            <div class="project-drawer__img-wrap">
+                <img class="project-drawer__img" id="drawerImg" src="" alt="">
+            </div>
+            <div class="project-drawer__content">
+                <div class="project-drawer__meta">
+                    <h2 class="project-drawer__title" id="drawerTitle"></h2>
+                    <span class="project-drawer__year" id="drawerYear"></span>
+                </div>
+                <p class="project-drawer__desc" id="drawerDesc"></p>
+                <div class="project-drawer__tech" id="drawerTech"></div>
+                <div class="project-drawer__actions">
+                    <div class="stack-btn-wrapper stack-btn-wrapper--dark">
+                        <div class="stack-btn__shadow-back"></div>
+                        <div class="stack-btn__shadow-mid"></div>
+                        <a id="drawerLink" href="#" target="_blank" class="stack-btn stack-btn--dark">visit project</a>
+                    </div>
+                    <div class="stack-btn-wrapper" id="drawerGithubWrapper">
+                        <div class="stack-btn__shadow-back"></div>
+                        <div class="stack-btn__shadow-mid"></div>
+                        <a id="drawerGithub" href="#" target="_blank" class="stack-btn">github</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
 
     <!--=============== LENIS SMOOTH SCROLL ===============-->
     <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>

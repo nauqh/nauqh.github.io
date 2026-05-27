@@ -11,6 +11,11 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
+if (document.getElementById("loading-screen")) {
+	lenis.stop();
+	document.addEventListener("loadingComplete", () => lenis.start(), { once: true });
+}
+
 /*=============== NAV OVERLAY ===============*/
 const navOverlay  = document.getElementById("navOverlay");
 const navBackdrop = document.getElementById("navBackdrop");
@@ -423,7 +428,15 @@ const revealObserver = new IntersectionObserver((entries) => {
 	});
 }, { threshold: 0.08, rootMargin: "0px 0px -20px 0px" });
 
-revealEls.forEach(el => revealObserver.observe(el));
+function startReveals() {
+	revealEls.forEach(el => revealObserver.observe(el));
+}
+
+if (document.getElementById("loading-screen")) {
+	document.addEventListener("loadingComplete", startReveals, { once: true });
+} else {
+	startReveals();
+}
 
 /*=============== SCROLL PROGRESS BAR ===============*/
 const scrollProgress = document.getElementById("scroll-progress");
@@ -431,5 +444,63 @@ window.addEventListener("scroll", () => {
 	const scrollTop = document.documentElement.scrollTop;
 	const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 	scrollProgress.style.width = (scrollTop / scrollHeight * 100) + "%";
+});
+
+/*=============== PROJECT DRAWER ===============*/
+const projectDrawer  = document.getElementById("project-drawer");
+const drawerBackdrop = document.getElementById("drawerBackdrop");
+const drawerClose    = document.getElementById("drawerClose");
+const drawerTag      = document.getElementById("drawerTag");
+const drawerTitle    = document.getElementById("drawerTitle");
+const drawerYear     = document.getElementById("drawerYear");
+const drawerImg      = document.getElementById("drawerImg");
+const drawerDesc     = document.getElementById("drawerDesc");
+const drawerTech     = document.getElementById("drawerTech");
+const drawerLink          = document.getElementById("drawerLink");
+const drawerGithub        = document.getElementById("drawerGithub");
+const drawerGithubWrapper = document.getElementById("drawerGithubWrapper");
+
+function openDrawer(card) {
+	drawerTag.textContent   = card.querySelector(".project-card__tag")?.textContent   || "";
+	drawerTitle.textContent = card.querySelector(".project-card__title")?.textContent || "";
+	drawerYear.textContent  = card.querySelector(".project-card__year")?.textContent  || "";
+	drawerImg.src = card.querySelector(".project-card__img img")?.src || "";
+	drawerImg.alt = card.querySelector(".project-card__img img")?.alt || "";
+	drawerDesc.textContent = card.dataset.description || "";
+	drawerTech.innerHTML = (card.dataset.tech || "")
+		.split(",")
+		.filter(Boolean)
+		.map(t => `<span class="project-drawer__chip">${t.trim()}</span>`)
+		.join("");
+	drawerLink.href = card.href;
+	const github = card.dataset.github;
+	if (github) {
+		drawerGithub.href = github;
+		drawerGithubWrapper.style.display = "";
+	} else {
+		drawerGithubWrapper.style.display = "none";
+	}
+	projectDrawer.classList.add("active");
+	projectDrawer.setAttribute("aria-hidden", "false");
+	lenis.stop();
+}
+
+function closeDrawer() {
+	projectDrawer.classList.remove("active");
+	projectDrawer.setAttribute("aria-hidden", "true");
+	lenis.start();
+}
+
+document.querySelectorAll(".project-card").forEach(card => {
+	card.addEventListener("click", e => {
+		e.preventDefault();
+		openDrawer(card);
+	});
+});
+
+drawerBackdrop.addEventListener("click", closeDrawer);
+drawerClose.addEventListener("click", closeDrawer);
+document.addEventListener("keydown", e => {
+	if (e.key === "Escape" && projectDrawer.classList.contains("active")) closeDrawer();
 });
 });
