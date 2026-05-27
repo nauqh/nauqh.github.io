@@ -450,7 +450,7 @@ img {
 
 .nav-overlay.active .nav-overlay__link {
 	clip-path: inset(0 0 0% 0);
-	transition-delay: 0.2s;
+	transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.2s, color 0.08s;
 }
 
 .nav-overlay__link + .nav-overlay__link::before {
