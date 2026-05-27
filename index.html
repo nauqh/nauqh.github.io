@@ -51,6 +51,64 @@
 </head>
 
 <body>
+    <!--=============== LOADING SCREEN ===============-->
+    <div id="loading-screen" aria-hidden="true">
+        <div class="loading__top">
+            <span class="loading__label">Loading..</span>
+            <div class="loading__track">
+                <div class="loading__fill" id="loading-fill"></div>
+            </div>
+        </div>
+        <div class="loading__counter">
+            <span id="loading-pct">0%</span>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var PAUSE_AT = 38, PHASE1_MS = 950, PHASE2_MS = 1250;
+            var screen = document.getElementById('loading-screen');
+            var fill = document.getElementById('loading-fill');
+            var pct = document.getElementById('loading-pct');
+            var phase = 'phase1', start = null, raf = null;
+
+            function setProgress(v) {
+                fill.style.width = v + '%';
+                pct.textContent = v + '%';
+            }
+
+            function tick(now) {
+                if (start === null) start = now;
+                var progress;
+                if (phase === 'phase1') {
+                    progress = Math.min(Math.floor(((now - start) / PHASE1_MS) * PAUSE_AT), PAUSE_AT);
+                    setProgress(progress);
+                    if (progress < PAUSE_AT) {
+                        raf = requestAnimationFrame(tick);
+                    } else {
+                        phase = 'phase2';
+                        start = null;
+                        raf = requestAnimationFrame(tick);
+                    }
+                } else {
+                    progress = Math.min(PAUSE_AT + Math.floor(((now - start) / PHASE2_MS) * (100 - PAUSE_AT)), 100);
+                    setProgress(progress);
+                    if (progress < 100) {
+                        raf = requestAnimationFrame(tick);
+                    } else {
+                        setTimeout(function () {
+                            screen.classList.add('loading--exit');
+                            screen.addEventListener('transitionend', function () {
+                                screen.remove();
+                            }, { once: true });
+                        }, 160);
+                    }
+                }
+            }
+
+            raf = requestAnimationFrame(tick);
+        })();
+    </script>
+
     <!--=============== SCROLL PROGRESS ===============-->
     <div id="scroll-progress"></div>
 

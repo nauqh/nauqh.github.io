@@ -1,5 +1,5 @@
 /*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,800;1,400;1,800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,800;1,400;1,800&display=swap");
 
 /*=============== VARIABLES CSS ===============*/
 :root {
@@ -1365,6 +1365,68 @@ img {
 	font-size: var(--small-font-size);
 	color: var(--text-color-light);
 	font-style: italic;
+}
+
+/*=============== LOADING SCREEN ===============*/
+#loading-screen {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	overflow: hidden;
+	user-select: none;
+	pointer-events: none;
+	background-color: var(--body-color);
+	transition: transform 0.72s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+#loading-screen.loading--exit {
+	transform: translateY(-100%);
+}
+
+.loading__top {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	gap: 1.25rem;
+	padding: 2rem 1.75rem 0;
+}
+
+.loading__label {
+	flex-shrink: 0;
+	font-size: 0.875rem;
+	font-weight: 300;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--title-color);
+}
+
+.loading__track {
+	flex: 1;
+	height: 3px;
+	overflow: hidden;
+}
+
+.loading__fill {
+	height: 100%;
+	border-radius: 9999px;
+	background-color: var(--title-color);
+	width: 0%;
+}
+
+.loading__counter {
+	position: absolute;
+	right: 1rem;
+	bottom: 0;
+}
+
+.loading__counter span {
+	display: block;
+	font-weight: 300;
+	font-variant-numeric: tabular-nums;
+	font-size: clamp(120px, 27vw, 520px);
+	line-height: 0.82;
+	color: var(--title-color);
 }
 
 /*=============== ALL WORKS LINK ===============*/
