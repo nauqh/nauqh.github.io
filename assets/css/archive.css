@@ -1,5 +1,14 @@
 /*=============== ARCHIVE PAGE STYLES ===============*/
 
+/*=============== ARCHIVE PAGE OVERRIDES ===============*/
+body {
+	padding-bottom: 0;
+}
+
+.archive.section {
+	padding-bottom: 2rem;
+}
+
 /*=============== ARCHIVE HEADER ===============*/
 .archive__header {
 	text-align: center;

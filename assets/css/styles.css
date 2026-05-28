@@ -616,6 +616,10 @@ img {
 	text-transform: none;
 }
 
+.home__name .highlight {
+	padding: 0 0.1em;
+}
+
 
 .home__name-light,
 .home__name-bold {
@@ -1298,7 +1302,10 @@ img {
 .project-card__thumbnail::after {
 	content: '';
 	position: absolute;
-	inset: 0;
+	top: 0;
+	left: 0;
+	right: 8px;
+	bottom: 8px;
 	background: var(--title-color);
 	transform: translate(8px, 8px);
 	z-index: 0;
@@ -1379,6 +1386,7 @@ img {
 	font-size: var(--small-font-size);
 	color: var(--text-color-light);
 	font-style: italic;
+	padding-left: 0.3em;
 }
 
 /*=============== LOADING SCREEN ===============*/
@@ -1529,6 +1537,7 @@ img {
 	overflow: hidden;
 	background: var(--container-color);
 	flex-shrink: 0;
+	padding: 1rem;
 }
 
 .project-drawer__img {
