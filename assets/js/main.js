@@ -13,7 +13,14 @@ requestAnimationFrame(raf);
 
 if (document.getElementById("loading-screen")) {
 	lenis.stop();
-	document.addEventListener("loadingComplete", () => lenis.start(), { once: true });
+	document.addEventListener("loadingComplete", () => {
+		lenis.start();
+		const homeData = document.querySelector(".home__data");
+		if (homeData) homeData.classList.add("hero-revealed");
+		setTimeout(() => {
+			document.getElementById("header").classList.remove("header--pre-reveal");
+		}, 1300);
+	}, { once: true });
 }
 
 /*=============== NAV OVERLAY ===============*/
@@ -436,6 +443,7 @@ if (document.getElementById("loading-screen")) {
 	document.addEventListener("loadingComplete", startReveals, { once: true });
 } else {
 	startReveals();
+	document.getElementById("header").classList.remove("header--pre-reveal");
 }
 
 /*=============== SCROLL PROGRESS BAR ===============*/
