@@ -616,15 +616,6 @@ img {
 	text-transform: none;
 }
 
-.home__name .highlight {
-	background-image: linear-gradient(
-		104deg,
-		transparent 1%,
-		#d1d5db 2%,
-		#d1d5db 97%,
-		transparent 98%
-	);
-}
 
 .home__name-light,
 .home__name-bold {
@@ -2842,6 +2833,7 @@ img {
 	left: 0;
 	width: 100%;
 	height: 100vh;
+	height: 100dvh;
 	z-index: 1;
 	display: flex;
 	flex-direction: column;
@@ -2989,29 +2981,55 @@ img {
 
 @media screen and (max-width: 768px) {
 	.contact.section {
+		height: 100dvh;
 		justify-content: flex-start;
-		overflow-y: auto;
+		overflow-y: hidden;
 	}
 
 	.contact__wrapper {
 		grid-template-columns: 1fr;
-		gap: 2rem;
-		padding-top: 3rem;
+		gap: 1.5rem;
+		padding-top: 4rem;
+		padding-bottom: 5rem;
+		flex: 1;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.contact__big-title {
+		font-size: clamp(2.2rem, 10vw, 3rem);
+		margin-bottom: 1rem;
 	}
 
 	.contact__desc {
 		max-width: 100%;
-		margin-bottom: 1.5rem;
+		margin-bottom: 1rem;
+		font-size: 0.95rem;
+	}
+
+	.contact__links {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.contact__form {
+		padding: 1.25rem;
+		box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.2);
+	}
+
+	.contact__textarea {
+		min-height: 110px;
 	}
 
 	.contact__footer {
-		position: relative;
-		left: auto;
-		right: auto;
-		bottom: auto;
-		max-width: 100%;
-		margin: 0;
-		padding: 1.5rem 2rem;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 1.25rem 2rem 1.5rem;
+		background-color: #0f172a;
 	}
 }
 
