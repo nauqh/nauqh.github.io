@@ -2670,6 +2670,10 @@ img {
 	.about .section__title {
 		text-align: left;
 	}
+
+	.about__container2 > .section__title {
+		margin-left: 0;
+	}
 }
 
 .about__container2 > .section__title {
@@ -2954,7 +2958,8 @@ img {
 	z-index: 1;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
+	padding-top: 8vh;
 }
 
 .contact__wrapper {
