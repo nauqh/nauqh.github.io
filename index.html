@@ -550,44 +550,40 @@
         </section>
     </main>
 
-    <!--=============== CONTACT ===============-->
+    <!--=============== CONTACT / FOOTER ===============-->
     <section class="contact section" id="contact" data-header-color="#0f172a" data-header-accent="#0D9488">
-        <div class="contact__wrapper container">
-
-            <div class="contact__left">
-                <h2 class="contact__big-title">let's <em>talk</em></h2>
-                <p class="contact__desc">Got an idea, a question, or just want to say hi? I'm always down for a good
-                    conversation.</p>
-                <div class="contact__links">
-                    <a href="https://github.com/nauqh" target="_blank" class="contact__link">
-                        <i class='bx bxl-github'></i> GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/nauqh/" target="_blank" class="contact__link">
-                        <i class='bx bxl-linkedin'></i> LinkedIn
-                    </a>
-                    <a href="assets/pdf/resume.pdf" target="_blank" class="contact__link">
-                        <i class='bx bx-file'></i> Resume
-                    </a>
-                </div>
+        <div class="contact__body">
+            <div class="contact__header">
+                <h2 class="contact__signature">nauqh<span class="contact__dot">.</span></h2>
+                <p class="contact__tagline">data engineer &amp; developer</p>
             </div>
-
-            <div class="contact__right">
-                <p class="contact__form-label">or drop a message —</p>
-                <form class="contact__form" id="contactForm">
-                    <input id="contactName" class="contact__input" type="text" placeholder="Your name (optional)" />
-                    <textarea id="contactMessage" class="contact__textarea" placeholder="Your message"
-                        required></textarea>
-                    <button type="submit" class="contact__button">send it</button>
-                    <p class="contact__note" id="contactNote"></p>
-                </form>
-            </div>
-
+            <nav class="contact__links">
+                <a href="https://github.com/nauqh" target="_blank" class="contact__link">
+                    <span class="contact__link-num">01</span>
+                    <span class="contact__link-label">GitHub</span>
+                    <span class="contact__link-line"></span>
+                    <i class='bx bx-right-arrow-alt'></i>
+                </a>
+                <a href="https://www.linkedin.com/in/nauqh/" target="_blank" class="contact__link">
+                    <span class="contact__link-num">02</span>
+                    <span class="contact__link-label">LinkedIn</span>
+                    <span class="contact__link-line"></span>
+                    <i class='bx bx-right-arrow-alt'></i>
+                </a>
+                <a href="assets/pdf/resume.pdf" target="_blank" class="contact__link">
+                    <span class="contact__link-num">03</span>
+                    <span class="contact__link-label">Resume</span>
+                    <span class="contact__link-line"></span>
+                    <i class='bx bx-right-arrow-alt'></i>
+                </a>
+            </nav>
         </div>
 
         <div class="contact__footer">
             <span class="footer__copy">
                 Designed and Built by <a href="index.html">Nauqh</a>
             </span>
+            <span class="footer__copy">© <span id="currentYear"></span></span>
         </div>
     </section>
 

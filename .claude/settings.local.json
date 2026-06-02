@@ -5,7 +5,25 @@
       "Bash(git tag *)",
       "Bash(git push *)",
       "Bash(gh release *)",
-      "Bash(git restore *)"
+      "Bash(git restore *)",
+      "WebFetch(domain:asana.com)",
+      "WebFetch(domain:www.oaic.gov.au)",
+      "WebFetch(domain:www.legislation.gov.au)",
+      "WebFetch(domain:www.acs.org.au)",
+      "WebFetch(domain:blog.crisp.se)",
+      "WebFetch(domain:membership.acs.org.au)",
+      "WebFetch(domain:www.iso.org)",
+      "WebFetch(domain:www.crowdstrike.com)",
+      "WebFetch(domain:www.bbc.com)",
+      "WebFetch(domain:www.reuters.com)",
+      "WebFetch(domain:www.ibrs.com.au)",
+      "WebFetch(domain:doi.org)",
+      "WebFetch(domain:doi.apa.org)",
+      "WebFetch(domain:www.worldscientific.com)",
+      "WebFetch(domain:link.springer.com)",
+      "WebFetch(domain:journals.sagepub.com)",
+      "WebFetch(domain:psycnet.apa.org)",
+      "WebFetch(domain:linkinghub.elsevier.com)"
     ]
   }
 }

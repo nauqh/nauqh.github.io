@@ -406,7 +406,6 @@ document.addEventListener("DOMContentLoaded", function () {
 /*=============== SCROLL REVEAL ===============*/
 const revealEls = [
 	...document.querySelectorAll(".section__title"),
-	...document.querySelectorAll(".contact__big-title"),
 	...document.querySelectorAll(".about__content p"),
 	...document.querySelectorAll(".about__content a"),
 	document.querySelector(".terminal"),
@@ -428,8 +427,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 	entries.forEach(entry => {
 		if (entry.isIntersecting) {
 			entry.target.classList.add("revealed");
-			if (entry.target.classList.contains("section__title") ||
-				entry.target.classList.contains("contact__big-title")) {
+			if (entry.target.classList.contains("section__title")) {
 				entry.target.classList.add("is-visible");
 			}
 			revealObserver.unobserve(entry.target);

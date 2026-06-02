@@ -1,0 +1,592 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); color: var(--color-text-primary); }
+
+.blueprint { padding: 0 0 2rem; }
+
+.header-bar {
+  background: var(--color-background-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.header-bar h1 { font-size: 18px; font-weight: 500; margin-bottom: 0.5rem; }
+.header-bar p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+.meta-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.75rem; }
+.chip {
+  font-size: 12px; padding: 3px 10px; border-radius: 999px;
+  border: 0.5px solid var(--color-border-secondary);
+  color: var(--color-text-secondary); background: var(--color-background-primary);
+}
+.chip.mark { color: var(--color-text-info); background: var(--color-background-info); border-color: var(--color-border-info); }
+
+.section-block { margin-bottom: 1.25rem; }
+
+.section-card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  cursor: pointer; user-select: none;
+}
+.section-header:hover { background: var(--color-background-secondary); }
+.section-header-left { display: flex; align-items: center; gap: 10px; }
+.section-number {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 500;
+  background: var(--color-background-secondary);
+  color: var(--color-text-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  flex-shrink: 0;
+}
+.section-title { font-size: 15px; font-weight: 500; }
+.section-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 1px; }
+.section-header-right { display: flex; align-items: center; gap: 8px; }
+.wc-badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 999px;
+  background: var(--color-background-secondary);
+  color: var(--color-text-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  white-space: nowrap;
+}
+.mark-badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 999px;
+  background: var(--color-background-success);
+  color: var(--color-text-success);
+  border: 0.5px solid var(--color-border-success);
+  white-space: nowrap;
+}
+.chevron { font-size: 14px; color: var(--color-text-secondary); transition: transform 0.2s; }
+.chevron.open { transform: rotate(180deg); }
+
+.section-body { padding: 1.25rem; display: none; }
+.section-body.open { display: block; }
+
+.issue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 500px) { .issue-grid { grid-template-columns: 1fr; } }
+
+.issue-card {
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-tertiary);
+  overflow: hidden;
+}
+.issue-card-header {
+  padding: 0.6rem 0.9rem;
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.issue-card-body { padding: 0.75rem 0.9rem; font-size: 13px; line-height: 1.6; color: var(--color-text-secondary); }
+.issue-card-body ul { padding-left: 1.1rem; }
+.issue-card-body li { margin-bottom: 3px; }
+.issue-card-body strong { color: var(--color-text-primary); font-weight: 500; }
+
+.tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; margin-right: 4px; margin-bottom: 3px; font-weight: 500; }
+
+.sub-section { margin-top: 1rem; }
+.sub-section h4 { font-size: 13px; font-weight: 500; margin-bottom: 0.5rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
+.sub-section p, .sub-section li { font-size: 13px; line-height: 1.65; color: var(--color-text-secondary); }
+.sub-section ul { padding-left: 1.2rem; }
+.sub-section li { margin-bottom: 4px; }
+.sub-section li strong { color: var(--color-text-primary); font-weight: 500; }
+
+.ref-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; padding: 2px 8px; border-radius: 999px;
+  border: 0.5px solid var(--color-border-tertiary);
+  color: var(--color-text-secondary);
+  margin: 2px 3px 2px 0;
+  background: var(--color-background-secondary);
+}
+
+.divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1rem 0; }
+
+.exec-step {
+  display: flex; gap: 0.75rem; margin-bottom: 0.75rem;
+  padding: 0.75rem; border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+}
+.step-num {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500;
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+}
+.step-content { flex: 1; }
+.step-content h5 { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.step-content p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.55; }
+
+.rec-card {
+  display: flex; gap: 0.75rem; align-items: flex-start;
+  padding: 0.75rem 0.9rem; margin-bottom: 0.6rem;
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-tertiary);
+}
+.rec-num {
+  width: 20px; height: 20px; border-radius: 4px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500;
+}
+.rec-content h5 { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.rec-content p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.55; }
+
+.warn-box {
+  background: var(--color-background-warning);
+  border: 0.5px solid var(--color-border-warning);
+  border-radius: var(--border-radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 12px; color: var(--color-text-warning);
+  margin-top: 0.75rem;
+}
+
+.ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+@media (max-width: 500px) { .ai-grid { grid-template-columns: 1fr; } }
+.ai-card {
+  padding: 0.75rem; border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+}
+.ai-card h5 { font-size: 12px; font-weight: 500; margin-bottom: 4px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
+.ai-card p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+</style>
+
+<div class="blueprint">
+
+<div class="header-bar">
+  <h1>FIT5122 Assignment 3 — UrbanMove report blueprint</h1>
+  <p>You are a senior IT employee at UrbanMove, reporting to senior management on four interconnected professional issues from the Queensland MaaS rollout.</p>
+  <div class="meta-chips">
+    <span class="chip">Due: Week 12, Friday 11:55pm</span>
+    <span class="chip mark">35% of unit</span>
+    <span class="chip">Business report: 4 marks (exec summary) + 2 marks (body)</span>
+    <span class="chip">AI reflection: 4 marks</span>
+    <span class="chip">Pro conversation: 25 marks</span>
+  </div>
+</div>
+
+<!-- ─── EXECUTIVE SUMMARY ──────────────────────────────────────── -->
+<div class="section-block">
+  <div class="section-card">
+    <div class="section-header" onclick="toggle('exec')">
+      <div class="section-header-left">
+        <div class="section-number">A</div>
+        <div>
+          <div class="section-title">Executive summary</div>
+          <div class="section-sub">Standalone — reader must not need the body to understand it</div>
+        </div>
+      </div>
+      <div class="section-header-right">
+        <span class="wc-badge">350–550 words</span>
+        <span class="mark-badge">4 marks</span>
+        <span class="chevron" id="chevron-exec">▾</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-exec">
+      <div class="warn-box">⚑ The rubric's top grade requires the exec summary to be fully standalone — if someone only reads this, they get the full picture. Write it last, after the body is done.</div>
+
+      <div class="sub-section" style="margin-top:1rem">
+        <h4>Four-part structure (Asana framework)</h4>
+
+        <div class="exec-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h5>Problem & context (~80 words)</h5>
+            <p>UrbanMove's Mobility-as-a-Service rollout for Queensland councils has surfaced four interconnected professional problems: inconsistent platform reliability across council deployments, a breakdown in communication and governance across stakeholders, Agile team coordination failures amid rapid expansion, and a cybersecurity/privacy incident involving the potential re-identification of commuter trip data. Left unaddressed, these issues put contractual obligations, council reputations, and public trust at significant risk.</p>
+          </div>
+        </div>
+
+        <div class="exec-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h5>Key findings — 4 issues (~150 words)</h5>
+            <p><strong>Quality:</strong> Inconsistent behaviour across councils, a growing defect/change backlog, and undefined third-party integration standards point to gaps in the quality framework (ISO/IEC 25010).<br>
+            <strong>Communication:</strong> Misalignment on responsibilities and SLAs — compounded by the Silicon Valley provider's API rigidity and the Brisbane startup's capacity constraints — shows a failure of shared communication scaffolding.<br>
+            <strong>Teams:</strong> Multiple parallel Agile squads without coordination structures, contractors and offshore developers with unclear onboarding, and intercultural gaps have created knowledge silos and divergent priorities.<br>
+            <strong>Ethics/Privacy:</strong> The cybersecurity incident exposed "de-identified" trip data that can be re-identified via cross-referencing public data — a breach of Australian Privacy Principles and a serious reputational risk for councils.</p>
+          </div>
+        </div>
+
+        <div class="exec-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h5>Recommendations (~120 words)</h5>
+            <p>I recommend: (1) adopting an ISO/IEC 25010-aligned quality assurance framework with mandatory integration testing; (2) establishing a cross-stakeholder RACI matrix and a change governance protocol; (3) restructuring parallel Agile delivery using a Spotify-inspired squad/tribe model with integration liaison roles; and (4) commissioning an immediate Privacy Impact Assessment and upgrading de-identification methodology to align with the Australian Privacy Principles (APPs) and Notifiable Data Breaches scheme obligations.</p>
+          </div>
+        </div>
+
+        <div class="exec-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h5>Conclusion (~80 words)</h5>
+            <p>Resolving these four issues is not optional — UrbanMove's ability to meet its contractual obligations, retain council partners, and scale responsibly depends on it. The recommendations in this report provide a structured, prioritised path to restore stakeholder confidence, protect public trust, and deliver a platform that councils can stand behind. This report details the specific actions, frameworks, and accountabilities required to achieve that outcome.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MAIN REPORT ──────────────────────────────────────── -->
+<div class="section-block">
+  <div class="section-card">
+    <div class="section-header" onclick="toggle('intro')">
+      <div class="section-header-left">
+        <div class="section-number">1</div>
+        <div>
+          <div class="section-title">Introduction</div>
+          <div class="section-sub">Role context, purpose, scope</div>
+        </div>
+      </div>
+      <div class="section-header-right">
+        <span class="wc-badge">~150 words</span>
+        <span class="chevron" id="chevron-intro">▾</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-intro">
+      <div class="sub-section">
+        <h4>What to write</h4>
+        <ul>
+          <li>State your role: senior IT professional at UrbanMove, commissioned by management to review the rollout situation.</li>
+          <li>Name the four issue areas your report addresses (quality, communication, teams, ethics/privacy).</li>
+          <li>Briefly outline the structure: background → issue analysis → recommendations.</li>
+          <li>Keep it short — no findings or opinions yet. This is just your "brief" paragraph.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-block">
+  <div class="section-card">
+    <div class="section-header" onclick="toggle('bg')">
+      <div class="section-header-left">
+        <div class="section-number">2</div>
+        <div>
+          <div class="section-title">Background & context</div>
+          <div class="section-sub">Platform overview, contract, organisational changes</div>
+        </div>
+      </div>
+      <div class="section-header-right">
+        <span class="wc-badge">~200 words</span>
+        <span class="chevron" id="chevron-bg">▾</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-bg">
+      <div class="sub-section">
+        <h4>What to write</h4>
+        <ul>
+          <li>UrbanMove: smart mobility platform integrating public transport, GPS, third-party mobility providers, and commuter apps.</li>
+          <li>QLD contract: unified Mobility-as-a-Service platform for several local councils — real-time journey planning, integrated ticketing, data-driven transport insights.</li>
+          <li>Organisational changes that created the conditions for these issues: shift to platform-based architecture, adoption of Agile (multiple parallel teams), rapid team expansion including contractors and offshore developers.</li>
+          <li>Frame the rollout: the issues did not emerge in isolation — they are the product of simultaneous organisational, technical, and contractual pressures.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Issue Analysis -->
+<div class="section-block">
+  <div class="section-card">
+    <div class="section-header" onclick="toggle('issues')">
+      <div class="section-header-left">
+        <div class="section-number">3</div>
+        <div>
+          <div class="section-title">Issue analysis</div>
+          <div class="section-sub">Four issues mapped to FIT5122 curriculum — the core of your report</div>
+        </div>
+      </div>
+      <div class="section-header-right">
+        <span class="wc-badge">~1100 words total</span>
+        <span class="chevron" id="chevron-issues">▾</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-issues">
+
+      <div class="issue-grid">
+
+        <!-- Quality -->
+        <div class="issue-card">
+          <div class="issue-card-header" style="background:var(--color-background-info);color:var(--color-text-info)">
+            <i class="ti ti-shield-check" aria-hidden="true"></i> Issue 1 — Quality & reliability
+            <span style="margin-left:auto;font-size:11px;opacity:0.8">~280 words · Ch.3</span>
+          </div>
+          <div class="issue-card-body">
+            <strong>What to say:</strong>
+            <ul>
+              <li>System behaves inconsistently across council deployments, especially where local systems and third-party services differ.</li>
+              <li>Growing backlog of defects and change requests relating to data accuracy and user experience.</li>
+              <li>No shared definition of integration requirements → each third-party integration is a risk.</li>
+              <li>Draw a parallel to CrowdStrike/Delta or UniSuper — inadequate testing at scale creates cascading failures.</li>
+            </ul>
+            <div style="margin-top:0.6rem"><strong>Frameworks to reference:</strong></div>
+            <div style="margin-top:4px">
+              <span class="ref-pill"><i class="ti ti-file-certificate" style="font-size:11px" aria-hidden="true"></i> ISO/IEC 25010 — functional suitability, reliability, portability, security</span>
+              <span class="ref-pill">Ch. 3 unit readings</span>
+              <span class="ref-pill">CrowdStrike/UniSuper case study</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Communication -->
+        <div class="issue-card">
+          <div class="issue-card-header" style="background:var(--color-background-warning);color:var(--color-text-warning)">
+            <i class="ti ti-message-circle" aria-hidden="true"></i> Issue 2 — Communication & stakeholders
+            <span style="margin-left:auto;font-size:11px;opacity:0.8">~280 words · Ch.4</span>
+          </div>
+          <div class="issue-card-body">
+            <strong>What to say:</strong>
+            <ul>
+              <li>Changes deployed without consistent notification to councils and third parties → divergent assumptions.</li>
+              <li>Different parties operate with different mental models of responsibilities, SLAs, and system behaviour.</li>
+              <li>Silicon Valley provider (low-context, formal, technical): refuses API changes — very limited shared field of experience with UrbanMove. Brisbane startup (high relationship, limited capacity): struggling to keep up, potentially needs more support and clearer specs.</li>
+              <li>Two very different communication approaches needed for two very different providers.</li>
+            </ul>
+            <div style="margin-top:0.6rem"><strong>Frameworks to reference:</strong></div>
+            <div style="margin-top:4px">
+              <span class="ref-pill">Schramm's communication model (noise, shared field of experience)</span>
+              <span class="ref-pill">High/low context communication (Edward Hall) — Ch. 4</span>
+              <span class="ref-pill">Thomas-Kilmann — conflict between parties</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teams -->
+        <div class="issue-card">
+          <div class="issue-card-header" style="background:var(--color-background-success);color:var(--color-text-success)">
+            <i class="ti ti-users" aria-hidden="true"></i> Issue 3 — Team dynamics & Agile
+            <span style="margin-left:auto;font-size:11px;opacity:0.8">~280 words · Ch.2</span>
+          </div>
+          <div class="issue-card-body">
+            <strong>What to say:</strong>
+            <ul>
+              <li>Multiple Agile teams working in parallel without coordination structures → different squads make conflicting changes.</li>
+              <li>Rapid expansion (contractors + offshore devs) with insufficient onboarding → knowledge silos, inconsistent standards.</li>
+              <li>Cultural diversity without intercultural management creates communication gaps (especially with offshore team).</li>
+              <li>No chapter lead / tribe structure to align squads across shared technical concerns.</li>
+            </ul>
+            <div style="margin-top:0.6rem"><strong>Frameworks to reference:</strong></div>
+            <div style="margin-top:4px">
+              <span class="ref-pill">Spotify agile model (squads, tribes, chapters, guilds) — Ch.2</span>
+              <span class="ref-pill">DMIS — intercultural sensitivity for offshore teams</span>
+              <span class="ref-pill">ACS Code of Professional Conduct</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ethics/Privacy -->
+        <div class="issue-card">
+          <div class="issue-card-header" style="background:var(--color-background-danger);color:var(--color-text-danger)">
+            <i class="ti ti-lock" aria-hidden="true"></i> Issue 4 — Ethics, privacy & legal
+            <span style="margin-left:auto;font-size:11px;opacity:0.8">~300 words · Ch.5</span>
+          </div>
+          <div class="issue-card-body">
+            <strong>What to say:</strong>
+            <ul>
+              <li>External party accessed "de-identified" trip pattern data via a third-party integration.</li>
+              <li>Key insight: de-identified ≠ anonymous. Cross-referencing with public data = <em>mosaic/aggregation effect</em> → real individuals identifiable.</li>
+              <li>Australian Privacy Act 1988 obligations: APP 1 (transparency), APP 3 (collection), APP 6 (use & disclosure), APP 11 (security of personal info).</li>
+              <li>Possible Notifiable Data Breaches (NDB) scheme obligations — serious risk of harm threshold may have been met.</li>
+              <li>Councils' reputational risk → public trust in MaaS platform at stake.</li>
+              <li>No transparency to commuters about how their travel data is collected and used.</li>
+            </ul>
+            <div style="margin-top:0.6rem"><strong>Frameworks to reference:</strong></div>
+            <div style="margin-top:4px">
+              <span class="ref-pill">Australian Privacy Act 1988 / APPs</span>
+              <span class="ref-pill">Notifiable Data Breaches scheme</span>
+              <span class="ref-pill">ACS Code of Ethics (public interest, honesty)</span>
+              <span class="ref-pill">Mosaic / aggregation effect</span>
+              <span class="ref-pill">Ch. 5 unit readings</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /issue-grid -->
+    </div>
+  </div>
+</div>
+
+<!-- Recommendations -->
+<div class="section-block">
+  <div class="section-card">
+    <div class="section-header" onclick="toggle('recs')">
+      <div class="section-header-left">
+        <div class="section-number">4</div>
+        <div>
+          <div class="section-title">Recommendations</div>
+          <div class="section-sub">One per issue — actionable, prescriptive, first-person</div>
+        </div>
+      </div>
+      <div class="section-header-right">
+        <span class="wc-badge">~500 words</span>
+        <span class="chevron" id="chevron-recs">▾</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-recs">
+
+      <div class="warn-box" style="margin-bottom:1rem">Business reports are prescriptive — write "I recommend…", not "it would be beneficial to consider…". Each rec should be concrete and actionable.</div>
+
+      <div class="rec-card">
+        <div class="rec-num" style="background:var(--color-background-info);color:var(--color-text-info)">R1</div>
+        <div class="rec-content">
+          <h5>Implement an ISO/IEC 25010-aligned quality assurance framework</h5>
+          <p>Define quality attributes (functional suitability, reliability, portability, security) per council deployment. Mandate integration testing protocols for every third-party API before go-live. Introduce a defect priority matrix with resolution SLAs. Schedule quarterly quality audits across all council deployments.</p>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-num" style="background:var(--color-background-warning);color:var(--color-text-warning)">R2</div>
+        <div class="rec-content">
+          <h5>Establish a cross-stakeholder RACI matrix and change governance framework</h5>
+          <p>Define who is Responsible, Accountable, Consulted, and Informed for every integration and decision point across UrbanMove, councils, and third-party providers. Introduce a change notification protocol requiring cross-stakeholder sign-off before any deployment. Hold regular joint steering meetings. Tailor communication style per provider (structured/formal for Silicon Valley; supportive/collaborative for Brisbane startup).</p>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-num" style="background:var(--color-background-success);color:var(--color-text-success)">R3</div>
+        <div class="rec-content">
+          <h5>Restructure Agile delivery using a Spotify-inspired squad/tribe model</h5>
+          <p>Establish squads with clear ownership, a tribe layer for cross-squad coordination, and chapter leads for shared technical standards. Assign dedicated integration liaison roles between UrbanMove and each third-party provider. Introduce an intercultural awareness onboarding program for offshore and contractor team members. Run shared backlog reviews to surface cross-squad dependencies early.</p>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-num" style="background:var(--color-background-danger);color:var(--color-text-danger)">R4</div>
+        <div class="rec-content">
+          <h5>Commission a Privacy Impact Assessment and remediate data governance</h5>
+          <p>Engage legal counsel immediately to assess APP obligations and Notifiable Data Breach scheme exposure. Upgrade de-identification methodology (consider k-anonymity or differential privacy to address the mosaic effect). Publish a plain-language data transparency statement for commuters (APP 1). Conduct a third-party API security audit and tighten access controls. Report findings to affected councils promptly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Conclusion -->
+<div class="section-block">
+  <div class="section-card">
+    <div class="section-header" onclick="toggle('conc')">
+      <div class="section-header-left">
+        <div class="section-number">5</div>
+        <div>
+          <div class="section-title">Conclusion</div>
+          <div class="section-sub">Tie it together — consequences, confidence, next step</div>
+        </div>
+      </div>
+      <div class="section-header-right">
+        <span class="wc-badge">~150 words</span>
+        <span class="chevron" id="chevron-conc">▾</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-conc">
+      <div class="sub-section">
+        <h4>What to write</h4>
+        <ul>
+          <li>Briefly restate the four interconnected issues — not a summary, but a "so what" framing.</li>
+          <li>Emphasise the consequences of inaction: contractual risk, council reputational damage, regulatory exposure (Privacy Act), and further erosion of public trust.</li>
+          <li>Express confidence that the four recommendations provide a prioritised, structured path to recovery.</li>
+          <li>Close with a forward-looking sentence — the platform's potential, if issues are addressed, to become a model for smart city mobility in Australia.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Reflection -->
+<div class="section-block">
+  <div class="section-card">
+    <div class="section-header" onclick="toggle('ai')">
+      <div class="section-header-left">
+        <div class="section-number">B</div>
+        <div>
+          <div class="section-title">AI use reflection</div>
+          <div class="section-sub">Four required components — rubric is very specific</div>
+        </div>
+      </div>
+      <div class="section-header-right">
+        <span class="wc-badge">300–500 words</span>
+        <span class="mark-badge">4 marks</span>
+        <span class="chevron" id="chevron-ai">▾</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-ai">
+      <div class="warn-box" style="margin-bottom:1rem">The rubric at HD level requires: deep analysis of AI limitations + sophisticated refinements that integrate FIT5122 concepts. Surface-level reflection scores a Pass at best.</div>
+      <div class="ai-grid">
+        <div class="ai-card">
+          <h5>1 — Disclose usage</h5>
+          <p>Name the tools (e.g. Claude, ChatGPT) and exactly what tasks you used them for — brainstorming, structuring sections, drafting specific paragraphs, checking grammar. Be specific: "I used Claude to generate an initial outline of the quality issue section."</p>
+        </div>
+        <div class="ai-card">
+          <h5>2 — Critical evaluation</h5>
+          <p>Was the output professional quality? Did it understand FIT5122 frameworks correctly? Was the tone appropriate for a senior executive audience? What was good and what was wrong?</p>
+        </div>
+        <div class="ai-card">
+          <h5>3 — Error identification</h5>
+          <p>Identify specific hallucinations (e.g. wrong APP numbers, incorrect ISO characteristics), missed nuances (e.g. AI didn't connect the mosaic effect to Australian Privacy Act specifically), or generic advice that didn't fit the UrbanMove scenario.</p>
+        </div>
+        <div class="ai-card">
+          <h5>4 — Editorial changes</h5>
+          <p>Describe what you corrected, added, or rewrote — and why. E.g.: "AI suggested GDPR; I replaced with Australian Privacy Act as UrbanMove operates under Australian jurisdiction." This shows professional judgement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pro Conversation -->
+<div class="section-block">
+  <div class="section-card">
+    <div class="section-header" onclick="toggle('conv')">
+      <div class="section-header-left">
+        <div class="section-number">C</div>
+        <div>
+          <div class="section-title">Professional conversation prep</div>
+          <div class="section-sub">15 min face-to-face — tutor plays senior executive</div>
+        </div>
+      </div>
+      <div class="section-header-right">
+        <span class="mark-badge">25 marks</span>
+        <span class="chevron" id="chevron-conv">▾</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-conv">
+      <div class="sub-section">
+        <h4>Likely question areas — be ready to justify and extend</h4>
+        <ul>
+          <li><strong>Quality:</strong> "Which ISO/IEC 25010 characteristics are most at risk here and why?" "How would you prioritise fixing defects across four different councils?"</li>
+          <li><strong>Communication:</strong> "How would you apply Schramm's model to the breakdown between UrbanMove and the Silicon Valley provider?" "What does high/low context have to do with this?"</li>
+          <li><strong>Teams:</strong> "How does the Spotify model solve the coordination problem here specifically?" "What intercultural framework informs your onboarding recommendation?"</li>
+          <li><strong>Ethics/Privacy:</strong> "Why is de-identified data not always private?" "What APPs were potentially breached?" "Was there a notifiable data breach?"</li>
+          <li><strong>Connections across issues:</strong> "How did the team issues contribute to the privacy incident?" — The HD rubric rewards drawing links between issues.</li>
+          <li><strong>AI use:</strong> "What did you use AI for?" "Where did it fall short?" "How did you check its output?"</li>
+        </ul>
+      </div>
+      <div class="warn-box">HD tip: The conversation is not a recall test — it rewards professional judgement. When asked "what would you do if the council wanted to cancel the contract?", they want to see how you reason under pressure, not a memorised answer.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /blueprint -->
+
+<script>
+function toggle(id) {
+  const body = document.getElementById('body-' + id);
+  const chevron = document.getElementById('chevron-' + id);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  if (chevron) chevron.classList.toggle('open', !isOpen);
+}
+// Open exec summary and issues by default
+toggle('exec');
+toggle('issues');
+toggle('recs');
+</script>
