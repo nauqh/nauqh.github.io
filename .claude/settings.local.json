@@ -23,7 +23,9 @@
       "WebFetch(domain:link.springer.com)",
       "WebFetch(domain:journals.sagepub.com)",
       "WebFetch(domain:psycnet.apa.org)",
-      "WebFetch(domain:linkinghub.elsevier.com)"
+      "WebFetch(domain:linkinghub.elsevier.com)",
+      "Bash(awk '/project-drawer/,/^@media|^\\\\./ {print NR\": \"$0}' \"D:\\\\Laboratory\\\\Projects\\\\Portfolio\\\\nauqh.github.io\\\\assets\\\\css\\\\styles.css\")",
+      "Bash(awk *)"
     ]
   }
 }

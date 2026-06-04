@@ -1545,13 +1545,23 @@ img {
 	top: 1rem;
 	right: 1rem;
 	bottom: 1rem;
-	width: min(500px, 100vw);
+	width: min(500px, calc(100vw - 2rem));
 	background: var(--body-color);
 	overflow-y: auto;
 	display: flex;
 	flex-direction: column;
 	transform: translateX(calc(100% + 1rem));
 	transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+@media screen and (max-width: 480px) {
+	.project-drawer__panel {
+		top: 0;
+		right: 0;
+		bottom: 0;
+		width: 100vw;
+		transform: translateX(100%);
+	}
 }
 
 #project-drawer.active .project-drawer__panel {
@@ -2635,8 +2645,7 @@ img {
 	}
 
 	.home__stack {
-		display: flex;
-		gap: 0.65rem;
+		display: none;
 	}
 
 	.home__data .about__quick-links {
