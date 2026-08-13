@@ -474,6 +474,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		...document.querySelectorAll(".timeline-container"),
 		document.querySelector(".experience-container"),
 		...document.querySelectorAll(".projects-col"),
+		document.querySelector(".github__grid"),
 		document.querySelector(".contact__container"),
 	].filter(Boolean);
 
@@ -591,4 +592,191 @@ document.addEventListener("DOMContentLoaded", function () {
 		if (e.key === "Escape" && projectDrawer.classList.contains("active"))
 			closeDrawer();
 	});
+});
+
+/*=============== GITHUB PROJECTS & STATS ===============*/
+document.addEventListener("DOMContentLoaded", function () {
+	const USERNAME = "nauqh";
+	const GITHUB_URL = `https://github.com/${USERNAME}`;
+	const statsEl = document.getElementById("githubStats");
+	const reposEl = document.getElementById("githubRepos");
+	if (!statsEl || !reposEl) return;
+
+	// The portfolio repo + auto-generated profile repo are excluded. Everything
+	// rendered here comes from PUBLIC GitHub data only — no private work leaks in.
+	const EXCLUDED = new Set(["nauqh", "nauqh.github.io"]);
+	const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+	const LEVEL_COLORS = ["#EDE9FE", "#C4B5FD", "#A78BFA", "#8B5CF6", "#6D28D9"];
+	const LANG_COLORS = {
+		Python: "#3572A5",
+		TypeScript: "#3178c6",
+		JavaScript: "#f1e05a",
+		CSS: "#563d7c",
+		HTML: "#e34c26",
+		Java: "#b07219",
+		"C++": "#f34b7d",
+		C: "#555555",
+		Shell: "#89e051",
+		Dockerfile: "#384d54",
+		"Jupyter Notebook": "#DA5B0B",
+		R: "#198CE7",
+		Go: "#00ADD8",
+		Rust: "#dea584",
+		Swift: "#F05138",
+		Kotlin: "#A97BFF",
+		Vue: "#41b883",
+		Svelte: "#ff3e00",
+	};
+
+	statsEl.innerHTML = '<p class="github__loading">Pulling GitHub data…</p>';
+
+	function escapeHtml(str) {
+		return String(str).replace(/[&<>"']/g, (c) => ({
+			"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+		})[c]);
+	}
+	function langColor(lang) { return LANG_COLORS[lang] || "#8B5CF6"; }
+	function parseDate(s) { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
+	function dayCol(d) { return (d.getDay() + 6) % 7; } // Mon = 0 … Sun = 6
+	function addDays(d, n) { const c = new Date(d); c.setDate(c.getDate() + n); return c; }
+	function formatDate(iso) {
+		if (!iso) return "";
+		const diff = Date.now() - new Date(iso).getTime();
+		const days = Math.floor(diff / 86400000);
+		if (days < 1) return "today";
+		if (days < 30) return `${days}d ago`;
+		if (days < 365) return `${Math.floor(days / 30)}mo ago`;
+		return `${Math.floor(days / 365)}y ago`;
+	}
+
+	function buildHeatmap(contributions) {
+		const first = parseDate(contributions[0].date);
+		const firstMonday = addDays(first, -dayCol(first));
+		const weeks = [];
+		let week = new Array(7).fill(null);
+		contributions.forEach((c, i) => {
+			const d = parseDate(c.date);
+			const r = dayCol(d);
+			week[r] = c.level;
+			if (r === 6 || i === contributions.length - 1) {
+				weeks.push(week.slice());
+				week = new Array(7).fill(null);
+			}
+		});
+		const weekCount = weeks.length;
+
+		const months = [];
+		let prev = -1;
+		weeks.forEach((_, wi) => {
+			const m = addDays(firstMonday, wi * 7).getMonth();
+			if (m !== prev) { months.push({ wi, m }); prev = m; }
+		});
+		months.forEach((mo, i) => {
+			const end = i + 1 < months.length ? months[i + 1].wi : weekCount;
+			mo.span = Math.max(1, end - mo.wi);
+		});
+
+		let html = "";
+		months.forEach((mo) => {
+			html += `<span class="gh-heat__month" style="grid-column:${2 + mo.wi} / span ${mo.span};grid-row:1">${MONTHS[mo.m]}</span>`;
+		});
+		[["Mon", 2], ["Wed", 4], ["Fri", 6]].forEach(([label, row]) => {
+			html += `<span class="gh-heat__day" style="grid-column:1;grid-row:${row}">${label}</span>`;
+		});
+		weeks.forEach((wk, wi) => {
+			wk.forEach((lvl, row) => {
+				if (lvl === null) return;
+				html += `<span class="gh-cell gh-cell--lvl${lvl}" style="grid-column:${2 + wi};grid-row:${2 + row};background:${LEVEL_COLORS[lvl]}"></span>`;
+			});
+		});
+
+		return { html, weekCount };
+	}
+
+	function computeStats(contributions) {
+		let total = 0, active = 0, longest = 0, run = 0;
+		for (const c of contributions) {
+			if (c.count > 0) { active++; total += c.count; run++; if (run > longest) longest = run; }
+			else run = 0;
+		}
+		let current = 0;
+		for (let i = contributions.length - 1; i >= 0; i--) {
+			if (contributions[i].count > 0) current++; else break;
+		}
+		return { total, active, longest, current };
+	}
+
+	function renderStats(contributions) {
+		const { html: heatHTML, weekCount } = buildHeatmap(contributions);
+		const s = computeStats(contributions);
+
+		statsEl.innerHTML = `
+			<div class="gh-card">
+				<div class="gh-card__head">
+					<div class="gh-card__head-left">
+						<span class="gh-card__eyebrow">github</span>
+						<a class="gh-card__link" href="${GITHUB_URL}" target="_blank" rel="noopener">github.com/${USERNAME} <i class="bx bx-link-external"></i></a>
+					</div>
+					<div class="gh-card__total">
+						<span class="gh-card__total-num">${s.total.toLocaleString()}</span>
+						<span class="gh-card__total-label">contributions · last year</span>
+					</div>
+				</div>
+				<div class="gh-card__grid-wrap">
+					<div class="gh-heat" style="grid-template-columns:30px repeat(${weekCount},12px);grid-template-rows:20px repeat(7,12px)">${heatHTML}</div>
+				</div>
+				<div class="gh-card__foot">
+					<div class="gh-legend">
+						<span class="gh-legend-label">less</span>
+						${LEVEL_COLORS.map((c) => `<span class="gh-legend-cell" style="background:${c}"></span>`).join("")}
+						<span class="gh-legend-label">more</span>
+					</div>
+					<div class="gh-kpis">
+						<div class="gh-kpi"><span class="gh-kpi-num">${s.current}</span><span class="gh-kpi-label">current streak</span></div>
+						<div class="gh-kpi"><span class="gh-kpi-num">${s.longest}</span><span class="gh-kpi-label">longest streak</span></div>
+						<div class="gh-kpi"><span class="gh-kpi-num">${s.active.toLocaleString()}</span><span class="gh-kpi-label">active days</span></div>
+					</div>
+				</div>
+			</div>`;
+	}
+
+	function renderRepos(repos) {
+		reposEl.innerHTML = repos.map((r) => `
+			<a class="github__repo" href="${r.html_url}" target="_blank" rel="noopener">
+				<div class="github__repo-head">
+					<span class="github__repo-name">${escapeHtml(r.name)}</span>
+					<i class="bx bx-right-arrow-alt github__repo-arrow"></i>
+				</div>
+				<p class="github__repo-desc">${r.description ? escapeHtml(r.description) : ""}</p>
+				<div class="github__repo-meta">
+					${r.language ? `<span><span class="github__repo-langdot" style="--dot:${langColor(r.language)}"></span>${escapeHtml(r.language)}</span>` : ""}
+					<span><i class="bx bxs-star"></i> ${r.stargazers_count || 0}</span>
+					<span><i class="bx bx-git-repo-forked"></i> ${r.forks_count || 0}</span>
+					<span><i class="bx bx-time-five"></i> ${formatDate(r.pushed_at)}</span>
+				</div>
+			</a>`).join("");
+	}
+
+	async function load() {
+		try {
+			const [contribRes, reposRes] = await Promise.all([
+				fetch(`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`),
+				fetch(`https://api.github.com/users/${USERNAME}/repos?sort=pushed&per_page=100&type=public`),
+			]);
+			if (!contribRes.ok || !reposRes.ok) throw new Error("GitHub API error");
+			const contrib = await contribRes.json();
+			const repos = (await reposRes.json()).filter((r) => r && !EXCLUDED.has(r.name));
+			if (!contrib.contributions || !contrib.contributions.length) throw new Error("no contributions");
+
+			renderStats(contrib.contributions);
+			renderRepos(
+				[...repos].sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)).slice(0, 4),
+			);
+		} catch (err) {
+			statsEl.innerHTML = `<p class="github__error">Couldn't load GitHub data right now — <a href="${GITHUB_URL}" target="_blank" rel="noopener">view my profile</a>.</p>`;
+			reposEl.innerHTML = "";
+		}
+	}
+
+	load();
 });
