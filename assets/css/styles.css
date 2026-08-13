@@ -3135,12 +3135,16 @@ img {
 	top: 0;
 }
 
-.company-list[data-active="gdg"]::after {
+.company-list[data-active="curriculum"]::after {
 	top: 3.5rem;
 }
 
-.company-list[data-active="monash"]::after {
+.company-list[data-active="gdg"]::after {
 	top: 7rem;
+}
+
+.company-list[data-active="monash"]::after {
+	top: 10.5rem;
 }
 
 .company-tab {
@@ -3173,7 +3177,8 @@ img {
 /* Job Details Styling */
 .job-details {
 	position: relative;
-	min-height: 0;
+	/* Floor matches the tallest role, so switching tabs never resizes the card */
+	min-height: 27rem;
 	background: #fff;
 	border: 1px solid var(--title-color);
 	box-shadow: 10px 10px 0 var(--title-color);
@@ -3195,11 +3200,35 @@ img {
 	margin-bottom: 0.5rem;
 }
 
+/* Company name matches the section accent, same orange as the title highlight */
+.job-title__at {
+	color: var(--section-accent, var(--first-color));
+}
+
 .job-dates {
 	color: var(--text-color-light);
 	font-size: 0.9rem;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1rem;
 	font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+}
+
+/* Metric chips — the numbers pulled out of the prose */
+.job-metrics {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 1.5rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.job-metric {
+	font-size: var(--smaller-font-size);
+	font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+	color: var(--title-color);
+	border: 1px solid var(--title-color);
+	padding: 0.25rem 0.6rem;
+	white-space: nowrap;
 }
 
 .job-description {
@@ -3295,6 +3324,16 @@ img {
 		background: var(--title-color);
 		color: var(--body-color);
 		box-shadow: none;
+	}
+
+	/* Narrower column makes every panel taller — let the card size to content */
+	.job-details {
+		min-height: 0;
+		padding: 1.25rem 1.25rem;
+	}
+
+	.job-metric {
+		white-space: normal;
 	}
 }
 
