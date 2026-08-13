@@ -3365,11 +3365,13 @@ img {
 	max-width: 968px;
 	margin-top: 3rem;
 	display: grid;
+	grid-template-columns: minmax(0, 1fr);
 	gap: 2.5rem;
 }
 
 .github__stats {
 	display: grid;
+	grid-template-columns: minmax(0, 1fr);
 	gap: 2rem;
 }
 
@@ -3577,7 +3579,7 @@ img {
 
 .github__repos {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 1.25rem;
 }
 
@@ -3674,7 +3676,65 @@ img {
 }
 
 @media screen and (max-width: 767px) {
+	.github__grid {
+		margin-top: 2rem;
+		gap: 2rem;
+	}
+
 	.github__repos {
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.gh-card {
+		padding: 1.25rem 1rem;
+	}
+
+	/* Head stacks: the total reads left-aligned under the profile link */
+	.gh-card__head {
+		margin-bottom: 1rem;
+	}
+
+	.gh-card__total {
+		text-align: left;
+	}
+
+	.gh-card__total-num {
+		font-size: 2rem;
+	}
+
+	/* Heatmap keeps its own horizontal scroll instead of stretching the card */
+	.gh-card__grid-wrap {
+		overscroll-behavior-x: contain;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.gh-card__foot {
+		gap: 1rem;
+		margin-top: 1rem;
+	}
+
+	.gh-kpis {
+		gap: 1.25rem;
+		flex-wrap: wrap;
+		width: 100%;
+	}
+
+	.gh-kpi {
+		flex: 1 1 auto;
+	}
+
+	.gh-kpi-num {
+		font-size: 1.3rem;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.gh-kpis {
+		gap: 0.75rem 1rem;
+	}
+
+	.gh-kpi-label,
+	.gh-card__total-label {
+		font-size: var(--tiny-font-size);
 	}
 }
