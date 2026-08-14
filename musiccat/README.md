@@ -84,6 +84,13 @@ LAVALINK_NODES='[{"name": "eu-1", "region": "eu"}, {"name": "us-1", "host": "10.
 Registering commands to `DEFAULT_GUILDS` while developing avoids the hour-long propagation delay
 that global commands have.
 
+## Documentation
+
+- [`docs/prd.md`](docs/prd.md) — what the bot is for, who operates it, and the
+  requirements this release is measured against.
+- [`docs/design.md`](docs/design.md) — how it is put together, and why the
+  rewrite is shaped differently from the version it replaces.
+
 ## Layout
 
 ```
