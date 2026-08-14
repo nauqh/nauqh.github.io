@@ -4,6 +4,9 @@
 /*=============== VARIABLES CSS ===============*/
 :root {
 	--header-height: 3.5rem;
+	/* Shared height for the nav controls, so the logo and the menu button always
+	   line up as a pair rather than drifting apart per breakpoint. */
+	--nav-control-height: 2.5rem;
 	--first-hue: 250;
 	--sat: 66%;
 	--lig: 75%;
@@ -51,6 +54,15 @@
 		--smaller-font-size: 0.813rem;
 	}
 
+}
+
+/* Matches where .nav itself grows to header-height + 1rem, so the controls
+   gain height and breathing room at the same breakpoint rather than briefly
+   filling the bar edge to edge. */
+@media screen and (min-width: 992px) {
+	:root {
+		--nav-control-height: 3.25rem;
+	}
 }
 
 /*=============== BASE ===============*/
@@ -270,7 +282,7 @@ img {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	height: clamp(2.5rem, 4vw, 3.5rem);
+	height: var(--nav-control-height);
 	aspect-ratio: 1;
 	color: var(--title-color);
 	vertical-align: middle;
@@ -366,7 +378,7 @@ img {
 .nav__menu-btn {
 	display: flex;
 	align-items: stretch;
-	height: 2.5rem;
+	height: var(--nav-control-height);
 	border: 1px solid var(--title-color);
 	background: none;
 	cursor: pointer;
@@ -376,7 +388,7 @@ img {
 }
 
 .nav__menu-btn-text {
-	height: 2.5rem;
+	height: var(--nav-control-height);
 	border-right: 1px solid var(--title-color);
 	overflow: hidden;
 	transition: background 0s, color 0s;
@@ -394,7 +406,7 @@ img {
 }
 
 .nav__menu-btn-text-roller span {
-	height: 2.5rem;
+	height: var(--nav-control-height);
 	display: flex;
 	align-items: center;
 	padding: 0 4rem 0 1.5rem;
@@ -456,14 +468,6 @@ img {
 	width: 18px;
 	height: 1.5px;
 	background: currentColor;
-}
-
-@media screen and (min-width: 968px) {
-	.nav__menu-btn,
-	.nav__menu-btn-text,
-	.nav__menu-btn-text-roller span {
-		height: 3.25rem;
-	}
 }
 
 /*=============== NAV OVERLAY ===============*/
@@ -2773,8 +2777,15 @@ img {
 		padding-top: 2rem;
 	}
 
-	.nav__logo {
-		height: 3.5rem;
+	/* The menu button's generous desktop padding crowds the bar on a phone,
+	   so tighten it to keep the logo and button comfortably apart. */
+	.nav__menu-btn-text-roller span {
+		padding: 0 1.75rem 0 1rem;
+		font-size: 0.9375rem;
+	}
+
+	.nav__menu-btn-icon {
+		width: 2.75rem;
 	}
 
 	/* Fix 3: terminal shadow within screen bounds */
