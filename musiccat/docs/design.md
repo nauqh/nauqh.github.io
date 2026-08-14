@@ -395,6 +395,59 @@ errors. The parts that were genuinely too big got smaller — the copied 56-line
 `play()` override is under 30, and `library/base.py`'s 105 lines of mixed
 orchestration and embed-building split into `service.py` and `embeds.py`.
 
+## Why this stack
+
+Re-examined 2026-08-14, after the port, on the question of whether Lavalink is
+still the right audio backend. It is, but not for the reason people usually give.
+
+**The audio server.** Every credible option was checked for whether it is alive:
+
+| | Latest | Last commit | Verdict |
+|---|---|---|---|
+| **Lavalink** (JVM) | 4.2.2 | 2026-06-08 | Alive. DAVE (E2EE voice) support since 4.2.0 |
+| **NodeLink** (Node.js) | — | 2026-06-17 | Alive, but see below |
+| **FrequenC** (C) | — | 2024-09-23 | Dead, two years |
+
+NodeLink is the only real contender, and it is genuinely attractive on
+resources — its README claims ~24 MB idle against a JVM's hundreds. Two facts
+rule it out here. It has **no LavaSearch and no Lavalink plugin system** —
+`loadsearch` does not appear anywhere in its source — so `/search`'s
+artist/album/playlist autocomplete, the bot's most distinctive feature, would
+have to go. And its own client compatibility table lists Lavalink.py at
+**"v3 supported? unknown"**, tested only against NodeLink v1 and v2; Wavelink is
+the sole Python client marked as supported, and Wavelink is discord.py-only.
+Switching would mean losing a feature *and* changing the client library.
+
+**Not using an audio server at all** was considered and is not available to us.
+hikari ships `VoiceComponent` and `VoiceConnection` as abstractions with no
+implementation behind them — no opus pipeline, no source resolution. Native
+playback is a discord.py capability (FFmpeg + `yt-dlp`), and taking it would mean
+changing Discord libraries, transcoding on the bot's own CPU, and owning the
+YouTube arms race directly instead of consuming someone else's fixes.
+
+**The client.** `lavalink.py` 5.11.0, last commit 2026-06-14. The alternative for
+a hikari bot is `hikari-ongaku` 1.0.4, which is hikari-native and would remove
+the manual voice-state forwarding in `extensions/general.py`. It was rejected on
+cadence: its most recent commit (2026-03-01) is *"Support Lavalink V4.2.0"* —
+that is the version of Lavalink released in February, so it tracks the server
+rather than leading it, where lavalink.py already carried the DAVE `channelId`
+field before it was needed. The ergonomic win is one listener; the cost is
+rewriting `player.py`, `service.py` and `events.py`.
+
+**DAVE.** Lavalink 4.2.0 added support for Discord's end-to-end encrypted voice
+and requires the client to send a `channelId` in the voice state. lavalink.py
+sends it (`lavalink/abc.py:259`), and `extensions/general.py` supplies it. This
+was checked rather than assumed, because it is the one upcoming Discord change
+that could stop the bot dead.
+
+**The actual risk is YouTube, and it is not a stack decision.** youtube-source's
+most recent commit at the time of writing is *"Revert client version upgrade
+(apparently older works better…)"* — the arms race, live. Every option above
+loses playback the same week when YouTube changes something; the only thing that
+varies is who ships the fix. Lavalink's plugin does, faster than the alternatives
+and much faster than a bot maintaining `yt-dlp` itself. That, rather than
+performance or ergonomics, is the argument for this stack.
+
 ## Deliberately absent
 
 `hikari-miru` · `bot.d` · a custom `AutocompleteChoice` class · a copied `play()`

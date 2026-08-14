@@ -232,7 +232,8 @@ M5 is the gate. Everything before it is verified offline only.
 | Risk | Impact | Mitigation |
 |---|---|---|
 | **Nothing has run against live Discord or Lavalink.** Offline checks verify shape, not behaviour | High | M5 walks every P0 by hand in a test guild before cutover |
-| Lavalink plugin versions in the example config are unverified — the Maven repository was unreachable when it was written | Medium | Versions are commented with links to their release pages; the node fails loudly on a bad dependency |
+| **YouTube playback breaks on YouTube's schedule, not ours.** youtube-source's latest commit is a client-version revert — the arms race is live | High | Not a stack decision: every backend fails the same week. Mitigated by consuming upstream fixes rather than maintaining them; `pot` and `oauth` are both documented in the node config |
+| Plugin versions rot, and a stale client name silently degrades playback | Medium | Versions verified 2026-08-14 and dated in the config; the config warns against copying a client list from an older file |
 | `/effects` needs `equalizer` and `timescale` filters, which are off in a stock Lavalink install | Medium | Both enabled in the example config, with a comment saying why |
 | The lightbulb menu-detach workaround depends on `Menu.attach()` internals staying as they are | Low | Uses only documented API; a test asserts the detach, so an upgrade that breaks it fails the suite |
 | Two `/play` commands within the same moment could skip a track, because `is_playing` is false until the node confirms the track started | Low | Pre-existing in the legacy bot; window is milliseconds; not worth a lock |

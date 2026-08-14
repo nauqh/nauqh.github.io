@@ -1,7 +1,10 @@
 ### Lavalink v4 node configuration for MusicCat.
 ###
-### Copy to `lavalink/application.yml` and fill in the credentials. Check the plugin versions
-### against their releases before deploying:
+### Copy to `lavalink/application.yml` and fill in the credentials.
+###
+### Plugin versions verified 2026-08-14 against the projects' tags. They rot — YouTube
+### playback in particular is an ongoing cat-and-mouse, and youtube-source ships fixes for it
+### faster than anything else here. Check before deploying:
 ###   https://github.com/lavalink-devs/youtube-source/releases
 ###   https://github.com/topi314/LavaSrc/releases
 ###   https://github.com/topi314/LavaSearch/releases
@@ -12,9 +15,9 @@ server:
 
 lavalink:
   plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.11.3"
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
       repository: "https://maven.lavalink.dev/releases"
-    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.3.0"
+    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
       repository: "https://maven.lavalink.dev/releases"
     # Powers the rich (artist/album/playlist) results behind `/search` autocomplete.
     - dependency: "com.github.topi314.lavasearch:lavasearch-plugin:1.0.0"
@@ -61,16 +64,34 @@ plugins:
     allowSearch: true
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
-    # Queried in order, so put the clients that work best for you first.
+    # Queried in order, so put the clients that work best for you first. This is the baseline
+    # youtube-source currently recommends. `MUSIC` is what makes `ytmsearch:` work; the other
+    # three carry playback.
+    #
+    # Do not copy a client list from an older config: the set changes. `TVHTML5EMBEDDED`, which
+    # the legacy bot led with, is no longer a valid client name at all.
     clients:
       - MUSIC
-      - TVHTML5EMBEDDED
+      - ANDROID_VR
       - WEB
-      - ANDROID_MUSIC
+      - WEBEMBEDDED
+
+    # YouTube will eventually answer "sign in to confirm you're not a bot". There are two fixes
+    # and you want exactly one of them — never both.
+    #
+    # poToken: applies only to WEB and WEBEMBEDDED.
+    #   https://github.com/lavalink-devs/youtube-source#using-a-potoken
     pot:
-      # See https://github.com/lavalink-devs/youtube-source#using-a-potoken
       token: ""
       visitorData: ""
+
+    # OAuth: works more broadly, but authenticates as a real account. Use a burner — the
+    # upstream warning is that a terminated account is a possible outcome, and that it can
+    # trigger rate limits on a busy node.
+    #   https://github.com/lavalink-devs/youtube-source#using-oauth-tokens
+    # oauth:
+    #   enabled: true
+    #   refreshToken: ""   # printed to the node's log after the first successful flow
 
   lavasrc:
     providers:
@@ -92,6 +113,9 @@ plugins:
       albumLoadLimit: 6
     deezer:
       masterDecryptionKey: ""
+      # Required as of LavaSrc 4.x — Deezer will not resolve without it, whatever the
+      # decryption key says.
+      arl: ""
 
 metrics:
   prometheus:
