@@ -761,6 +761,52 @@ img {
 	font-size: 1.4em;
 }
 
+/* The name is set in a hand-drawn face to echo the drawn logo mark. Its
+   letterforms run wider and lighter than the display font, so it needs its own
+   tracking and a nudge in size to hold the same presence on the line. */
+.home__name-hand {
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-weight: 500;
+	font-size: 1.25em;
+	letter-spacing: 0.005em;
+	/* keep the 1.2 line box the display type occupied so the hero doesn't shift */
+	line-height: 1.2;
+}
+
+/* Writes itself on: a soft-edged wipe travelling left to right, which reads as
+   the word being written rather than simply fading in. */
+.home__name-hand>span {
+	display: inline-block;
+	-webkit-mask-image: linear-gradient(to right, #000 0 40%, transparent 55%);
+	mask-image: linear-gradient(to right, #000 0 40%, transparent 55%);
+	-webkit-mask-size: 250% 100%;
+	mask-size: 250% 100%;
+	-webkit-mask-position: 100% 0;
+	mask-position: 100% 0;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+.home__data.hero-revealed .home__name-hand>span {
+	animation: home__name-write 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.35s forwards;
+}
+
+@keyframes home__name-write {
+	to {
+		-webkit-mask-position: 0 0;
+		mask-position: 0 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.home__name-hand>span {
+		-webkit-mask-image: none;
+		mask-image: none;
+		animation: none;
+	}
+}
+
 
 .home__quote {
 	font-size: clamp(1rem, 1.5vw, 1.35rem);
