@@ -26,7 +26,9 @@
       "WebFetch(domain:linkinghub.elsevier.com)",
       "Bash(awk '/project-drawer/,/^@media|^\\\\./ {print NR\": \"$0}' \"D:\\\\Laboratory\\\\Projects\\\\Portfolio\\\\nauqh.github.io\\\\assets\\\\css\\\\styles.css\")",
       "Bash(awk *)",
-      "WebSearch"
+      "WebSearch",
+      "mcp__bf7c680d-5fdc-5ef4-b4a0-abadb619bf0a__list_repos",
+      "mcp__bf7c680d-5fdc-5ef4-b4a0-abadb619bf0a__add_repo"
     ]
   }
 }
