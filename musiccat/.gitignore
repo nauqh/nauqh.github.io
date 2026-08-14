@@ -1,0 +1,10 @@
+__pycache__/
+*.egg-info/
+.venv/
+.env
+logs/
+lavalink/application.yml
+lavalink/logs/
+lavalink/plugins/
+.pytest_cache/
+.ruff_cache/

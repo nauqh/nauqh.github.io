@@ -1,0 +1,32 @@
+services:
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink:4
+    container_name: musiccat-lavalink
+    environment:
+      - _JAVA_OPTIONS=-Xmx2G
+      - SERVER_PORT=2333
+    volumes:
+      # `sudo chown -R 322:322 lavalink/logs lavalink/plugins` before the first run.
+      - ./lavalink/application.yml:/opt/Lavalink/application.yml:ro
+      - ./lavalink/logs/:/opt/Lavalink/logs/
+      - ./lavalink/plugins/:/opt/Lavalink/plugins/
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 2333 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  bot:
+    build: .
+    container_name: musiccat
+    env_file: .env
+    environment:
+      - LAVALINK_HOST=lavalink
+    depends_on:
+      lavalink:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped

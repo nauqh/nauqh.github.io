@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "musiccat"
+version = "2.0.0"
+description = "A Discord music streaming bot built with hikari, lightbulb and Lavalink"
+readme = "README.md"
+requires-python = ">=3.10,<3.15"
+license = { text = "MIT" }
+
+dependencies = [
+    "hikari==2.5.0",
+    "hikari-lightbulb==3.2.5",
+    "lavalink==5.11.0",
+    "python-dotenv==1.1.1",
+]
+
+[project.optional-dependencies]
+speedups = ["hikari[speedups]==2.5.0"]
+dev = ["ruff==0.14.2", "pytest==8.4.2", "pytest-asyncio==1.2.0"]
+
+[project.scripts]
+musiccat = "musiccat.bot:run"
+
+[tool.hatch.build.targets.wheel]
+packages = ["musiccat"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["B008"]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+# The `lavalink/` directory holds the node's config, not a local module.
+known-third-party = ["lavalink"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

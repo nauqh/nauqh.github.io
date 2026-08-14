@@ -1,0 +1,114 @@
+### Lavalink v4 node configuration for MusicCat.
+###
+### Copy to `lavalink/application.yml` and fill in the credentials. Check the plugin versions
+### against their releases before deploying:
+###   https://github.com/lavalink-devs/youtube-source/releases
+###   https://github.com/topi314/LavaSrc/releases
+###   https://github.com/topi314/LavaSearch/releases
+
+server:
+  port: 2333
+  address: 0.0.0.0
+
+lavalink:
+  plugins:
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.11.3"
+      repository: "https://maven.lavalink.dev/releases"
+    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.3.0"
+      repository: "https://maven.lavalink.dev/releases"
+    # Powers the rich (artist/album/playlist) results behind `/search` autocomplete.
+    - dependency: "com.github.topi314.lavasearch:lavasearch-plugin:1.0.0"
+      repository: "https://maven.lavalink.dev/releases"
+
+  server:
+    password: "youshallnotpass"
+    sources:
+      # YouTube is served by the youtube-plugin below, not by Lavalink's built-in source.
+      youtube: false
+      bandcamp: false
+      soundcloud: true
+      twitch: false
+      vimeo: false
+      http: true
+      local: false
+    filters:
+      # `/effects` needs these two.
+      equalizer: true
+      timescale: true
+      volume: false
+      karaoke: false
+      tremolo: false
+      vibrato: false
+      distortion: false
+      rotation: false
+      channelMix: false
+      lowPass: false
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+    resamplingQuality: LOW
+    trackStuckThresholdMs: 10000
+    useSeekGhosting: true
+    youtubePlaylistLoadLimit: 6
+    playerUpdateInterval: 5
+    youtubeSearchEnabled: true
+    soundcloudSearchEnabled: true
+    gc-warnings: true
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+    # Queried in order, so put the clients that work best for you first.
+    clients:
+      - MUSIC
+      - TVHTML5EMBEDDED
+      - WEB
+      - ANDROID_MUSIC
+    pot:
+      # See https://github.com/lavalink-devs/youtube-source#using-a-potoken
+      token: ""
+      visitorData: ""
+
+  lavasrc:
+    providers:
+      - "ytsearch:\"%ISRC%\""
+      - "dzisrc:%ISRC%"
+      - "ytsearch:%QUERY%"
+    sources:
+      spotify: true
+      deezer: true
+      applemusic: false
+      yandexmusic: false
+      flowerytts: false
+      youtube: false
+    spotify:
+      clientId: ""
+      clientSecret: ""
+      countryCode: "US"
+      playlistLoadLimit: 6
+      albumLoadLimit: 6
+    deezer:
+      masterDecryptionKey: ""
+
+metrics:
+  prometheus:
+    enabled: false
+    endpoint: /metrics
+
+logging:
+  file:
+    path: ./logs
+  request:
+    enabled: true
+    includeClientInfo: true
+    includeHeaders: false
+    includeQueryString: true
+    includePayload: true
+    maxPayloadLength: 10000
+  logback:
+    rollingpolicy:
+      max-file-size: 1GB
+      max-history: 30
