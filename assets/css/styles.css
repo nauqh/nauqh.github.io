@@ -766,7 +766,7 @@ img {
    tracking and a nudge in size to hold the same presence on the line. */
 .home__name-hand {
 	font-family: "Shantell Sans", "Segoe Print", cursive;
-	font-weight: 500;
+	font-weight: 400;
 	font-size: 1.25em;
 	letter-spacing: 0.005em;
 	/* keep the 1.2 line box the display type occupied so the hero doesn't shift */
