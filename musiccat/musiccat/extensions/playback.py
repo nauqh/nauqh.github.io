@@ -28,12 +28,6 @@ EFFECT_NONE = "None"
 EFFECT_BASS_BOOST = "Bass Boost"
 EFFECT_NIGHTCORE = "Nightcore"
 
-LOOP_MODES = {
-    "track": (MusicCatPlayer.LOOP_SINGLE, "🔂 Looping the current track"),
-    "queue": (MusicCatPlayer.LOOP_QUEUE, "🔁 Looping the queue"),
-    "off": (MusicCatPlayer.LOOP_NONE, "⏭️ Looping off"),
-}
-
 
 def require_player(lavalink_client: lavalink.Client, ctx: lightbulb.Context) -> MusicCatPlayer:
     """Fetch the guild's player. The command hooks have already checked that there is one."""
@@ -64,62 +58,6 @@ class Skip(
 
 
 @loader.command
-class Pause(
-    lightbulb.SlashCommand,
-    name="pause",
-    description="Pause playback",
-    hooks=[hooks.guild_only, hooks.valid_user_voice, hooks.player_playing],
-):
-    @lightbulb.invoke
-    async def invoke(self, ctx: lightbulb.Context, lavalink_client: lavalink.Client = lightbulb.di.INJECTED) -> None:
-        await require_player(lavalink_client, ctx).set_pause(True)
-        await responses.respond(ctx, embed=hikari.Embed(description="⏸️ Paused"))
-
-
-@loader.command
-class Resume(
-    lightbulb.SlashCommand,
-    name="resume",
-    description="Resume playback",
-    hooks=[hooks.guild_only, hooks.valid_user_voice, hooks.player_connected],
-):
-    @lightbulb.invoke
-    async def invoke(self, ctx: lightbulb.Context, lavalink_client: lavalink.Client = lightbulb.di.INJECTED) -> None:
-        await require_player(lavalink_client, ctx).set_pause(False)
-        await responses.respond(ctx, embed=hikari.Embed(description="▶️ Resumed"))
-
-
-@loader.command
-class Stop(
-    lightbulb.SlashCommand,
-    name="stop",
-    description="Stop playing and clear the queue",
-    hooks=[hooks.guild_only, hooks.valid_user_voice, hooks.player_playing],
-):
-    @lightbulb.invoke
-    async def invoke(self, ctx: lightbulb.Context, lavalink_client: lavalink.Client = lightbulb.di.INJECTED) -> None:
-        await require_player(lavalink_client, ctx).stop()
-        await responses.respond(ctx, embed=hikari.Embed(description="⏹️ Stopped"))
-
-
-@loader.command
-class Restart(
-    lightbulb.SlashCommand,
-    name="restart",
-    description="Restart the current track",
-    hooks=[hooks.guild_only, hooks.valid_user_voice, hooks.player_playing],
-):
-    @lightbulb.invoke
-    async def invoke(self, ctx: lightbulb.Context, lavalink_client: lavalink.Client = lightbulb.di.INJECTED) -> None:
-        player = require_player(lavalink_client, ctx)
-        if player.current is None or not player.current.is_seekable:
-            raise errors.TrackNotSeekable
-
-        await player.seek(0)
-        await responses.respond(ctx, embed=hikari.Embed(description="⏪ Restarted the track"))
-
-
-@loader.command
 class Seek(
     lightbulb.SlashCommand,
     name="seek",
@@ -143,45 +81,6 @@ class Seek(
 
         await player.seek(milliseconds)
         await responses.respond(ctx, embed=hikari.Embed(description=f"⏩ Moved to `{self.position}`"))
-
-
-@loader.command
-class Loop(
-    lightbulb.SlashCommand,
-    name="loop",
-    description="Loop the current track, the queue, or nothing",
-    hooks=[hooks.guild_only, hooks.valid_user_voice, hooks.player_playing],
-):
-    mode = lightbulb.string(
-        "mode",
-        "What to loop",
-        choices=[lightbulb.Choice(name.capitalize(), name) for name in LOOP_MODES],
-        default="track",
-    )
-
-    @lightbulb.invoke
-    async def invoke(self, ctx: lightbulb.Context, lavalink_client: lavalink.Client = lightbulb.di.INJECTED) -> None:
-        player = require_player(lavalink_client, ctx)
-        loop, message = LOOP_MODES[self.mode]
-
-        player.set_loop(loop)
-        await responses.respond(ctx, embed=hikari.Embed(description=message))
-
-
-@loader.command
-class Shuffle(
-    lightbulb.SlashCommand,
-    name="shuffle",
-    description="Toggle shuffling the queue",
-    hooks=[hooks.guild_only, hooks.valid_user_voice, hooks.player_playing],
-):
-    @lightbulb.invoke
-    async def invoke(self, ctx: lightbulb.Context, lavalink_client: lavalink.Client = lightbulb.di.INJECTED) -> None:
-        player = require_player(lavalink_client, ctx)
-        player.set_shuffle(not player.shuffle)
-
-        description = "🔀 Shuffle on" if player.shuffle else "🔀 Shuffle off"
-        await responses.respond(ctx, embed=hikari.Embed(description=description))
 
 
 @loader.command

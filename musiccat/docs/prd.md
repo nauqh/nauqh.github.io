@@ -14,10 +14,13 @@ MusicCat is a Discord music bot: members queue music from YouTube, Spotify and
 Deezer with slash commands, and control playback from an interactive message the
 bot keeps up to date.
 
-This release changes none of that. It rebuilds the bot on the current generation
-of its libraries, because the versions it was pinned to can no longer be
-upgraded, and fixes the defects that rebuild exposed. **The command surface is
-unchanged: the same 18 commands, the same names, the same arguments.**
+This release rebuilds the bot on the current generation of its libraries, because
+the versions it was pinned to can no longer be upgraded, and fixes the defects
+that rebuild exposed.
+
+It also **narrows the command surface from 18 to 10**. Nothing was removed that
+the bot can no longer do — the eight cuts were either a button on the player
+message or another command spelled differently (§4.1).
 
 ## 2. Problem
 
@@ -45,7 +48,7 @@ pre-existing user-facing bugs, not new work:
 | | Evidence |
 |---|---|
 | `/loop track` loops the **queue**, not the track | The player redefined lavalink's loop constants inverted (`library/player.py:10-12`); `/loop track` sends `1`, which the library reads as queue-loop |
-| `/join` raises on every invocation | `_join` returns `None` (`library/base.py:14-27`); the command reads `.channel_id` off it (`extensions/bot.py:31`) |
+| `/join` raises on every invocation | `_join` returns `None` (`library/base.py:14-27`); the command reads `.channel_id` off it (`extensions/bot.py:31`). Fixed, then the command was cut entirely (§4.1) |
 | Playlist links can crash queueing | Playlist provenance is written to `track.user_data` (`library/base.py:41`), which is `None` for any track the server did not tag |
 | Boolean-ish options are parsed with `eval` | `eval(ctx.options.next)` on a network-supplied argument (`extensions/play.py:93-95`) |
 | The bot is unconfigurable without a code change | Node host, port and password are hardcoded (`bot/config.py`) |
@@ -73,6 +76,27 @@ pre-existing user-facing bugs, not new work:
   diffed against the old ones.
 - **Migrating the Go rewrite.** [`main`](https://github.com/bachtran02/MusicCat)
   is a separate Go implementation and is untouched.
+
+### 4.1 What was cut, and where it went
+
+The legacy bot's 18 commands became 10. Every cut is reachable another way — this
+is a narrower surface, not a smaller product.
+
+| Cut | Still available as |
+|---|---|
+| `/pause` `/resume` | the pause/resume button |
+| `/stop` | the stop button |
+| `/loop` | the loop button (off → track → queue), or `/play loop:true` |
+| `/shuffle` | the shuffle button, or `/play shuffle:true` |
+| `/now` | the player message, which is posted for every track |
+| `/restart` | `/seek 0:00` |
+| `/join` | `/play`, which connects on its own |
+
+`/skip` also has a button and was **kept anyway**: it is the control people reach
+for mid-conversation, when the player message has scrolled out of view.
+
+The six buttons are therefore load-bearing rather than a convenience. That raises
+the cost of the player message failing, which is why the emoji were changed (§11).
 
 ## 5. Users
 
@@ -138,13 +162,13 @@ needs a live Discord and Lavalink node.
 
 | ID | Requirement | Pri | Verified |
 |---|---|---|---|
-| FR-14 | `/pause` `/resume` `/skip` `/stop` `/restart` control playback | P0 | manual |
+| FR-14 | `/skip` plays the next track and names the one it replaced | P0 | `test_player` |
 | FR-15 | `/seek` accepts `mm:ss` and `hh:mm:ss`, and rejects anything else with a usable message | P1 | `test_formatting` |
-| FR-16 | `/seek` and `/restart` refuse tracks that are not seekable | P1 | manual |
-| FR-17 | `/loop` takes `track`, `queue` or `off`, and **`track` loops the track** | P0 | `test_player` |
-| FR-18 | `/shuffle` toggles shuffle | P1 | manual |
+| FR-16 | `/seek` refuses tracks that are not seekable | P1 | manual |
+| FR-17 | The loop button cycles off → track → queue, and **track loops the track** | P0 | `test_player` |
+| FR-18 | The shuffle button toggles shuffle, and shows its state through the button's colour | P1 | manual |
 | FR-19 | `/effects` applies Bass Boost or Nightcore, or clears effects; applying one replaces the other | P1 | manual |
-| FR-20 | `/stop` clears the queue, history, loop and shuffle, and takes down the player message | P0 | `test_player` |
+| FR-20 | The stop button clears the queue, history, loop and shuffle, and takes down the player message | P0 | `test_player` |
 
 ### The now-playing message
 
@@ -153,7 +177,7 @@ needs a live Discord and Lavalink node.
 | FR-21 | A message with the track and six buttons is posted when a track starts, in the channel the last queueing command came from | P0 | `test_events` |
 | FR-22 | Exactly one such message exists per guild — a new track deletes the previous one | P0 | `test_events` |
 | FR-23 | The message is deleted when the queue ends or playback is stopped | P0 | `test_events` |
-| FR-24 | Buttons: previous, pause/resume, next, loop, shuffle, stop | P0 | offline menu render |
+| FR-24 | Buttons: previous, pause/resume, next, loop, shuffle, stop — the six controls that are **not** commands | P0 | offline menu render |
 | FR-25 | The pause, loop and shuffle buttons show current state, and update when pressed | P1 | manual |
 | FR-26 | **Previous** restarts the track if it is underway, otherwise plays the previous one and re-queues the current | P1 | `test_player` |
 | FR-27 | Only members in the bot's voice channel may press a button; others get an ephemeral refusal | P1 | manual |
@@ -163,16 +187,15 @@ needs a live Discord and Lavalink node.
 
 | ID | Requirement | Pri | Verified |
 |---|---|---|---|
-| FR-29 | `/now` shows the current track, progress and the next one | P0 | manual |
 | FR-30 | `/queue` shows the current track and the next 10 | P0 | manual |
 | FR-31 | `/remove` autocompletes from the live queue and removes by position | P1 | manual |
-| FR-32 | `/now` and `/queue` do not require voice channel membership | P2 | offline command render |
+| FR-32 | `/queue` does not require voice channel membership | P2 | offline command render |
 
 ### Voice
 
 | ID | Requirement | Pri | Verified |
 |---|---|---|---|
-| FR-33 | `/join` joins the caller's channel and **reports which channel it joined** | P0 | manual |
+| FR-33 | `/play` connects to the caller's channel when the bot is not already in one | P0 | manual |
 | FR-34 | `/leave` disconnects and clears the player | P0 | manual |
 | FR-35 | When one member is listening, their deafening pauses playback and undeafening resumes it | P1 | manual |
 | FR-36 | The bot leaves once it is alone in the channel | P1 | manual |
@@ -207,7 +230,7 @@ needs a live Discord and Lavalink node.
 
 | Metric | Target | How measured |
 |---|---|---|
-| Command parity | 18/18, names and arguments identical | Offline render diffed against the legacy definitions |
+| Capability parity | Every legacy capability reachable, via 10 commands plus 6 buttons | Offline render; §4.1 maps each cut |
 | Known defects shipped | 0 of the 5 in §2 | Each has a test or a documented manual check |
 | Dependencies on a pre-release or unmaintained version | 0 | `pyproject.toml` |
 | Automated test coverage of pure logic | Every non-I/O module has tests | 92 tests at time of writing |
@@ -218,7 +241,7 @@ needs a live Discord and Lavalink node.
 
 | Milestone | Contents | State |
 |---|---|---|
-| **M1 — Port** | All four libraries current, 18 commands registering, miru removed | Done |
+| **M1 — Port** | All four libraries current, commands registering, miru removed | Done |
 | **M2 — Defects** | The five §2 defects fixed, each with a test where testable | Done |
 | **M3 — Operability** | Environment configuration, Docker compose, README, node config example | Done |
 | **M4 — Safety net** | Test suite, lint and format clean | Done — 92 tests |
@@ -237,7 +260,7 @@ M5 is the gate. Everything before it is verified offline only.
 | `/effects` needs `equalizer` and `timescale` filters, which are off in a stock Lavalink install | Medium | Both enabled in the example config, with a comment saying why |
 | The lightbulb menu-detach workaround depends on `Menu.attach()` internals staying as they are | Low | Uses only documented API; a test asserts the detach, so an upgrade that breaks it fails the suite |
 | Two `/play` commands within the same moment could skip a track, because `is_playing` is false until the node confirms the track started | Low | Pre-existing in the legacy bot; window is milliseconds; not worth a lock |
-| Custom emoji IDs are hardcoded and belong to one Discord application | Low | Documented; a fork replacing them changes one file |
+| ~~Custom emoji belong to one Discord application~~ | ~~Low~~ | **Closed.** The emoji are Unicode; `constants.py` documents substituting your own. This was upgraded from Low to blocking once the buttons became the only way to pause |
 
 ## 12. Open questions
 
@@ -251,22 +274,29 @@ M5 is the gate. Everything before it is verified offline only.
 4. **Is `DEFAULT_GUILDS` wanted in production**, or only for development? Global
    registration is the default and takes up to an hour to propagate.
 
-## Appendix — command reference
+## Appendix — command and button reference
+
+### Commands
 
 | Command | Options | Checks |
 |---|---|---|
 | `/play` | `query` · `next` · `loop` · `shuffle` | guild, voice |
 | `/search` | `query`* · `type` · `source` · `next` · `loop` · `shuffle` | guild, voice |
-| `/pause` `/skip` `/stop` `/restart` | — | guild, voice, playing |
-| `/resume` | — | guild, voice, connected |
+| `/skip` | — | guild, voice, playing |
 | `/seek` | `position` | guild, voice, playing |
-| `/loop` | `mode` | guild, voice, playing |
-| `/shuffle` | — | guild, voice, playing |
 | `/effects` | `effect` | guild, voice, playing |
-| `/now` `/queue` | — | guild, playing |
+| `/queue` | — | guild, playing |
 | `/remove` | `track`* | guild, voice, playing |
-| `/join` | — | guild, voice |
 | `/leave` | — | guild, voice, connected |
 | `/stats` `/info` | — | owner |
 
 \* autocompleted
+
+### Buttons
+
+On the player message, restricted to members in the bot's voice channel.
+
+| Row | Buttons |
+|---|---|
+| 1 | ⏮️ previous · ⏸️/▶️ pause · ⏭️ next |
+| 2 | ➡️/🔂/🔁 loop · 🔀 shuffle (green when on) · ⏹️ stop |

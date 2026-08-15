@@ -15,8 +15,7 @@ from musiccat.constants import EMOJI_PAUSE_PLAYER
 from musiccat.constants import EMOJI_PLAY_NEXT
 from musiccat.constants import EMOJI_PLAY_PREVIOUS
 from musiccat.constants import EMOJI_RESUME_PLAYER
-from musiccat.constants import EMOJI_SHUFFLE_OFF
-from musiccat.constants import EMOJI_SHUFFLE_ON
+from musiccat.constants import EMOJI_SHUFFLE
 from musiccat.constants import EMOJI_STOP_PLAYER
 from musiccat.player import MusicCatPlayer
 
@@ -58,7 +57,9 @@ class PlayerMenu(lightbulb.components.Menu):
         self.next_row()
 
         self.loop_button = self.add_interactive_button(secondary, self.on_loop, emoji=self._loop_emoji())
-        self.shuffle_button = self.add_interactive_button(secondary, self.on_shuffle, emoji=self._shuffle_emoji())
+        self.shuffle_button = self.add_interactive_button(
+            self._shuffle_style(), self.on_shuffle, emoji=_emoji(EMOJI_SHUFFLE)
+        )
         self.stop_button = self.add_interactive_button(secondary, self.on_stop, emoji=_emoji(EMOJI_STOP_PLAYER))
 
     def _pause_emoji(self) -> hikari.Emoji:
@@ -67,8 +68,9 @@ class PlayerMenu(lightbulb.components.Menu):
     def _loop_emoji(self) -> hikari.Emoji:
         return _emoji(LOOP_EMOJIS.get(self.player.loop, EMOJI_LOOP_OFF))
 
-    def _shuffle_emoji(self) -> hikari.Emoji:
-        return _emoji(EMOJI_SHUFFLE_ON if self.player.shuffle else EMOJI_SHUFFLE_OFF)
+    def _shuffle_style(self) -> hikari.ButtonStyle:
+        # One glyph for both states, so the button's colour carries whether shuffle is on.
+        return hikari.ButtonStyle.SUCCESS if self.player.shuffle else hikari.ButtonStyle.SECONDARY
 
     async def predicate(self, ctx: lightbulb.components.MenuContext) -> bool:
         """Only let members sharing the bot's voice channel touch the player."""
@@ -115,5 +117,5 @@ class PlayerMenu(lightbulb.components.Menu):
 
     async def on_shuffle(self, ctx: lightbulb.components.MenuContext) -> None:
         self.player.set_shuffle(not self.player.shuffle)
-        self.shuffle_button.emoji = self._shuffle_emoji()
+        self.shuffle_button.style = self._shuffle_style()
         await self.refresh(ctx)

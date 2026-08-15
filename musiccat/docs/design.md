@@ -92,7 +92,7 @@ musiccat/
 │   ├── responses.py      replying, and the self-deleting reply
 │   ├── errors.py         errors that carry a user-facing message
 │   ├── sources.py        the search sources and their prefixes
-│   ├── constants.py      effects and the custom emoji set
+│   ├── constants.py      effects and the player emojis
 │   ├── log_config.py     dictConfig
 │   └── extensions/       general · play · playback · queue · admin
 ├── lavalink/             the node's application.yml
@@ -167,7 +167,8 @@ Both sets were live in the same process: `/loop track` called `set_loop(1)`
 (`extensions/player.py:148`) and the overridden `play()` then read that 1 as its
 own `LOOP_QUEUE` and appended the current track to the end of the queue. **`/loop
 track` looped the queue.** It went unnoticed because a single-track queue makes
-the two indistinguishable. The rewrite defines no constants of its own.
+the two indistinguishable. The rewrite defines no constants of its own; loop is
+now set by the player message's loop button and by `/play loop:true`.
 
 **`play_previous` suspends the loop mode.** Stepping back pushes the previous and
 current tracks onto the front of the queue and plays index 0. `DefaultPlayer.play`
@@ -288,34 +289,37 @@ only weak references to tasks, so an unheld one can be collected mid-sleep.
 
 ## Command surface
 
-18 commands, in five extensions. Every one is a `lightbulb.SlashCommand`
+10 commands, in five extensions. Every one is a `lightbulb.SlashCommand`
 subclass registered on a `Loader`.
 
+The legacy bot had 18. Eight were cut because the player message already does the
+job — pause, resume, stop, loop, shuffle and previous are buttons, so a command
+for each was a second way to press the same button. `/now` went because the
+player message *is* the now-playing display, `/restart` because it is `/seek
+0:00`, and `/join` because `/play` connects on its own. `/skip` was kept
+deliberately despite having a button: it is the one control people reach for
+mid-conversation, when the player message has scrolled away.
+
 ```
-general    /join                                  hooks: guild, voice
-           /leave                                 hooks: guild, voice, connected
+general    /leave                                 hooks: guild, voice, connected
 
 play       /play    query next loop shuffle       hooks: guild, voice
            /search  query type source + the above hooks: guild, voice
                     query autocompletes; type and source drive LavaSearch
 
-playback   /skip /pause /stop /restart            hooks: guild, voice, playing
-           /resume                                hooks: guild, voice, connected
+playback   /skip                                  hooks: guild, voice, playing
            /seek    position    "mm:ss" or "hh:mm:ss"
-           /loop    mode        track | queue | off
-           /shuffle
            /effects effect      Bass Boost | Nightcore | None
 
-queue      /now                                   hooks: guild, playing
-           /queue                                 hooks: guild, playing
+queue      /queue                                 hooks: guild, playing
            /remove  track       autocompletes from the live queue
 
 admin      /stats /info                           hooks: owner only
 ```
 
-`/now` and `/queue` deliberately carry no voice check — reading what is playing
-is not a privileged act, and requiring channel membership to answer "what is
-this song" was friction with no threat behind it.
+`/queue` deliberately carries no voice check — reading what is playing is not a
+privileged act, and requiring channel membership to answer "what is this song"
+was friction with no threat behind it.
 
 `next`, `loop` and `shuffle` are **boolean options**. The legacy versions were
 string options constrained to `choices=['True']` and then parsed with
@@ -387,13 +391,14 @@ which catches the whole class of registration errors without a token.
 
 ## What the rewrite costs
 
-The package is **2,329 lines against the legacy `bot/`'s 1,578**, plus 1,126
+The package is **2,197 lines against the legacy `bot/`'s 1,578**, plus 1,126
 lines of tests where there were none. Stated plainly because the direction is the
 wrong one for a simplification: the growth is docstrings, type annotations,
 `config.py` (146 lines that were previously eight hardcoded ones), and typed
 errors. The parts that were genuinely too big got smaller — the copied 56-line
-`play()` override is under 30, and `library/base.py`'s 105 lines of mixed
-orchestration and embed-building split into `service.py` and `embeds.py`.
+`play()` override is under 30, `library/base.py`'s 105 lines of mixed
+orchestration and embed-building split into `service.py` and `embeds.py`, and
+cutting the eight redundant commands took `playback.py` from 235 lines to 134.
 
 ## Why this stack
 
@@ -452,7 +457,14 @@ performance or ergonomics, is the argument for this stack.
 
 `hikari-miru` · `bot.d` · a custom `AutocompleteChoice` class · a copied `play()`
 override · private `_transport` access · `eval` on options · hardcoded node
-config · a database · a queue · a worker · persistence across restarts.
+config · application-specific emoji IDs · eight commands that duplicated a button
+· a database · a queue · a worker · persistence across restarts.
+
+The emoji are the subtlest of those. The legacy bot's eleven were custom emojis
+belonging to its own Discord application, and **no other application can render
+another's** — a fork got blank or rejected buttons with nothing in the logs to
+explain it, on the bot's headline feature. They are Unicode now, with a comment
+in `constants.py` showing how to substitute your own.
 
 `hikari-miru` went because lightbulb 3 ships component menus, and one dependency
 that does the job is better than two that overlap. The `AutocompleteChoice`

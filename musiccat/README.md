@@ -22,14 +22,18 @@ on the current generation of those libraries: hikari 2.5, lightbulb 3.2 and Lava
 
 ### Commands
 
-| Group    | Commands                                                       |
-| -------- | -------------------------------------------------------------- |
-| Playback | `/play` `/search`                                               |
-| Control  | `/pause` `/resume` `/skip` `/stop` `/seek` `/restart`           |
-| Queue    | `/now` `/queue` `/remove` `/shuffle` `/loop`                    |
-| Effects  | `/effects`                                                      |
-| Voice    | `/join` `/leave`                                                |
-| Owner    | `/stats` `/info`                                                |
+Ten, deliberately. Pause, resume, stop, loop, shuffle and stepping backwards are all buttons
+on the player message rather than commands, so they are not repeated here.
+
+| Group   | Commands                       | |
+| ------- | ------------------------------ | --- |
+| Music   | `/play` `/search`              | add a track, playlist or URL to the queue |
+| Queue   | `/queue` `/remove`             | see what's next, drop something from it |
+| Control | `/skip` `/seek` `/effects`     | the three the buttons can't do |
+| Voice   | `/leave`                       | disconnect and clear |
+| Owner   | `/stats` `/info`               | node health |
+
+`/play` connects to your voice channel on its own, so there is no `/join`.
 
 ## Running it
 

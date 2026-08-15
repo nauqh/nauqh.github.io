@@ -18,26 +18,6 @@ loader = lightbulb.Loader()
 
 
 @loader.command
-class Join(
-    lightbulb.SlashCommand,
-    name="join",
-    description="Join the voice channel you are in",
-    hooks=[hooks.guild_only, hooks.valid_user_voice],
-):
-    @lightbulb.invoke
-    async def invoke(
-        self,
-        ctx: lightbulb.Context,
-        bot: hikari.GatewayBot = lightbulb.di.INJECTED,
-        lavalink_client: lavalink.Client = lightbulb.di.INJECTED,
-    ) -> None:
-        assert ctx.guild_id is not None
-
-        _, channel_id = await service.join(bot, lavalink_client, ctx.guild_id, ctx.user.id)
-        await responses.respond(ctx, content=f"Joined <#{channel_id}>")
-
-
-@loader.command
 class Leave(
     lightbulb.SlashCommand,
     name="leave",

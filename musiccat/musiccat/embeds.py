@@ -36,12 +36,12 @@ def now_playing(player: MusicCatPlayer) -> hikari.Embed:
 
 def queue(player: MusicCatPlayer, *, title: str, preview_length: int = 0) -> hikari.Embed:
     """
-    The embed behind ``/now`` and ``/queue``.
+    The embed behind ``/queue``: the current track, then a numbered list of what follows.
 
     Args:
         player: The player to describe.
         title: The embed title.
-        preview_length: How many queued tracks to list. ``/now`` shows just the next one.
+        preview_length: How many queued tracks to list.
     """
     current = player.current
     if current is None:
@@ -59,7 +59,6 @@ def queue(player: MusicCatPlayer, *, title: str, preview_length: int = 0) -> hik
     if upcoming:
         description += "\n**Up next:**"
         for i, track in enumerate(upcoming, start=1):
-            prefix = f"\n{i}. " if preview_length > 1 else "\n"
-            description += prefix + track_line(track)
+            description += f"\n{i}. " + track_line(track)
 
     return hikari.Embed(title=title, description=description).set_thumbnail(current.artwork_url)

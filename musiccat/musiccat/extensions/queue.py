@@ -24,24 +24,6 @@ MAX_CHOICES = 25
 
 
 @loader.command
-class Now(
-    lightbulb.SlashCommand,
-    name="now",
-    description="Show what is playing",
-    hooks=[hooks.guild_only, hooks.player_playing],
-):
-    @lightbulb.invoke
-    async def invoke(self, ctx: lightbulb.Context, lavalink_client: lavalink.Client = lightbulb.di.INJECTED) -> None:
-        assert ctx.guild_id is not None
-
-        player = service.get_player(lavalink_client, ctx.guild_id)
-        if player is None:
-            raise errors.PlayerNotPlaying
-
-        await ctx.respond(embed=embeds.queue(player, title="🎵 Now Playing", preview_length=1))
-
-
-@loader.command
 class Queue(
     lightbulb.SlashCommand,
     name="queue",
