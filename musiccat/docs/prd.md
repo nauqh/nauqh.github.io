@@ -18,9 +18,8 @@ This release rebuilds the bot on the current generation of its libraries, becaus
 the versions it was pinned to can no longer be upgraded, and fixes the defects
 that rebuild exposed.
 
-It also **narrows the command surface from 18 to 10**. Nothing was removed that
-the bot can no longer do — the eight cuts were either a button on the player
-message or another command spelled differently (§4.1).
+It also **narrows the surface to 11 commands and no buttons**. The now-playing
+message is an announcement rather than a control panel (§4.1).
 
 ## 2. Problem
 
@@ -84,27 +83,27 @@ is a narrower surface, not a smaller product.
 
 | Cut | Still available as |
 |---|---|
-| `/pause` `/resume` | the pause/resume button |
-| `/stop` | the stop button |
-| `/loop` | the loop button (off → track → queue), or `/play loop:true` |
-| `/shuffle` | the shuffle button, or `/play shuffle:true` |
-| `/now` | the player message, which is posted for every track |
+| `/resume` | `/pause`, which toggles |
+| `/stop` | `/leave`, which disconnects and clears |
+| `/loop` | the `loop` option on `/play` and `/search` |
+| `/shuffle` | the `shuffle` option on `/play` and `/search` |
+| `/now` | the now-playing message, posted for every track |
 | `/restart` | `/seek 0:00` |
 | `/join` | `/play`, which connects on its own |
 
-`/skip` also has a button and was **kept anyway**: it is the control people reach
-for mid-conversation, when the player message has scrolled out of view.
+The player buttons went too. Loop and shuffle are consequently set at queueing
+time rather than adjusted mid-track, which is the one behavioural change here.
 
-The six buttons are therefore load-bearing rather than a convenience. That raises
-the cost of the player message failing, which is why the emoji were changed (§11).
+**Stepping backwards through history is gone** — it was the previous button, it
+had no command, and nothing replaces it. That is the only capability the trim
+cost, and it is recoverable as a `/previous` command if it is missed.
 
 ## 5. Users
 
 **The listener** — a member of a Discord server where MusicCat is installed.
 Wants to hear a song without reading documentation. Interacts mostly through
-`/play` and the buttons; will never see a config file. Cares that the buttons
-respond, that autocomplete finds the right track, and that nothing needs
-re-typing.
+`/play`; will never see a config file. Cares that autocomplete finds the right
+track, that replies are quick, and that nothing needs re-typing.
 
 **The operator** — whoever self-hosts the bot. Runs the container, holds the
 Discord token and the Lavalink credentials, and is the only one who sees
@@ -119,7 +118,7 @@ change.
 | US-1 | listener | queue a track by URL or by searching | I can play music without leaving Discord |
 | US-2 | listener | see suggestions as I type a search | I get the track I meant, not the first match |
 | US-3 | listener | search a specific source and result type | I can find a Spotify *album* rather than a track that shares its name |
-| US-4 | listener | control playback with buttons | I don't type a command to pause |
+| US-4 | listener | pause and skip without hunting for a control | the bot stays out of the way |
 | US-5 | listener | see what's playing and what's next | I know whether to queue something |
 | US-6 | listener | remove a track from the queue | one bad choice doesn't have to play |
 | US-7 | listener | loop a track or the queue, and shuffle | the music continues without babysitting |
@@ -162,26 +161,21 @@ needs a live Discord and Lavalink node.
 
 | ID | Requirement | Pri | Verified |
 |---|---|---|---|
-| FR-14 | `/skip` plays the next track and names the one it replaced | P0 | `test_player` |
+| FR-14 | `/skip` plays the next track and names the one it replaced; `/pause` toggles | P0 | `test_player` |
 | FR-15 | `/seek` accepts `mm:ss` and `hh:mm:ss`, and rejects anything else with a usable message | P1 | `test_formatting` |
 | FR-16 | `/seek` refuses tracks that are not seekable | P1 | manual |
-| FR-17 | The loop button cycles off → track → queue, and **track loops the track** | P0 | `test_player` |
-| FR-18 | The shuffle button toggles shuffle, and shows its state through the button's colour | P1 | manual |
+| FR-17 | `/play loop:true` loops the track, or the queue for a playlist — and **track means track** | P0 | `test_service` |
+| FR-18 | `/play shuffle:true` shuffles a playlist as it is queued | P1 | `test_service` |
 | FR-19 | `/effects` applies Bass Boost or Nightcore, or clears effects; applying one replaces the other | P1 | manual |
-| FR-20 | The stop button clears the queue, history, loop and shuffle, and takes down the player message | P0 | `test_player` |
+| FR-20 | `/leave` clears the queue, loop and shuffle, and takes down the now-playing message | P0 | `test_player` |
 
 ### The now-playing message
 
 | ID | Requirement | Pri | Verified |
 |---|---|---|---|
-| FR-21 | A message with the track and six buttons is posted when a track starts, in the channel the last queueing command came from | P0 | `test_events` |
+| FR-21 | A message describing the track is posted when a track starts, in the channel the last queueing command came from | P0 | `test_events` |
 | FR-22 | Exactly one such message exists per guild — a new track deletes the previous one | P0 | `test_events` |
 | FR-23 | The message is deleted when the queue ends or playback is stopped | P0 | `test_events` |
-| FR-24 | Buttons: previous, pause/resume, next, loop, shuffle, stop — the six controls that are **not** commands | P0 | offline menu render |
-| FR-25 | The pause, loop and shuffle buttons show current state, and update when pressed | P1 | manual |
-| FR-26 | **Previous** restarts the track if it is underway, otherwise plays the previous one and re-queues the current | P1 | `test_player` |
-| FR-27 | Only members in the bot's voice channel may press a button; others get an ephemeral refusal | P1 | manual |
-| FR-28 | Buttons on a deleted message stop consuming resources | P0 | `test_events` |
 
 ### Queue
 
@@ -230,7 +224,7 @@ needs a live Discord and Lavalink node.
 
 | Metric | Target | How measured |
 |---|---|---|
-| Capability parity | Every legacy capability reachable, via 10 commands plus 6 buttons | Offline render; §4.1 maps each cut |
+| Capability parity | Every legacy capability reachable via 11 commands, except stepping backwards | Offline render; §4.1 maps each cut |
 | Known defects shipped | 0 of the 5 in §2 | Each has a test or a documented manual check |
 | Dependencies on a pre-release or unmaintained version | 0 | `pyproject.toml` |
 | Automated test coverage of pure logic | Every non-I/O module has tests | 92 tests at time of writing |
@@ -260,21 +254,22 @@ M5 is the gate. Everything before it is verified offline only.
 | `/effects` needs `equalizer` and `timescale` filters, which are off in a stock Lavalink install | Medium | Both enabled in the example config, with a comment saying why |
 | The lightbulb menu-detach workaround depends on `Menu.attach()` internals staying as they are | Low | Uses only documented API; a test asserts the detach, so an upgrade that breaks it fails the suite |
 | Two `/play` commands within the same moment could skip a track, because `is_playing` is false until the node confirms the track started | Low | Pre-existing in the legacy bot; window is milliseconds; not worth a lock |
-| ~~Custom emoji belong to one Discord application~~ | ~~Low~~ | **Closed.** The emoji are Unicode; `constants.py` documents substituting your own. This was upgraded from Low to blocking once the buttons became the only way to pause |
+| ~~Custom emoji belong to one Discord application~~ | ~~Low~~ | **Closed.** Eight of the eleven went with the buttons; the three the embed still draws with are Unicode |
 
 ## 12. Open questions
 
 1. **Does the operator want CI?** A workflow running `ruff` and `pytest` on the
    test suite is roughly 20 lines and nothing depends on it.
-2. **Should `/previous` exist as a command?** It exists as a button and was
-   commented out as a command in the legacy code. Cheap either way.
+2. **Should `/previous` exist as a command?** Stepping backwards was lost with
+   the buttons and is the only capability the trim cost. The player's history and
+   `play_previous` went with it, so restoring it is ~40 lines, not a one-liner.
 3. **Where should this live long-term?** It currently sits in a subdirectory of a
    GitHub Pages repository, which is where it could be pushed — not where it
    belongs.
 4. **Is `DEFAULT_GUILDS` wanted in production**, or only for development? Global
    registration is the default and takes up to an hour to propagate.
 
-## Appendix — command and button reference
+## Appendix — command reference
 
 ### Commands
 
@@ -282,6 +277,7 @@ M5 is the gate. Everything before it is verified offline only.
 |---|---|---|
 | `/play` | `query` · `next` · `loop` · `shuffle` | guild, voice |
 | `/search` | `query`* · `type` · `source` · `next` · `loop` · `shuffle` | guild, voice |
+| `/pause` | — | guild, voice, playing |
 | `/skip` | — | guild, voice, playing |
 | `/seek` | `position` | guild, voice, playing |
 | `/effects` | `effect` | guild, voice, playing |
@@ -294,9 +290,4 @@ M5 is the gate. Everything before it is verified offline only.
 
 ### Buttons
 
-On the player message, restricted to members in the bot's voice channel.
-
-| Row | Buttons |
-|---|---|
-| 1 | ⏮️ previous · ⏸️/▶️ pause · ⏭️ next |
-| 2 | ➡️/🔂/🔁 loop · 🔀 shuffle (green when on) · ⏹️ stop |
+There are none. The now-playing message carries no components.

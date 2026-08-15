@@ -1,14 +1,12 @@
-"""The now-playing message lifecycle, against a real lightbulb client."""
+"""The now-playing message lifecycle."""
 
 from __future__ import annotations
 
-import asyncio
 import base64
 import dataclasses
 from typing import Any
 
 import hikari
-import lightbulb
 import pytest
 
 from musiccat.events import LavalinkEventHandler
@@ -50,33 +48,25 @@ def bot() -> Any:
 
 
 @pytest.fixture
-def lb_client(bot: Any) -> lightbulb.Client:
-    return lightbulb.client_from_app(bot)
-
-
-@pytest.fixture
-def handler(bot: Any, lb_client: lightbulb.Client) -> LavalinkEventHandler:
-    return LavalinkEventHandler(bot, lb_client)
+def handler(bot: Any) -> LavalinkEventHandler:
+    return LavalinkEventHandler(bot)
 
 
 @pytest.mark.asyncio
-async def test_posting_the_player_message_attaches_its_buttons(
+async def test_posting_the_player_message(
     handler: LavalinkEventHandler,
     bot: Any,
-    lb_client: lightbulb.Client,
     player: MusicCatPlayer,
 ) -> None:
     player.current = make_track("Some Song")
     player.announce_channel_id = CHANNEL_ID
 
     await handler.post_now_playing(player)
-    await asyncio.sleep(0)  # Let the menu's attach task start.
 
     assert len(bot.rest.created) == 1
     assert bot.rest.created[0]["channel"] == CHANNEL_ID
     assert player.now_playing is not None
     assert player.now_playing.channel_id == CHANNEL_ID
-    assert len(lb_client._attached_menus) == 1
 
 
 @pytest.mark.asyncio
@@ -95,43 +85,34 @@ async def test_nothing_is_posted_without_a_channel_to_post_in(
 async def test_a_new_track_replaces_the_previous_message(
     handler: LavalinkEventHandler,
     bot: Any,
-    lb_client: lightbulb.Client,
     player: MusicCatPlayer,
 ) -> None:
     player.current = make_track("first")
     player.announce_channel_id = CHANNEL_ID
     await handler.post_now_playing(player)
-    await asyncio.sleep(0)
     first_message_id = player.now_playing.message_id  # type: ignore[union-attr]
 
     player.current = make_track("second")
     await handler.post_now_playing(player)
-    await asyncio.sleep(0)
 
     assert bot.rest.deleted == [(CHANNEL_ID, first_message_id)]
     assert len(bot.rest.created) == 2
-    # The replaced message's menu must not still be listening.
-    assert len(lb_client._attached_menus) == 1
 
 
 @pytest.mark.asyncio
-async def test_clearing_deletes_the_message_and_detaches_its_buttons(
+async def test_clearing_deletes_the_message(
     handler: LavalinkEventHandler,
     bot: Any,
-    lb_client: lightbulb.Client,
     player: MusicCatPlayer,
 ) -> None:
     player.current = make_track()
     player.announce_channel_id = CHANNEL_ID
     await handler.post_now_playing(player)
-    await asyncio.sleep(0)
 
     await handler.clear_now_playing(player)
-    await asyncio.sleep(0)
 
     assert player.now_playing is None
     assert len(bot.rest.deleted) == 1
-    assert lb_client._attached_menus == set()
 
 
 @pytest.mark.asyncio
@@ -141,7 +122,6 @@ async def test_clearing_twice_deletes_the_message_once(
     player.current = make_track()
     player.announce_channel_id = CHANNEL_ID
     await handler.post_now_playing(player)
-    await asyncio.sleep(0)
 
     await handler.clear_now_playing(player)
     await handler.clear_now_playing(player)
@@ -150,10 +130,9 @@ async def test_clearing_twice_deletes_the_message_once(
 
 
 @pytest.mark.asyncio
-async def test_a_message_that_cannot_be_posted_leaves_no_menu_behind(
+async def test_a_message_that_cannot_be_posted_is_not_recorded(
     handler: LavalinkEventHandler,
     bot: Any,
-    lb_client: lightbulb.Client,
     player: MusicCatPlayer,
 ) -> None:
     player.current = make_track()
@@ -161,7 +140,5 @@ async def test_a_message_that_cannot_be_posted_leaves_no_menu_behind(
     bot.rest.fail_create = hikari.ForbiddenError(url="", headers={}, raw_body=b"")  # type: ignore[arg-type]
 
     await handler.post_now_playing(player)
-    await asyncio.sleep(0)
 
     assert player.now_playing is None
-    assert lb_client._attached_menus == set()

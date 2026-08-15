@@ -26,10 +26,9 @@ first join, destroyed by Lavalink. _Avoid_: session, connection.
 `player.current` is separate, and Lavalink only sets it when the node confirms
 the track started.
 
-**Now-playing message** — the interactive message with six buttons, posted when
-a track starts and deleted when the queue ends. Exactly one per guild at a time.
-_Avoid_: player message, controller, view (the last is miru's word, and miru is
-gone).
+**Now-playing message** — the embed posted when a track starts and deleted when
+the queue ends. Exactly one per guild at a time. It carries no components: it
+announces, it does not control. _Avoid_: player message, controller, view.
 
 **Announce channel** — where the next now-playing message will be posted: the
 channel the most recent queueing command came from. _Avoid_: text channel, send
@@ -49,7 +48,7 @@ which changes only how it is described, never how it is queued.
 ```
    ┌──────────────────────────────────────────────┐
    │  Discord                                     │
-   │  slash commands · buttons · voice state      │
+   │  slash commands · voice state                │
    └───────────────┬──────────────────────────────┘
                    │ gateway (GUILDS, GUILD_VOICE_STATES)
    ┌───────────────▼──────────────────────────────┐
@@ -84,7 +83,6 @@ musiccat/
 │   ├── service.py        join · resolve · enqueue — the one seam
 │   ├── player.py         MusicCatPlayer, history, the now-playing handle
 │   ├── events.py         Lavalink events → the now-playing message
-│   ├── ui.py             PlayerMenu — the six buttons
 │   ├── hooks.py          the command checks
 │   ├── search.py         the LavaSearch plugin client
 │   ├── embeds.py         embed builders
@@ -92,7 +90,7 @@ musiccat/
 │   ├── responses.py      replying, and the self-deleting reply
 │   ├── errors.py         errors that carry a user-facing message
 │   ├── sources.py        the search sources and their prefixes
-│   ├── constants.py      effects and the player emojis
+│   ├── constants.py      effects and the three embed emojis
 │   ├── log_config.py     dictConfig
 │   └── extensions/       general · play · playback · queue · admin
 ├── lavalink/             the node's application.yml
@@ -102,16 +100,15 @@ musiccat/
 
 ## The modules
 
-Nine that matter, each stated as its interface. Everything else is
+Eight that matter, each stated as its interface. Everything else is
 implementation.
 
 | Module | Interface | What it hides |
 |---|---|---|
 | `Config` | `from_env() -> Config` | env parsing, the multi-node JSON, every validation error |
 | `service` | `join()` · `resolve()` · `enqueue()` | voice connection, query prefixing, five load-result shapes, playlist metadata |
-| `MusicCatPlayer` | `play(index=)` · `play_previous()` · `skip()` · `stop()` | history, how loop modes interfere with explicit plays, an unreachable node |
-| `LavalinkEventHandler` | nothing — it consumes events | the entire now-playing message lifecycle |
-| `PlayerMenu` | a `lightbulb.components.Menu` | button state, who is allowed to press, acking before the message dies |
+| `MusicCatPlayer` | `skip()` · `stop()` · `remove()` | resetting to a clean state even when the node is unreachable |
+| `LavalinkEventHandler` | nothing — it consumes events | the now-playing message lifecycle |
 | `search` | `load_search(node, query, types)` | the plugin's REST contract, its 204, its failures |
 | `hooks` | four execution hooks | voice-state cache lookups and dependency injection |
 | `responses` | `respond(ctx, **kwargs)` | the self-deleting reply lightbulb no longer provides |
@@ -167,8 +164,8 @@ Both sets were live in the same process: `/loop track` called `set_loop(1)`
 (`extensions/player.py:148`) and the overridden `play()` then read that 1 as its
 own `LOOP_QUEUE` and appended the current track to the end of the queue. **`/loop
 track` looped the queue.** It went unnoticed because a single-track queue makes
-the two indistinguishable. The rewrite defines no constants of its own; loop is
-now set by the player message's loop button and by `/play loop:true`.
+the two indistinguishable. The rewrite defines no constants of its own, and loop
+is now the `loop` option on `/play` and `/search` rather than a command.
 
 **`play_previous` suspends the loop mode.** Stepping back pushes the previous and
 current tracks onto the front of the queue and plays index 0. `DefaultPlayer.play`
@@ -188,47 +185,39 @@ for one ending. Teardown is therefore idempotent by construction rather than by
 guard: `clear_now_playing` takes the reference off the player before it awaits
 anything, so the second call finds nothing to do.
 
-### `LavalinkEventHandler` and `PlayerMenu` — the now-playing message
+### `LavalinkEventHandler` — the now-playing message
 
 One message per guild, replaced on every track change:
 
 ```
-TrackStartEvent ──► remember(track)
-                └─► post_now_playing
-                      ├─ clear_now_playing   delete the old message, detach its menu
-                      ├─ PlayerMenu(player, bot)
-                      ├─ asyncio.create_task(menu.attach(client, timeout=None))
-                      └─ rest.create_message(embed, components=menu)
+TrackStartEvent ──► post_now_playing
+                      ├─ clear_now_playing   delete the old message
+                      └─ rest.create_message(embed)
 
 QueueEndEvent ────► clear_now_playing
 ```
 
-**The menu is attached through a cancellable task, not `attach_persistent`.**
-Lightbulb offers `Menu.attach_persistent(client, timeout=None)` for exactly this
-shape, and it returns a `MenuHandle` whose `stop_interacting()` is supposed to
-detach the menu. It cannot: `MenuHandle.__init__` accepts an `_am` argument and
-then assigns `self.__am = None`, discarding it
-(`lightbulb/components/menus.py:579-587`). With `timeout=None` nothing else ever
-sets it, so `stop_interacting()` sets the stop event and never discards the
-container from `client._attached_menus`. The set is consulted on every component
-interaction, and a music bot replaces this message on every track — the leak is
-proportional to tracks played, forever.
+It carries **no components**. An earlier revision made it a
+`lightbulb.components.Menu` with six buttons — previous, pause, next, loop,
+shuffle, stop — and that came with a defect worth recording, because anyone
+adding buttons back will meet it.
 
-`Menu.attach()` has no such problem: it adds the container, awaits the stop
-event, and discards in a `finally`. Cancelling the task runs that `finally`.
-This costs one `asyncio.Task` per guild and uses only documented API. It is
-pinned by a test that asserts `client._attached_menus` empties
-(`tests/test_events.py`).
+Lightbulb offers `Menu.attach_persistent(client, timeout=None)` for a menu that
+should outlive the command that created it. Its `MenuHandle.stop_interacting()`
+cannot actually detach the menu: `MenuHandle.__init__` accepts an `_am` argument
+and then assigns `self.__am = None`, discarding it
+(`lightbulb/components/menus.py:579-587`). With `timeout=None` nothing else sets
+it, so the container is never discarded from `client._attached_menus` — a set
+consulted on every component interaction, leaking one entry per track played.
+The working alternative is `asyncio.create_task(menu.attach(client,
+timeout=None))` and cancelling the task, because `attach` discards in a
+`finally`.
 
-The three stepping buttons — previous, next, stop — `defer(edit=True)` before
-acting, because the action deletes the message they live on and an unacked
-interaction shows the user "interaction failed". The three toggling buttons —
-pause, loop, shuffle — mutate, update their own emoji, and reply with
-`edit=True, rebuild_menu=True`.
+Buttons also need care that commands do not: a callback whose action deletes the
+message must `defer(edit=True)` first, and a `predicate` returning `False`
+without responding both show the user "interaction failed".
 
-`Menu.predicate` rejects anyone not in the bot's voice channel, replying
-ephemerally first — returning `False` without responding leaves the same
-"interaction failed".
+None of that is in the bot now. It is written down because it was paid for once.
 
 ### `search` — the LavaSearch client
 
@@ -289,16 +278,18 @@ only weak references to tasks, so an unheld one can be collected mid-sleep.
 
 ## Command surface
 
-10 commands, in five extensions. Every one is a `lightbulb.SlashCommand`
+11 commands, in five extensions. Every one is a `lightbulb.SlashCommand`
 subclass registered on a `Loader`.
 
-The legacy bot had 18. Eight were cut because the player message already does the
-job — pause, resume, stop, loop, shuffle and previous are buttons, so a command
-for each was a second way to press the same button. `/now` went because the
-player message *is* the now-playing display, `/restart` because it is `/seek
-0:00`, and `/join` because `/play` connects on its own. `/skip` was kept
-deliberately despite having a button: it is the one control people reach for
-mid-conversation, when the player message has scrolled away.
+The legacy bot had 18. `/now` went because the now-playing message *is* the
+now-playing display, `/restart` because it is `/seek 0:00`, `/join` because
+`/play` connects on its own, and `/resume` because `/pause` toggles. `/loop` and
+`/shuffle` became options on `/play` and `/search`, set once at queueing time
+rather than adjusted mid-track. `/stop` went because `/leave` covers it —
+disconnecting clears the player.
+
+Stepping backwards through history went with the buttons and has no command. It
+is the one capability the trim actually cost.
 
 ```
 general    /leave                                 hooks: guild, voice, connected
@@ -307,7 +298,8 @@ play       /play    query next loop shuffle       hooks: guild, voice
            /search  query type source + the above hooks: guild, voice
                     query autocompletes; type and source drive LavaSearch
 
-playback   /skip                                  hooks: guild, voice, playing
+playback   /pause   toggles                       hooks: guild, voice, playing
+           /skip
            /seek    position    "mm:ss" or "hh:mm:ss"
            /effects effect      Bass Boost | Nightcore | None
 
@@ -368,8 +360,8 @@ callers use.
 - `search` — a fake node returning recorded payloads, the 204, and a raised error.
 - `hooks` — run through a real `linkd` container, so the test proves the
   injection works and not merely the logic.
-- `events` — a real lightbulb `Client` with a fake REST, asserting the message is
-  posted, replaced, deleted once, and that `_attached_menus` empties.
+- `events` — a fake REST, asserting the message is posted, replaced, and deleted
+  exactly once even when teardown runs twice.
 
 Two library behaviours the tests had to model rather than assume, both found by
 tests failing for the right reason:
@@ -391,14 +383,16 @@ which catches the whole class of registration errors without a token.
 
 ## What the rewrite costs
 
-The package is **2,197 lines against the legacy `bot/`'s 1,578**, plus 1,126
-lines of tests where there were none. Stated plainly because the direction is the
+The package is **1,986 lines against the legacy `bot/`'s 1,578**, plus 996 lines
+of tests where there were none. Stated plainly because the direction is the
 wrong one for a simplification: the growth is docstrings, type annotations,
 `config.py` (146 lines that were previously eight hardcoded ones), and typed
 errors. The parts that were genuinely too big got smaller — the copied 56-line
 `play()` override is under 30, `library/base.py`'s 105 lines of mixed
 orchestration and embed-building split into `service.py` and `embeds.py`, and
-cutting the eight redundant commands took `playback.py` from 235 lines to 134.
+and dropping the buttons deleted `ui.py` outright along with the player's
+history, `play_previous` and `play(index=)` — 119 lines of module and 83 of
+player, none of which had another caller.
 
 ## Why this stack
 
@@ -457,14 +451,13 @@ performance or ergonomics, is the argument for this stack.
 
 `hikari-miru` · `bot.d` · a custom `AutocompleteChoice` class · a copied `play()`
 override · private `_transport` access · `eval` on options · hardcoded node
-config · application-specific emoji IDs · eight commands that duplicated a button
+config · application-specific emoji IDs · component menus and the player buttons
 · a database · a queue · a worker · persistence across restarts.
 
-The emoji are the subtlest of those. The legacy bot's eleven were custom emojis
+The emoji are the subtlest of those. The legacy bot carried eleven custom emojis
 belonging to its own Discord application, and **no other application can render
-another's** — a fork got blank or rejected buttons with nothing in the logs to
-explain it, on the bot's headline feature. They are Unicode now, with a comment
-in `constants.py` showing how to substitute your own.
+another's** — a fork would have got blank or rejected buttons with nothing in the
+logs to explain it. Three survive, Unicode, for the progress bar in the embed.
 
 `hikari-miru` went because lightbulb 3 ships component menus, and one dependency
 that does the job is better than two that overlap. The `AutocompleteChoice`
@@ -474,7 +467,7 @@ went because `hikari.impl.AutocompleteChoiceBuilder` exists.
 ## Deferred
 
 Persistence across restarts, multi-node failover testing, `/previous` as a
-command rather than only a button, and a CI workflow. None is blocked by
+command, and a CI workflow. None is blocked by
 anything here; each is out of scope for a port whose contract was to change the
 libraries and not the product.
 

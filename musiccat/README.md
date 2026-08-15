@@ -10,8 +10,8 @@ on the current generation of those libraries: hikari 2.5, lightbulb 3.2 and Lava
 ## Features
 
 * Slash commands, with autocompletion on `/search` and `/remove`.
-* An interactive player message: previous, pause/resume, next, loop, shuffle and stop, posted
-  each time a track starts and taken down when the queue runs out.
+* A now-playing message posted each time a track starts and taken down when the queue runs
+  out. It is an announcement, not a control panel - everything is a command.
 * `/search` looks queries up per source and per type (track, artist, album, playlist) through the
   [LavaSearch](https://github.com/topi314/LavaSearch) plugin.
 * `/effects` applies Nightcore or Bass Boost.
@@ -22,18 +22,18 @@ on the current generation of those libraries: hikari 2.5, lightbulb 3.2 and Lava
 
 ### Commands
 
-Ten, deliberately. Pause, resume, stop, loop, shuffle and stepping backwards are all buttons
-on the player message rather than commands, so they are not repeated here.
+Eleven, deliberately.
 
-| Group   | Commands                       | |
-| ------- | ------------------------------ | --- |
-| Music   | `/play` `/search`              | add a track, playlist or URL to the queue |
-| Queue   | `/queue` `/remove`             | see what's next, drop something from it |
-| Control | `/skip` `/seek` `/effects`     | the three the buttons can't do |
-| Voice   | `/leave`                       | disconnect and clear |
-| Owner   | `/stats` `/info`               | node health |
+| Group   | Commands                          | |
+| ------- | --------------------------------- | --- |
+| Music   | `/play` `/search`                 | add a track, playlist or URL to the queue |
+| Queue   | `/queue` `/remove`                | see what's next, drop something from it |
+| Control | `/pause` `/skip` `/seek` `/effects` | `/pause` toggles |
+| Voice   | `/leave`                          | disconnect and clear |
+| Owner   | `/stats` `/info`                  | node health |
 
-`/play` connects to your voice channel on its own, so there is no `/join`.
+`/play` connects to your voice channel on its own, so there is no `/join`. Loop and shuffle
+are options on `/play` and `/search` rather than commands of their own.
 
 ## Running it
 
@@ -102,9 +102,8 @@ musiccat/
 ├── bot.py          entrypoint: hikari bot, lightbulb client, Lavalink client
 ├── config.py       configuration read from the environment
 ├── service.py      joining voice, resolving queries, filling the queue
-├── player.py       MusicCatPlayer - queue history and the now-playing message
+├── player.py       MusicCatPlayer - the queue and the now-playing message
 ├── events.py       Lavalink events -> the now-playing message
-├── ui.py           the player message's buttons
 ├── hooks.py        command checks
 ├── search.py       LavaSearch client
 ├── embeds.py       embed builders
@@ -118,8 +117,8 @@ The libraries this was built on all changed shape since the legacy version:
 * **lightbulb 2 → 3.** `BotApp`, plugins and the decorator stack are gone. Commands are classes,
   checks are execution hooks, and `bot.d` is replaced by dependency injection - the Lavalink
   client and config are registered on the client's DI registry and injected into commands.
-* **hikari-miru is no longer needed.** Lightbulb 3 ships its own component menus, so the player
-  message's buttons are `lightbulb.components.Menu` and there is one less dependency.
+* **hikari-miru is gone**, and so are the player buttons it existed for. The now-playing
+  message is a plain embed; every control is a command.
 * **Lavalink.py 5.1 → 5.11.** `Client._dispatch_event` is synchronous now, `AudioTrack.stream` was
   renamed `is_stream`, nodes take a required region, and `Node.request` is public - so the
   LavaSearch call no longer reaches into `node._transport._request`.
@@ -127,7 +126,8 @@ The libraries this was built on all changed shape since the legacy version:
   scheduled in `responses.py`.
 * Boolean options replaced `choices=['True']` strings parsed with `eval`.
 * Loop modes now use Lavalink's own constants (`LOOP_SINGLE = 1`, `LOOP_QUEUE = 2`); the legacy
-  player defined them the other way round, so `/loop track` looped the queue.
+  player defined them the other way round, so its `/loop track` looped the queue. Loop is now
+  the `loop` option on `/play` and `/search`.
 * Configuration comes from the environment rather than being hardcoded in `config.py`.
 
 ---

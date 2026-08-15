@@ -2,17 +2,14 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
 
 import hikari
 import lavalink
-import lightbulb
 
 from musiccat import embeds
 from musiccat.player import MusicCatPlayer
 from musiccat.player import NowPlayingMessage
-from musiccat.ui import PlayerMenu
 
 LOGGER = logging.getLogger(__name__)
 TRACK_LOGGER = logging.getLogger("musiccat.track")
@@ -25,16 +22,14 @@ class LavalinkEventHandler:
     Register it with `lavalink.Client.add_event_hooks`.
     """
 
-    def __init__(self, bot: hikari.GatewayBot, client: lightbulb.Client) -> None:
+    def __init__(self, bot: hikari.GatewayBot) -> None:
         self._bot = bot
-        self._client = client
 
     @lavalink.listener(lavalink.TrackStartEvent)
     async def on_track_start(self, event: lavalink.TrackStartEvent) -> None:
         player = event.player
         assert isinstance(player, MusicCatPlayer)
 
-        player.remember(event.track)
         TRACK_LOGGER.info("%s - %s - %s", event.track.title, event.track.author, event.track.uri)
         LOGGER.info("Track started on guild %s", player.guild_id)
 
@@ -96,23 +91,17 @@ class LavalinkEventHandler:
             return
 
         channel_id = player.announce_channel_id
-        menu = PlayerMenu(player, self._bot)
-        # `Menu.attach` runs until cancelled and detaches itself on the way out, which is how
-        # `clear_now_playing` takes the buttons down again.
-        menu_task = asyncio.create_task(menu.attach(self._client, timeout=None))
 
         try:
             message = await self._bot.rest.create_message(
                 channel=channel_id,
                 embed=embeds.now_playing(player),
-                components=menu,
             )
         except hikari.HikariError as e:
-            menu_task.cancel()
             LOGGER.error("Failed to post player message in channel %s: %s", channel_id, e)
             return
 
-        player.now_playing = NowPlayingMessage(channel_id=channel_id, message_id=int(message.id), menu_task=menu_task)
+        player.now_playing = NowPlayingMessage(channel_id=channel_id, message_id=int(message.id))
 
     async def clear_now_playing(self, player: MusicCatPlayer) -> None:
         """
@@ -123,8 +112,6 @@ class LavalinkEventHandler:
         now_playing, player.now_playing = player.now_playing, None
         if now_playing is None:
             return
-
-        now_playing.detach_menu()
 
         try:
             await self._bot.rest.delete_message(now_playing.channel_id, now_playing.message_id)
