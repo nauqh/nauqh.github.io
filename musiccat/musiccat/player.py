@@ -71,14 +71,13 @@ class MusicCatPlayer(lavalink.DefaultPlayer):
 
     async def stop(self) -> None:
         """
-        Stop playback and reset the player: queue, history, loop, shuffle and filters.
+        Stop playback and reset the player: queue, loop and shuffle.
 
         Local state is reset even when the node cannot be reached - this also runs when the bot
         has been disconnected from voice, which is exactly when the node may already be gone.
         """
         try:
             await super().stop()
-            await self.clear_filters()
         except (lavalink.LavalinkError, OSError, asyncio.TimeoutError) as e:
             LOGGER.warning("Failed to stop player on guild %s cleanly: %s", self.guild_id, e)
             self.current = None

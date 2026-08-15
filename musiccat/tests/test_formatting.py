@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import pytest
 
-from musiccat.extensions.playback import _parse_position
 from musiccat.formatting import PROGRESS_BAR_WIDTH
 from musiccat.formatting import format_time
 from musiccat.formatting import parse_time
@@ -53,21 +52,3 @@ def test_trim_only_shortens_what_is_too_long() -> None:
     assert trim("short", 10) == "short"
     assert trim("a very long title indeed", 10) == "a very ..."
     assert len(trim("a very long title indeed", 10)) == 10
-
-
-@pytest.mark.parametrize(
-    ("position", "expected"),
-    [
-        ("0:00", 0),
-        ("1:23", 83_000),
-        ("12:34", 754_000),
-        ("1:02:03", 3_723_000),
-    ],
-)
-def test_seek_positions_are_parsed(position: str, expected: int) -> None:
-    assert _parse_position(position) == expected
-
-
-@pytest.mark.parametrize("position", ["", "90", "1:60", "1:2:3:4", "abc", "-1:00", "1:99"])
-def test_bad_seek_positions_are_rejected(position: str) -> None:
-    assert _parse_position(position) is None

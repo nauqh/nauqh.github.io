@@ -41,9 +41,5 @@ class NoResults(MusicCatError):
     default_message = "No results for that query."
 
 
-class TrackNotSeekable(MusicCatError):
-    default_message = "The current track cannot be seeked."
-
-
 class NoNodesAvailable(MusicCatError):
     default_message = "No Lavalink node is available - try again in a moment."

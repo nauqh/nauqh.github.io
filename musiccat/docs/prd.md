@@ -18,7 +18,7 @@ This release rebuilds the bot on the current generation of its libraries, becaus
 the versions it was pinned to can no longer be upgraded, and fixes the defects
 that rebuild exposed.
 
-It also **narrows the surface to 11 commands and no buttons**. The now-playing
+It also **narrows the surface to 9 commands and no buttons**. The now-playing
 message is an announcement rather than a control panel (§4.1).
 
 ## 2. Problem
@@ -81,6 +81,8 @@ pre-existing user-facing bugs, not new work:
 The legacy bot's 18 commands became 10. Every cut is reachable another way — this
 is a narrower surface, not a smaller product.
 
+Moved rather than removed:
+
 | Cut | Still available as |
 |---|---|
 | `/resume` | `/pause`, which toggles |
@@ -88,15 +90,19 @@ is a narrower surface, not a smaller product.
 | `/loop` | the `loop` option on `/play` and `/search` |
 | `/shuffle` | the `shuffle` option on `/play` and `/search` |
 | `/now` | the now-playing message, posted for every track |
-| `/restart` | `/seek 0:00` |
 | `/join` | `/play`, which connects on its own |
 
-The player buttons went too. Loop and shuffle are consequently set at queueing
-time rather than adjusted mid-track, which is the one behavioural change here.
+Removed outright, with nothing replacing them:
 
-**Stepping backwards through history is gone** — it was the previous button, it
-had no command, and nothing replaces it. That is the only capability the trim
-cost, and it is recoverable as a `/previous` command if it is missed.
+| Cut | Consequence |
+|---|---|
+| the player buttons | loop and shuffle are set at queueing time, not adjusted mid-track |
+| **previous** | stepping backwards through history is gone; it needs the player's history back |
+| `/seek`, `/restart` | there is no way to move within a track |
+| `/effects` | no Nightcore or Bass Boost; the node's filters are all off |
+
+The bot is now: queue music, see the queue, skip, pause, leave. That is the
+deliberate scope.
 
 ## 5. Users
 
@@ -162,11 +168,8 @@ needs a live Discord and Lavalink node.
 | ID | Requirement | Pri | Verified |
 |---|---|---|---|
 | FR-14 | `/skip` plays the next track and names the one it replaced; `/pause` toggles | P0 | `test_player` |
-| FR-15 | `/seek` accepts `mm:ss` and `hh:mm:ss`, and rejects anything else with a usable message | P1 | `test_formatting` |
-| FR-16 | `/seek` refuses tracks that are not seekable | P1 | manual |
 | FR-17 | `/play loop:true` loops the track, or the queue for a playlist — and **track means track** | P0 | `test_service` |
 | FR-18 | `/play shuffle:true` shuffles a playlist as it is queued | P1 | `test_service` |
-| FR-19 | `/effects` applies Bass Boost or Nightcore, or clears effects; applying one replaces the other | P1 | manual |
 | FR-20 | `/leave` clears the queue, loop and shuffle, and takes down the now-playing message | P0 | `test_player` |
 
 ### The now-playing message
@@ -224,7 +227,7 @@ needs a live Discord and Lavalink node.
 
 | Metric | Target | How measured |
 |---|---|---|
-| Capability parity | Every legacy capability reachable via 11 commands, except stepping backwards | Offline render; §4.1 maps each cut |
+| Scope held | 9 commands, no buttons; every removal deliberate and recorded | §4.1 |
 | Known defects shipped | 0 of the 5 in §2 | Each has a test or a documented manual check |
 | Dependencies on a pre-release or unmaintained version | 0 | `pyproject.toml` |
 | Automated test coverage of pure logic | Every non-I/O module has tests | 92 tests at time of writing |
@@ -251,7 +254,6 @@ M5 is the gate. Everything before it is verified offline only.
 | **Nothing has run against live Discord or Lavalink.** Offline checks verify shape, not behaviour | High | M5 walks every P0 by hand in a test guild before cutover |
 | **YouTube playback breaks on YouTube's schedule, not ours.** youtube-source's latest commit is a client-version revert — the arms race is live | High | Not a stack decision: every backend fails the same week. Mitigated by consuming upstream fixes rather than maintaining them; `pot` and `oauth` are both documented in the node config |
 | Plugin versions rot, and a stale client name silently degrades playback | Medium | Versions verified 2026-08-14 and dated in the config; the config warns against copying a client list from an older file |
-| `/effects` needs `equalizer` and `timescale` filters, which are off in a stock Lavalink install | Medium | Both enabled in the example config, with a comment saying why |
 | The lightbulb menu-detach workaround depends on `Menu.attach()` internals staying as they are | Low | Uses only documented API; a test asserts the detach, so an upgrade that breaks it fails the suite |
 | Two `/play` commands within the same moment could skip a track, because `is_playing` is false until the node confirms the track started | Low | Pre-existing in the legacy bot; window is milliseconds; not worth a lock |
 | ~~Custom emoji belong to one Discord application~~ | ~~Low~~ | **Closed.** Eight of the eleven went with the buttons; the three the embed still draws with are Unicode |
@@ -279,8 +281,6 @@ M5 is the gate. Everything before it is verified offline only.
 | `/search` | `query`* · `type` · `source` · `next` · `loop` · `shuffle` | guild, voice |
 | `/pause` | — | guild, voice, playing |
 | `/skip` | — | guild, voice, playing |
-| `/seek` | `position` | guild, voice, playing |
-| `/effects` | `effect` | guild, voice, playing |
 | `/queue` | — | guild, playing |
 | `/remove` | `track`* | guild, voice, playing |
 | `/leave` | — | guild, voice, connected |

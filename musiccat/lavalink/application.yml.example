@@ -35,9 +35,10 @@ lavalink:
       http: true
       local: false
     filters:
-      # `/effects` needs these two.
-      equalizer: true
-      timescale: true
+      # The bot applies no filters, so all of these stay off. Turning equalizer and
+      # timescale on is what an /effects command would need.
+      equalizer: false
+      timescale: false
       volume: false
       karaoke: false
       tremolo: false

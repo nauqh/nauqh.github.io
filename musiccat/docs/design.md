@@ -90,7 +90,7 @@ musiccat/
 │   ├── responses.py      replying, and the self-deleting reply
 │   ├── errors.py         errors that carry a user-facing message
 │   ├── sources.py        the search sources and their prefixes
-│   ├── constants.py      effects and the three embed emojis
+│   ├── constants.py      the three embed emojis
 │   ├── log_config.py     dictConfig
 │   └── extensions/       general · play · playback · queue · admin
 ├── lavalink/             the node's application.yml
@@ -278,18 +278,24 @@ only weak references to tasks, so an unheld one can be collected mid-sleep.
 
 ## Command surface
 
-11 commands, in five extensions. Every one is a `lightbulb.SlashCommand`
+9 commands, in five extensions. Every one is a `lightbulb.SlashCommand`
 subclass registered on a `Loader`.
 
 The legacy bot had 18. `/now` went because the now-playing message *is* the
-now-playing display, `/restart` because it is `/seek 0:00`, `/join` because
+now-playing display, `/restart` with `/seek`, `/join` because
 `/play` connects on its own, and `/resume` because `/pause` toggles. `/loop` and
 `/shuffle` became options on `/play` and `/search`, set once at queueing time
 rather than adjusted mid-track. `/stop` went because `/leave` covers it —
 disconnecting clears the player.
 
-Stepping backwards through history went with the buttons and has no command. It
-is the one capability the trim actually cost.
+`/seek` and `/effects` went last, and unlike the rest they were not redundant —
+they are simply out of scope for what this bot is now. Their removal takes the
+equalizer and timescale filters out of the node config with them.
+
+Two capabilities were genuinely lost rather than moved: **stepping backwards
+through history**, which went with the buttons, and **seeking within a track**.
+Both are recoverable, and neither is a one-liner — the first needs the player's
+history back, the second a position parser.
 
 ```
 general    /leave                                 hooks: guild, voice, connected
@@ -300,8 +306,6 @@ play       /play    query next loop shuffle       hooks: guild, voice
 
 playback   /pause   toggles                       hooks: guild, voice, playing
            /skip
-           /seek    position    "mm:ss" or "hh:mm:ss"
-           /effects effect      Bass Boost | Nightcore | None
 
 queue      /queue                                 hooks: guild, playing
            /remove  track       autocompletes from the live queue
@@ -343,9 +347,8 @@ the difference between seeing an edited command immediately and waiting out
 Discord's global propagation.
 
 The node's own configuration is [`lavalink/application.yml.example`](../lavalink/application.yml.example)
-— plugins, sources and the two filters `/effects` needs (`equalizer`,
-`timescale`). Both are off by default in a stock Lavalink install and `/effects`
-fails silently without them.
+— plugins and sources. Every audio filter is off: the bot applies none since
+`/effects` was removed.
 
 ## Testing
 
@@ -383,7 +386,7 @@ which catches the whole class of registration errors without a token.
 
 ## What the rewrite costs
 
-The package is **1,986 lines against the legacy `bot/`'s 1,578**, plus 996 lines
+The package is **1,866 lines against the legacy `bot/`'s 1,578**, plus 977 lines
 of tests where there were none. Stated plainly because the direction is the
 wrong one for a simplification: the growth is docstrings, type annotations,
 `config.py` (146 lines that were previously eight hardcoded ones), and typed
