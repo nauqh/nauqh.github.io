@@ -11,15 +11,16 @@
 ## 1. Summary
 
 MusicCat is a Discord music bot: members queue music from YouTube, Spotify and
-Deezer with slash commands, and control playback from an interactive message the
-bot keeps up to date.
+Deezer with slash commands, and the bot posts a message saying what is playing.
 
 This release rebuilds the bot on the current generation of its libraries, because
 the versions it was pinned to can no longer be upgraded, and fixes the defects
 that rebuild exposed.
 
-It also **narrows the surface to 8 commands and no buttons**. The now-playing
-message is an announcement rather than a control panel (§4.1).
+It also **narrows the surface from 18 commands to 8, and removes the player
+buttons entirely** (§4.1). That second half was not in the original scope — the
+release began as a straight port and the narrowing was decided during it. Four
+capabilities were dropped rather than relocated, and §4.1 names each one.
 
 ## 2. Problem
 
@@ -56,12 +57,16 @@ pre-existing user-facing bugs, not new work:
 
 - **G1 — Run on current libraries.** hikari 2.5, lightbulb 3.2, lavalink.py 5.11,
   on Python 3.10–3.14.
-- **G2 — Preserve the product exactly.** Every command keeps its name, arguments
-  and behaviour. No user has to learn anything.
+- **G2 — Keep what survives faithful.** A command that still exists behaves as it
+  did, under the same name and arguments. This started as *preserve the product
+  exactly*, and G6 replaced half of it.
 - **G3 — Fix what the port exposed.** Ship none of the five defects above.
 - **G4 — Make it deployable by someone who is not the author.** Configuration
   from the environment; one `docker compose up`.
 - **G5 — Leave a safety net.** An automated test suite, where there was none.
+- **G6 — Narrow the surface.** Added mid-release. Keep only what earns its place:
+  queue music, see the queue, skip, leave. Every removal deliberate and recorded,
+  including the ones that cost a capability.
 
 ## 4. Non-goals
 
