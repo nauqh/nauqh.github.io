@@ -1,4 +1,4 @@
-"""Inspecting and editing the queue."""
+"""The queue: seeing it, skipping through it, editing it."""
 
 from __future__ import annotations
 
@@ -21,6 +21,28 @@ loader = lightbulb.Loader()
 
 QUEUE_PREVIEW_LENGTH = 10
 MAX_CHOICES = 25
+
+
+@loader.command
+class Skip(
+    lightbulb.SlashCommand,
+    name="skip",
+    description="Skip the current track",
+    hooks=[hooks.guild_only, hooks.valid_user_voice, hooks.player_playing],
+):
+    @lightbulb.invoke
+    async def invoke(self, ctx: lightbulb.Context, lavalink_client: lavalink.Client = lightbulb.di.INJECTED) -> None:
+        assert ctx.guild_id is not None
+
+        player = service.get_player(lavalink_client, ctx.guild_id)
+        if player is None:
+            raise errors.PlayerNotPlaying
+
+        skipped = await player.skip()
+        description = (
+            f"⏭️ Skipped: [{skipped.title}]({skipped.uri})" if skipped is not None else "⏭️ Skipped the current track"
+        )
+        await responses.respond(ctx, embed=hikari.Embed(description=description))
 
 
 @loader.command

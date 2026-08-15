@@ -18,7 +18,7 @@ This release rebuilds the bot on the current generation of its libraries, becaus
 the versions it was pinned to can no longer be upgraded, and fixes the defects
 that rebuild exposed.
 
-It also **narrows the surface to 9 commands and no buttons**. The now-playing
+It also **narrows the surface to 8 commands and no buttons**. The now-playing
 message is an announcement rather than a control panel (§4.1).
 
 ## 2. Problem
@@ -78,14 +78,13 @@ pre-existing user-facing bugs, not new work:
 
 ### 4.1 What was cut, and where it went
 
-The legacy bot's 18 commands became 10. Every cut is reachable another way — this
-is a narrower surface, not a smaller product.
+The legacy bot's 18 commands became 8. Some cuts moved elsewhere; some removed a
+capability outright. The difference matters, so both are listed.
 
 Moved rather than removed:
 
 | Cut | Still available as |
 |---|---|
-| `/resume` | `/pause`, which toggles |
 | `/stop` | `/leave`, which disconnects and clears |
 | `/loop` | the `loop` option on `/play` and `/search` |
 | `/shuffle` | the `shuffle` option on `/play` and `/search` |
@@ -100,9 +99,15 @@ Removed outright, with nothing replacing them:
 | **previous** | stepping backwards through history is gone; it needs the player's history back |
 | `/seek`, `/restart` | there is no way to move within a track |
 | `/effects` | no Nightcore or Bass Boost; the node's filters are all off |
+| `/pause`, `/resume` | **there is no way to pause on demand** |
 
-The bot is now: queue music, see the queue, skip, pause, leave. That is the
-deliberate scope.
+Pausing has one path left, and it is automatic: when a single listener deafens
+themselves the voice-state handler pauses playback, and undeafening resumes it
+(FR-35). That behaviour is untouched, so pausing is now something a listener does
+to themselves rather than to the bot.
+
+The bot is: queue music, see the queue, skip, leave. That is the deliberate
+scope.
 
 ## 5. Users
 
@@ -124,12 +129,12 @@ change.
 | US-1 | listener | queue a track by URL or by searching | I can play music without leaving Discord |
 | US-2 | listener | see suggestions as I type a search | I get the track I meant, not the first match |
 | US-3 | listener | search a specific source and result type | I can find a Spotify *album* rather than a track that shares its name |
-| US-4 | listener | pause and skip without hunting for a control | the bot stays out of the way |
+| US-4 | listener | skip a track I don't want | one bad choice doesn't hold up the queue |
 | US-5 | listener | see what's playing and what's next | I know whether to queue something |
 | US-6 | listener | remove a track from the queue | one bad choice doesn't have to play |
 | US-7 | listener | loop a track or the queue, and shuffle | the music continues without babysitting |
 | US-8 | listener | queue a playlist and have it shuffled | I get variety without queueing tracks one by one |
-| US-9 | listener | have playback pause when I deafen myself | I don't miss anything when I step away |
+| US-9 | listener | have playback pause when I deafen myself | I don't miss anything when I step away — this is the only pause |
 | US-10 | operator | configure the bot without editing code | I can deploy it against my own node |
 | US-11 | operator | see node health | I can tell "the bot is broken" from "the node is down" |
 | US-12 | operator | have bad config fail at startup | I find out at deploy, not from a user |
@@ -167,7 +172,7 @@ needs a live Discord and Lavalink node.
 
 | ID | Requirement | Pri | Verified |
 |---|---|---|---|
-| FR-14 | `/skip` plays the next track and names the one it replaced; `/pause` toggles | P0 | `test_player` |
+| FR-14 | `/skip` plays the next track and names the one it replaced | P0 | `test_player` |
 | FR-17 | `/play loop:true` loops the track, or the queue for a playlist — and **track means track** | P0 | `test_service` |
 | FR-18 | `/play shuffle:true` shuffles a playlist as it is queued | P1 | `test_service` |
 | FR-20 | `/leave` clears the queue, loop and shuffle, and takes down the now-playing message | P0 | `test_player` |
@@ -227,7 +232,7 @@ needs a live Discord and Lavalink node.
 
 | Metric | Target | How measured |
 |---|---|---|
-| Scope held | 9 commands, no buttons; every removal deliberate and recorded | §4.1 |
+| Scope held | 8 commands, no buttons; every removal deliberate and recorded | §4.1 |
 | Known defects shipped | 0 of the 5 in §2 | Each has a test or a documented manual check |
 | Dependencies on a pre-release or unmaintained version | 0 | `pyproject.toml` |
 | Automated test coverage of pure logic | Every non-I/O module has tests | 92 tests at time of writing |
@@ -279,7 +284,6 @@ M5 is the gate. Everything before it is verified offline only.
 |---|---|---|
 | `/play` | `query` · `next` · `loop` · `shuffle` | guild, voice |
 | `/search` | `query`* · `type` · `source` · `next` · `loop` · `shuffle` | guild, voice |
-| `/pause` | — | guild, voice, playing |
 | `/skip` | — | guild, voice, playing |
 | `/queue` | — | guild, playing |
 | `/remove` | `track`* | guild, voice, playing |

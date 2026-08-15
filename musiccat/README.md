@@ -15,21 +15,21 @@ on the current generation of those libraries: hikari 2.5, lightbulb 3.2 and Lava
 * `/search` looks queries up per source and per type (track, artist, album, playlist) through the
   [LavaSearch](https://github.com/topi314/LavaSearch) plugin.
 * When one person is listening, Discord's deafen 🎧 pauses playback and undeafening resumes it.
-  The bot leaves once it is alone in the channel.
+  This is the only way to pause - there is no `/pause`. The bot leaves once it is alone in the
+  channel.
 * Sources are whatever the node's plugins provide - see `lavalink/application.yml.example` for the
   YouTube, Spotify and Deezer setup this was written against.
 
 ### Commands
 
-Nine.
+Eight.
 
-| Group   | Commands            | |
-| ------- | ------------------- | --- |
-| Music   | `/play` `/search`   | add a track, playlist or URL to the queue |
-| Queue   | `/queue` `/remove`  | see what's next, drop something from it |
-| Control | `/pause` `/skip`    | `/pause` toggles |
-| Voice   | `/leave`            | disconnect and clear |
-| Owner   | `/stats` `/info`    | node health |
+| Group | Commands                     | |
+| ----- | ---------------------------- | --- |
+| Music | `/play` `/search`            | add a track, playlist or URL to the queue |
+| Queue | `/queue` `/skip` `/remove`   | see what's next, move past it, drop something |
+| Voice | `/leave`                     | disconnect and clear |
+| Owner | `/stats` `/info`             | node health |
 
 `/play` connects to your voice channel on its own, so there is no `/join`. Loop and shuffle
 are options on `/play` and `/search` rather than commands of their own.

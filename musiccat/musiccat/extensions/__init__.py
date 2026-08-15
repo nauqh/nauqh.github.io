@@ -7,7 +7,6 @@ from typing import Final
 EXTENSIONS: Final = (
     "musiccat.extensions.general",
     "musiccat.extensions.play",
-    "musiccat.extensions.playback",
     "musiccat.extensions.queue",
     "musiccat.extensions.admin",
 )

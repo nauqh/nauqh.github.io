@@ -18,9 +18,9 @@ explicit.
 
 Small, but the words are load-bearing and two of them were used loosely before.
 
-**Player** — the guild's `MusicCatPlayer`: its queue, history, loop and shuffle
-state, and a handle on its now-playing message. One per guild, created on the
-first join, destroyed by Lavalink. _Avoid_: session, connection.
+**Player** — the guild's `MusicCatPlayer`: its queue, loop and shuffle state,
+and a handle on its now-playing message. One per guild, created on the first
+join, destroyed by Lavalink. _Avoid_: session, connection.
 
 **Queue** — the tracks waiting. The currently playing track is **not** in it;
 `player.current` is separate, and Lavalink only sets it when the node confirms
@@ -54,11 +54,11 @@ which changes only how it is described, never how it is queued.
    ┌───────────────▼──────────────────────────────┐
    │  hikari  GatewayBot                          │
    │     └── lightbulb  Client                    │
-   │            commands · hooks · menus · DI     │
+   │            commands · hooks · DI             │
    ├──────────────────────────────────────────────┤
    │  musiccat                                    │
    │     hooks ──► service ──► player             │
-   │     ui    ◄── events                         │
+   │                           events ──► embeds  │
    └───────────────┬──────────────────────────────┘
                    │ lavalink.py 5.11
    ┌───────────────▼──────────────────────────────┐
@@ -81,7 +81,7 @@ musiccat/
 │   ├── bot.py            entrypoint: hikari bot, lightbulb client, Lavalink client
 │   ├── config.py         the environment → a frozen Config
 │   ├── service.py        join · resolve · enqueue — the one seam
-│   ├── player.py         MusicCatPlayer, history, the now-playing handle
+│   ├── player.py         MusicCatPlayer and the now-playing handle
 │   ├── events.py         Lavalink events → the now-playing message
 │   ├── hooks.py          the command checks
 │   ├── search.py         the LavaSearch plugin client
@@ -92,7 +92,7 @@ musiccat/
 │   ├── sources.py        the search sources and their prefixes
 │   ├── constants.py      the three embed emojis
 │   ├── log_config.py     dictConfig
-│   └── extensions/       general · play · playback · queue · admin
+│   └── extensions/       general · play · queue · admin
 ├── lavalink/             the node's application.yml
 ├── tests/
 └── docs/
@@ -144,39 +144,31 @@ command then read `player.channel_id` off it (`extensions/bot.py:31`). The
 command had been broken for as long as the file existed. `join` now returns
 both the player and the channel it joined.
 
-### `MusicCatPlayer` — three additions, and one correction
+### `MusicCatPlayer` — one addition, and one correction
 
-Subclasses `lavalink.DefaultPlayer`. It adds a bounded `history`, a `play(index=)`
-that bypasses shuffle, and a `stop()` that resets rather than merely stops.
-
-**History is recorded on `TrackStartEvent`, not on play.** The legacy player
-overrode `play()` wholesale — sixty lines duplicated out of the library — partly
-to append to `recently_played` at the point of dispatch. Copying a library method
-means re-copying it on every upgrade, and the copy had already drifted: it still
-awaited `client._dispatch_event`, which became synchronous in lavalink.py 5.x.
-Recording on the event instead is both smaller and truer, because the event is
-the only moment a track is actually playing.
+Subclasses `lavalink.DefaultPlayer`. What survives the trims is small: a handle
+on the guild's now-playing message, and a `stop()` that resets rather than merely
+stopping.
 
 **Loop constants are the library's.** The legacy player redefined them
 (`library/player.py:10-12`) as `LOOP_QUEUE = 1`, `LOOP_SINGLE = 2` — inverted
 against `lavalink.DefaultPlayer`, where `LOOP_SINGLE = 1` and `LOOP_QUEUE = 2`.
 Both sets were live in the same process: `/loop track` called `set_loop(1)`
-(`extensions/player.py:148`) and the overridden `play()` then read that 1 as its
-own `LOOP_QUEUE` and appended the current track to the end of the queue. **`/loop
+(`extensions/player.py:148`) and its overridden `play()` read that 1 as its own
+`LOOP_QUEUE`, appending the current track to the end of the queue. **`/loop
 track` looped the queue.** It went unnoticed because a single-track queue makes
 the two indistinguishable. The rewrite defines no constants of its own, and loop
-is now the `loop` option on `/play` and `/search` rather than a command.
+is the `loop` option on `/play` and `/search` rather than a command.
 
-**`play_previous` suspends the loop mode.** Stepping back pushes the previous and
-current tracks onto the front of the queue and plays index 0. `DefaultPlayer.play`
-re-queues `current` whenever a track is passed explicitly, which under any loop
-mode would duplicate the track that was just pushed. The loop is set to
-`LOOP_NONE` for the duration and restored in a `finally`.
+The legacy player also **overrode `play()` wholesale** — sixty lines duplicated
+out of the library, which had already drifted: the copy still awaited
+`client._dispatch_event`, synchronous since lavalink.py 5.x. Nothing overrides
+`play()` here.
 
 **`stop()` resets state even when the node is unreachable.** It is called from
 the voice-state handler when the bot has just been disconnected — which is
-exactly the moment the node may already be gone. The node calls are wrapped; the
-local reset is not conditional on them.
+exactly the moment the node may already be gone. The node call is wrapped; the
+local reset is not conditional on it.
 
 `stop()` ends by dispatching `QueueEndEvent`, which is how the now-playing
 message comes down. `DefaultPlayer.play` dispatches the same event when it runs
@@ -278,24 +270,26 @@ only weak references to tasks, so an unheld one can be collected mid-sleep.
 
 ## Command surface
 
-9 commands, in five extensions. Every one is a `lightbulb.SlashCommand`
+8 commands, in four extensions. Every one is a `lightbulb.SlashCommand`
 subclass registered on a `Loader`.
 
 The legacy bot had 18. `/now` went because the now-playing message *is* the
-now-playing display, `/restart` with `/seek`, `/join` because
-`/play` connects on its own, and `/resume` because `/pause` toggles. `/loop` and
-`/shuffle` became options on `/play` and `/search`, set once at queueing time
-rather than adjusted mid-track. `/stop` went because `/leave` covers it —
-disconnecting clears the player.
+now-playing display, `/restart` with `/seek`, and `/join` because `/play`
+connects on its own. `/loop` and `/shuffle` became options on `/play` and
+`/search`, set once at queueing time rather than adjusted mid-track. `/stop` went
+because `/leave` covers it — disconnecting clears the player.
 
-`/seek` and `/effects` went last, and unlike the rest they were not redundant —
-they are simply out of scope for what this bot is now. Their removal takes the
-equalizer and timescale filters out of the node config with them.
+`/seek`, `/effects` and `/pause` went last, and unlike the rest they were not
+redundant — they are out of scope for what this bot is now. `/seek` and
+`/effects` took the equalizer and timescale filters out of the node config with
+them.
 
-Two capabilities were genuinely lost rather than moved: **stepping backwards
-through history**, which went with the buttons, and **seeking within a track**.
-Both are recoverable, and neither is a one-liner — the first needs the player's
-history back, the second a position parser.
+Three capabilities are gone rather than moved: **stepping backwards through
+history** (went with the buttons), **seeking within a track**, and **pausing on
+demand**. The last is the surprising one — the only pause left in the bot is
+automatic, in the voice-state handler: when a single listener deafens themselves,
+playback pauses, and undeafening resumes it. That path is untouched, so pausing
+is a thing you do to yourself rather than to the bot.
 
 ```
 general    /leave                                 hooks: guild, voice, connected
@@ -304,10 +298,8 @@ play       /play    query next loop shuffle       hooks: guild, voice
            /search  query type source + the above hooks: guild, voice
                     query autocompletes; type and source drive LavaSearch
 
-playback   /pause   toggles                       hooks: guild, voice, playing
-           /skip
-
 queue      /queue                                 hooks: guild, playing
+           /skip                                  hooks: guild, voice, playing
            /remove  track       autocompletes from the live queue
 
 admin      /stats /info                           hooks: owner only
@@ -386,7 +378,7 @@ which catches the whole class of registration errors without a token.
 
 ## What the rewrite costs
 
-The package is **1,866 lines against the legacy `bot/`'s 1,578**, plus 977 lines
+The package is **1,821 lines against the legacy `bot/`'s 1,578**, plus 977 lines
 of tests where there were none. Stated plainly because the direction is the
 wrong one for a simplification: the growth is docstrings, type annotations,
 `config.py` (146 lines that were previously eight hardcoded ones), and typed
