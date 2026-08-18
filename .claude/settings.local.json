@@ -26,7 +26,19 @@
       "WebFetch(domain:linkinghub.elsevier.com)",
       "Bash(awk '/project-drawer/,/^@media|^\\\\./ {print NR\": \"$0}' \"D:\\\\Laboratory\\\\Projects\\\\Portfolio\\\\nauqh.github.io\\\\assets\\\\css\\\\styles.css\")",
       "Bash(awk *)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(npx --version)",
+      "Bash(npm init *)",
+      "Bash(npm i *)",
+      "Bash(npx --yes http-server -p 4599 -c-1 --silent)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:4599/index.html)",
+      "Bash(node shot.mjs .)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://127.0.0.1:4599/index.html)",
+      "Read(//c/Users/user/AppData/Local/ms-playwright/chromium-1223/**)",
+      "Bash(powershell -Command 'Get-NetTCPConnection -LocalPort 4599 -State Listen -EA SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }')",
+      "Bash(node timing.mjs)",
+      "Bash(node footer.mjs)",
+      "Bash(node tail.mjs)"
     ]
   }
 }

@@ -71,11 +71,44 @@ const _colorSections = Array.from(
 	document.querySelectorAll("section[data-header-color]"),
 ).filter((s) => getComputedStyle(s).position !== "fixed");
 
+function contrastColor(hex) {
+	if (!hex) return "#000000";
+	const full = (hex.replace("#", "").padEnd(6, "0"));
+	const r = parseInt(full.slice(0, 2), 16);
+	const g = parseInt(full.slice(2, 4), 16);
+	const b = parseInt(full.slice(4, 6), 16);
+	// Perceived luminance; light backgrounds get dark text and vice versa.
+	return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? "#000000" : "#ffffff";
+}
+
+// Natural document top (offset-based) rather than getBoundingClientRect().
+// The sticky footer is pinned to fill the viewport (rect.top stays 0 all the
+// time), so the rect would always read it as the active section. Summing
+// offsetTops ignores that pinning and measures where the section really sits
+// in the document, letting the footer count only once you've scrolled to it.
+function headerTop(el) {
+	let top = 0;
+	for (let e = el; e; e = e.offsetParent) top += e.offsetTop;
+	return top;
+}
+
 function syncHeaderColor() {
 	const headerBottom = _header.offsetHeight;
+	const scrollY = window.scrollY;
 	let activeSection = _colorSections[0] ?? null;
 	for (const section of _colorSections) {
-		if (section.getBoundingClientRect().top <= headerBottom) {
+		// The sticky footer is pinned to the bottom of the viewport, so both
+		// offsetTop and getBoundingClientRect().top read 0 for it at every scroll
+		// position (it would always "win"). Measure its natural document top
+		// instead: it's the last element, so that's scrollHeight - its height.
+		const position = getComputedStyle(section).position;
+		const top =
+			position === "sticky"
+				? document.documentElement.scrollHeight -
+						section.offsetHeight -
+						scrollY
+				: headerTop(section) - scrollY;
+		if (top <= headerBottom) {
 			activeSection = section;
 		}
 	}
@@ -85,6 +118,10 @@ function syncHeaderColor() {
 			"--section-color",
 			activeSection.dataset.headerAccent ??
 				activeSection.dataset.headerColor,
+		);
+		_header.style.setProperty(
+			"--header-fg",
+			contrastColor(activeSection.dataset.headerColor),
 		);
 	}
 }
@@ -219,11 +256,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 });
 
-/*=============== TERMINAL TECH STACK ===============*/
+/*=============== TECH STACK PANELS ===============*/
 document.addEventListener("DOMContentLoaded", function () {
 	const DISCIPLINES = {
 		languages: {
-			cmd: "ls ~/languages",
+			label: "languages",
+			headline: "The languages I think in.",
 			categories: [
 				{
 					label: null,
@@ -241,7 +279,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			],
 		},
 		software: {
-			cmd: "ls ~/software",
+			label: "software",
+			headline: "Full stack, front end to deploy.",
 			categories: [
 				{
 					label: "Frontend",
@@ -249,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						{ name: "React", icon: "assets/img/icons/react.svg" },
 						{
 							name: "Next.js",
-							icon: "assets/img/icons/nextjs.png",
+							icon: "https://www.svgrepo.com/show/354113/nextjs-icon.svg",
 						},
 						{
 							name: "Tailwind",
@@ -294,13 +333,17 @@ document.addEventListener("DOMContentLoaded", function () {
 							name: "Kubernetes",
 							icon: "assets/img/icons/kubernetes.png",
 						},
-						{ name: "AWS", icon: "assets/img/icons/aws.webp" },
+						{
+							name: "AWS",
+							icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1280px-Amazon_Web_Services_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail",
+						},
 					],
 				},
 			],
 		},
 		data: {
-			cmd: "ls ~/data",
+			label: "data",
+			headline: "Pipelines that move real data.",
 			categories: [
 				{
 					label: "Engineering",
@@ -331,7 +374,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			],
 		},
 		ai: {
-			cmd: "ls ~/ai",
+			label: "ai",
+			headline: "LLMs wired into real products.",
 			categories: [
 				{
 					label: null,
@@ -347,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						},
 						{
 							name: "Langchain",
-							icon: "assets/img/icons/langchain.png",
+							icon: "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/logos/langchain-ipuhh4qo1jz5ssl4x0g2a.png/langchain-dp1uxj2zn3752pntqnpfu2.png?_a=DATAiZAAZAA0",
 						},
 						{
 							name: "PyTorch",
@@ -359,69 +403,63 @@ document.addEventListener("DOMContentLoaded", function () {
 		},
 	};
 
-	const tabs = document.querySelectorAll(".terminal__tab");
-	const cmdEl = document.getElementById("termCmd");
-	const cursorEl = document.getElementById("termCursor");
-	const contentEl = document.getElementById("termContent");
+	const root = document.getElementById("stack");
+	if (!root) return;
 
-	if (!tabs.length || !cmdEl) return;
-
-	let typingTimer = null;
-
-	function renderContent(discipline) {
-		const data = DISCIPLINES[discipline];
-		contentEl.innerHTML = data.categories
+	function renderItems(data) {
+		return data.categories
 			.map((cat) => {
 				const label = cat.label
-					? `<div class="term-category__label">${cat.label}/</div>`
+					? `<div class="stack__category-label">${cat.label}</div>`
 					: "";
 				const items = cat.items
 					.map(
 						(item) =>
-							`<span class="term-item"><img src="${item.icon}" alt="${item.name}">${item.name}</span>`,
+							`<span class="stack__item"><img src="${item.icon}" alt="" loading="lazy">${item.name}</span>`,
 					)
 					.join("");
-				return `<div class="term-category">${label}<div class="term-category__grid">${items}</div></div>`;
+				return `<div class="stack__category">${label}<div class="stack__item-grid">${items}</div></div>`;
 			})
 			.join("");
 	}
 
-	function typeCommand(text, onDone) {
-		clearTimeout(typingTimer);
-		cmdEl.textContent = "";
-		contentEl.classList.remove("visible");
-		cursorEl.classList.add("typing");
+	root.innerHTML = Object.keys(DISCIPLINES)
+		.map((key, i) => {
+			const data = DISCIPLINES[key];
+			const index = String(i + 1).padStart(2, "0");
+			return `
+			<button class="stack__panel" type="button" data-discipline="${key}" aria-expanded="false">
+				<span class="stack__head">
+					<span class="stack__label">${data.label}</span>
+					<span class="stack__index">${index}</span>
+				</span>
+				<span class="stack__body">${renderItems(data)}</span>
+				<span class="stack__headline">${data.headline}</span>
+			</button>`;
+		})
+		.join("");
 
-		let i = 0;
-		function tick() {
-			if (i < text.length) {
-				cmdEl.textContent += text[i++];
-				typingTimer = setTimeout(tick, 38);
-			} else {
-				cursorEl.classList.remove("typing");
-				onDone();
-			}
-		}
-		tick();
-	}
+	const panels = Array.from(root.querySelectorAll(".stack__panel"));
 
-	function activate(discipline) {
-		const data = DISCIPLINES[discipline];
-		typeCommand(data.cmd, () => {
-			renderContent(discipline);
-			requestAnimationFrame(() => contentEl.classList.add("visible"));
+	function activate(panel) {
+		panels.forEach((p) => {
+			const on = p === panel;
+			p.classList.toggle("active", on);
+			p.setAttribute("aria-expanded", String(on));
 		});
 	}
 
-	tabs.forEach((tab) => {
-		tab.addEventListener("click", () => {
-			tabs.forEach((t) => t.classList.remove("active"));
-			tab.classList.add("active");
-			activate(tab.dataset.discipline);
-		});
+	panels.forEach((panel) => {
+		// Hover only: the panel expands under the cursor and every panel snaps
+		// back to equal width once the pointer leaves the row.
+		panel.addEventListener("mouseenter", () => activate(panel));
+		panel.addEventListener("focus", () => activate(panel));
 	});
 
-	activate("languages");
+	root.addEventListener("mouseleave", () => activate(null));
+	root.addEventListener("focusout", (e) => {
+		if (!root.contains(e.relatedTarget)) activate(null);
+	});
 });
 
 /*=============== TOUCH FLIP DISABLED: hover-only ===============*/
@@ -470,7 +508,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		...document.querySelectorAll(".section__title"),
 		...document.querySelectorAll(".about__content p"),
 		...document.querySelectorAll(".about__content a"),
-		document.querySelector(".terminal"),
+		document.querySelector(".stack"),
 		...document.querySelectorAll(".timeline-container"),
 		document.querySelector(".experience-container"),
 		...document.querySelectorAll(".projects-col"),
@@ -605,8 +643,27 @@ document.addEventListener("DOMContentLoaded", function () {
 	// The portfolio repo + auto-generated profile repo are excluded. Everything
 	// rendered here comes from PUBLIC GitHub data only — no private work leaks in.
 	const EXCLUDED = new Set(["nauqh", "nauqh.github.io"]);
-	const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-	const LEVEL_COLORS = ["#EDE9FE", "#C4B5FD", "#A78BFA", "#8B5CF6", "#6D28D9"];
+	const MONTHS = [
+		"Jan",
+		"Feb",
+		"Mar",
+		"Apr",
+		"May",
+		"Jun",
+		"Jul",
+		"Aug",
+		"Sep",
+		"Oct",
+		"Nov",
+		"Dec",
+	];
+	const LEVEL_COLORS = [
+		"#EDE9FE",
+		"#C4B5FD",
+		"#A78BFA",
+		"#8B5CF6",
+		"#6D28D9",
+	];
 	const LANG_COLORS = {
 		Python: "#3572A5",
 		TypeScript: "#3178c6",
@@ -631,14 +688,33 @@ document.addEventListener("DOMContentLoaded", function () {
 	statsEl.innerHTML = '<p class="github__loading">Pulling GitHub data…</p>';
 
 	function escapeHtml(str) {
-		return String(str).replace(/[&<>"']/g, (c) => ({
-			"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-		})[c]);
+		return String(str).replace(
+			/[&<>"']/g,
+			(c) =>
+				({
+					"&": "&amp;",
+					"<": "&lt;",
+					">": "&gt;",
+					'"': "&quot;",
+					"'": "&#39;",
+				})[c],
+		);
 	}
-	function langColor(lang) { return LANG_COLORS[lang] || "#8B5CF6"; }
-	function parseDate(s) { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
-	function dayCol(d) { return (d.getDay() + 6) % 7; } // Mon = 0 … Sun = 6
-	function addDays(d, n) { const c = new Date(d); c.setDate(c.getDate() + n); return c; }
+	function langColor(lang) {
+		return LANG_COLORS[lang] || "#8B5CF6";
+	}
+	function parseDate(s) {
+		const [y, m, d] = s.split("-").map(Number);
+		return new Date(y, m - 1, d);
+	}
+	function dayCol(d) {
+		return (d.getDay() + 6) % 7;
+	} // Mon = 0 … Sun = 6
+	function addDays(d, n) {
+		const c = new Date(d);
+		c.setDate(c.getDate() + n);
+		return c;
+	}
 	function formatDate(iso) {
 		if (!iso) return "";
 		const diff = Date.now() - new Date(iso).getTime();
@@ -669,7 +745,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		let prev = -1;
 		weeks.forEach((_, wi) => {
 			const m = addDays(firstMonday, wi * 7).getMonth();
-			if (m !== prev) { months.push({ wi, m }); prev = m; }
+			if (m !== prev) {
+				months.push({ wi, m });
+				prev = m;
+			}
 		});
 		months.forEach((mo, i) => {
 			const end = i + 1 < months.length ? months[i + 1].wi : weekCount;
@@ -680,7 +759,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		months.forEach((mo) => {
 			html += `<span class="gh-heat__month" style="grid-column:${2 + mo.wi} / span ${mo.span};grid-row:1">${MONTHS[mo.m]}</span>`;
 		});
-		[["Mon", 2], ["Wed", 4], ["Fri", 6]].forEach(([label, row]) => {
+		[
+			["Mon", 2],
+			["Wed", 4],
+			["Fri", 6],
+		].forEach(([label, row]) => {
 			html += `<span class="gh-heat__day" style="grid-column:1;grid-row:${row}">${label}</span>`;
 		});
 		weeks.forEach((wk, wi) => {
@@ -694,14 +777,22 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	function computeStats(contributions) {
-		let total = 0, active = 0, longest = 0, run = 0;
+		let total = 0,
+			active = 0,
+			longest = 0,
+			run = 0;
 		for (const c of contributions) {
-			if (c.count > 0) { active++; total += c.count; run++; if (run > longest) longest = run; }
-			else run = 0;
+			if (c.count > 0) {
+				active++;
+				total += c.count;
+				run++;
+				if (run > longest) longest = run;
+			} else run = 0;
 		}
 		let current = 0;
 		for (let i = contributions.length - 1; i >= 0; i--) {
-			if (contributions[i].count > 0) current++; else break;
+			if (contributions[i].count > 0) current++;
+			else break;
 		}
 		return { total, active, longest, current };
 	}
@@ -741,7 +832,9 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	function renderRepos(repos) {
-		reposEl.innerHTML = repos.map((r) => `
+		reposEl.innerHTML = repos
+			.map(
+				(r) => `
 			<a class="github__repo" href="${r.html_url}" target="_blank" rel="noopener">
 				<div class="github__repo-head">
 					<span class="github__repo-name">${escapeHtml(r.name)}</span>
@@ -754,23 +847,37 @@ document.addEventListener("DOMContentLoaded", function () {
 					<span><i class="bx bx-git-repo-forked"></i> ${r.forks_count || 0}</span>
 					<span><i class="bx bx-time-five"></i> ${formatDate(r.pushed_at)}</span>
 				</div>
-			</a>`).join("");
+			</a>`,
+			)
+			.join("");
 	}
 
 	async function load() {
 		try {
 			const [contribRes, reposRes] = await Promise.all([
-				fetch(`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`),
-				fetch(`https://api.github.com/users/${USERNAME}/repos?sort=pushed&per_page=100&type=public`),
+				fetch(
+					`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`,
+				),
+				fetch(
+					`https://api.github.com/users/${USERNAME}/repos?sort=pushed&per_page=100&type=public`,
+				),
 			]);
-			if (!contribRes.ok || !reposRes.ok) throw new Error("GitHub API error");
+			if (!contribRes.ok || !reposRes.ok)
+				throw new Error("GitHub API error");
 			const contrib = await contribRes.json();
-			const repos = (await reposRes.json()).filter((r) => r && !EXCLUDED.has(r.name));
-			if (!contrib.contributions || !contrib.contributions.length) throw new Error("no contributions");
+			const repos = (await reposRes.json()).filter(
+				(r) => r && !EXCLUDED.has(r.name),
+			);
+			if (!contrib.contributions || !contrib.contributions.length)
+				throw new Error("no contributions");
 
 			renderStats(contrib.contributions);
 			renderRepos(
-				[...repos].sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)).slice(0, 4),
+				[...repos]
+					.sort(
+						(a, b) => new Date(b.pushed_at) - new Date(a.pushed_at),
+					)
+					.slice(0, 4),
 			);
 		} catch (err) {
 			statsEl.innerHTML = `<p class="github__error">Couldn't load GitHub data right now — <a href="${GITHUB_URL}" target="_blank" rel="noopener">view my profile</a>.</p>`;

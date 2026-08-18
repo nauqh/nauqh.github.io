@@ -272,30 +272,9 @@
         <section class="skills section" id="skills" data-header-color="#EDF4FF" data-header-accent="#3B82F6">
             <h2 class="section__title">what I <em>use</em></h2>
 
-            <div class="terminal container">
-                <div class="terminal__titlebar">
-                    <span class="terminal__path">~/tech-stack</span>
-                </div>
-                <div class="terminal__body">
-                    <nav class="terminal__sidebar">
-                        <button class="terminal__tab active" data-discipline="languages"><i class='bx bx-code-alt'></i>
-                            languages</button>
-                        <button class="terminal__tab" data-discipline="software"><i class='bx bx-package'></i>
-                            software</button>
-                        <button class="terminal__tab" data-discipline="data"><i class='bx bx-data'></i>
-                            data</button>
-                        <button class="terminal__tab" data-discipline="ai"><i class='bx bx-brain'></i> ai</button>
-                    </nav>
-                    <div class="terminal__output">
-                        <div class="terminal__prompt-line">
-                            <span class="terminal__prompt-symbol">$</span>
-                            <span class="terminal__cmd" id="termCmd"></span><span class="terminal__cursor"
-                                id="termCursor"></span>
-                        </div>
-                        <div class="terminal__content" id="termContent"></div>
-                    </div>
-                </div>
-            </div>
+            <!-- Panels are rendered from the DISCIPLINES data in main.js so the
+                 stack lives in one place instead of being mirrored in markup. -->
+            <div class="stack container" id="stack"></div>
         </section>
 
         <!--=============== QUALIFICATIONS ===============-->
