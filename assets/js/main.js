@@ -927,12 +927,13 @@ document.addEventListener("DOMContentLoaded", function () {
 				throw new Error("no contributions");
 
 			renderStats(contrib.contributions);
+			// Curated order (most relevant first) rather than just "most recently
+			// pushed", so the homepage surfaces the work that matters most.
+			const FEATURED = ["fb-agent", "jobboard-automation", "ti", "alfred"];
 			renderRepos(
-				[...repos]
-					.sort(
-						(a, b) => new Date(b.pushed_at) - new Date(a.pushed_at),
-					)
-					.slice(0, 4),
+				FEATURED.map((name) => repos.find((r) => r.name === name)).filter(
+					Boolean,
+				),
 			);
 		} catch (err) {
 			statsEl.innerHTML = `<p class="github__error">Couldn't load GitHub data right now — <a href="${GITHUB_URL}" target="_blank" rel="noopener">view my profile</a>.</p>`;
