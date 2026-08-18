@@ -426,12 +426,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	root.innerHTML = Object.keys(DISCIPLINES)
 		.map((key, i) => {
 			const data = DISCIPLINES[key];
-			const index = String(i + 1).padStart(2, "0");
 			return `
 			<button class="stack__panel" type="button" data-discipline="${key}" aria-expanded="false">
 				<span class="stack__head">
 					<span class="stack__label">${data.label}</span>
-					<span class="stack__index">${index}</span>
 				</span>
 				<span class="stack__body">${renderItems(data)}</span>
 				<span class="stack__headline">${data.headline}</span>
@@ -440,6 +438,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		.join("");
 
 	const panels = Array.from(root.querySelectorAll(".stack__panel"));
+	// Hover-expand only makes sense with a mouse; the whole card is always the
+	// click target (pointer-events:none on the hidden chips keeps every part of
+	// the card tappable).
+	const hoverAble = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 	function activate(panel) {
 		panels.forEach((p) => {
@@ -450,19 +452,32 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	panels.forEach((panel) => {
-		// Hover only: the panel expands under the cursor and every panel snaps
-		// back to equal width once the pointer leaves the row.
-		panel.addEventListener("mouseenter", () => activate(panel));
-		panel.addEventListener("focus", () => activate(panel));
+		// Mouse: the panel also expands under the cursor and snaps back once
+		// the pointer leaves the row.
+		if (hoverAble) {
+			panel.addEventListener("mouseenter", () => activate(panel));
+			panel.addEventListener("focus", () => activate(panel));
+		}
+		// The whole card is the click target: on a mouse it opens (hover/
+		// mouseleave manage closed); on touch it toggles open/closed.
+		panel.addEventListener("click", () => {
+			if (hoverAble) {
+				activate(panel);
+			} else {
+				activate(panel.classList.contains("active") ? null : panel);
+			}
+		});
 	});
 
-	root.addEventListener("mouseleave", () => activate(null));
-	root.addEventListener("focusout", (e) => {
-		if (!root.contains(e.relatedTarget)) activate(null);
-	});
+	if (hoverAble) {
+		root.addEventListener("mouseleave", () => activate(null));
+		root.addEventListener("focusout", (e) => {
+			if (!root.contains(e.relatedTarget)) activate(null);
+		});
+	}
 });
 
-/*=============== TOUCH FLIP DISABLED: hover-only ===============*/
+/*=============== MOBILE STACK: tap-to-reveal ===============*/
 
 // Set current year in footer
 document.addEventListener("DOMContentLoaded", function () {
@@ -653,8 +668,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function onScroll() {
 		if (done) return;
-		// fire once the footer’s top is about a third of the way up the viewport
-		if (window.scrollY + window.innerHeight * 0.35 >= footerTop()) {
+		// fire once the footer’s top reaches the viewport bottom, i.e. as soon
+		// as it starts rising out from under the closing section. (A viewport-
+		// fraction threshold fails when the footer is shorter than that
+		// fraction of the screen — it would never be reached on mobile.)
+		if (window.scrollY + window.innerHeight >= footerTop()) {
 			done = true;
 			sign.classList.add("is-written");
 			if (lenis && lenis.off) lenis.off("scroll", onScroll);

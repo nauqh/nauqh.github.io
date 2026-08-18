@@ -2993,6 +2993,9 @@ img {
 	opacity: 0;
 	visibility: hidden;
 	transform: translateY(8px);
+	/* Don't let the hidden chips swallow taps — the whole panel must stay
+	   clickable even in the region they occupy when collapsed. */
+	pointer-events: none;
 	transition:
 		opacity 0.22s ease,
 		transform 0.22s ease,
@@ -3003,6 +3006,7 @@ img {
 	opacity: 1;
 	visibility: visible;
 	transform: none;
+	pointer-events: auto;
 	transition:
 		opacity 0.28s ease 0.1s,
 		transform 0.28s ease 0.1s,
@@ -3057,21 +3061,36 @@ img {
 
 @media screen and (max-width: 968px) {
 	/* Horizontal collapse leaves no readable width on narrow screens, so the
-	   panels stack and every one stays open. */
+	   panels stack. They start collapsed and expand on tap (accordion). */
 	.stack {
 		flex-direction: column;
 		height: auto;
 		box-shadow: 6px 6px 0 var(--title-color);
 	}
 
-	.stack__panel,
-	.stack__panel.active {
+	.stack__panel {
 		flex: none;
 		border-right: none;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-		cursor: default;
+		cursor: pointer;
 		gap: 0;
 		padding: 1.75rem 1.25rem 2.25rem;
+		/* Buttery accordion: the chips live in their own grid row that eases
+		   0fr -> 1fr, so they unfold to their exact height instead of a jumpy
+		   max-height chase. Collapsed cards keep their phrase; spacing comes
+		   from the original margins (row-gap is zero to match the old look). */
+		display: grid;
+		grid-template-rows: auto auto 0fr;
+		row-gap: 0;
+		overflow: hidden;
+		transition:
+			grid-template-rows 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+			background-color 0.25s ease;
+	}
+
+	.stack__panel.active {
+		flex: none;
+		grid-template-rows: auto auto 1fr;
 	}
 
 	.stack__panel:last-child {
@@ -3082,25 +3101,59 @@ img {
 	   then the chips — instead of the desktop order where the headline anchors
 	   the bottom edge. */
 	.stack__head {
-		order: 0;
+		grid-row: 1;
 		margin-bottom: 0.4rem;
 	}
 
+	/* Tap hint: a “+” that flips to “×” on the open panel. */
+	.stack__head::after {
+		content: "+";
+		font-size: 1.4rem;
+		line-height: 1;
+		font-weight: 300;
+		transition: transform 0.3s ease;
+	}
+
+	.stack__panel.active .stack__head::after {
+		transform: rotate(45deg);
+	}
+
 	.stack__headline {
-		order: 1;
+		grid-row: 2;
 		margin-top: 0;
-		margin-bottom: 1.75rem;
+		/* keep the original breathing room before the chips */
+		margin-bottom: 1.25rem;
 		font-size: 1.2rem;
 	}
 
+	/* Collapsed by default; the open panel's rows unfold. */
 	.stack__body,
 	.stack__panel.active .stack__body {
-		order: 2;
-		opacity: 1;
-		visibility: visible;
-		transform: none;
+		grid-row: 3;
+		min-height: 0;
 		justify-content: flex-start;
 		padding-bottom: 0;
+	}
+
+	/* Fade the chips in/out in step with the row so the reveal feels soft. */
+	.stack__panel .stack__body {
+		transition:
+			opacity 0.4s ease,
+			transform 0.4s ease,
+			visibility 0s linear 0.55s;
+	}
+
+	.stack__panel.active .stack__body {
+		transition:
+			opacity 0.45s ease 0.08s,
+			transform 0.45s ease 0.08s,
+			visibility 0s;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.stack__panel {
+			transition: background-color 0.25s ease;
+		}
 	}
 }
 
@@ -3109,10 +3162,12 @@ img {
 	/* Rides at the bottom of the viewport, behind the page content (see the
 	   stacking on .main). Being sticky, it stays pinned to the bottom while the
 	   sections scroll over it, so the dark panel slides up out from under the
-	   closing section — at its natural height, not a full screen. */
+	   closing section. It always fills 90% of the viewport height. */
 	position: sticky;
 	bottom: 0;
 	width: 100%;
+	height: 90vh;
+	height: 90dvh;
 	z-index: 0;
 	display: flex;
 	flex-direction: column;
