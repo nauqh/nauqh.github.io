@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	const DISCIPLINES = {
 		languages: {
 			label: "languages",
-			headline: "The languages I think in.",
+			headline: "What I write in day to day.",
 			categories: [
 				{
 					label: null,
@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		},
 		software: {
 			label: "software",
-			headline: "Full stack, front end to deploy.",
+			headline: "I build the whole thing, not just the front.",
 			categories: [
 				{
 					label: "Frontend",
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		},
 		data: {
 			label: "data",
-			headline: "Pipelines that move real data.",
+			headline: "I move data between places it needs to be.",
 			categories: [
 				{
 					label: "Engineering",
@@ -375,7 +375,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		},
 		ai: {
 			label: "ai",
-			headline: "LLMs wired into real products.",
+			headline: "I put LLMs into things people use.",
 			categories: [
 				{
 					label: null,
@@ -631,6 +631,43 @@ document.addEventListener("DOMContentLoaded", function () {
 			closeDrawer();
 	});
 });
+
+/*=============== FOOTER SIGNATURE DRAW-IN ===============*/
+// Plays the hand-drawn write-in on the footer “nauqh.” once the sticky
+// footer has risen far enough into view (so it draws as it slides up).
+(function footerSignatureDraw() {
+	const contact = document.getElementById("contact");
+	const sign = contact && contact.querySelector(".contact__signature");
+	if (!contact || !sign) return;
+
+	if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+		sign.classList.add("is-written");
+		return;
+	}
+
+	// The footer is sticky, so its rect is in the viewport for most of the
+	// page. Use its natural document top instead to time the reveal.
+	const footerTop = () =>
+		document.documentElement.scrollHeight - contact.offsetHeight;
+	let done = false;
+
+	function onScroll() {
+		if (done) return;
+		// fire once the footer’s top is about a third of the way up the viewport
+		if (window.scrollY + window.innerHeight * 0.35 >= footerTop()) {
+			done = true;
+			sign.classList.add("is-written");
+			if (lenis && lenis.off) lenis.off("scroll", onScroll);
+			window.removeEventListener("scroll", onScroll);
+			window.removeEventListener("resize", onScroll);
+		}
+	}
+
+	if (lenis && lenis.on) lenis.on("scroll", onScroll);
+	window.addEventListener("scroll", onScroll, { passive: true });
+	window.addEventListener("resize", onScroll);
+	onScroll(); // already at the bottom on load
+})();
 
 /*=============== GITHUB PROJECTS & STATS ===============*/
 document.addEventListener("DOMContentLoaded", function () {

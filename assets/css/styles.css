@@ -3049,7 +3049,7 @@ img {
 
 .stack__headline {
 	margin-top: auto;
-	font-size: var(--h3-font-size);
+	font-size: 1.2rem;
 	font-weight: var(--font-medium);
 	line-height: 1.35;
 	color: var(--title-color);
@@ -3090,7 +3090,7 @@ img {
 		order: 1;
 		margin-top: 0;
 		margin-bottom: 1.75rem;
-		font-size: var(--h2-font-size);
+		font-size: 1.2rem;
 	}
 
 	.stack__body,
@@ -3138,11 +3138,44 @@ img {
 }
 
 .contact__signature {
+	/* Match the hero's hand-drawn name (Shantell Sans) so the footer
+	   signature echoes the logo rather than the display face. */
+	font-family: "Shantell Sans", "Segoe Print", cursive;
 	font-size: clamp(3.5rem, 9vw, 8rem);
-	font-weight: 800;
+	font-weight: 400;
 	color: #ffffff;
-	line-height: 1;
-	letter-spacing: -0.03em;
+	line-height: 1.2;
+	letter-spacing: 0.005em;
+	/* Hand-drawn write-in, the same soft-edged wipe as the hero name. Starts
+	   masked out; .is-written animates it on once the footer is revealed. */
+	-webkit-mask-image: linear-gradient(to right, #000 0 40%, transparent 55%);
+	mask-image: linear-gradient(to right, #000 0 40%, transparent 55%);
+	-webkit-mask-size: 250% 100%;
+	mask-size: 250% 100%;
+	-webkit-mask-position: 100% 0;
+	mask-position: 100% 0;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+	.contact__signature.is-written {
+	animation: contact__sign-write 2.2s cubic-bezier(0.65, 0, 0.35, 1) 0.25s
+		forwards;
+}
+
+@keyframes contact__sign-write {
+	to {
+		-webkit-mask-position: 0 0;
+		mask-position: 0 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.contact__signature {
+		-webkit-mask-image: none;
+		mask-image: none;
+		animation: none;
+	}
 }
 
 .contact__dot {
@@ -3219,6 +3252,8 @@ img {
 	}
 
 	.contact__signature {
+		font-family: "Shantell Sans", "Segoe Print", cursive;
+		font-weight: 400;
 		font-size: clamp(3rem, 14vw, 5rem);
 	}
 

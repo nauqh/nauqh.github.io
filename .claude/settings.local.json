@@ -38,7 +38,10 @@
       "Bash(powershell -Command 'Get-NetTCPConnection -LocalPort 4599 -State Listen -EA SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }')",
       "Bash(node timing.mjs)",
       "Bash(node footer.mjs)",
-      "Bash(node tail.mjs)"
+      "Bash(node tail.mjs)",
+      "Bash(npx http-server *)",
+      "Bash(node copy.mjs)",
+      "Bash(powershell -NoProfile -Command \"Get-NetTCPConnection -LocalPort 4599 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id \\\\$_.OwningProcess -Force }\")"
     ]
   }
 }
