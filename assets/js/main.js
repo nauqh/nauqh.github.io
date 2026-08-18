@@ -261,6 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	const DISCIPLINES = {
 		languages: {
 			label: "languages",
+			icon: "bx-code-alt",
 			headline: "What I write in day to day.",
 			categories: [
 				{
@@ -280,7 +281,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		},
 		software: {
 			label: "software",
-			headline: "I build the whole thing, not just the front.",
+			icon: "bx-package",
+			headline: "I build the full product, front to back.",
 			categories: [
 				{
 					label: "Frontend",
@@ -343,7 +345,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		},
 		data: {
 			label: "data",
-			headline: "I move data between places it needs to be.",
+			icon: "bx-data",
+			headline: "I move data from raw to usable.",
 			categories: [
 				{
 					label: "Engineering",
@@ -375,7 +378,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		},
 		ai: {
 			label: "ai",
-			headline: "I put LLMs into things people use.",
+			icon: "bx-brain",
+			headline: "I wire LLMs into products people use.",
 			categories: [
 				{
 					label: null,
@@ -428,6 +432,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			const data = DISCIPLINES[key];
 			return `
 			<button class="stack__panel" type="button" data-discipline="${key}" aria-expanded="false">
+				<i class="bx ${data.icon} stack__panel-icon" aria-hidden="true"></i>
 				<span class="stack__head">
 					<span class="stack__label">${data.label}</span>
 				</span>
@@ -592,6 +597,23 @@ document.addEventListener("DOMContentLoaded", function () {
 	const drawerTitle = document.getElementById("drawerTitle");
 	const drawerYear = document.getElementById("drawerYear");
 	const drawerImg = document.getElementById("drawerImg");
+	const drawerThumbs = document.getElementById("drawerThumbs");
+	// Autoplay: one full progress ring per image, then advance to the next.
+	const AUTOPLAY_MS = 4000; // keep in sync with .drawer-ring-fill duration
+	let galleryTimer = null;
+
+	function stopGalleryAuto() {
+		if (galleryTimer) {
+			clearTimeout(galleryTimer);
+			galleryTimer = null;
+		}
+	}
+
+	function restartRing(btn) {
+		btn.style.animation = "none";
+		void btn.offsetWidth;
+		btn.style.animation = "";
+	}
 	const drawerDesc = document.getElementById("drawerDesc");
 	const drawerTech = document.getElementById("drawerTech");
 	const drawerLink = document.getElementById("drawerLink");
@@ -605,8 +627,73 @@ document.addEventListener("DOMContentLoaded", function () {
 			card.querySelector(".project-card__title")?.textContent || "";
 		drawerYear.textContent =
 			card.querySelector(".project-card__year")?.textContent || "";
-		drawerImg.src = card.querySelector(".project-card__img img")?.src || "";
-		drawerImg.alt = card.querySelector(".project-card__img img")?.alt || "";
+	const cardImg = card.querySelector(".project-card__img img");
+	// Multi-image gallery: a card can carry data-images="a.png,b.png" and the
+	// drawer shows a main shot plus clickable thumbnails. Without it, the
+	// single card thumbnail is used as before.
+	const images = (card.dataset.images || "")
+		.split(",")
+		.map((s) => s.trim())
+		.filter(Boolean);
+	if (images.length > 0) {
+		drawerImg.src = images[0];
+		drawerImg.alt = cardImg?.alt || drawerTitle.textContent;
+		drawerImg.onerror = () => {
+			// Gallery files may not exist yet - fall back to the card shot.
+			if (cardImg?.src) drawerImg.src = cardImg.src;
+			drawerThumbs.hidden = true;
+		};
+		drawerThumbs.hidden = false;
+		drawerThumbs.innerHTML = images
+			.map(
+				(src, i) =>
+					`<button type="button" class="project-drawer__thumb${i === 0 ? " active" : ""}" data-src="${src}" aria-label="view image ${i + 1}"><img src="${src}" alt="" loading="lazy"></button>`,
+			)
+			.join("");
+		const thumbs = drawerThumbs.querySelectorAll(".project-drawer__thumb");
+		const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+		const activate = (btn) => {
+			// restart the subtle fade-in on every switch
+			drawerImg.classList.remove("is-switching");
+			void drawerImg.offsetWidth;
+			drawerImg.src = btn.dataset.src;
+			drawerImg.classList.add("is-switching");
+			thumbs.forEach((b) => b.classList.toggle("active", b === btn));
+			restartRing(btn);
+		};
+
+		function startAuto() {
+			stopGalleryAuto();
+			if (reduceMotion || thumbs.length < 2) return;
+			galleryTimer = setTimeout(() => {
+				const cur = Array.from(thumbs).findIndex((b) =>
+					b.classList.contains("active"),
+				);
+				activate(thumbs[(cur + 1) % thumbs.length]);
+				startAuto();
+			}, AUTOPLAY_MS);
+		}
+
+		thumbs.forEach((btn) => {
+			const thumbImg = btn.querySelector("img");
+			if (thumbImg) {
+				thumbImg.onerror = () => btn.remove();
+			}
+			btn.addEventListener("click", () => {
+				activate(btn);
+				startAuto();
+			});
+		});
+		startAuto();
+	} else {
+		drawerImg.src = cardImg?.src || "";
+		drawerImg.alt = cardImg?.alt || "";
+		drawerImg.onerror = null;
+		drawerThumbs.hidden = true;
+		drawerThumbs.innerHTML = "";
+		stopGalleryAuto();
+	}
 		drawerDesc.textContent = card.dataset.description || "";
 		drawerTech.innerHTML = (card.dataset.tech || "")
 			.split(",")
@@ -624,12 +711,15 @@ document.addEventListener("DOMContentLoaded", function () {
 		projectDrawer.classList.add("active");
 		projectDrawer.setAttribute("aria-hidden", "false");
 		lenis.stop();
+		document.body.style.overflow = "hidden";
 	}
 
 	function closeDrawer() {
 		projectDrawer.classList.remove("active");
 		projectDrawer.setAttribute("aria-hidden", "true");
 		lenis.start();
+		document.body.style.overflow = "";
+		stopGalleryAuto();
 	}
 
 	document.querySelectorAll(".project-card").forEach((card) => {
@@ -671,7 +761,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		// fire once the footer’s top reaches the viewport bottom, i.e. as soon
 		// as it starts rising out from under the closing section. (A viewport-
 		// fraction threshold fails when the footer is shorter than that
-		// fraction of the screen — it would never be reached on mobile.)
+		// fraction of the screen - it would never be reached on mobile.)
 		if (window.scrollY + window.innerHeight >= footerTop()) {
 			done = true;
 			sign.classList.add("is-written");
@@ -696,7 +786,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (!statsEl || !reposEl) return;
 
 	// The portfolio repo + auto-generated profile repo are excluded. Everything
-	// rendered here comes from PUBLIC GitHub data only — no private work leaks in.
+	// rendered here comes from PUBLIC GitHub data only - no private work leaks in.
 	const EXCLUDED = new Set(["nauqh", "nauqh.github.io"]);
 	const MONTHS = [
 		"Jan",
@@ -927,16 +1017,15 @@ document.addEventListener("DOMContentLoaded", function () {
 				throw new Error("no contributions");
 
 			renderStats(contrib.contributions);
-			// Curated order (most relevant first) rather than just "most recently
-			// pushed", so the homepage surfaces the work that matters most.
-			const FEATURED = ["fb-agent", "jobboard-automation", "ti", "alfred"];
 			renderRepos(
-				FEATURED.map((name) => repos.find((r) => r.name === name)).filter(
-					Boolean,
-				),
+				[...repos]
+					.sort(
+						(a, b) => new Date(b.pushed_at) - new Date(a.pushed_at),
+					)
+					.slice(0, 4),
 			);
 		} catch (err) {
-			statsEl.innerHTML = `<p class="github__error">Couldn't load GitHub data right now — <a href="${GITHUB_URL}" target="_blank" rel="noopener">view my profile</a>.</p>`;
+			statsEl.innerHTML = `<p class="github__error">Couldn't load GitHub data right now - <a href="${GITHUB_URL}" target="_blank" rel="noopener">view my profile</a>.</p>`;
 			reposEl.innerHTML = "";
 		}
 	}

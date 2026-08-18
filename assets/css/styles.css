@@ -1753,7 +1753,7 @@ img {
 	font-weight: 500;
 	letter-spacing: 0.15em;
 	text-transform: uppercase;
-	color: var(--text-color-light);
+	color: var(--title-color);
 }
 
 .project-drawer__close {
@@ -1779,17 +1779,149 @@ img {
 
 .project-drawer__img-wrap {
 	width: 100%;
-	aspect-ratio: 16 / 9;
+	/* taller than 16:9 so wide desktop-screenshot shots get more room */
+	aspect-ratio: 3 / 2;
 	overflow: hidden;
 	background: var(--container-color);
 	flex-shrink: 0;
 	padding: 1rem;
 }
 
+.project-drawer__gallery {
+	flex-shrink: 0;
+	background: var(--container-color);
+	/* full-bleed image: no top/left/right padding, only a little below */
+	padding: 0 0 0.5rem;
+}
+
+.project-drawer__gallery .project-drawer__img-wrap {
+	padding: 0;
+}
+
 .project-drawer__img {
 	width: 100%;
 	height: 100%;
+	/* contain (not cover): never crop the screenshot, letterbox in the
+	   container background instead */
+	object-fit: contain;
+}
+
+/* Subtle transition when the preview switches (autoplay or thumbnail click). */
+.project-drawer__img.is-switching {
+	animation: drawer-img-switch 0.4s ease;
+}
+
+@keyframes drawer-img-switch {
+	from {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.project-drawer__img.is-switching {
+		animation: none;
+	}
+}
+
+/* Thumbnail strip: click a thumb to swap the main shot. */
+.project-drawer__thumbs {
+	display: flex;
+	gap: 0.5rem;
+	margin-top: 0;
+	overflow-x: auto;
+	padding: 0.5rem;
+	scrollbar-width: thin;
+}
+
+.project-drawer__thumb {
+	flex: 0 0 auto;
+	width: 76px;
+	height: 54px;
+	padding: 0;
+	border: 2px solid transparent;
+	border-radius: 6px;
+	background: none;
+	cursor: pointer;
+	/* no overflow clipping: the progress ring lives just outside the edge */
+	overflow: visible;
+	opacity: 0.55;
+	transition:
+		opacity 0.2s ease,
+		border-color 0.2s ease;
+}
+
+.project-drawer__thumb:hover {
+	opacity: 0.85;
+}
+
+.project-drawer__thumb.active {
+	opacity: 1;
+}
+
+.project-drawer__thumb img {
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
+	display: block;
+	border-radius: 4px;
+}
+
+/* Autoplay progress ring: a conic marker traces a full circle around the
+   active thumbnail, then the drawer advances to the next image. Duration
+   must match AUTOPLAY_MS in main.js (4s). */
+@property --drawer-ring {
+	syntax: "<angle>";
+	inherits: false;
+	initial-value: 0deg;
+}
+
+.project-drawer__thumb {
+	position: relative;
+}
+
+.project-drawer__thumb::after {
+	content: "";
+	position: absolute;
+	/* -2px so the ring band sits exactly over the 2px outer border */
+	inset: -2px;
+	border-radius: 8px;
+	/* ring thickness: masks everything but a thin band, so the conic
+	   progress traces the outer border instead of filling the thumbnail */
+	padding: 2px;
+	background: conic-gradient(
+		#444 var(--drawer-ring),
+		transparent 0
+	);
+	-webkit-mask:
+		linear-gradient(#fff 0 0) content-box,
+		linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask:
+		linear-gradient(#fff 0 0) content-box,
+		linear-gradient(#fff 0 0);
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+	pointer-events: none;
+}
+
+.project-drawer__thumb.active::after {
+	opacity: 1;
+	animation: drawer-ring-fill 4s linear forwards;
+}
+
+@keyframes drawer-ring-fill {
+	to {
+		--drawer-ring: 360deg;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.project-drawer__thumb.active::after {
+		animation: none;
+		opacity: 1;
+	}
 }
 
 .project-drawer__content {
@@ -2925,6 +3057,8 @@ img {
 	   larger share so its icon grid has room to lay out. */
 	flex: 1 1 0;
 	min-width: 0;
+	/* anchors the watermark icon to the panel itself */
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	padding: 1.5rem 1.25rem;
@@ -3059,6 +3193,31 @@ img {
 	color: var(--title-color);
 }
 
+/* Discipline watermark icon: a centred watermark inside each panel on
+   desktop, filling the panel behind its content. Hidden on mobile (the
+   stacked cards show the label + phrase instead). */
+.stack__panel-icon {
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 3.5rem;
+	line-height: 1;
+	color: var(--title-color);
+	opacity: 0.06;
+	pointer-events: none;
+	z-index: 0;
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
+}
+
+.stack__panel.active .stack__panel-icon {
+	opacity: 0.03;
+	transform: translate(-50%, -50%) translateY(-6px) scale(0.96);
+}
+
 @media screen and (max-width: 968px) {
 	/* Horizontal collapse leaves no readable width on narrow screens, so the
 	   panels stack. They start collapsed and expand on tap (accordion). */
@@ -3070,6 +3229,8 @@ img {
 
 	.stack__panel {
 		flex: none;
+		/* anchor the watermark icon to the card itself */
+		position: relative;
 		border-right: none;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 		cursor: pointer;
@@ -3116,6 +3277,12 @@ img {
 
 	.stack__panel.active .stack__head::after {
 		transform: rotate(45deg);
+	}
+
+	/* Watermark icons are desktop-only: the stacked mobile cards show the
+	   label + phrase instead, no dead space to fill. */
+	.stack__panel-icon {
+		display: none;
 	}
 
 	.stack__headline {
