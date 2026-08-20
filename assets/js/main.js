@@ -360,6 +360,10 @@ document.addEventListener("DOMContentLoaded", function () {
 							name: "GitHub Actions",
 							icon: "assets/img/icons/actions.svg",
 						},
+						{
+							name: "dbt",
+							icon: "assets/img/icons/dbt.svg",
+						},
 					],
 				},
 				{
@@ -382,24 +386,43 @@ document.addEventListener("DOMContentLoaded", function () {
 			headline: "I wire LLMs into products people use.",
 			categories: [
 				{
-					label: null,
+					label: "Models & gateways",
 					items: [
-						{ name: "OpenAI", icon: "assets/img/icons/openai.png" },
-						{
-							name: "Anthropic",
-							icon: "assets/img/icons/anthropic.png",
-						},
-						{
-							name: "n8n",
-							icon: "https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/n8n-color.png",
-						},
+						{ name: "OpenRouter", icon: "assets/img/icons/openrouter.svg" },
+					],
+				},
+				{
+					label: "Agent frameworks",
+					items: [
 						{
 							name: "Langchain",
 							icon: "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/logos/langchain-ipuhh4qo1jz5ssl4x0g2a.png/langchain-dp1uxj2zn3752pntqnpfu2.png?_a=DATAiZAAZAA0",
 						},
 						{
-							name: "PyTorch",
-							icon: "assets/img/icons/pytorch.png",
+							name: "Pydantic AI",
+							icon: "assets/img/icons/pydantic/pydantic-logo.png",
+						},
+					],
+				},
+				{
+					label: "Vector stores",
+					items: [
+						{
+							name: "pgvector",
+							icon: "assets/img/icons/pgvector/pgvector-avatar.png",
+						},
+						{
+							name: "Qdrant",
+							icon: "assets/img/icons/qdrant.svg",
+						},
+					],
+				},
+				{
+					label: "Observability",
+					items: [
+						{
+							name: "Langfuse",
+							icon: "assets/img/icons/langfuse.svg",
 						},
 					],
 				},
