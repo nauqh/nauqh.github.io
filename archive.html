@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!--=============== FAVICON ===============-->
-    <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/img/logo.svg" type="image/x-icon" />
 
     <!--=============== BOXICONS ===============-->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
@@ -30,6 +30,9 @@
 </head>
 
 <body>
+    <!--=============== SCROLL PROGRESS ===============-->
+    <div id="scroll-progress"></div>
+
     <!--=============== HEADER ===============-->
     <header class="header" id="header">
         <nav class="nav container">
@@ -43,11 +46,47 @@
                     </g>
                 </svg>
             </a>
-            <a href="index.html" class="back-home">
-                <i class="bx bx-arrow-back"></i> Back
-            </a>
+            <button class="nav__menu-btn" id="navMenuBtn" aria-label="Open menu">
+                <span class="nav__menu-btn-text"><span
+                        class="nav__menu-btn-text-roller"><span>menu</span><span>menu</span></span></span>
+                <span class="nav__menu-btn-icon"><span class="nav__menu-icon-roller"><span
+                            class="nav__menu-icon-face"><span class="nav__menu-bars"></span></span><span
+                                class="nav__menu-icon-face nav__menu-icon-face--hover"><span
+                                    class="nav__menu-bars"></span></span></span></span>
+            </button>
         </nav>
     </header>
+
+    <!--=============== NAV BACKDROP ===============-->
+    <div class="nav-backdrop" id="navBackdrop"></div>
+
+    <!--=============== NAV OVERLAY ===============-->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay__header">
+            <a href="index.html" class="nav-overlay__brand">Minh Quan</a>
+            <button class="nav-overlay__close" id="navClose" aria-label="Close menu">
+                ✕
+            </button>
+        </div>
+
+        <nav class="nav-overlay__menu">
+            <a href="index.html#about" class="nav-overlay__link" data-close>About</a>
+            <a href="index.html#skills" class="nav-overlay__link" data-close>Tech Stack</a>
+            <a href="index.html#qualification" class="nav-overlay__link" data-close>Qualifications</a>
+            <a href="index.html#experience" class="nav-overlay__link" data-close>Experience</a>
+            <a href="index.html#work" class="nav-overlay__link" data-close>Projects</a>
+        </nav>
+
+        <div class="nav-overlay__footer">
+            <div class="nav-overlay__footer-col">
+                <a href="https://github.com/nauqh" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/nauqh/" target="_blank">LinkedIn</a>
+            </div>
+            <div class="nav-overlay__footer-col">
+                <a href="assets/pdf/resume.pdf" target="_blank">Resume</a>
+            </div>
+        </div>
+    </div>
 
     <!--=============== MAIN ===============-->
     <main class="main">
@@ -55,7 +94,7 @@
         <section class="archive section" id="archive">
             <div class="container">
                 <div class="archive__header">
-                    <h1 class="archive__title">Archive</h1>
+                    <h1 class="section__title">the <em>archive</em></h1>
                     <p class="archive__subtitle">A comprehensive list of all my projects and work</p>
                 </div>
 
@@ -81,7 +120,7 @@
                                 <div class="archive__col">Web App</div>
                                 <div class="archive__col">Next.js · Shadcn · Clerk · FastAPI</div>
                                 <div class="archive__col">
-                                    <a href="https://csassessment.it.com/" target="_blank" class="archive__link">
+                                    <a href="https://csassessment.it.com/" target="_blank" class="archive__link" aria-label="Live site">
                                         <i class="bx bx-link-alt"></i>
                                     </a>
                                 </div>
@@ -97,7 +136,7 @@
                                 <div class="archive__col">AI Tool</div>
                                 <div class="archive__col">OpenAI · Next.js · GitHub · ChromaDB · Discord.py</div>
                                 <div class="archive__col">
-                                    <a href="https://github.com/nauqh/ti" target="_blank" class="archive__link">
+                                    <a href="https://github.com/nauqh/ti" target="_blank" class="archive__link" aria-label="GitHub repository">
                                         <i class="bx bxl-github"></i>
                                     </a>
                                 </div>
@@ -114,11 +153,11 @@
                                 <div class="archive__col">Web App</div>
                                 <div class="archive__col">Next.js · Shadcn · Tailwind</div>
                                 <div class="archive__col">
-                                    <a href="https://keleidoscope.vercel.app/" target="_blank" class="archive__link">
+                                    <a href="https://keleidoscope.vercel.app/" target="_blank" class="archive__link" aria-label="Live site">
                                         <i class="bx bx-link-alt"></i>
                                     </a>
                                     <a href="https://github.com/nauqh/keleidoscope" target="_blank"
-                                        class="archive__link">
+                                        class="archive__link" aria-label="GitHub repository">
                                         <i class="bx bxl-github"></i>
                                     </a>
                                 </div>
@@ -135,7 +174,7 @@
                                 <div class="archive__col">Data Analysis</div>
                                 <div class="archive__col">Streamlit · RiotAPI · Pandas · Plotly</div>
                                 <div class="archive__col">
-                                    <a href="https://hymaram.streamlit.app/" target="_blank" class="archive__link">
+                                    <a href="https://hymaram.streamlit.app/" target="_blank" class="archive__link" aria-label="Live site">
                                         <i class="bx bx-link-alt"></i>
                                     </a>
                                 </div>
@@ -152,7 +191,7 @@
                                 <div class="archive__col">Data</div>
                                 <div class="archive__col">React · FastAPI · OpenAI</div>
                                 <div class="archive__col">
-                                    <a href="https://github.com/nauqh/resonance" target="_blank" class="archive__link">
+                                    <a href="https://github.com/nauqh/resonance" target="_blank" class="archive__link" aria-label="GitHub repository">
                                         <i class="bx bxl-github"></i>
                                     </a>
                                 </div>
@@ -169,10 +208,10 @@
                                 <div class="archive__col">Data</div>
                                 <div class="archive__col">FastAPI · Airflow · PostgreSQL</div>
                                 <div class="archive__col">
-                                    <a href="error.html" class="archive__link">
+                                    <a href="error.html" class="archive__link" aria-label="Live site">
                                         <i class="bx bx-link-alt"></i>
                                     </a>
-                                    <a href="https://github.com/nauqh/Echodb-app" target="_blank" class="archive__link">
+                                    <a href="https://github.com/nauqh/Echodb-app" target="_blank" class="archive__link" aria-label="GitHub repository">
                                         <i class="bx bxl-github"></i>
                                     </a>
                                 </div>
@@ -189,10 +228,10 @@
                                 <div class="archive__col">Software</div>
                                 <div class="archive__col">Hikari · Discord API</div>
                                 <div class="archive__col">
-                                    <a href="error.html" class="archive__link">
+                                    <a href="error.html" class="archive__link" aria-label="Live site">
                                         <i class="bx bx-link-alt"></i>
                                     </a>
-                                    <a href="https://github.com/nauqh/Ashema" target="_blank" class="archive__link">
+                                    <a href="https://github.com/nauqh/Ashema" target="_blank" class="archive__link" aria-label="GitHub repository">
                                         <i class="bx bxl-github"></i>
                                     </a>
                                 </div>
@@ -210,7 +249,7 @@
                                 <div class="archive__col">Tableau</div>
                                 <div class="archive__col">
                                     <a href="https://public.tableau.com/views/Musicdashboard_16932136545670/Dashboard"
-                                        target="_blank" class="archive__link">
+                                        target="_blank" class="archive__link" aria-label="Live site">
                                         <i class="bx bx-link-alt"></i>
                                     </a>
                                 </div>
@@ -227,10 +266,10 @@
                                 <div class="archive__col">Software</div>
                                 <div class="archive__col">Riot API · Discord.py</div>
                                 <div class="archive__col">
-                                    <a href="https://nauqh.github.io/porodocs/" target="_blank" class="archive__link">
+                                    <a href="https://nauqh.github.io/porodocs/" target="_blank" class="archive__link" aria-label="Live site">
                                         <i class="bx bx-link-alt"></i>
                                     </a>
-                                    <a href="https://github.com/nauqh/RiotAPI" target="_blank" class="archive__link">
+                                    <a href="https://github.com/nauqh/RiotAPI" target="_blank" class="archive__link" aria-label="GitHub repository">
                                         <i class="bx bxl-github"></i>
                                     </a>
                                 </div>
@@ -246,7 +285,7 @@
                                 <div class="archive__col">Data Visualisation</div>
                                 <div class="archive__col">D3.js · JavaScript · Python · Pandas</div>
                                 <div class="archive__col">
-                                    <a href="visualisation.html" class="archive__link">
+                                    <a href="visualisation.html" class="archive__link" aria-label="Live site">
                                         <i class="bx bx-link-alt"></i>
                                     </a>
                                 </div>
@@ -264,11 +303,11 @@
                                 <div class="archive__col">HTML · CSS · Vega-Lite</div>
                                 <div class="archive__col">
                                     <a href="https://nauqh.github.io/FIT3179-Data-Visualization-II/" target="_blank"
-                                        class="archive__link">
+                                        class="archive__link" aria-label="Live site">
                                         <i class="bx bx-link-alt"></i>
                                     </a>
                                     <a href="https://github.com/nauqh/FIT3179-Data-Visualization-II" target="_blank"
-                                        class="archive__link">
+                                        class="archive__link" aria-label="GitHub repository">
                                         <i class="bx bxl-github"></i>
                                     </a>
                                 </div>
@@ -288,6 +327,9 @@
             </span>
         </div>
     </footer>
+
+    <!--=============== LENIS SMOOTH SCROLL ===============-->
+    <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>
 
     <!--=============== ARCHIVE JS ===============-->
     <script src="assets/js/archive.js"></script>

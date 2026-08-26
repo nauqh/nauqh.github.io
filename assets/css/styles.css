@@ -707,49 +707,6 @@ img {
 	text-transform: lowercase;
 }
 
-.home__sticky-notes {
-	display: flex;
-	flex-direction: column;
-	gap: 0.6rem;
-	align-self: center;
-}
-
-.sticky-note {
-	background: #f4f4f4;
-	color: var(--title-color);
-	font-size: 0.9rem;
-	font-weight: 500;
-	padding: 0.75rem 1.1rem;
-	box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.08);
-	transform: rotate(-1.5deg);
-	transition:
-		transform 0.2s ease,
-		box-shadow 0.2s ease;
-	cursor: default;
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	white-space: nowrap;
-}
-
-.sticky-note:nth-child(even) {
-	transform: rotate(1.2deg);
-}
-
-.sticky-note:hover {
-	transform: rotate(0deg) scale(1.04);
-	box-shadow: 4px 6px 16px rgba(0, 0, 0, 0.12);
-	z-index: 1;
-}
-
-.sticky-note--teal {
-	background: var(--first-color-alt);
-}
-
-.sticky-note--status {
-	background: #f4f4f4;
-	transform: rotate(0.8deg);
-}
 
 .home__greeting {
 	margin-bottom: 1rem;
@@ -1017,51 +974,6 @@ img {
 	transform: translateY(-5px);
 }
 
-.speech-bubbles {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	pointer-events: none;
-}
-
-.speech-bubble {
-	position: absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 60px;
-	height: 60px;
-	border-radius: 50%;
-	font-size: 1.5rem;
-	animation: float 3s ease-in-out infinite;
-}
-
-.code-bubble {
-	background-color: var(--first-color);
-	color: var(--body-color);
-	top: 20%;
-	left: -30px;
-	animation-delay: 0s;
-}
-
-.tech-bubble {
-	background-color: var(--title-color);
-	color: var(--body-color);
-	top: 60%;
-	right: -30px;
-	animation-delay: 1.5s;
-}
-
-@keyframes float {
-	0%,
-	100% {
-		transform: translateY(0px);
-	}
-	50% {
-		transform: translateY(-10px);
-	}
-}
-
 /* Social links */
 .home__social-link {
 	width: max-content;
@@ -1110,32 +1022,6 @@ img {
 .home__scroll-name {
 	font-size: var(--smaller-font-size);
 	transform: rotate(-90deg);
-}
-
-/*=============== BUTTONS ===============*/
-.button {
-	display: inline-block;
-	background-color: var(--first-color);
-	color: var(--body-color);
-	padding: 0.75rem 1rem;
-	border-radius: 0;
-	font-weight: var(--font-medium);
-	transition: 0.4s;
-}
-
-.button:hover {
-	background-color: var(--first-color);
-	color: #fff;
-}
-
-.button--ghost {
-	background-color: transparent;
-	border: 2px solid var(--first-color);
-	color: var(--first-color);
-}
-
-.button--ghost:hover {
-	border: 2px solid var(--first-color);
 }
 
 /*=============== ABOUT ===============*/
@@ -1386,112 +1272,6 @@ img {
 
 .qualification__country {
 	margin-bottom: 0.75rem;
-}
-
-/*=============== SERVICES ===============*/
-.services__container {
-	grid-template-columns: repeat(2, 1fr);
-	gap: 1.5rem;
-}
-
-.services__card {
-	background-color: var(--container-color);
-	padding: 3rem 1.5rem 1.5rem;
-	border-radius: 0;
-}
-
-.services__title {
-	font-size: var(--h3-font-size);
-	margin-bottom: 2.5rem;
-}
-
-.services__button {
-	color: var(--first-color);
-	font-size: var(--small-font-size);
-	display: flex;
-	align-items: center;
-	column-gap: 0.25rem;
-	cursor: pointer;
-}
-
-.services__button:hover .services__icon {
-	transform: translateX(0.25rem);
-}
-
-.services__icon {
-	font-size: 1rem;
-	transition: 0.4s;
-}
-
-.services__modal {
-	position: fixed;
-	inset: 0;
-	background-color: hsla(var(--second-hue), 28%, 16%, 0.7);
-	padding: 2rem 1rem;
-	display: grid;
-	place-items: center;
-	visibility: hidden;
-	opacity: 0;
-	transition: 0.4s;
-	z-index: var(--z-modal);
-}
-
-.services__modal-content {
-	position: relative;
-	background-color: var(--body-color);
-	padding: 4.5rem 1.5rem 2.5rem;
-	border-radius: 0;
-}
-
-.services__modal-title,
-.services__modal-description {
-	text-align: left;
-}
-
-.services__modal-title {
-	font-size: var(--h3-font-size);
-	color: var(--first-color);
-	margin-bottom: 1rem;
-}
-
-.services__modal-description {
-	font-size: var(--small-font-size);
-	margin-bottom: 2rem;
-}
-
-.services__modal-list {
-	display: grid;
-	row-gap: 0.75rem;
-}
-
-.services__modal-item {
-	display: flex;
-	align-items: flex-start;
-	column-gap: 0.5rem;
-}
-
-.services__modal-icon {
-	font-size: 1.5rem;
-	color: var(--first-color);
-}
-
-.services__modal-info {
-	font-size: var(--small-font-size);
-}
-
-.services__modal-close {
-	position: absolute;
-	top: 1.5rem;
-	right: 1.5rem;
-	font-size: 1.5rem;
-	color: var(--title-color);
-	cursor: pointer;
-}
-
-/*Active modal*/
-.active-modal {
-	opacity: 1;
-	visibility: visible;
 }
 
 /*=============== WORK ===============*/
@@ -2130,11 +1910,6 @@ img {
 	.skills__content {
 		padding: 1.5rem;
 	}
-
-	.services__container {
-		grid-template-columns: repeat(2, 150px);
-		justify-content: center;
-	}
 }
 
 @media screen and (min-width: 510px) {
@@ -2166,16 +1941,6 @@ img {
 	}
 	.skills__content {
 		padding: 2rem 1.5rem;
-	}
-
-	.services__container {
-		grid-template-columns: repeat(2, 160px);
-		justify-content: center;
-		column-gap: 2rem;
-	}
-	.services__modal-content {
-		width: 500px;
-		padding: 4.5rem 2.5rem 2.5rem;
 	}
 
 	.qualification__container {
@@ -2222,11 +1987,6 @@ img {
 		font-size: 1rem;
 	}
 
-	.services__container {
-		grid-template-columns: repeat(4, 180px);
-		justify-content: center;
-	}
-
 	.testimonial__container {
 		width: 750px;
 	}
@@ -2236,10 +1996,6 @@ img {
 }
 
 @media screen and (min-width: 992px) {
-	.button {
-		font-size: 1rem;
-	}
-
 	.container {
 		margin-left: auto;
 		margin-right: auto;
@@ -2299,18 +2055,6 @@ img {
 	.qualification__title {
 		margin-bottom: 3rem;
 		font-size: var(--h2-font-size);
-	}
-
-	.services__container {
-		grid-template-columns: repeat(4, 220px);
-		column-gap: 2rem;
-	}
-	.services__card {
-		padding: 5rem 2rem 1.5rem;
-	}
-
-	.services__modal-content {
-		width: 600px;
 	}
 
 	.qualification__info {
@@ -2736,74 +2480,6 @@ img {
 	font-size: 1.2rem;
 }
 
-/*=============== ENHANCED CHAT BUBBLE ===============*/
-.chat-bubble {
-	position: absolute;
-	top: -40px;
-	left: 50%;
-	transform: translateX(-50%);
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	background: linear-gradient(135deg, #4285f4, #34a853);
-	color: white;
-	padding: 0.6rem 1.2rem;
-	border-radius: 0;
-	font-size: 0.8rem;
-	font-weight: 600;
-	cursor: pointer;
-	animation: bubbleFloat 3s ease-in-out infinite;
-	box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
-	z-index: var(--z-tooltip);
-	transition: all 0.3s ease;
-	white-space: nowrap;
-}
-
-.chat-bubble:hover {
-	transform: translateX(-50%) scale(1.05) translateY(-3px);
-	background: linear-gradient(135deg, #3367d6, #2d7e32);
-	box-shadow: 0 12px 35px rgba(66, 133, 244, 0.4);
-	animation-play-state: paused;
-	cursor: pointer;
-}
-
-.chat-bubble::after {
-	content: "";
-	position: absolute;
-	bottom: -8px;
-	left: 20px; /* Moved triangle to the left */
-	width: 16px;
-	height: 10px;
-	background: linear-gradient(135deg, #4285f4, #34a853);
-	clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
-	transition: background 0.3s ease;
-}
-
-.chat-bubble:hover::after {
-	background: linear-gradient(135deg, #3367d6, #2d7e32);
-}
-
-/* Remove icon styling */
-.chat-bubble i {
-	display: none;
-}
-
-@media screen and (max-width: 768px) {
-	.chat-bubble {
-		top: -35px;
-		left: 50%;
-		font-size: 0.7rem;
-		padding: 0.5rem 1rem;
-	}
-
-	.chat-bubble::after {
-		bottom: -5px;
-		left: 16px; /* Adjusted for mobile */
-		width: 10px;
-		height: 6px;
-	}
-}
-
 /*=============== ENHANCED RESPONSIVE DESIGN ===============*/
 @media screen and (max-width: 767px) {
 	.about__container2 {
@@ -2821,13 +2497,6 @@ img {
 
 	.about__img {
 		width: 220px;
-	}
-
-	.chat-bubble {
-		top: -35px;
-		left: 50%;
-		font-size: 0.7rem;
-		padding: 0.5rem 1rem;
 	}
 }
 
@@ -2935,10 +2604,6 @@ img {
 		font-size: 1rem;
 	}
 
-	.home__sticky-notes {
-		display: none;
-	}
-
 	.home__data {
 		flex: 1;
 		display: flex;
@@ -3025,17 +2690,38 @@ img {
 }
 
 @media screen and (max-width: 767px) {
+	/* Two DOM columns read column-major (col1 top-to-bottom, then col2), but a
+	   single mobile column must read row-major (left card, right card, next
+	   row...). display:contents unwraps each .projects-col so its cards
+	   become direct flex children of .projects-grid, then explicit order
+	   interleaves them into true left-to-right, top-to-bottom reading order. */
 	.projects-grid {
-		grid-template-columns: 1fr;
-		gap: 0;
-	}
-
-	.projects-col {
+		display: flex;
+		flex-direction: column;
 		gap: 2.5rem;
 	}
 
-	.projects-col + .projects-col {
-		margin-top: 2.5rem;
+	.projects-col {
+		display: contents;
+	}
+
+	.projects-col:nth-child(1) .project-card:nth-child(1) {
+		order: 1;
+	}
+	.projects-col:nth-child(2) .project-card:nth-child(1) {
+		order: 2;
+	}
+	.projects-col:nth-child(1) .project-card:nth-child(2) {
+		order: 3;
+	}
+	.projects-col:nth-child(2) .project-card:nth-child(2) {
+		order: 4;
+	}
+	.projects-col:nth-child(1) .project-card:nth-child(3) {
+		order: 5;
+	}
+	.projects-col:nth-child(2) .project-card:nth-child(3) {
+		order: 6;
 	}
 }
 
@@ -3580,6 +3266,13 @@ img {
 .company-tab.active {
 	color: #fff;
 	background: var(--title-color);
+}
+
+.company-tab__role {
+	margin-left: 0.4rem;
+	font-size: 0.75rem;
+	font-weight: 400;
+	opacity: 0.6;
 }
 
 /* Job Details Styling */

@@ -142,93 +142,6 @@ lenis.on("scroll", ({ scroll, limit }) => {
 	syncHeaderColor();
 });
 
-/*=============== SERVICES MODAL ===============*/
-const modalViews = document.querySelectorAll(".services__modal"),
-	modalBtns = document.querySelectorAll(".services__button"),
-	modalClose = document.querySelectorAll(".services__modal-close");
-
-let modal = function (modalClick) {
-	modalViews[modalClick].classList.add("active-modal");
-};
-
-modalBtns.forEach((mb, i) => {
-	mb.addEventListener("click", () => {
-		modal(i);
-	});
-});
-
-/*=============== CONTACT FORM (simple client-side ack) ===============*/
-// document.addEventListener("DOMContentLoaded", function () {
-// 	const form = document.getElementById("contactForm");
-// 	const nameInput = document.getElementById("contactName");
-// 	const textarea = document.getElementById("contactMessage");
-// 	const note = document.getElementById("contactNote");
-// 	if (!form) return;
-
-// 	const DISCORD_WEBHOOK =
-// 		"https://discord.com/api/webhooks/1410494471929466963/DDOq095Uv-N04wCrEX2Ff7WLwu4oTiJH-wtCGQzHPwSC8lHAG3x0fvtV6TpY0HiV-C7k";
-
-// 	form.addEventListener("submit", async function (e) {
-// 		e.preventDefault();
-// 		const msg = (textarea.value || "").trim();
-// 		const sender = (
-// 			nameInput && nameInput.value ? nameInput.value : ""
-// 		).trim();
-// 		if (!msg) {
-// 			note.textContent = "Please enter a message.";
-// 			return;
-// 		}
-
-// 		const btn = form.querySelector(".contact__button");
-// 		if (btn) {
-// 			btn.disabled = true;
-// 			btn.textContent = "Sending...";
-// 		}
-// 		note.textContent = "";
-
-// 		try {
-// 			const payload = {
-// 				username: "nauqh.dev",
-// 				embeds: [
-// 					{
-// 						title: `From ${sender ? sender : "Anonymous"}`,
-// 						description: msg,
-// 						timestamp: new Date().toISOString(),
-// 					},
-// 				],
-// 			};
-
-// 			const res = await fetch(DISCORD_WEBHOOK, {
-// 				method: "POST",
-// 				headers: { "Content-Type": "application/json" },
-// 				body: JSON.stringify(payload),
-// 			});
-
-// 			if (!res.ok) throw new Error("Request failed: " + res.status);
-
-// 			textarea.value = "";
-// 			if (nameInput) nameInput.value = "";
-// 			note.textContent = "Thank you for your message!";
-// 			setTimeout(() => (note.textContent = ""), 4000);
-// 		} catch (err) {
-// 			note.textContent = "Hmm. Something went wrong. Please try again.";
-// 		} finally {
-// 			if (btn) {
-// 				btn.disabled = false;
-// 				btn.textContent = "Send";
-// 			}
-// 		}
-// 	});
-// });
-
-modalClose.forEach((mc) => {
-	mc.addEventListener("click", () => {
-		modalViews.forEach((mv) => {
-			mv.classList.remove("active-modal");
-		});
-	});
-});
-
 // Set up job span and contact button interactions safely
 document.addEventListener("DOMContentLoaded", function () {
 	const jobSpan = document.getElementById("jobSpan");
@@ -352,6 +265,10 @@ document.addEventListener("DOMContentLoaded", function () {
 					label: "Engineering",
 					items: [
 						{ name: "PySpark", icon: "assets/img/icons/spark.png" },
+						{
+							name: "Kafka",
+							icon: "https://cdn.worldvectorlogo.com/logos/kafka.svg",
+						},
 						{
 							name: "Airflow",
 							icon: "assets/img/icons/airflow.png",
@@ -557,6 +474,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		...document.querySelectorAll(".projects-col"),
 		document.querySelector(".github__grid"),
 		document.querySelector(".contact__container"),
+		document.querySelector(".archive__table"),
+		document.querySelector(".error__card"),
 	].filter(Boolean);
 
 	revealEls.forEach((el) => el.setAttribute("data-reveal", ""));
@@ -604,13 +523,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	/*=============== SCROLL PROGRESS BAR ===============*/
 	const scrollProgress = document.getElementById("scroll-progress");
-	window.addEventListener("scroll", () => {
-		const scrollTop = document.documentElement.scrollTop;
-		const scrollHeight =
-			document.documentElement.scrollHeight -
-			document.documentElement.clientHeight;
-		scrollProgress.style.width = (scrollTop / scrollHeight) * 100 + "%";
-	});
+	if (scrollProgress) {
+		window.addEventListener("scroll", () => {
+			const scrollTop = document.documentElement.scrollTop;
+			const scrollHeight =
+				document.documentElement.scrollHeight -
+				document.documentElement.clientHeight;
+			scrollProgress.style.width = (scrollTop / scrollHeight) * 100 + "%";
+		});
+	}
 
 	/*=============== PROJECT DRAWER ===============*/
 	const projectDrawer = document.getElementById("project-drawer");
@@ -621,6 +542,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	const drawerYear = document.getElementById("drawerYear");
 	const drawerImg = document.getElementById("drawerImg");
 	const drawerThumbs = document.getElementById("drawerThumbs");
+	if (!projectDrawer) return;
 	// Autoplay: one full progress ring per image, then advance to the next.
 	const AUTOPLAY_MS = 4000; // keep in sync with .drawer-ring-fill duration
 	let galleryTimer = null;
@@ -1020,7 +942,46 @@ document.addEventListener("DOMContentLoaded", function () {
 			.join("");
 	}
 
+	const CACHE_KEY = "gh-panel-cache-v1";
+	const CACHE_TTL = 60 * 60 * 1000; // 1h - avoids re-hitting the GitHub API on every page load
+
+	function readCache() {
+		try {
+			const parsed = JSON.parse(localStorage.getItem(CACHE_KEY));
+			if (!parsed || !parsed.contributions || !parsed.repos) return null;
+			return parsed;
+		} catch {
+			return null;
+		}
+	}
+
+	function writeCache(contributions, repos) {
+		try {
+			localStorage.setItem(
+				CACHE_KEY,
+				JSON.stringify({ contributions, repos, savedAt: Date.now() }),
+			);
+		} catch {
+			// storage unavailable/full - caching is a nice-to-have, skip silently
+		}
+	}
+
+	function renderFrom(contributions, repos) {
+		renderStats(contributions);
+		renderRepos(
+			[...repos]
+				.sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
+				.slice(0, 4),
+		);
+	}
+
 	async function load() {
+		const cached = readCache();
+		if (cached && Date.now() - cached.savedAt < CACHE_TTL) {
+			renderFrom(cached.contributions, cached.repos);
+			return;
+		}
+
 		try {
 			const [contribRes, reposRes] = await Promise.all([
 				fetch(
@@ -1039,15 +1000,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			if (!contrib.contributions || !contrib.contributions.length)
 				throw new Error("no contributions");
 
-			renderStats(contrib.contributions);
-			renderRepos(
-				[...repos]
-					.sort(
-						(a, b) => new Date(b.pushed_at) - new Date(a.pushed_at),
-					)
-					.slice(0, 4),
-			);
+			writeCache(contrib.contributions, repos);
+			renderFrom(contrib.contributions, repos);
 		} catch (err) {
+			if (cached) {
+				renderFrom(cached.contributions, cached.repos);
+				return;
+			}
 			statsEl.innerHTML = `<p class="github__error">Couldn't load GitHub data right now - <a href="${GITHUB_URL}" target="_blank" rel="noopener">view my profile</a>.</p>`;
 			reposEl.innerHTML = "";
 		}
