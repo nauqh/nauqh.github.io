@@ -473,6 +473,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		document.querySelector(".experience-container"),
 		...document.querySelectorAll(".projects-col"),
 		document.querySelector(".github__grid"),
+		document.querySelector(".building__card"),
 		document.querySelector(".contact__container"),
 		document.querySelector(".archive__table"),
 		document.querySelector(".error__card"),
