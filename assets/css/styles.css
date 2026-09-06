@@ -1481,7 +1481,7 @@ img {
 	position: absolute;
 	inset: 0;
 	background: rgba(0, 0, 0, 0);
-	transition: background 0.4s ease;
+	transition: background 0.45s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 #project-drawer.active .project-drawer__backdrop {
@@ -1499,7 +1499,7 @@ img {
 	display: flex;
 	flex-direction: column;
 	transform: translateX(calc(100% + 1rem));
-	transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+	transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 @media screen and (max-width: 480px) {
@@ -1514,6 +1514,22 @@ img {
 
 #project-drawer.active .project-drawer__panel {
 	transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.project-drawer__backdrop,
+	.project-drawer__panel {
+		transition: opacity 0.2s ease, background 0.2s ease;
+	}
+	.project-drawer__panel {
+		transform: none;
+		opacity: 0;
+		pointer-events: none;
+	}
+	#project-drawer.active .project-drawer__panel {
+		opacity: 1;
+		pointer-events: all;
+	}
 }
 
 .project-drawer__head {
