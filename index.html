@@ -470,28 +470,28 @@
                     <div class="building__grid">
                         <div class="building__media">
                             <div class="building__frame">
-                                <video src="assets/img/demo.mp4" poster="assets/img/pixel-knights/island.png"
-                                    autoplay muted loop playsinline preload="metadata" aria-label="The Pixel Knights island defending a raid as errors come and go"></video>
-                            </div>
-                            <div class="building__status">
-                                <span class="building__live"><i></i> on the marketplace</span>
+                                <iframe id="pixelKnightsDemo" src="pixel-knights-demo.html"
+                                    title="Interactive Pixel Knights demo" loading="lazy"></iframe>
                             </div>
                         </div>
 
                         <div class="building__body">
+                            <div class="building__status">
+                                <span class="building__live"><i></i> interactive demo</span>
+                            </div>
                             <h3 class="building__name">Pixel Knights</h3>
                             <p class="building__pitch">
-                                A VS Code extension that turns your error diagnostics into a living island in
-                                the sidebar. Break the build and red raiders land on the shore; fix the errors
-                                and the garrison cuts them down.
+                                A VS Code extension that turns error diagnostics into a living island. Break the
+                                build and red raiders land on the shore; fix the errors and the garrison cuts them down.
                             </p>
 
-                            <div class="building__tease">
-                                <strong>on the workbench</strong>
-                                <p>the island remembers next. levels, streaks and a settlement that
-                                    grows as you ship, with work-in-progress carried across the fields
-                                    to the keep.</p>
+                            <div class="building__demo-controls" aria-label="Try the Pixel Knights demo">
+                                <span class="building__demo-label">try it</span>
+                                <button type="button" data-pixel-knights-errors="0" aria-pressed="true" title="Clear the raid">clean</button>
+                                <button type="button" data-pixel-knights-errors="3" aria-pressed="false" title="Trigger a raid">errors</button>
+                                <button type="button" data-pixel-knights-colour="colour2" aria-pressed="false" title="Switch faction colour">black faction</button>
                             </div>
+                            <p class="building__demo-help">Open the activity panel in the island to read the live activity and chronicle.</p>
 
                             <div class="building__tech">
                                 <span>typescript</span><span>esbuild</span><span>canvas 2d</span><span>tiny-swords</span>
@@ -505,6 +505,7 @@
                                         target="_blank" class="stack-btn stack-btn--dark">install on marketplace</a>
                                 </div>
                             </div>
+                            <p class="building__credit">Pixel art from <a href="https://pixelfrog-assets.itch.io/tiny-swords" target="_blank" rel="noopener">Tiny Swords by Pixel Frog</a>.</p>
                         </div>
                     </div>
                 </div>
@@ -742,6 +743,9 @@
 
     <!--=============== LENIS SMOOTH SCROLL ===============-->
     <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>
+
+    <!--=============== PIXEL KNIGHTS DEMO ===============-->
+    <script src="assets/js/pixel-knights-demo.js"></script>
 
     <!--=============== MAIN JS ===============-->
     <script src="assets/js/main.js"></script>

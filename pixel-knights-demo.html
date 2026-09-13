@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Knights Demo</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --water: #47aba9;
+            --well: #1f252c;
+            --slate: #525b66;
+            --rim: #444553;
+            --gold-line: #ecc76a;
+            --paper: #f3dda0;
+            --gold: #e7bd4d;
+            --red: #ef7a6e;
+            --green: #9fc77d;
+            --blue: #8fbce0;
+            --stone: #8ca0ad;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: var(--water);
+            font: 11px/1.4 Inter, ui-sans-serif, system-ui, sans-serif;
+        }
+
+        #stage {
+            position: absolute;
+            inset: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(31, 37, 44, .7) transparent;
+            image-rendering: pixelated;
+        }
+
+        #stage::-webkit-scrollbar,
+        #activity-log::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #stage::-webkit-scrollbar-track,
+        #activity-log::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #stage::-webkit-scrollbar-button,
+        #activity-log::-webkit-scrollbar-button {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        #stage::-webkit-scrollbar-thumb,
+        #activity-log::-webkit-scrollbar-thumb {
+            border: 2px solid transparent;
+            border-radius: 999px;
+            background: rgba(31, 37, 44, .7);
+            background-clip: content-box;
+        }
+
+        #stage::-webkit-scrollbar-thumb:hover,
+        #activity-log::-webkit-scrollbar-thumb:hover {
+            background: rgba(31, 37, 44, .95);
+            background-clip: content-box;
+        }
+
+        #world {
+            image-rendering: pixelated;
+        }
+
+        #stage:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: -2px;
+        }
+
+        canvas {
+            position: sticky;
+            top: 0;
+            display: block;
+            margin: 0 auto;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        #activity-hud {
+            position: absolute;
+            top: 10px;
+            right: 18px;
+            left: 10px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            color: var(--paper);
+            pointer-events: none;
+        }
+
+        #activity-toggle {
+            align-self: flex-end;
+            max-width: 100%;
+            border: 1px solid var(--rim);
+            border-radius: 3px;
+            padding: 5px 9px;
+            background: var(--slate);
+            color: var(--paper);
+            box-shadow: inset 0 0 0 1px var(--slate), inset 0 0 0 2px var(--gold-line), 2px 2px 0 rgba(16, 27, 39, .6);
+            cursor: pointer;
+            font: inherit;
+            text-align: left;
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, .45);
+            pointer-events: auto;
+        }
+
+        #activity-toggle:hover { background: #5f6975; }
+        #activity-toggle:active { transform: scale(.98); }
+        #activity-mark, #activity-chevron {
+            width: 16px;
+            height: 16px;
+            vertical-align: -3px;
+            image-rendering: pixelated;
+        }
+        #activity-mark { margin-right: 6px; }
+        #activity-chevron { margin-left: 7px; transform: rotate(-90deg); }
+        #activity-toggle[aria-expanded="true"] #activity-chevron { transform: rotate(90deg); }
+        #activity-state { font-weight: 700; letter-spacing: .02em; }
+
+        #activity-panel {
+            position: relative;
+            align-self: flex-end;
+            width: min(290px, 100%);
+            margin-top: 4px;
+            padding: 17px 14px 19px;
+            pointer-events: auto;
+            filter: drop-shadow(2px 3px 0 rgba(16, 27, 39, .55));
+        }
+
+        .paper {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template: 32px 1fr 32px / 32px 1fr 32px;
+            pointer-events: none;
+        }
+        .paper i {
+            display: block;
+            background-image: var(--ui-frame);
+            background-repeat: no-repeat;
+            image-rendering: pixelated;
+        }
+        .paper .tl { background-size: 160px 160px; background-position: 0 0; }
+        .paper .t { background-size: 500% 160px; background-position: 50% 0; }
+        .paper .tr { background-size: 160px 160px; background-position: 100% 0; }
+        .paper .l { background-size: 160px 500%; background-position: 0 50%; }
+        .paper .c { background: var(--slate); }
+        .paper .r { background-size: 160px 500%; background-position: 100% 50%; }
+        .paper .bl { background-size: 160px 160px; background-position: 0 100%; }
+        .paper .b { background-size: 500% 160px; background-position: 50% 100%; }
+        .paper .br { background-size: 160px 160px; background-position: 100% 100%; }
+        .activity-section { position: relative; padding: 2px; }
+        .activity-section + .activity-section { margin-top: 6px; }
+        .activity-heading {
+            margin: 0 0 4px 1px;
+            color: var(--gold);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .14em;
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, .5);
+        }
+        #activity-live, #activity-log {
+            padding: 4px 7px;
+            border-radius: 2px;
+            background: var(--well);
+            box-shadow: inset 0 0 0 1px var(--rim);
+        }
+        .activity-row {
+            display: flex;
+            gap: 7px;
+            min-height: 18px;
+            padding: 1px 0;
+            align-items: center;
+        }
+        .activity-actor {
+            display: flex;
+            flex: 0 0 86px;
+            gap: 5px;
+            align-items: center;
+            overflow: hidden;
+            font-weight: 700;
+        }
+        .activity-badge {
+            display: inline-flex;
+            width: 15px;
+            height: 15px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid currentColor;
+            border-radius: 1px;
+            font-size: 9px;
+            line-height: 1;
+        }
+        .activity-action { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .activity-combat { color: var(--red); }
+        .activity-work { color: var(--gold); }
+        .activity-defense { color: var(--blue); }
+        .activity-muted { color: var(--stone); }
+        #activity-log {
+            height: min(10.5em, 24vh);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(31, 37, 44, .7) transparent;
+        }
+        .chat-line { padding: 1px 0 1px 1.2em; text-indent: -1.2em; overflow-wrap: anywhere; }
+        .chat-time, .chat-note { color: var(--stone); }
+        .chat-system { color: var(--gold); }
+        .chat-warning { color: var(--red); font-weight: 700; }
+        .chat-loot { color: var(--green); }
+        .chat-travel { color: #c9d1d8; }
+        .chat-who { font-weight: 700; }
+        .who-knight, .who-warrior { color: #e0b573; }
+        .who-lancer { color: var(--blue); }
+        .who-archer, .who-archers { color: var(--green); }
+        .who-monk { color: #fff; }
+        .who-pawn { color: #d6a26e; }
+        .who-red-raider { color: var(--red); }
+        .chat-item { color: var(--paper); white-space: nowrap; }
+        .chat-item img { width: 16px; height: 16px; margin-right: 1px; vertical-align: -4px; image-rendering: pixelated; }
+
+        @media (max-width: 480px) {
+            #activity-hud { right: 12px; left: 8px; }
+            #activity-panel { width: min(270px, calc(100vw - 20px)); }
+        }
+    </style>
+</head>
+<body>
+    <div id="stage" tabindex="0" aria-label="Pixel Knights interactive island">
+        <div id="world"><canvas id="knight"></canvas></div>
+    </div>
+
+    <section id="activity-hud" aria-label="Pixel Knights activity">
+        <button id="activity-toggle" type="button" aria-expanded="false" aria-controls="activity-panel">
+            <img id="activity-mark" alt="">
+            <span id="activity-state">Island at peace</span>
+            <img id="activity-chevron" alt="">
+        </button>
+        <div id="activity-panel" hidden>
+            <div class="paper" aria-hidden="true"><i class="tl"></i><i class="t"></i><i class="tr"></i><i class="l"></i><i class="c"></i><i class="r"></i><i class="bl"></i><i class="b"></i><i class="br"></i></div>
+            <div class="activity-section">
+                <div class="activity-heading">LIVE ACTIVITY</div>
+                <div id="activity-live" role="list"></div>
+            </div>
+            <div class="activity-section">
+                <div class="activity-heading">CHRONICLE</div>
+                <div id="activity-log" role="log" aria-live="polite"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const root = "assets/pixel-knights/media/";
+        const units = (faction, file) => `${root}tiny-swords/Units/${faction} Units/${file}`;
+        const buildings = (faction, file) => `${root}tiny-swords/Buildings/${faction} Buildings/${file}`;
+
+        const colourFiles = {
+            warrior_Idle: ["units", "Warrior/Warrior_Idle.png"],
+            warrior_Run: ["units", "Warrior/Warrior_Run.png"],
+            warrior_Guard: ["units", "Warrior/Warrior_Guard.png"],
+            warrior_Attack1: ["units", "Warrior/Warrior_Attack1.png"],
+            archer_idle: ["units", "Archer/Archer_Idle.png"],
+            archer_run: ["units", "Archer/Archer_Run.png"],
+            archer_shoot: ["units", "Archer/Archer_Shoot.png"],
+            arrow: ["units", "Archer/Arrow.png"],
+            lancer_idle: ["units", "Lancer/Lancer_Idle.png"],
+            lancer_run: ["units", "Lancer/Lancer_Run.png"],
+            lancer_attack: ["units", "Lancer/Lancer_Right_Attack.png"],
+            monk_idle: ["units", "Monk/Idle.png"],
+            monk_run: ["units", "Monk/Run.png"],
+            pawn_idle: ["units", "Pawn/Pawn_Idle.png"],
+            pawn_run: ["units", "Pawn/Pawn_Run.png"],
+            pawn_axe: ["units", "Pawn/Pawn_Interact Axe.png"],
+            pawn_pick: ["units", "Pawn/Pawn_Interact Pickaxe.png"],
+            pawn_run_wood: ["units", "Pawn/Pawn_Run Wood.png"],
+            pawn_idle_wood: ["units", "Pawn/Pawn_Idle Wood.png"],
+            pawn_run_gold: ["units", "Pawn/Pawn_Run Gold.png"],
+            pawn_idle_gold: ["units", "Pawn/Pawn_Idle Gold.png"],
+            pawn_idle_axe: ["units", "Pawn/Pawn_Idle Axe.png"],
+            pawn_run_axe: ["units", "Pawn/Pawn_Run Axe.png"],
+            pawn_idle_pick: ["units", "Pawn/Pawn_Idle Pickaxe.png"],
+            pawn_run_pick: ["units", "Pawn/Pawn_Run Pickaxe.png"],
+            pawn_knife: ["units", "Pawn/Pawn_Interact Knife.png"],
+            pawn_idle_knife: ["units", "Pawn/Pawn_Idle Knife.png"],
+            pawn_run_knife: ["units", "Pawn/Pawn_Run Knife.png"],
+            pawn_idle_meat: ["units", "Pawn/Pawn_Idle Meat.png"],
+            pawn_run_meat: ["units", "Pawn/Pawn_Run Meat.png"],
+            castle: ["buildings", "Castle.png"],
+            tower: ["buildings", "Tower.png"],
+            barracks: ["buildings", "Barracks.png"],
+            archery: ["buildings", "Archery.png"],
+            house: ["buildings", "House1.png"],
+            house2: ["buildings", "House2.png"],
+            house3: ["buildings", "House3.png"],
+            monastery: ["buildings", "Monastery.png"]
+        };
+
+        function makeFaction(faction) {
+            return Object.fromEntries(Object.entries(colourFiles).map(([key, [kind, file]]) => [
+                key,
+                kind === "units" ? units(faction, file) : buildings(faction, file)
+            ]));
+        }
+
+        window.__SPRITES__ = {
+            colour1: makeFaction("Blue"),
+            colour2: makeFaction("Black")
+        };
+
+        window.__SCENE__ = {
+            enemy_Idle: units("Red", "Warrior/Warrior_Idle.png"),
+            enemy_Run: units("Red", "Warrior/Warrior_Run.png"),
+            enemy_Attack1: units("Red", "Warrior/Warrior_Attack1.png"),
+            tilemap: `${root}tiny-swords/Terrain/Tileset/Tilemap_color1.png`,
+            foam: `${root}tiny-swords/Terrain/Tileset/Water Foam.png`,
+            rock: `${root}tiny-swords/Terrain/Decorations/Rocks/Rock1.png`,
+            rock2: `${root}tiny-swords/Terrain/Decorations/Rocks/Rock2.png`,
+            rock3: `${root}tiny-swords/Terrain/Decorations/Rocks/Rock3.png`,
+            rock4: `${root}tiny-swords/Terrain/Decorations/Rocks/Rock4.png`,
+            bush: `${root}tiny-swords/Terrain/Decorations/Bushes/Bushe1.png`,
+            bush2: `${root}tiny-swords/Terrain/Decorations/Bushes/Bushe2.png`,
+            bush3: `${root}tiny-swords/Terrain/Decorations/Bushes/Bushe3.png`,
+            bush4: `${root}tiny-swords/Terrain/Decorations/Bushes/Bushe4.png`,
+            tree: `${root}tiny-swords/Terrain/Resources/Wood/Trees/Tree1.png`,
+            tree2: `${root}tiny-swords/Terrain/Resources/Wood/Trees/Tree2.png`,
+            tree3: `${root}tiny-swords/Terrain/Resources/Wood/Trees/Tree3.png`,
+            tree4: `${root}tiny-swords/Terrain/Resources/Wood/Trees/Tree4.png`,
+            stump: `${root}tiny-swords/Terrain/Resources/Wood/Trees/Stump 1.png`,
+            gold: `${root}tiny-swords/Terrain/Resources/Gold/Gold Stones/Gold Stone 4.png`,
+            gold_res: `${root}tiny-swords/Terrain/Resources/Gold/Gold Resource/Gold_Resource.png`,
+            gold_hl: `${root}tiny-swords/Terrain/Resources/Gold/Gold Stones/Gold Stone 4_Highlight.png`,
+            gold_res_hl: `${root}tiny-swords/Terrain/Resources/Gold/Gold Resource/Gold_Resource_Highlight.png`,
+            wood_res: `${root}tiny-swords/Terrain/Resources/Wood/Wood Resource/Wood Resource.png`,
+            meat_res: `${root}tiny-swords/Terrain/Resources/Meat/Meat Resource/Meat Resource.png`,
+            tool_axe: `${root}tiny-swords/Terrain/Resources/Tools/Tool_02.png`,
+            tool_pick: `${root}tiny-swords/Terrain/Resources/Tools/Tool_04.png`,
+            sheep_idle: `${root}tiny-swords/Terrain/Resources/Meat/Sheep/Sheep_Idle.png`,
+            sheep_move: `${root}tiny-swords/Terrain/Resources/Meat/Sheep/Sheep_Move.png`,
+            sheep_graze: `${root}tiny-swords/Terrain/Resources/Meat/Sheep/Sheep_Grass.png`,
+            wrock1: `${root}tiny-swords/Terrain/Decorations/Rocks in the Water/Water Rocks_01.png`,
+            wrock3: `${root}tiny-swords/Terrain/Decorations/Rocks in the Water/Water Rocks_03.png`,
+            duck: `${root}tiny-swords/Terrain/Decorations/Rubber Duck/Rubber duck.png`,
+            dust: `${root}tiny-swords/Particle FX/Dust_01.png`
+        };
+
+        window.__UI__ = {
+            frame: `${root}tiny-swords/UI Elements/UI Elements/Papers/SpecialPaper.png`,
+            wood: `${root}tiny-swords/UI Elements/UI Elements/Icons/Icon_02.png`,
+            gold: `${root}tiny-swords/UI Elements/UI Elements/Icons/Icon_03.png`,
+            meat: `${root}tiny-swords/UI Elements/UI Elements/Icons/Icon_04.png`,
+            shield: `${root}tiny-swords/UI Elements/UI Elements/Icons/Icon_06.png`,
+            sword: `${root}tiny-swords/UI Elements/UI Elements/Icons/Icon_05.png`,
+            arrow: `${root}tiny-swords/UI Elements/UI Elements/Icons/Icon_08.png`
+        };
+        window.__INITIAL_COLOUR__ = "colour1";
+    </script>
+    <script src="assets/pixel-knights/companion.js"></script>
+</body>
+</html>
