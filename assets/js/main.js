@@ -37,8 +37,13 @@ const navBackdrop = document.getElementById("navBackdrop");
 const navMenuBtn = document.getElementById("navMenuBtn");
 const navClose = document.getElementById("navClose");
 
+// clip-path only hides the closed menu visually; inert also takes its links
+// out of the tab order and the accessibility tree.
+navOverlay.inert = true;
+
 function openNav() {
 	navOverlay.classList.add("active");
+	navOverlay.inert = false;
 	navBackdrop.classList.add("active");
 	document.body.style.overflow = "hidden";
 	lenis.stop();
@@ -46,6 +51,7 @@ function openNav() {
 
 function closeNav() {
 	navOverlay.classList.remove("active");
+	navOverlay.inert = true;
 	navBackdrop.classList.remove("active");
 	document.body.style.overflow = "";
 	lenis.start();

@@ -517,7 +517,8 @@ img {
 	display: flex;
 	flex-direction: column;
 	padding: 0 2rem;
-	box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+	/* Same hairline frame as the rest of the site, no soft shadow. */
+	border: 1px solid var(--title-color);
 	clip-path: inset(0 0 0 100%);
 	transition: clip-path 0.55s cubic-bezier(0.76, 0, 0.24, 1);
 	pointer-events: none;
@@ -603,19 +604,27 @@ img {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	counter-reset: nav-link;
+	/* 8 links can outgrow short viewports; scroll instead of clipping.
+	   The bleed margin lives here since overflow would clip the links'. */
+	min-height: 0;
+	overflow-y: auto;
+	margin: 0 -2rem;
 }
 
 .nav-overlay__link {
 	position: relative;
 	display: flex;
 	align-items: center;
-	font-size: clamp(1.5rem, 4vw, 2.25rem);
+	gap: 1rem;
+	font-size: clamp(1.5rem, 4vw, 2rem);
 	font-weight: 600;
 	color: var(--title-color);
 	letter-spacing: -0.01em;
 	line-height: 1;
-	padding: 1.4rem 1.25rem;
-	margin: 0 -2rem;
+	padding: 1.1rem 1.25rem;
+	flex-shrink: 0;
+	counter-increment: nav-link;
 	clip-path: inset(0 0 100% 0);
 	transition:
 		clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1),
@@ -633,8 +642,8 @@ img {
 	content: "";
 	position: absolute;
 	top: 0;
-	left: -2rem;
-	right: -2rem;
+	left: 0;
+	right: 0;
 	height: 1px;
 	background: #000;
 	transform: scaleX(0);
@@ -647,29 +656,39 @@ img {
 	transition-delay: 0.2s;
 }
 
-.nav-overlay__link:hover {
-	color: var(--first-color);
+/* Index number: 01, 02, ... */
+.nav-overlay__link::after {
+	content: counter(nav-link, decimal-leading-zero);
+	order: -1;
+	min-width: 1.5rem;
+	font-size: var(--smaller-font-size);
+	font-weight: var(--font-medium);
+	letter-spacing: 0.1em;
+	color: var(--text-color-light);
+	transition: color 0.15s;
 }
 
+.nav-overlay__link:hover {
+	color: var(--text-color-light);
+}
+
+.nav-overlay__link:hover::after {
+	color: var(--title-color);
+}
+
+/* One row of links; the column wrappers in the markup are flattened. */
 .nav-overlay__footer {
 	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.5rem;
 	border-top: 1px solid #000;
 	margin: 0 -2rem;
+	padding: 1.25rem;
 	flex-shrink: 0;
 }
 
 .nav-overlay__footer-col {
-	display: flex;
-	flex-direction: column;
-	gap: 0.4rem;
-	padding: 1.25rem;
-	flex: 1;
-}
-
-.nav-overlay__footer-col:last-child {
-	border-left: 1px solid #000;
-	flex: 0 0 auto;
-	min-width: 120px;
+	display: contents;
 }
 
 .nav-overlay__footer-col a {
