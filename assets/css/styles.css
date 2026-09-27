@@ -1138,76 +1138,6 @@ img {
 	transform: scale(1.1);
 }
 
-/*=============== SKILLS ===============*/
-.skills__container {
-	row-gap: 2rem;
-	padding-top: 1rem;
-}
-
-.skills__content {
-	background-color: #ffffff;
-	padding: 1.5rem;
-	border-radius: 0;
-	transition: transform 0.3s ease-in-out;
-}
-
-.skills__content:hover {
-	cursor: pointer;
-	transform: translateY(-5px);
-}
-
-.skills__content:not(:hover) {
-	transform: translateY(0px);
-}
-
-.skills__title {
-	font-size: var(--normal-font-size);
-	font-weight: var(--font-medium);
-	color: var(--first-color);
-	text-align: center;
-	margin-bottom: 1.5rem;
-}
-
-.skills__box {
-	display: flex;
-	justify-content: center;
-	column-gap: 2.5rem;
-}
-
-.skills__group {
-	display: grid;
-	align-content: flex-start;
-	row-gap: 1rem;
-}
-
-.skills__data {
-	display: flex;
-	column-gap: 0.5rem;
-	align-items: center;
-}
-
-.skills .check-icon {
-	font-size: 1.5rem;
-	color: var(--first-color);
-	transition: transform 0.3s ease;
-}
-
-.skills .check-icon:hover {
-	transform: translateY(-6px);
-}
-
-.skills__name {
-	font-size: 1rem;
-	font-weight: var(--font-medium);
-	line-height: 18px;
-	color: var(--title-color);
-}
-
-.skills__level {
-	font-size: var(--tiny-font-size);
-	color: var(--text-color-light);
-}
-
 /*=============== QUALIFICATION ===============*/
 .qualification {
 	position: relative;
@@ -1946,14 +1876,7 @@ img {
 		grid-template-columns: repeat(3, 1fr);
 	}
 
-	.skills__container {
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
 
-	.skills__content {
-		padding: 1.5rem;
-	}
 }
 
 @media screen and (min-width: 510px) {
@@ -1976,15 +1899,6 @@ img {
 	.about__info {
 		grid-template-columns: repeat(3, 140px);
 		justify-content: center;
-	}
-
-	.skills__container {
-		justify-content: center;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.5rem;
-	}
-	.skills__content {
-		padding: 2rem 1.5rem;
 	}
 
 	.qualification__container {
@@ -2017,11 +1931,6 @@ img {
 		padding: 1rem 1.25rem;
 	}
 
-	.skills__container {
-		grid-template-columns: repeat(2, 1fr);
-		column-gap: 2rem;
-		row-gap: 2rem;
-	}
 
 	.qualification__info {
 		width: 600px;
@@ -2078,23 +1987,9 @@ img {
 		font-size: 2rem;
 	}
 
-	.skills__container {
-		grid-template-columns: repeat(2, 1fr);
-		column-gap: 3rem;
-		row-gap: 2.5rem;
-	}
 
-	.skills__box {
-		column-gap: 6rem;
-	}
 
-	.skills__title {
-		font-size: var(--h2-font-size);
-	}
 
-	.skills__name {
-		font-size: 1.2rem;
-	}
 
 	.qualification__title {
 		margin-bottom: 3rem;
@@ -2557,8 +2452,6 @@ img {
 
 /* Cursor defaults */
 .section__title,
-.skills__name,
-.skills__level,
 .timeline-title,
 .timeline-position,
 .timeline-subtitle2,
@@ -2769,288 +2662,102 @@ img {
 	}
 }
 
-/*=============== TECH STACK PANELS ===============*/
+/*=============== TECH STACK ===============*/
+/* Bento grid: 1px gaps over a tinted background draw the hairline dividers. */
 .stack {
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1px;
 	margin-top: 1rem;
-	/* Fixed height so hovering only ever changes panel widths — the row never
-	   grows taller when a panel with more chips opens. */
-	height: 460px;
 	border: 1px solid var(--title-color);
 	box-shadow: 10px 10px 0 var(--title-color);
-	background: #ffffff;
-	overflow: hidden;
+	background: rgba(0, 0, 0, 0.12);
 }
 
-.stack__panel {
-	/* Collapsed panels share the remaining width; the active one takes a fixed
-	   larger share so its icon grid has room to lay out. */
-	flex: 1 1 0;
-	min-width: 0;
-	/* anchors the watermark icon to the panel itself */
-	position: relative;
+.stack__card {
 	display: flex;
 	flex-direction: column;
-	padding: 1.5rem 1.25rem;
-	border: none;
-	border-right: 1px solid rgba(0, 0, 0, 0.12);
-	background: #f5f5f3;
-	font-family: inherit;
-	text-align: left;
-	cursor: pointer;
-	overflow: hidden;
-	transition:
-		flex-grow 0.36s cubic-bezier(0.4, 0, 0.2, 1),
-		background-color 0.25s ease;
-}
-
-.stack__panel:last-child {
-	border-right: none;
-}
-
-.stack__panel:nth-child(2) {
-	background: #edf4ff;
-}
-.stack__panel:nth-child(3) {
-	background: #fefce8;
-}
-.stack__panel:nth-child(4) {
+	gap: 1.25rem;
+	padding: 2rem 1.75rem;
 	background: #f5f3ff;
 }
 
-.stack__panel.active {
-	flex-grow: 2.6;
+.stack__card:nth-child(2) {
+	background: #fefce8;
+}
+.stack__card:nth-child(3) {
+	background: #edf7f0;
+}
+.stack__card:nth-child(4) {
+	background: #f5f5f3;
 }
 
-.stack__panel:focus-visible {
-	outline: 2px solid var(--first-color);
-	outline-offset: -4px;
-}
-
-.stack__head {
+.stack__label {
 	display: flex;
-	align-items: baseline;
-	justify-content: space-between;
-	gap: 1rem;
-	font-size: var(--smaller-font-size);
-	text-transform: uppercase;
-	letter-spacing: 0.14em;
-	color: var(--text-color-light);
-	white-space: nowrap;
-}
-
-.stack__panel.active .stack__head {
-	color: var(--title-color);
-}
-
-.stack__body {
-	/* Hidden while collapsed rather than removed, so the reveal is a fade and
-	   the panel width is the only thing actually animating. */
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	/* Chips sit just above the headline rather than floating mid-panel, so a
-	   short list and a long one both read as one block. */
-	justify-content: flex-end;
-	padding-bottom: 1.5rem;
-	overflow: hidden;
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(8px);
-	/* Don't let the hidden chips swallow taps — the whole panel must stay
-	   clickable even in the region they occupy when collapsed. */
-	pointer-events: none;
-	transition:
-		opacity 0.22s ease,
-		transform 0.22s ease,
-		visibility 0s linear 0.32s;
-}
-
-.stack__panel.active .stack__body {
-	opacity: 1;
-	visibility: visible;
-	transform: none;
-	pointer-events: auto;
-	transition:
-		opacity 0.28s ease 0.1s,
-		transform 0.28s ease 0.1s,
-		visibility 0s;
-}
-
-.stack__category + .stack__category {
-	margin-top: 0.85rem;
-}
-
-.stack__category-label {
-	margin-bottom: 0.45rem;
+	align-items: center;
+	gap: 0.5rem;
 	font-size: var(--smaller-font-size);
 	font-weight: var(--font-medium);
 	text-transform: uppercase;
-	letter-spacing: 0.12em;
-	color: var(--text-color-light);
+	letter-spacing: 0.14em;
+	color: var(--title-color);
 }
 
-.stack__item-grid {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.4rem;
-}
-
-.stack__item {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.4rem;
-	padding: 0.3rem 0.6rem;
-	border: 1px solid rgba(0, 0, 0, 0.15);
-	background: rgba(255, 255, 255, 0.6);
-	font-size: var(--small-font-size);
-	color: var(--text-color);
-	white-space: nowrap;
-}
-
-.stack__item img {
-	width: 16px;
-	height: 16px;
-	object-fit: contain;
-	flex-shrink: 0;
+.stack__label i {
+	font-size: 1.15rem;
 }
 
 .stack__headline {
-	margin-top: auto;
 	font-size: 1.2rem;
 	font-weight: var(--font-medium);
 	line-height: 1.35;
 	color: var(--title-color);
 }
 
-/* Discipline watermark icon: a centred watermark inside each panel on
-   desktop, filling the panel behind its content. Hidden on mobile (the
-   stacked cards show the label + phrase instead). */
-.stack__panel-icon {
+/* Push both tiers to the bottom so chips line up across cards in a row. */
+.stack__headline + .stack__tier {
+	margin-top: auto;
+}
+
+.stack__tier-label {
 	display: block;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 3.5rem;
-	line-height: 1;
+	margin-bottom: 0.5rem;
+	font-size: var(--tiny-font-size);
+	font-weight: var(--font-medium);
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	color: var(--text-color-light);
+}
+
+.stack__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+.stack__chips li {
+	padding: 0.3rem 0.65rem;
+	border: 1px solid var(--title-color);
+	background: #ffffff;
+	font-size: var(--small-font-size);
 	color: var(--title-color);
-	opacity: 0.06;
-	pointer-events: none;
-	z-index: 0;
-	transition:
-		opacity 0.3s ease,
-		transform 0.3s ease;
+	white-space: nowrap;
 }
 
-.stack__panel.active .stack__panel-icon {
-	opacity: 0.03;
-	transform: translate(-50%, -50%) translateY(-6px) scale(0.96);
+.stack__tier--muted .stack__chips li {
+	border: 1px dashed rgba(0, 0, 0, 0.3);
+	background: transparent;
+	color: var(--text-color);
 }
 
-@media screen and (max-width: 968px) {
-	/* Horizontal collapse leaves no readable width on narrow screens, so the
-	   panels stack. They start collapsed and expand on tap (accordion). */
+@media screen and (max-width: 768px) {
 	.stack {
-		flex-direction: column;
-		height: auto;
+		grid-template-columns: 1fr;
 		box-shadow: 6px 6px 0 var(--title-color);
 	}
 
-	.stack__panel {
-		flex: none;
-		/* anchor the watermark icon to the card itself */
-		position: relative;
-		border-right: none;
-		border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-		cursor: pointer;
-		gap: 0;
-		padding: 1.75rem 1.25rem 2.25rem;
-		/* Buttery accordion: the chips live in their own grid row that eases
-		   0fr -> 1fr, so they unfold to their exact height instead of a jumpy
-		   max-height chase. Collapsed cards keep their phrase; spacing comes
-		   from the original margins (row-gap is zero to match the old look). */
-		display: grid;
-		grid-template-rows: auto auto 0fr;
-		row-gap: 0;
-		overflow: hidden;
-		transition:
-			grid-template-rows 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
-			background-color 0.25s ease;
-	}
-
-	.stack__panel.active {
-		flex: none;
-		grid-template-rows: auto auto 1fr;
-	}
-
-	.stack__panel:last-child {
-		border-bottom: none;
-	}
-
-	/* Stacked panels read top-down — label, then the headline it belongs to,
-	   then the chips — instead of the desktop order where the headline anchors
-	   the bottom edge. */
-	.stack__head {
-		grid-row: 1;
-		margin-bottom: 0.4rem;
-	}
-
-	/* Tap hint: a “+” that flips to “×” on the open panel. */
-	.stack__head::after {
-		content: "+";
-		font-size: 1.4rem;
-		line-height: 1;
-		font-weight: 300;
-		transition: transform 0.3s ease;
-	}
-
-	.stack__panel.active .stack__head::after {
-		transform: rotate(45deg);
-	}
-
-	/* Watermark icons are desktop-only: the stacked mobile cards show the
-	   label + phrase instead, no dead space to fill. */
-	.stack__panel-icon {
-		display: none;
-	}
-
-	.stack__headline {
-		grid-row: 2;
-		margin-top: 0;
-		/* keep the original breathing room before the chips */
-		margin-bottom: 1.25rem;
-		font-size: 1.2rem;
-	}
-
-	/* Collapsed by default; the open panel's rows unfold. */
-	.stack__body,
-	.stack__panel.active .stack__body {
-		grid-row: 3;
-		min-height: 0;
-		justify-content: flex-start;
-		padding-bottom: 0;
-	}
-
-	/* Fade the chips in/out in step with the row so the reveal feels soft. */
-	.stack__panel .stack__body {
-		transition:
-			opacity 0.4s ease,
-			transform 0.4s ease,
-			visibility 0s linear 0.55s;
-	}
-
-	.stack__panel.active .stack__body {
-		transition:
-			opacity 0.45s ease 0.08s,
-			transform 0.45s ease 0.08s,
-			visibility 0s;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.stack__panel {
-			transition: background-color 0.25s ease;
-		}
+	.stack__card {
+		padding: 1.5rem 1.25rem;
 	}
 }
 
