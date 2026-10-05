@@ -61,7 +61,15 @@ navMenuBtn.addEventListener("click", openNav);
 navClose.addEventListener("click", closeNav);
 
 document.querySelectorAll("[data-close]").forEach((link) => {
-	link.addEventListener("click", closeNav);
+	link.addEventListener("click", (e) => {
+		closeNav();
+		// The sticky footer always reads as pinned in view, so the native jump
+		// to #contact barely moves. It's the last thing on the page: go to the end.
+		if (link.hash === "#contact") {
+			e.preventDefault();
+			lenis.scrollTo(lenis.limit);
+		}
+	});
 });
 
 navBackdrop.addEventListener("click", closeNav);
