@@ -2359,7 +2359,9 @@ img {
 	object-position: 50% 35%;
 	border-radius: 0;
 	margin: 0 auto;
-	box-shadow: none;
+	border: 1px solid var(--title-color);
+	box-shadow: 8px 8px 0 var(--title-color);
+	filter: saturate(0.75);
 	cursor: default;
 }
 
