@@ -553,43 +553,49 @@
                 <div class="building__card">
                     <div class="building__grid">
                         <div class="building__media">
-                            <div class="building__frame">
-                                <iframe id="pixelKnightsDemo" src="pixel-knights-demo.html"
-                                    title="Interactive Pixel Knights demo" loading="lazy"></iframe>
+                            <div class="building__window">
+                                <div class="building__window-bar" aria-hidden="true">
+                                    <span class="building__lights"><i></i><i></i><i></i></span>
+                                    <span class="building__window-title">discord / #music-room</span>
+                                </div>
+                                <div class="building__shots">
+                                    <img src="assets/img/alfred-2.png" alt="Alfred answering plain-language requests in Discord: showing the current track and queueing a song" data-alfred-shot="chat" loading="lazy">
+                                    <img src="assets/img/alfred-1.png" alt="Alfred queue message with playback controls and up-next tracks" data-alfred-shot="queue" loading="lazy" hidden>
+                                </div>
                             </div>
                         </div>
 
                         <div class="building__body">
                             <div class="building__status">
-                                <span class="building__live"><i></i> interactive demo</span>
+                                <span class="building__live"><i></i> in progress</span>
                             </div>
-                            <h3 class="building__name">Pixel Knights</h3>
+                            <h3 class="building__name">Alfred</h3>
                             <p class="building__pitch">
-                                A VS Code extension that turns error diagnostics into a living island. Break the
-                                build and red raiders land on the shore; fix the errors and the garrison cuts them down.
+                                A self-hosted music bot for Discord. Play from YouTube, Spotify and Deezer in your voice
+                                channels, or just ask: mention Alfred in plain language and it queues the song for you.
+                                One clean message with button controls, zero channel spam.
                             </p>
 
-                            <div class="building__demo-controls" aria-label="Try the Pixel Knights demo">
-                                <span class="building__demo-label">try it</span>
-                                <button type="button" data-pixel-knights-errors="0" aria-pressed="true" title="Clear the raid">clean</button>
-                                <button type="button" data-pixel-knights-errors="3" aria-pressed="false" title="Trigger a raid">errors</button>
-                                <button type="button" data-pixel-knights-colour="colour2" aria-pressed="false" title="Switch faction colour">black faction</button>
+                            <div class="building__demo-controls" aria-label="Switch Alfred screenshot">
+                                <span class="building__demo-label">see it</span>
+                                <button type="button" data-alfred-view="chat" aria-pressed="true">chat</button>
+                                <button type="button" data-alfred-view="queue" aria-pressed="false">queue</button>
                             </div>
-                            <p class="building__demo-help">Open the activity panel in the island to read the live activity and chronicle.</p>
 
                             <div class="building__tech">
-                                <span>typescript</span><span>esbuild</span><span>canvas 2d</span><span>tiny-swords</span>
+                                <span>python</span><span>hikari</span><span>lightbulb</span><span>lavalink</span>
                             </div>
 
                             <div class="building__actions">
                                 <div class="stack-btn-wrapper stack-btn-wrapper--dark">
                                     <div class="stack-btn__shadow-back"></div>
                                     <div class="stack-btn__shadow-mid"></div>
-                                    <a href="https://marketplace.visualstudio.com/items?itemName=nauqh.pixel-knights"
-                                        target="_blank" class="stack-btn stack-btn--dark">install on marketplace</a>
+                                    <a href="https://nauqh.github.io/alfred/" target="_blank"
+                                        class="stack-btn stack-btn--dark">visit alfred</a>
                                 </div>
+                                <a href="https://github.com/nauqh/alfred" target="_blank" rel="noopener"
+                                    class="building__link">view source</a>
                             </div>
-                            <p class="building__credit">Pixel art from <a href="https://pixelfrog-assets.itch.io/tiny-swords" target="_blank" rel="noopener">Tiny Swords by Pixel Frog</a>.</p>
                         </div>
                     </div>
                 </div>
@@ -828,8 +834,16 @@
     <!--=============== LENIS SMOOTH SCROLL ===============-->
     <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>
 
-    <!--=============== PIXEL KNIGHTS DEMO ===============-->
-    <script src="assets/js/pixel-knights-demo.js"></script>
+    <!--=============== ALFRED SCREENSHOTS ===============-->
+    <script>
+        document.querySelectorAll("[data-alfred-view]").forEach((button, _, buttons) => {
+            button.addEventListener("click", () => {
+                const view = button.dataset.alfredView;
+                buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+                document.querySelectorAll("[data-alfred-shot]").forEach((img) => (img.hidden = img.dataset.alfredShot !== view));
+            });
+        });
+    </script>
 
     <!--=============== MAIN JS ===============-->
     <script src="assets/js/main.js"></script>
