@@ -80,6 +80,11 @@ html {
 	scroll-behavior: smooth;
 }
 
+/* Lenis drives scrolling itself; native smooth scroll fights it every frame */
+html.lenis.lenis-smooth {
+	scroll-behavior: auto !important;
+}
+
 body,
 button,
 input,

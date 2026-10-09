@@ -284,12 +284,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	/*=============== SCROLL PROGRESS BAR ===============*/
 	const scrollProgress = document.getElementById("scroll-progress");
 	if (scrollProgress) {
-		window.addEventListener("scroll", () => {
-			const scrollTop = document.documentElement.scrollTop;
-			const scrollHeight =
-				document.documentElement.scrollHeight -
-				document.documentElement.clientHeight;
-			scrollProgress.style.width = (scrollTop / scrollHeight) * 100 + "%";
+		lenis.on("scroll", ({ progress }) => {
+			scrollProgress.style.width = progress * 100 + "%";
 		});
 	}
 
