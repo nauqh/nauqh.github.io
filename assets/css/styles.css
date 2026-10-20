@@ -194,6 +194,8 @@ img {
 	position: relative;
 	z-index: 1;
 	background-color: var(--body-color);
+	/* Rounded bottom edge, so the page reads as a sheet lifting off the footer. */
+	border-radius: 0 0 clamp(2rem, 6vw, 6rem) clamp(2rem, 6vw, 6rem);
 }
 
 .section {
@@ -1827,7 +1829,7 @@ img {
 	max-width: calc(1200px - 4rem);
 	width: calc(100% - 4rem);
 	margin: 0 auto;
-	padding: 1.5rem 0 2rem;
+	padding: 0.9rem 0;
 	border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -2801,19 +2803,36 @@ img {
 
 /*=============== CONTACT ===============*/
 .contact.section {
-	/* Rides at the bottom of the viewport, behind the page content (see the
-	   stacking on .main). Being sticky, it stays pinned to the bottom while the
-	   sections scroll over it, so the dark panel slides up out from under the
-	   closing section. It always fills 90% of the viewport height. */
-	position: sticky;
-	bottom: 0;
+	/* Scrolls up after the page like any section, but its content lags behind:
+	   --footer-reveal (0..1, set by main.js) eases it from 12.5rem raised down
+	   to rest, under a dark overlay that fades out. It sits behind .main, which
+	   hides the raised content. At least 85% of the viewport tall, taller only
+	   if the content needs it (stacked on mobile). */
+	position: relative;
 	width: 100%;
-	height: 90vh;
-	height: 90dvh;
+	/* Tuck up under .main's rounded bottom corners so they show footer. */
+	margin-top: calc(-1 * clamp(2rem, 6vw, 6rem));
+	min-height: 85vh;
+	min-height: 85dvh;
 	z-index: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	--footer-shift: calc((1 - var(--footer-reveal, 1)) * -12.5rem);
+}
+
+.contact__body,
+.contact__footer {
+	transform: translateY(var(--footer-shift));
+}
+
+.contact.section::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: #000;
+	opacity: calc((1 - var(--footer-reveal, 1)) * 0.55);
+	pointer-events: none;
 }
 
 .contact__body {
@@ -3003,8 +3022,14 @@ img {
 	}
 
 	.contact__footer {
+		gap: 0.5rem 1rem;
 		width: calc(100% - 3rem);
-		padding: 1.25rem 0 1.5rem;
+		padding: 0.9rem 0;
+	}
+
+	/* Drop the year so the strip stays one line on phones. */
+	.contact__footer .footer__copy:nth-child(2) {
+		display: none;
 	}
 }
 

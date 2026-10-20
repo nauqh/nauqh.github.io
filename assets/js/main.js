@@ -63,8 +63,7 @@ navClose.addEventListener("click", closeNav);
 document.querySelectorAll("[data-close]").forEach((link) => {
 	link.addEventListener("click", (e) => {
 		closeNav();
-		// The sticky footer always reads as pinned in view, so the native jump
-		// to #contact barely moves. It's the last thing on the page: go to the end.
+		// The footer is the last thing on the page: go to the end.
 		if (link.hash === "#contact") {
 			e.preventDefault();
 			lenis.scrollTo(lenis.limit);
@@ -439,8 +438,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /*=============== FOOTER SIGNATURE DRAW-IN ===============*/
-// Plays the hand-drawn write-in on the footer “nauqh.” once the sticky
-// footer has risen far enough into view (so it draws as it slides up).
+// Plays the hand-drawn write-in on the footer “nauqh.” once the footer
+// starts rising into view (so it draws as it slides up).
 (function footerSignatureDraw() {
 	const contact = document.getElementById("contact");
 	const sign = contact && contact.querySelector(".contact__signature");
@@ -451,8 +450,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		return;
 	}
 
-	// The footer is sticky, so its rect is in the viewport for most of the
-	// page. Use its natural document top instead to time the reveal.
+	// The footer is the last element, so its document top is the page height
+	// minus its own.
 	const footerTop = () =>
 		document.documentElement.scrollHeight - contact.offsetHeight;
 	let done = false;
@@ -476,6 +475,25 @@ document.addEventListener("DOMContentLoaded", function () {
 	window.addEventListener("scroll", onScroll, { passive: true });
 	window.addEventListener("resize", onScroll);
 	onScroll(); // already at the bottom on load
+})();
+
+/*=============== FOOTER PARALLAX ===============*/
+// Feeds --footer-reveal (0..1) to the CSS as the footer scrolls into view, so
+// its content trails the scroll and the dim overlay fades out.
+(function footerParallax() {
+	const contact = document.getElementById("contact");
+	if (!contact) return;
+	if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+	function update() {
+		const shown = window.innerHeight - contact.getBoundingClientRect().top;
+		const p = Math.min(Math.max(shown / contact.offsetHeight, 0), 1);
+		contact.style.setProperty("--footer-reveal", p.toFixed(3));
+	}
+
+	if (lenis && lenis.on) lenis.on("scroll", update);
+	window.addEventListener("resize", update);
+	update();
 })();
 
 /*=============== GITHUB PROJECTS & STATS ===============*/
