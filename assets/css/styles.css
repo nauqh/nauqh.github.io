@@ -2609,12 +2609,6 @@ img {
 		width: 2.75rem;
 	}
 
-	/* Fix 3: stack shadow within screen bounds */
-	.stack {
-		box-shadow: 6px 6px 0 var(--title-color);
-		margin-right: 6px;
-	}
-
 	/* Fix 4: section padding balance */
 	.section {
 		padding: 7rem 0;
@@ -2703,58 +2697,119 @@ img {
 }
 
 /*=============== TECH STACK ===============*/
-/* Bento grid: 1px gaps over a tinted background draw the hairline dividers. */
+/* A fanned hand of tilted cards. Each card keeps its tilt and offset in
+   --r / --y; hovering one straightens and lifts it while the cards on either
+   side slide out of its way. */
 .stack {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 1px;
-	margin-top: 1rem;
-	border: 1px solid var(--title-color);
-	box-shadow: 10px 10px 0 var(--title-color);
-	background: rgba(0, 0, 0, 0.12);
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	margin-top: 2rem;
+	padding: 2rem 0 3rem;
 }
 
 .stack__card {
+	--r: 0deg;
+	--y: 0rem;
+	position: relative;
+	flex: 1 1 0;
+	min-width: 0;
+	min-height: 25rem;
 	display: flex;
 	flex-direction: column;
-	gap: 1.25rem;
+	gap: 1rem;
 	padding: 2rem 1.75rem;
-	background: #f5f3ff;
+	border: 2px solid var(--title-color);
+	box-shadow: 6px 6px 0 var(--title-color);
+	background: #ddd6fe;
+	rotate: var(--r);
+	translate: 0 var(--y);
+	transition:
+		rotate 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
+		translate 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
+		scale 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
+.stack__card + .stack__card {
+	margin-left: -1.5rem;
+}
+
+.stack__card:nth-child(1) {
+	--r: -5deg;
+	--y: 1rem;
+	background: #bae6fd;
+}
 .stack__card:nth-child(2) {
-	background: #fefce8;
+	--r: 3deg;
+	--y: 2rem;
+	background: #fbcfe8;
 }
 .stack__card:nth-child(3) {
-	background: #edf7f0;
+	--r: -2deg;
+	--y: 0rem;
+	background: #fde68a;
 }
 .stack__card:nth-child(4) {
-	background: #f5f5f3;
+	--r: 5deg;
+	--y: 1.5rem;
+	background: #ddd6fe;
 }
 
+/* How far the neighbours of a hovered card slide away. Narrower desktops
+   keep it smaller so the outer cards don't push past the viewport edge. */
+.stack {
+	--spread: 2.5rem;
+}
+
+@media screen and (min-width: 1100px) {
+	.stack {
+		--spread: 3.5rem;
+	}
+}
+
+@media (hover: hover) and (min-width: 1024px) {
+	.stack__card:hover {
+		z-index: 5;
+		rotate: 0deg;
+		translate: 0 -1rem;
+		scale: 1.04;
+	}
+
+	.stack__card:hover ~ .stack__card {
+		translate: var(--spread) var(--y);
+	}
+
+	.stack__card:has(~ .stack__card:hover) {
+		translate: calc(-1 * var(--spread)) var(--y);
+	}
+}
+
+/* Handwritten like the hero name, in the "Step #1" slot. */
 .stack__label {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 0.5rem;
-	font-size: var(--smaller-font-size);
-	font-weight: var(--font-medium);
-	text-transform: uppercase;
-	letter-spacing: 0.14em;
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 1.35rem;
+	font-weight: 400;
 	color: var(--title-color);
 }
 
 .stack__label i {
-	font-size: 1.15rem;
+	font-size: 1.5rem;
 }
 
 .stack__headline {
-	font-size: 1.2rem;
-	font-weight: var(--font-medium);
-	line-height: 1.35;
+	margin-top: 0.5rem;
+	font-size: clamp(1.35rem, 2vw, 1.65rem);
+	font-weight: var(--font-semibold);
+	letter-spacing: -0.02em;
+	line-height: 1.15;
 	color: var(--title-color);
 }
 
-/* Push both tiers to the bottom so chips line up across cards in a row. */
+/* Push both tiers to the bottom so chips line up across the cards. */
 .stack__headline + .stack__tier {
 	margin-top: auto;
 }
@@ -2766,7 +2821,8 @@ img {
 	font-weight: var(--font-medium);
 	text-transform: uppercase;
 	letter-spacing: 0.14em;
-	color: var(--text-color-light);
+	color: var(--title-color);
+	opacity: 0.6;
 }
 
 .stack__chips {
@@ -2778,6 +2834,7 @@ img {
 .stack__chips li {
 	padding: 0.3rem 0.65rem;
 	border: 1px solid var(--title-color);
+	border-radius: 999px;
 	background: #ffffff;
 	font-size: var(--small-font-size);
 	color: var(--title-color);
@@ -2785,19 +2842,80 @@ img {
 }
 
 .stack__tier--muted .stack__chips li {
-	border: 1px dashed rgba(0, 0, 0, 0.3);
+	border: 1px dashed rgba(0, 0, 0, 0.45);
 	background: transparent;
-	color: var(--text-color);
+	color: var(--title-color);
 }
 
-@media screen and (max-width: 768px) {
+/* Below desktop the hand can't fan out: lay the cards in a grid, still tilted
+   a little, without the overlap. */
+@media screen and (max-width: 1023px) {
 	.stack {
-		grid-template-columns: 1fr;
-		box-shadow: 6px 6px 0 var(--title-color);
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 2rem 1.5rem;
+		padding: 1rem 0 2rem;
+	}
+
+	.stack__card + .stack__card {
+		margin-left: 0;
 	}
 
 	.stack__card {
+		min-height: 0;
+		--y: 0rem;
+	}
+
+	.stack__card:nth-child(odd) {
+		--r: -2deg;
+	}
+	.stack__card:nth-child(even) {
+		--r: 2deg;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	/* A native swipe carousel: one card per view, snapping to center, with
+	   the next card peeking in from the edge. It bleeds past the container
+	   margins to the screen edges; the vertical padding leaves room for the
+	   tilt and shadow, which overflow-x would otherwise clip. */
+	.stack {
+		display: flex;
+		/* Start-aligned: centered overflow would push card one out of reach. */
+		justify-content: flex-start;
+		gap: 1rem;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+		padding: 1.25rem 1.25rem 2rem;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-padding-inline: 1.25rem;
+		overscroll-behavior-x: contain;
+		scrollbar-width: none;
+	}
+
+	.stack::-webkit-scrollbar {
+		display: none;
+	}
+
+	.stack__card {
+		flex: 0 0 72%;
+		min-height: 25rem;
 		padding: 1.5rem 1.25rem;
+		scroll-snap-align: center;
+	}
+
+	.stack__card:nth-child(odd) {
+		--r: -1.5deg;
+	}
+	.stack__card:nth-child(even) {
+		--r: 1.5deg;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.stack__card {
+		transition: none;
 	}
 }
 
