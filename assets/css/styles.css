@@ -19,6 +19,11 @@
 	--text-color: #222222;
 	--text-color-light: #666666;
 	--body-color: #ffffff;
+	/* Corner radius for the rounded "sheet" edges between sections. */
+	--sheet-radius: clamp(2rem, 6vw, 6rem);
+	/* Inset colour cards: the white margin around them, and their corners. */
+	--card-gutter: clamp(0.75rem, 2.5vw, 2rem);
+	--card-radius: clamp(1.5rem, 4vw, 4rem);
 	--container-color: #f4f4f4;
 
 	/*========== Font and typography ==========*/
@@ -195,7 +200,7 @@ img {
 	z-index: 1;
 	background-color: var(--body-color);
 	/* Rounded bottom edge, so the page reads as a sheet lifting off the footer. */
-	border-radius: 0 0 clamp(2rem, 6vw, 6rem) clamp(2rem, 6vw, 6rem);
+	border-radius: 0 0 var(--sheet-radius) var(--sheet-radius);
 }
 
 .section {
@@ -206,6 +211,173 @@ img {
 
 .home.section {
 	padding-top: 0;
+}
+
+/*=============== SECTION RHYTHM ===============*/
+/* The page doesn't stack same-shaped colour blocks. Like a magazine spread it
+   mixes three treatments on the white page: white sections that breathe
+   (hero, skills), colour cards inset from the edges with rounded corners
+   (about, building), and full-width colour bands (experience, work, github),
+   one of which, education, is a rounded sheet lying over its neighbours. */
+.section--card {
+	margin: var(--card-gutter);
+	border-radius: var(--card-radius);
+}
+
+/* Education: rounded on all four corners and lying one radius over the
+   sections above and below, so its corners show their colours. */
+.qualification.section {
+	border-radius: var(--sheet-radius);
+	margin-block: calc(-1 * var(--sheet-radius));
+	padding-block: calc(3rem + var(--sheet-radius) / 2);
+	z-index: 6;
+}
+
+/* Its neighbours lose one radius under it; give that space back. */
+.section:has(+ .qualification.section) {
+	padding-bottom: calc(7rem + var(--sheet-radius));
+}
+
+.qualification.section + .section {
+	padding-top: calc(7rem + var(--sheet-radius));
+}
+
+/* Sections carrying a seam note stack above the next one so the note's
+   arrow crosses the edge on top. */
+.experience.section {
+	z-index: 5;
+}
+.building.section {
+	z-index: 4;
+}
+
+/* A handwritten note with a pen-drawn arrow, straddling the seam where a
+   section lies over the next one, so the eye carries across the edge. It
+   lives in the upper section, which stacks above the lower one. */
+.seam-note {
+	position: absolute;
+	right: max(1.5rem, calc((100% - 968px) / 2 + 1rem));
+	bottom: 0;
+	translate: 0 45%;
+	rotate: -4deg;
+	display: flex;
+	align-items: flex-start;
+	gap: 0.25rem;
+	margin: 0;
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 1.7rem;
+	color: var(--title-color);
+	pointer-events: none;
+}
+
+.seam-note svg {
+	width: 86px;
+	height: auto;
+	margin-top: 0.55em;
+}
+
+/* A linked note scrolls on to the next section. Its arrow retraces on
+   hover like the "all works" links (it shares their classes and rules). */
+a.seam-note {
+	pointer-events: auto;
+}
+
+@media screen and (max-width: 768px) {
+	.seam-note {
+		right: 1.25rem;
+		font-size: 1.1rem;
+	}
+
+	.seam-note svg {
+		width: 48px;
+	}
+}
+
+/* White sections get texture the way the reference does it: big flowing
+   shapes in a very pale tint behind the content (flat fills, no gradients),
+   drifting slowly. z-index -1 puts them under the content but over the
+   section background, inside the section's own stacking context. */
+.section-blob {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	fill: #f1eeff;
+	pointer-events: none;
+	animation: section-blob-drift 24s ease-in-out infinite alternate;
+}
+
+/* Keep the drift inside the section. */
+.section:has(> .section-blob) {
+	overflow: clip;
+}
+
+.section-blob--skills {
+	/* The blue the Skills section used to be filled with. */
+	fill: #d4e5ff;
+	animation-duration: 30s;
+}
+
+@keyframes section-blob-drift {
+	to {
+		transform: translate(1.5%, -2%) rotate(1.5deg) scale(1.03);
+	}
+}
+
+/* A handwritten aside next to a section title, like a margin note. */
+.side-note {
+	position: absolute;
+	top: 7.5rem;
+	right: max(1.5rem, calc((100% - 968px) / 2 + 1rem));
+	rotate: -6deg;
+	margin: 0;
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 1.35rem;
+	line-height: 1.25;
+	text-align: center;
+	color: #2563eb;
+	pointer-events: none;
+}
+
+@media screen and (max-width: 768px) {
+	.side-note {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.section-blob {
+		animation: none;
+	}
+}
+
+/* A small sticker slapped across a seam: centred on the white gap between
+   a band and the card below, so it overlaps the edge of both. It lives in
+   the upper section, which stacks above the lower one. */
+.seam-sticker {
+	position: absolute;
+	left: max(1.5rem, calc((100% - 968px) / 2 + 1rem));
+	bottom: 0;
+	translate: 0 calc(50% + var(--card-gutter) / 2);
+	rotate: -4deg;
+	margin: 0;
+	padding: 0.45rem 1rem;
+	border: 2px solid var(--title-color);
+	background: #ffffff;
+	box-shadow: 4px 4px 0 var(--title-color);
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 1.15rem;
+	color: var(--title-color);
+	white-space: nowrap;
+	pointer-events: none;
+}
+
+@media screen and (max-width: 768px) {
+	.seam-sticker {
+		left: 1.25rem;
+		font-size: 1rem;
+	}
 }
 
 /*=============== SECTION BACKGROUNDS ===============*/
@@ -221,7 +393,7 @@ img {
 	align-content: center;
 }
 .skills.section {
-	background-color: #d4e5ff;
+	background-color: #ffffff;
 	--section-accent: #3b82f6;
 }
 .qualification.section {
@@ -1801,12 +1973,16 @@ img {
 /* On hover or keyboard focus the pen retraces the arrow: the curve eases in
    and out, then the head is drawn in the same stroke, no pop. */
 .work__all-link:hover .work__all-curve,
-.work__all-link:focus-visible .work__all-curve {
+.work__all-link:focus-visible .work__all-curve,
+a.seam-note:hover .work__all-curve,
+a.seam-note:focus-visible .work__all-curve {
 	animation: work-arrow-draw 0.45s cubic-bezier(0.45, 0, 0.2, 1) both;
 }
 
 .work__all-link:hover .work__all-head,
-.work__all-link:focus-visible .work__all-head {
+.work__all-link:focus-visible .work__all-head,
+a.seam-note:hover .work__all-head,
+a.seam-note:focus-visible .work__all-head {
 	animation: work-arrow-draw 0.2s cubic-bezier(0.2, 0, 0.2, 1) 0.4s both;
 }
 
@@ -1823,7 +1999,11 @@ img {
 	.work__all-link:hover .work__all-curve,
 	.work__all-link:focus-visible .work__all-curve,
 	.work__all-link:hover .work__all-head,
-	.work__all-link:focus-visible .work__all-head {
+	.work__all-link:focus-visible .work__all-head,
+	a.seam-note:hover .work__all-curve,
+	a.seam-note:focus-visible .work__all-curve,
+	a.seam-note:hover .work__all-head,
+	a.seam-note:focus-visible .work__all-head {
 		animation: none;
 	}
 }
@@ -2951,7 +3131,7 @@ img {
 	position: relative;
 	width: 100%;
 	/* Tuck up under .main's rounded bottom corners so they show footer. */
-	margin-top: calc(-1 * clamp(2rem, 6vw, 6rem));
+	margin-top: calc(-1 * var(--sheet-radius));
 	min-height: 85vh;
 	min-height: 85dvh;
 	z-index: 0;
@@ -3787,8 +3967,8 @@ img {
 	background-color: #e6e0ff;
 	--section-accent: #8b5cf6;
 	/* A soft footer-coloured shadow along the bottom edge: it covers the seam
-	   between this section and the sticky footer, so no light line shows
-	   through while the footer slides up (fractional-pixel anti-aliasing). */
+	   between this section and the footer, so no light line shows through
+	   the page's rounded bottom edge (fractional-pixel anti-aliasing). */
 	box-shadow: 0 8px 16px -8px rgba(15, 23, 42, 0.45);
 }
 

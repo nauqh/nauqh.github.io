@@ -31,6 +31,16 @@ if (document.getElementById("loading-screen")) {
 	);
 }
 
+/*=============== SEAM NOTE LINKS ===============*/
+// In-page links on the seam notes glide to their section through Lenis
+// instead of the browser's instant jump.
+document.querySelectorAll('a.seam-note[href^="#"]').forEach((link) => {
+	link.addEventListener("click", (e) => {
+		e.preventDefault();
+		lenis.scrollTo(link.hash);
+	});
+});
+
 /*=============== NAV OVERLAY ===============*/
 const navOverlay = document.getElementById("navOverlay");
 const navBackdrop = document.getElementById("navBackdrop");

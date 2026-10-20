@@ -190,6 +190,10 @@
     <main class="main">
         <!--=============== HOME ===============-->
         <section class="home section" id="home" data-header-color="#FFFFFF" data-header-accent="#6B7280">
+            <svg class="section-blob" aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+                <path d="M-60 640C160 540 300 770 520 712 760 648 770 392 1010 338 1230 290 1340 430 1500 372V640C1330 706 1220 576 1042 626 822 688 812 944 556 972 330 996 196 828-60 890Z" />
+                <path d="M1190 170C1300 130 1420 180 1480 260V440C1410 410 1330 440 1250 410 1150 372 1090 230 1190 170Z" />
+            </svg>
             <div class="home__container container">
                 <div class="home__data">
                     <h1 class="home__name">
@@ -233,7 +237,7 @@
         </section>
 
         <!--=============== ABOUT ===============-->
-        <section class="about section" id="about" data-header-color="#C8F2DC" data-header-accent="#059669">
+        <section class="about section section--card" id="about" data-header-color="#FFFFFF" data-header-accent="#059669">
             <div class="about__container2 container grid">
                 <h2 class="section__title">about <em>me</em></h2>
                 <div class="about__image-container">
@@ -276,8 +280,13 @@
         </section>
 
         <!--=============== SKILLS ===============-->
-        <section class="skills section" id="skills" data-header-color="#D4E5FF" data-header-accent="#3B82F6">
+        <section class="skills section" id="skills" data-header-color="#FFFFFF" data-header-accent="#3B82F6">
             <h2 class="section__title">what I <em>use</em></h2>
+            <svg class="section-blob section-blob--skills" aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+                <path d="M-60 120C120 60 250 200 300 360 352 528 300 700 420 800 520 884 660 850 760 920H-60Z" />
+                <path d="M1500 300C1340 250 1200 330 1150 470 1100 610 1180 760 1340 790 1410 804 1460 790 1500 770Z" />
+            </svg>
+            <p class="side-note" aria-hidden="true">the tools I<br>reach for most</p>
 
             <!-- Two tiers per area: "core" is what I reach for by default,
                  "familiar" is what I have used in real projects. -->
@@ -553,10 +562,11 @@
                     </div>
                 </div>
             </div>
+            <p class="seam-sticker" aria-hidden="true">currently building</p>
         </section>
 
         <!--=============== BUILDING (NOW) ===============-->
-        <section class="building section" id="building" data-header-color="#C6F1EC" data-header-accent="#0D9488">
+        <section class="building section section--card" id="building" data-header-color="#FFFFFF" data-header-accent="#0D9488">
             <h2 class="section__title">what I'm <em>building</em> now</h2>
 
             <div class="building container">
@@ -610,6 +620,18 @@
                     </div>
                 </div>
             </div>
+            <a href="#work" class="seam-note">
+                <span>there's more below</span>
+                <svg aria-hidden="true" viewBox="0 0 110 52" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <g class="work__all-ghost">
+                        <path d="M 12 22 C 16 2 90 2 82 44" />
+                        <path d="M 75 36 C 77 40 79 43 82 46 C 85 42 88 38 90 36" />
+                    </g>
+                    <path class="work__all-curve" pathLength="1" d="M 12 22 C 16 2 90 2 82 44" />
+                    <path class="work__all-head" pathLength="1" d="M 75 36 C 77 40 79 43 82 46 C 85 42 88 38 90 36" />
+                </svg>
+            </a>
         </section>
 
         <!--=============== WORK ===============-->
