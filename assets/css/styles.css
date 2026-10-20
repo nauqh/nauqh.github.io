@@ -214,26 +214,26 @@ img {
 	--section-accent: #6b7280;
 }
 .about.section {
-	background-color: #edf7f0;
+	background-color: #c8f2dc;
 	--section-accent: #059669;
 	min-height: 100vh;
 	display: grid;
 	align-content: center;
 }
 .skills.section {
-	background-color: #edf4ff;
+	background-color: #d4e5ff;
 	--section-accent: #3b82f6;
 }
 .qualification.section {
-	background-color: #fde8f0;
+	background-color: #fdd5e6;
 	--section-accent: #db2777;
 }
 .experience.section {
-	background-color: #fefce8;
+	background-color: #fff1b8;
 	--section-accent: #d97706;
 }
 .work.section {
-	background-color: #edf4ff;
+	background-color: #d4e5ff;
 	--section-accent: #3b82f6;
 }
 .contact.section {
@@ -2721,7 +2721,7 @@ img {
 	padding: 2rem 1.75rem;
 	border: 2px solid var(--title-color);
 	box-shadow: 6px 6px 0 var(--title-color);
-	background: #ddd6fe;
+	background: #c4b5fd;
 	rotate: var(--r);
 	translate: 0 var(--y);
 	transition:
@@ -2737,22 +2737,22 @@ img {
 .stack__card:nth-child(1) {
 	--r: -5deg;
 	--y: 1rem;
-	background: #bae6fd;
+	background: #7dd3fc;
 }
 .stack__card:nth-child(2) {
 	--r: 3deg;
 	--y: 2rem;
-	background: #fbcfe8;
+	background: #f9a8d4;
 }
 .stack__card:nth-child(3) {
 	--r: -2deg;
 	--y: 0rem;
-	background: #fde68a;
+	background: #fcd34d;
 }
 .stack__card:nth-child(4) {
 	--r: 5deg;
 	--y: 1.5rem;
-	background: #ddd6fe;
+	background: #c4b5fd;
 }
 
 /* How far the neighbours of a hovered card slide away. Narrower desktops
@@ -3418,7 +3418,7 @@ img {
 
 /*=============== BUILDING (NOW) ===============*/
 .building.section {
-	background-color: #e4f6f4;
+	background-color: #c6f1ec;
 	--section-accent: #0d9488;
 	/* darker teal for small text on white so accordant labels hold 4.5:1 */
 	--building-accent-ink: #0f766e;
@@ -3762,7 +3762,7 @@ img {
 
 /*=============== GITHUB SECTION ===============*/
 .github.section {
-	background-color: #f5f3ff;
+	background-color: #e6e0ff;
 	--section-accent: #8b5cf6;
 	/* A soft footer-coloured shadow along the bottom edge: it covers the seam
 	   between this section and the sticky footer, so no light line shows
