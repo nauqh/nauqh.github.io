@@ -3077,23 +3077,37 @@ a.seam-note:focus-visible .work__all-head {
 .stack__chips {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.4rem;
+	gap: 0.55rem 1.1rem;
 }
 
+/* Logo + name. Logos are Simple Icons masks so they take the text colour and
+   stay one ink across the coloured cards; tools without one use a boxicon. */
 .stack__chips li {
-	padding: 0.3rem 0.65rem;
-	border: 1px solid var(--title-color);
-	border-radius: 999px;
-	background: #ffffff;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
 	font-size: var(--small-font-size);
+	font-weight: var(--font-medium);
 	color: var(--title-color);
 	white-space: nowrap;
 }
 
+.stack__chips li[style]::before {
+	content: "";
+	flex-shrink: 0;
+	width: 1.15em;
+	height: 1.15em;
+	background-color: currentColor;
+	mask: var(--logo) center / contain no-repeat;
+}
+
+.stack__chips li i {
+	font-size: 1.3em;
+}
+
 .stack__tier--muted .stack__chips li {
-	border: 1px dashed rgba(0, 0, 0, 0.45);
-	background: transparent;
-	color: var(--title-color);
+	font-weight: 400;
+	color: rgba(0, 0, 0, 0.6);
 }
 
 /* Below desktop the hand can't fan out: lay the cards in a grid, still tilted
