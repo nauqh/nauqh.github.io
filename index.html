@@ -15,7 +15,7 @@
     <!--=============== FONTS ===============-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,800;1,400;1,800&family=Shantell+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="assets/css/styles.css" />
@@ -66,65 +66,6 @@
 </head>
 
 <body>
-    <!--=============== LOADING SCREEN ===============-->
-    <div id="loading-screen" aria-hidden="true">
-        <div class="loading__top">
-            <span class="loading__label">Loading..</span>
-            <div class="loading__track">
-                <div class="loading__fill" id="loading-fill"></div>
-            </div>
-        </div>
-        <div class="loading__counter">
-            <span id="loading-pct">0%</span>
-        </div>
-    </div>
-    <script>
-        (function () {
-            var PAUSE_AT = 38, PHASE1_MS = 950, PHASE2_MS = 1250;
-            var screen = document.getElementById('loading-screen');
-            var fill = document.getElementById('loading-fill');
-            var pct = document.getElementById('loading-pct');
-            var phase = 'phase1', start = null, raf = null;
-
-            function setProgress(v) {
-                fill.style.width = v + '%';
-                pct.textContent = v + '%';
-            }
-
-            function tick(now) {
-                if (start === null) start = now;
-                var progress;
-                if (phase === 'phase1') {
-                    progress = Math.min(Math.floor(((now - start) / PHASE1_MS) * PAUSE_AT), PAUSE_AT);
-                    setProgress(progress);
-                    if (progress < PAUSE_AT) {
-                        raf = requestAnimationFrame(tick);
-                    } else {
-                        phase = 'phase2';
-                        start = null;
-                        raf = requestAnimationFrame(tick);
-                    }
-                } else {
-                    progress = Math.min(PAUSE_AT + Math.floor(((now - start) / PHASE2_MS) * (100 - PAUSE_AT)), 100);
-                    setProgress(progress);
-                    if (progress < 100) {
-                        raf = requestAnimationFrame(tick);
-                    } else {
-                        setTimeout(function () {
-                            screen.classList.add('loading--exit');
-                            screen.addEventListener('transitionend', function () {
-                                screen.remove();
-                                document.dispatchEvent(new CustomEvent('loadingComplete'));
-                            }, { once: true });
-                        }, 160);
-                    }
-                }
-            }
-
-            raf = requestAnimationFrame(tick);
-        })();
-    </script>
-
     <!--=============== SCROLL PROGRESS ===============-->
     <div id="scroll-progress"></div>
 
@@ -154,6 +95,88 @@
             </button>
         </nav>
     </header>
+
+    <!--=============== LOADING SCREEN ===============-->
+    <!-- The nav logo is cloned in, drawn large, then flown into its spot in the nav. -->
+    <div id="loading-screen" aria-hidden="true">
+        <div class="loading__top">
+            <div class="loading__logo"></div>
+            <div class="loading__track"><div class="loading__fill" id="loading-fill"></div></div>
+        </div>
+        <div class="loading__counter"><span id="loading-pct">0%</span></div>
+    </div>
+    <script>
+        (function () {
+            var screen = document.getElementById('loading-screen');
+            var header = document.getElementById('header');
+            var navSvg = header.querySelector('.nav__logo-svg');
+            var logo = screen.querySelector('.loading__logo');
+            var DRAW_MS = 1400, FLIGHT_MS = 800, HEADER_FADE_MS = 600;
+            var skip = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            try {
+                // TEMP: once-per-session disabled for testing, uncomment to restore
+                // skip = skip || sessionStorage.getItem('intro-seen') === '1';
+                sessionStorage.setItem('intro-seen', '1');
+            } catch (e) { }
+
+            // main.js listens for loadingComplete, so never fire it before main.js has run
+            function whenReady(fn) {
+                if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn, { once: true });
+                else fn();
+            }
+
+            if (skip) {
+                screen.style.display = 'none';
+                whenReady(function () {
+                    document.dispatchEvent(new CustomEvent('loadingComplete'));
+                    header.classList.remove('header--pre-reveal');
+                    screen.remove();
+                });
+                return;
+            }
+
+            logo.appendChild(navSvg.cloneNode(true));
+
+            var pct = document.getElementById('loading-pct');
+            var fill = document.getElementById('loading-fill');
+            var t0 = performance.now(), ready = false;
+
+            // only show the counter once Poppins is in, so it never swaps font mid-count
+            document.fonts.load('300 1em Poppins').finally(function () { pct.classList.add('is-ready'); });
+            whenReady(function () {
+                document.fonts.ready.then(function () { ready = true; });
+            });
+
+            // paced to the logo draw; slow-to-fast reads as a shorter wait.
+            // holds at 90% until the page has really loaded, then finishes and flies
+            requestAnimationFrame(function tick(now) {
+                var t = Math.min((now - t0) / DRAW_MS, 1);
+                var v = Math.round(Math.min(t * t, ready ? 1 : 0.9) * 100);
+                pct.textContent = v + '%';
+                fill.style.width = v + '%';
+                if (v < 100) requestAnimationFrame(tick);
+                else fly();
+            });
+
+            function fly() {
+                var from = logo.getBoundingClientRect();
+                var to = navSvg.getBoundingClientRect();
+                var dx = to.left + to.width / 2 - (from.left + from.width / 2);
+                var dy = to.top + to.height / 2 - (from.top + from.height / 2);
+                logo.style.color = getComputedStyle(navSvg).color;
+                logo.style.transform = 'translate(' + dx + 'px, ' + dy + 'px) scale(' + to.width / from.width + ')';
+                screen.classList.add('loading--exit');
+                document.dispatchEvent(new CustomEvent('loadingComplete'));
+
+                setTimeout(function () {
+                    // the nav logo fades in already drawn, underneath the landed copy
+                    header.classList.add('header--logo-drawn');
+                    header.classList.remove('header--pre-reveal');
+                    setTimeout(function () { screen.remove(); }, HEADER_FADE_MS);
+                }, FLIGHT_MS);
+            }
+        })();
+    </script>
 
     <!--=============== NAV BACKDROP ===============-->
     <div class="nav-backdrop" id="navBackdrop"></div>

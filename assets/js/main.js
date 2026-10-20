@@ -21,11 +21,6 @@ if (document.getElementById("loading-screen")) {
 			lenis.start();
 			const homeData = document.querySelector(".home__data");
 			if (homeData) homeData.classList.add("hero-revealed");
-			setTimeout(() => {
-				document
-					.getElementById("header")
-					.classList.remove("header--pre-reveal");
-			}, 1300);
 		},
 		{ once: true },
 	);

@@ -1,5 +1,5 @@
-/*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,800;1,400;1,800&display=swap");
+/* Poppins is loaded by a <link> in each page head: an @import here would
+   only start the font download after this whole file arrived */
 
 /*=============== VARIABLES CSS ===============*/
 :root {
@@ -1557,47 +1557,65 @@ a.seam-note {
 	user-select: none;
 	pointer-events: none;
 	background-color: var(--body-color);
-	transition: transform 0.72s cubic-bezier(0.76, 0, 0.24, 1);
+	transition: background-color 0.6s ease 0.15s;
 }
 
 #loading-screen.loading--exit {
-	transform: translateY(-100%);
+	background-color: transparent;
 }
 
+/* logo + bar share the top row, the counter anchors the bottom-right:
+   a diagonal that keeps them apart, and the logo starts close to the nav */
 .loading__top {
-	position: relative;
-	z-index: 1;
 	display: flex;
 	align-items: center;
-	gap: 1.25rem;
-	padding: 2rem 1.75rem 0;
+	gap: clamp(1rem, 3vw, 2.5rem);
+	padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem) 0;
 }
 
-.loading__label {
+.loading__logo {
 	flex-shrink: 0;
-	font-size: 0.875rem;
-	font-weight: 300;
-	letter-spacing: 0.22em;
-	text-transform: uppercase;
+	width: clamp(96px, 16vw, 220px);
+	aspect-ratio: 1;
 	color: var(--title-color);
+	transition:
+		transform 0.8s cubic-bezier(0.76, 0, 0.24, 1),
+		color 0.8s ease;
+}
+
+/* thinner stroke while large; eases back to the nav's 5.5 as it shrinks,
+   so the landed copy matches the real nav logo exactly */
+.loading__logo svg {
+	stroke-width: 1.8;
+	transition: stroke-width 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.loading--exit .loading__logo svg {
+	stroke-width: 5.5;
+}
+
+.loading__logo .nav__logo-path {
+	animation-play-state: running;
 }
 
 .loading__track {
 	flex: 1;
-	height: 3px;
+	/* tracks the logo's stroke weight as it scales with the viewport */
+	height: clamp(2px, 0.2vw, 3px);
+	border-radius: 9999px;
 	overflow: hidden;
+	background-color: var(--container-color);
 }
 
 .loading__fill {
-	height: 100%;
-	border-radius: 9999px;
-	background-color: var(--title-color);
 	width: 0%;
+	height: 100%;
+	background-color: var(--title-color);
 }
 
 .loading__counter {
 	position: absolute;
-	right: 1rem;
+	right: clamp(1rem, 3vw, 2.5rem);
 	bottom: 0;
 }
 
@@ -1605,9 +1623,38 @@ a.seam-note {
 	display: block;
 	font-weight: 300;
 	font-variant-numeric: tabular-nums;
-	font-size: clamp(120px, 27vw, 520px);
+	font-size: clamp(88px, 19vw, 360px);
 	line-height: 0.82;
 	color: var(--title-color);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.loading__counter span.is-ready {
+	opacity: 1;
+}
+
+.loading__track,
+.loading__counter {
+	transition:
+		opacity 0.4s ease,
+		transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.loading--exit .loading__track {
+	opacity: 0;
+	transform: scaleX(0.6);
+	transform-origin: right;
+}
+
+.loading--exit .loading__counter {
+	opacity: 0;
+	transform: translateY(15%);
+}
+
+.header--logo-drawn .nav__logo-path {
+	animation: none;
+	stroke-dashoffset: 0;
 }
 
 /*=============== PROJECT DRAWER ===============*/
