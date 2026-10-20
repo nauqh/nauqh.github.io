@@ -1782,49 +1782,40 @@ img {
 	color: inherit;
 }
 
-.work__all-curve {
-	/* pathLength="1" in the markup makes one dash exactly the path. */
-	stroke-dasharray: 1;
+.work__all-curve,
+.work__all-head {
+	/* pathLength="1" in the markup makes one dash exactly the path. The gap
+	   is longer than the path and the start offset sits just past it, so the
+	   round cap of an empty dash never shows as a dot. */
+	stroke-dasharray: 1 2;
 	stroke-dashoffset: 0;
 }
 
-/* The head pops out from its tip (bottom centre of its box) once the line
-   has reached it. */
-.work__all-head {
-	transform-box: fill-box;
-	transform-origin: 47% 100%;
+/* A faint copy of the arrow under the ink. At rest the ink covers it; while
+   the ink redraws it reads as the pencil guide being traced over, so the
+   arrow never blinks out. */
+.work__all-ghost {
+	opacity: 0.2;
 }
 
-/* On hover or keyboard focus the stroke redraws like a pen, easing in and
-   out, then the head lands with a slight overshoot. */
+/* On hover or keyboard focus the pen retraces the arrow: the curve eases in
+   and out, then the head is drawn in the same stroke, no pop. */
 .work__all-link:hover .work__all-curve,
 .work__all-link:focus-visible .work__all-curve {
-	animation: work-arrow-draw 0.5s cubic-bezier(0.65, 0, 0.35, 1) both;
+	animation: work-arrow-draw 0.45s cubic-bezier(0.45, 0, 0.2, 1) both;
 }
 
 .work__all-link:hover .work__all-head,
 .work__all-link:focus-visible .work__all-head {
-	animation: work-arrow-head 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) 0.42s
-		both;
+	animation: work-arrow-draw 0.2s cubic-bezier(0.2, 0, 0.2, 1) 0.4s both;
 }
 
 @keyframes work-arrow-draw {
 	from {
-		stroke-dashoffset: 1;
+		stroke-dashoffset: 1.01;
 	}
 	to {
 		stroke-dashoffset: 0;
-	}
-}
-
-@keyframes work-arrow-head {
-	from {
-		opacity: 0;
-		transform: scale(0.4);
-	}
-	to {
-		opacity: 1;
-		transform: none;
 	}
 }
 
