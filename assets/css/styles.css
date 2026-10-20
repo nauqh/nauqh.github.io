@@ -344,6 +344,12 @@ a.seam-note {
 	.side-note {
 		display: none;
 	}
+
+	/* the tall, narrow section crops the shapes down to a stray sliver in
+	   the corner, and the coloured cards carry the section on their own */
+	.section-blob--skills {
+		display: none;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
