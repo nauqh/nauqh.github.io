@@ -1331,16 +1331,20 @@ img {
 }
 
 /* A highlighter stroke: one flat ink with ragged edges and blunt ends (the
-   SVG), sitting across the lower part of the letters with a slight tilt. On
-   hover it is drawn on left to right by unclipping it, not stretched. */
-.project-card__title::before {
+   SVG mask), sitting across the lower part of the letters with a slight
+   tilt. On hover it is drawn on left to right by unclipping it, not
+   stretched. Shared with the education degree titles; each sets its ink. */
+.project-card__title::before,
+.timeline-position::before {
 	content: "";
 	position: absolute;
 	top: 0.15em;
 	bottom: -0.08em;
 	left: -0.15em;
 	right: -0.25em;
-	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath fill='%2360a5fa' fill-opacity='0.55' d='M2 5.5C18 4 40 5.2 62 4.3 78 3.7 90 3.2 98.5 4.6L99.5 9.5 97.8 16.2C80 17.4 58 15.6 34 16.6 20 17.2 9 17.8 1.6 16.1L.4 10.8Z'/%3E%3C/svg%3E")
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M2 5.5C18 4 40 5.2 62 4.3 78 3.7 90 3.2 98.5 4.6L99.5 9.5 97.8 16.2C80 17.4 58 15.6 34 16.6 20 17.2 9 17.8 1.6 16.1L.4 10.8Z'/%3E%3C/svg%3E")
+		center / 100% 100% no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M2 5.5C18 4 40 5.2 62 4.3 78 3.7 90 3.2 98.5 4.6L99.5 9.5 97.8 16.2C80 17.4 58 15.6 34 16.6 20 17.2 9 17.8 1.6 16.1L.4 10.8Z'/%3E%3C/svg%3E")
 		center / 100% 100% no-repeat;
 	rotate: -1deg;
 	clip-path: inset(0 100% 0 0);
@@ -1349,12 +1353,17 @@ img {
 	pointer-events: none;
 }
 
+.project-card__title::before {
+	background-color: rgba(96, 165, 250, 0.55);
+}
+
 .project-card:hover .project-card__title::before {
 	clip-path: inset(0 0 0 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.project-card__title::before {
+	.project-card__title::before,
+	.timeline-position::before {
 		transition: none;
 	}
 }
@@ -1774,32 +1783,58 @@ img {
 }
 
 .work__all-curve {
-	stroke-dasharray: 220;
+	/* pathLength="1" in the markup makes one dash exactly the path. */
+	stroke-dasharray: 1;
 	stroke-dashoffset: 0;
-	transition: stroke-dashoffset 0.5s ease;
 }
 
-.work__all-link:hover .work__all-curve {
-	animation: redraw 0.5s ease forwards;
+/* The head pops out from its tip (bottom centre of its box) once the line
+   has reached it. */
+.work__all-head {
+	transform-box: fill-box;
+	transform-origin: 47% 100%;
 }
 
-@keyframes redraw {
-	0% {
-		stroke-dashoffset: 220;
+/* On hover or keyboard focus the stroke redraws like a pen, easing in and
+   out, then the head lands with a slight overshoot. */
+.work__all-link:hover .work__all-curve,
+.work__all-link:focus-visible .work__all-curve {
+	animation: work-arrow-draw 0.5s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.work__all-link:hover .work__all-head,
+.work__all-link:focus-visible .work__all-head {
+	animation: work-arrow-head 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) 0.42s
+		both;
+}
+
+@keyframes work-arrow-draw {
+	from {
+		stroke-dashoffset: 1;
 	}
-	100% {
+	to {
 		stroke-dashoffset: 0;
 	}
 }
 
-.work__all-head {
-	transition: transform 0.25s ease;
-	transform-box: fill-box;
-	transform-origin: center;
+@keyframes work-arrow-head {
+	from {
+		opacity: 0;
+		transform: scale(0.4);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
 }
 
-.work__all-link:hover .work__all-head {
-	transform: translateY(4px);
+@media (prefers-reduced-motion: reduce) {
+	.work__all-link:hover .work__all-curve,
+	.work__all-link:focus-visible .work__all-curve,
+	.work__all-link:hover .work__all-head,
+	.work__all-link:focus-visible .work__all-head {
+		animation: none;
+	}
 }
 
 .work__tech::before {
@@ -2158,25 +2193,13 @@ img {
 	position: relative;
 }
 
+/* Marker stroke shared with .project-card__title::before. */
 .timeline-position::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background-image: linear-gradient(
-		to right,
-		rgba(249, 168, 212, 0.1),
-		rgba(249, 168, 212, 0.7) 4%,
-		rgba(249, 168, 212, 0.3)
-	);
-	transform: skewX(-8deg) scaleX(0);
-	transform-origin: left center;
-	transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	z-index: -1;
-	pointer-events: none;
+	background-color: rgba(244, 114, 182, 0.45);
 }
 
 .timeline-container .content:hover .timeline-position::before {
-	transform: skewX(-8deg) scaleX(1);
+	clip-path: inset(0 0 0 0);
 }
 
 .timeline-subtitle2 {
