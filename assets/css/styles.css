@@ -3362,6 +3362,8 @@ a.seam-note:focus-visible .work__all-head {
 
 .contact__link-arrow {
 	align-self: center;
+	/* boxicons 2.1.4 has no diagonal arrow, so tilt the up arrow */
+	rotate: 45deg;
 	font-size: 1.25rem;
 	opacity: 0;
 	transform: translate(-4px, 4px);
@@ -3417,6 +3419,82 @@ a.seam-note:focus-visible .work__all-head {
 	/* Drop the year so the strip stays one line on phones. */
 	.contact__footer .footer__copy:nth-child(2) {
 		display: none;
+	}
+}
+
+/* Phones: cut it down to signature, one line, three links, one strip.
+   The labels and handles repeat what the links already say. */
+@media screen and (max-width: 600px) {
+	.contact__eyebrow,
+	.contact__tagline,
+	.contact__links-title,
+	.contact__link-handle {
+		display: none;
+	}
+
+	.contact__body {
+		gap: 2rem;
+		padding-bottom: 3rem;
+	}
+
+	.contact__lead {
+		margin-top: 0;
+	}
+
+	/* one row of text links instead of ruled rows */
+	.contact__links {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 0 1.75rem;
+	}
+
+	.contact__link,
+	.contact__link:last-child {
+		align-items: center;
+		gap: 0.2rem;
+		min-height: 44px;
+		padding: 0;
+		border: 0;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	.contact__link-label {
+		font-size: 1.1rem;
+	}
+
+	/* email gets its own line, showing the address itself */
+	.contact__link[href^="mailto:"] {
+		flex-basis: 100%;
+	}
+
+	.contact__link[href^="mailto:"] .contact__link-label {
+		display: none;
+	}
+
+	.contact__link[href^="mailto:"] .contact__link-handle {
+		display: inline;
+		margin-left: 0;
+		color: inherit;
+		font-size: 1.1rem;
+		font-weight: 500;
+		text-decoration: underline;
+		text-decoration-color: var(--first-color);
+		text-underline-offset: 0.3em;
+	}
+
+	.contact__link-arrow {
+		opacity: 0.5;
+		transform: none;
+	}
+
+	/* "© year" instead of the credit line */
+	.contact__footer .footer__copy:first-child {
+		display: none;
+	}
+
+	.contact__footer .footer__copy:nth-child(2) {
+		display: inline;
+		margin-right: auto;
 	}
 }
 
@@ -3984,6 +4062,12 @@ a.seam-note:focus-visible .work__all-head {
 [data-reveal].revealed {
 	opacity: 1;
 	transform: none;
+}
+
+/* footer items travel further and slower so the reveal reads */
+.contact__reveal {
+	transform: translateY(2.5rem);
+	transition-duration: 0.9s;
 }
 
 @media (prefers-reduced-motion: reduce) {

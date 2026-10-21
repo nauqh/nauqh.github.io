@@ -237,7 +237,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		...document.querySelectorAll(".projects-col"),
 		document.querySelector(".github__grid"),
 		document.querySelector(".building__card"),
-		document.querySelector(".contact__container"),
 		document.querySelector(".archive__table"),
 		document.querySelector(".error__card"),
 	].filter(Boolean);
@@ -490,10 +489,33 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (!contact) return;
 	if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+	// Staggered fade-up of the footer content (the signature has its own
+	// write-in). Driven by the footer's own progress, not the shared
+	// IntersectionObserver: that fires while the content is still under the
+	// dark overlay, so the reveal finished before anyone could see it.
+	// The strip's children reveal, not the strip: it already moves here.
+	const revealGroups = [
+		".contact__header > :not(.contact__signature)",
+		".contact__links > *",
+		".contact__footer > *",
+	].map((sel) => [...contact.querySelectorAll(sel)]);
+	revealGroups.forEach((els, g) =>
+		els.forEach((el, i) => {
+			el.setAttribute("data-reveal", "");
+			el.classList.add("contact__reveal");
+			el.style.transitionDelay = `${g * 0.15 + i * 0.1}s`;
+		}),
+	);
+	let revealed = false;
+
 	function update() {
 		const shown = window.innerHeight - contact.getBoundingClientRect().top;
 		const p = Math.min(Math.max(shown / contact.offsetHeight, 0), 1);
 		contact.style.setProperty("--footer-reveal", p.toFixed(3));
+		if (!revealed && p >= 0.5) {
+			revealed = true;
+			revealGroups.flat().forEach((el) => el.classList.add("revealed"));
+		}
 	}
 
 	if (lenis && lenis.on) lenis.on("scroll", update);
