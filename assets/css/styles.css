@@ -4128,6 +4128,18 @@ a.seam-note:focus-visible .work__all-head {
 	gap: 1.5rem;
 }
 
+.agents__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1.25rem 1.75rem;
+}
+
+.agents__actions .building__link:hover,
+.agents__actions .building__link:focus-visible {
+	color: #c2410c;
+}
+
 @media screen and (max-width: 968px) {
 	.agents__flow {
 		grid-template-columns: repeat(2, 1fr);

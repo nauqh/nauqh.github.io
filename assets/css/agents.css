@@ -22,9 +22,19 @@ body {
 	border-top: 2px solid var(--title-color);
 }
 
-.footer__copy,
+/* The site's footer colours are for the dark home footer; these sit on peach. */
+.footer__copy {
+	color: #57534e;
+}
+
 .footer__copy a {
-	color: var(--text-color-light);
+	color: var(--title-color);
+	font-weight: var(--font-medium);
+}
+
+.footer__copy a:hover,
+.footer__copy a:focus-visible {
+	color: #c2410c;
 }
 
 .retro.section {
