@@ -308,6 +308,50 @@ a.seam-note {
 	animation: section-blob-drift 24s ease-in-out infinite alternate;
 }
 
+/* The hero sits on graph paper, a nod to the handwritten name: even
+   hairline grey squares, solid behind the hero
+   content and fading out on every side (main.js sets the content box as
+   --grid-top/right/bottom/left). It fades in with the hero text once the
+   loading screen is done. */
+.home::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	background-image:
+		linear-gradient(#ececec 1px, transparent 1px),
+		linear-gradient(90deg, #ececec 1px, transparent 1px);
+	--grid-size: 64px;
+	background-size: var(--grid-size) var(--grid-size);
+	/* a vertical line runs down the hero text's left edge (.home__container
+	   is 936px of content centred, or 1rem in from the edge when narrower).
+	   A percentage here resolves against (width - tile), hence the
+	   half-tile in the offset. */
+	background-position: max(1rem, 50% - 468px + var(--grid-size) / 2) 0;
+	/* where the content runs to the hero's edge (phones), the fade moves
+	   inside so the grid never stops at a hard line */
+	--grid-fade: 160px;
+	mask-image:
+		linear-gradient(to bottom,
+			transparent max(0px, var(--grid-top, 0px) - var(--grid-fade)),
+			#000 max(var(--grid-top, 0px), var(--grid-fade)),
+			#000 min(var(--grid-bottom, 100%), 100% - var(--grid-fade)),
+			transparent min(100%, var(--grid-bottom, 100%) + var(--grid-fade))),
+		linear-gradient(to right,
+			transparent max(0px, var(--grid-left, 0px) - var(--grid-fade)),
+			#000 max(var(--grid-left, 0px), var(--grid-fade)),
+			#000 min(var(--grid-right, 100%), 100% - var(--grid-fade)),
+			transparent min(100%, var(--grid-right, 100%) + var(--grid-fade)));
+	mask-composite: intersect;
+	opacity: 0;
+	transition: opacity 1s ease 0.2s;
+}
+
+.home:has(.hero-revealed)::before {
+	opacity: 1;
+}
+
 /* Keep the drift inside the section. */
 .section:has(> .section-blob) {
 	overflow: clip;
@@ -355,6 +399,10 @@ a.seam-note {
 @media (prefers-reduced-motion: reduce) {
 	.section-blob {
 		animation: none;
+	}
+
+	.home::before {
+		transition: none;
 	}
 }
 
@@ -2916,6 +2964,10 @@ a.seam-note:focus-visible .work__all-head {
 	.about__quick-links .stack-btn {
 		width: 100%;
 		justify-content: center;
+	}
+
+	.home::before {
+		--grid-fade: 80px;
 	}
 }
 

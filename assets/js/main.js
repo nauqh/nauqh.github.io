@@ -26,6 +26,27 @@ if (document.getElementById("loading-screen")) {
 	);
 }
 
+/*=============== HERO GRID FADE ===============*/
+// Hand the CSS the hero content's box (relative to .home), which the grid
+// fades out around. offsetTop ignores the reveal's translateY.
+const home = document.querySelector(".home");
+const heroData = home?.querySelector(".home__data");
+if (heroData) {
+	const container = heroData.parentElement;
+	const fitHeroGrid = () => {
+		const box = {
+			top: container.offsetTop + heroData.offsetTop,
+			left: container.offsetLeft + heroData.offsetLeft,
+		};
+		box.bottom = box.top + heroData.offsetHeight;
+		box.right = box.left + heroData.offsetWidth;
+		for (const side in box) home.style.setProperty(`--grid-${side}`, `${box[side]}px`);
+	};
+	fitHeroGrid();
+	document.fonts.ready.then(fitHeroGrid);
+	addEventListener("resize", fitHeroGrid);
+}
+
 /*=============== SEAM NOTE LINKS ===============*/
 // In-page links on the seam notes glide to their section through Lenis
 // instead of the browser's instant jump.
