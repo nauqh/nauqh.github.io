@@ -1,6 +1,30 @@
-/*=============== AGENT TEAM RETROSPECTIVE ===============*/
+/*=============== HOW MY AGENT TEAM WORKS ===============*/
+/* No dark footer to reveal on this page, so the sheet stays square and the
+   peach runs to the bottom. */
 body {
 	padding-bottom: 0;
+	background: #ffe4cc;
+}
+
+.main {
+	border-radius: 0;
+}
+
+.footer {
+	padding: 0 1rem 2.5rem;
+}
+
+/* Lines up with the content column above it. */
+.footer__container {
+	max-width: calc(968px - 2rem);
+	margin-inline: auto;
+	padding: 1.25rem 0 0;
+	border-top: 2px solid var(--title-color);
+}
+
+.footer__copy,
+.footer__copy a {
+	color: var(--text-color-light);
 }
 
 .retro.section {
@@ -246,4 +270,126 @@ body {
 	.retro__map .retro__card {
 		gap: 0.25rem;
 	}
+}
+
+/*=============== AGENTS.MD PAGE ===============*/
+.md__follow {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.25rem;
+	margin: 2.5rem 0;
+	padding: 1.25rem 1.5rem;
+	border: 2px solid var(--title-color);
+	box-shadow: 5px 5px 0 var(--title-color);
+	background: #fed7aa;
+}
+
+.md__follow p {
+	font-weight: var(--font-medium);
+	color: var(--title-color);
+}
+
+.md__follow .stack-btn i {
+	margin-right: 0.4rem;
+	vertical-align: -0.15em;
+}
+
+.md__file {
+	border: 2px solid var(--title-color);
+	box-shadow: 5px 5px 0 var(--title-color);
+	background: #ffffff;
+}
+
+.md__bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.6rem 1rem;
+	border-bottom: 2px solid var(--title-color);
+	font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+	font-size: var(--small-font-size);
+	color: var(--title-color);
+}
+
+.md__copy {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.35rem 0.8rem;
+	border: 2px solid var(--title-color);
+	background: #ffffff;
+	font: inherit;
+	color: var(--title-color);
+	cursor: pointer;
+}
+
+.md__copy:hover,
+.md__copy:focus-visible {
+	background: var(--title-color);
+	color: #ffffff;
+}
+
+.md__code {
+	margin: 0;
+	padding: 1.25rem 1.5rem;
+	font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+	font-size: 0.8rem;
+	line-height: 1.6;
+	color: var(--text-color);
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.md__works {
+	display: grid;
+	gap: 0.6rem;
+	max-width: 44rem;
+	margin-top: 1.5rem;
+}
+
+.md__works div {
+	display: grid;
+	grid-template-columns: 7rem 1fr;
+	gap: 1rem;
+	align-items: baseline;
+}
+
+.md__works dt {
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 1.15rem;
+	color: #c2410c;
+}
+
+.md__works dd {
+	line-height: 1.6;
+	color: var(--text-color);
+}
+
+@media screen and (max-width: 640px) {
+	.md__works div {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+}
+
+/* An orange underline marks the link at rest; on hover the chip fills orange. */
+.retro__link {
+	color: var(--title-color);
+	text-decoration: none;
+}
+
+.retro__link code {
+	border-bottom: 2px solid #ea580c;
+	border-radius: 4px 4px 0 0;
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease;
+}
+
+.retro__link:hover code,
+.retro__link:focus-visible code {
+	background: #ea580c;
+	color: #ffffff;
 }
