@@ -402,6 +402,10 @@ a.seam-note {
 	background-color: #ffffff;
 	--section-accent: #3b82f6;
 }
+.agents.section {
+	background-color: #ffe4cc;
+	--section-accent: #ea580c;
+}
 .qualification.section {
 	background-color: #fdd5e6;
 	--section-accent: #db2777;
@@ -4047,6 +4051,96 @@ a.seam-note:focus-visible .work__all-head {
 	.building__shots img,
 	.building__shots img[hidden] {
 		transform: none;
+	}
+}
+
+/*=============== AGENTS ===============*/
+.side-note--agents {
+	color: #c2410c;
+}
+
+.agents__lead {
+	max-width: 46rem;
+	font-size: clamp(1.1rem, 2vw, 1.35rem);
+	font-weight: var(--font-medium);
+	line-height: 1.5;
+	color: var(--title-color);
+}
+
+.agents code {
+	padding: 0.05em 0.35em;
+	border-radius: 4px;
+	background: rgba(0, 0, 0, 0.07);
+	font-size: 0.9em;
+}
+
+/* Four steps in a row, joined by a rule through the gaps. */
+.agents__flow {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1.5rem;
+	margin: 3rem 0;
+	padding: 0;
+	list-style: none;
+}
+
+.agents__step {
+	position: relative;
+	padding: 1.25rem;
+	border: 2px solid var(--title-color);
+	box-shadow: 5px 5px 0 var(--title-color);
+	background: #ffffff;
+}
+
+.agents__step + .agents__step::before {
+	content: "";
+	position: absolute;
+	top: 2.4rem;
+	left: calc(-1.5rem - 2px);
+	width: 1.5rem;
+	border-top: 2px solid var(--title-color);
+}
+
+.agents__num {
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 1.5rem;
+	color: #c2410c;
+}
+
+.agents__step-name {
+	margin: 0.25rem 0 0.5rem;
+	font-size: 1.25rem;
+	font-weight: var(--font-semibold);
+	color: var(--title-color);
+}
+
+.agents__step p {
+	font-size: var(--small-font-size);
+	line-height: 1.6;
+	color: var(--text-color);
+}
+
+.agents__foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+}
+
+@media screen and (max-width: 968px) {
+	.agents__flow {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.agents__step + .agents__step::before {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 560px) {
+	.agents__flow {
+		grid-template-columns: 1fr;
 	}
 }
 

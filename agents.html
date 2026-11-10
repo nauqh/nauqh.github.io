@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="assets/img/logo.svg?v=2" type="image/svg+xml" />
+
+    <!--=============== BOXICONS ===============-->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,800;1,400;1,800&family=Shantell+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/archive.css" />
+    <link rel="stylesheet" href="assets/css/agents.css" />
+
+    <title>How My Agent Team Works | Minh Quan</title>
+
+    <meta name="description" content="How I work with a team of AI agents: a lead agent plans and merges, workers each have their own git branch.">
+
+    <link rel="canonical" href="https://nauqh.github.io/agents">
+
+    <meta property="og:title" content="How My Agent Team Works | Minh Quan">
+    <meta property="og:description" content="How I work with a team of AI agents: a lead agent plans and merges, workers each have their own git branch.">
+    <meta property="og:url" content="https://nauqh.github.io/agents">
+    <meta property="og:image" content="https://nauqh.github.io/assets/img/og-banner.png">
+    <meta property="og:type" content="website">
+</head>
+
+<body>
+    <main class="main">
+        <section class="retro section" id="retro">
+            <div class="container retro__wrap">
+                <a href="index.html#agents" class="retro__back"><i class="bx bx-left-arrow-alt" aria-hidden="true"></i>back</a>
+                <h1 class="section__title is-visible">how my agent <em>team</em> works</h1>
+                <p class="retro__intro">
+                    I work with a small team of AI agents. A lead agent plans the work and hands it to workers,
+                    each on its own git branch. It's the workflow a dev team already uses, run on one machine.
+                </p>
+
+                <section class="retro__block">
+                    <h2 class="retro__heading"><span>01</span>the problem</h2>
+                    <p>
+                        A single agent works through a job one step at a time. On a big task that's slow, and its
+                        conversation fills up with detail until it loses track of what matters. Putting two agents
+                        in the same folder doesn't help: they overwrite each other's changes.
+                    </p>
+                </section>
+
+                <section class="retro__block">
+                    <h2 class="retro__heading"><span>02</span>the system</h2>
+                    <div class="retro__org" aria-label="Me above the lead agent, the lead above the workers">
+                        <div class="retro__node retro__node--me">me<small>decide what to build, review the feature</small></div>
+                        <div class="retro__node retro__node--lead">lead agent<small>plans, reviews the code, merges</small></div>
+                        <div class="retro__workers">
+                            <div class="retro__node">worker<small>own branch, own files</small></div>
+                            <div class="retro__node">worker<small>own branch, own files</small></div>
+                            <div class="retro__node">worker<small>own branch, own files</small></div>
+                        </div>
+                    </div>
+                    <dl class="retro__roles">
+                        <div>
+                            <dt>me</dt>
+                            <dd>I decide what gets built, approve the plan, and review the finished feature. Every agent runs in its own terminal, so I can watch any of them and step in.</dd>
+                        </div>
+                        <div>
+                            <dt>the lead</dt>
+                            <dd>Reads the code, splits the work, writes each worker's brief, then reviews the code that comes back and merges it.</dd>
+                        </div>
+                        <div>
+                            <dt>workers</dt>
+                            <dd>Each has its own git worktree and branch and owns a set of files. They report back with their test results, and can message each other and the lead.</dd>
+                        </div>
+                    </dl>
+                    <p>
+                        A rules file in each repo, <code>AGENTS.md</code>, tells every agent how to behave: how to
+                        claim a file, when to ask, and what it must never do without me, like pushing or deleting.
+                    </p>
+                </section>
+
+                <section class="retro__block">
+                    <h2 class="retro__heading"><span>03</span>why it works</h2>
+                    <p>Each part is borrowed from how a dev team already works.</p>
+                    <div class="retro__map">
+                        <div class="retro__card">
+                            <h3>a branch per developer</h3>
+                            <p>Each worker has its own worktree and branch, so nobody overwrites anyone else's work.</p>
+                        </div>
+                        <div class="retro__card">
+                            <h3>code ownership</h3>
+                            <p>Work is split by file. If two tasks need the same file, they run one after the other, so merges don't conflict.</p>
+                        </div>
+                        <div class="retro__card">
+                            <h3>tickets</h3>
+                            <p>Each worker gets a written brief with the goal, its files and the tests to run. It only needs that, not the lead's whole conversation.</p>
+                        </div>
+                        <div class="retro__card">
+                            <h3>code review</h3>
+                            <p>The lead reads every change without having written it, so it spots what the author missed.</p>
+                        </div>
+                        <div class="retro__card">
+                            <h3>one person merges</h3>
+                            <p>Only the lead merges, and it runs the full test suite on the combined result before anything reaches me.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="retro__block">
+                    <h2 class="retro__heading"><span>04</span>in practice</h2>
+                    <p>
+                        On Greyfall, my game, I asked for a redesigned map area. The lead started a researcher to
+                        study level design and a builder to work from its brief. Partway through I added a shop
+                        system, and the lead brought in a third worker for it instead of squeezing it into someone
+                        else's files. Two features in one session, with no merge conflicts.
+                    </p>
+                </section>
+
+                <section class="retro__block">
+                    <h2 class="retro__heading"><span>05</span>what I'm improving</h2>
+                    <p>It isn't finished. What I'm working on now:</p>
+                    <ul class="retro__todo">
+                        <li>Workers commit to their own branch, so the lead can merge it like a pull request.</li>
+                        <li>A setup script for each new worktree, since a fresh one has no packages, assets or config.</li>
+                        <li>A port per worker, and each worker shuts its servers down before reporting back.</li>
+                        <li>Running the final tests only after every worker has stopped, because a busy machine makes tests fail at random.</li>
+                    </ul>
+                </section>
+
+                <section class="retro__block retro__verdict">
+                    <p>
+                        I use it for two or more pieces of work that don't share files, or research that can run
+                        ahead of the build. For a small fix, one agent is faster.
+                    </p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container container">
+            <span class="footer__copy">
+                Designed and Built by <a href="index.html">Nauqh</a>
+            </span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>
+    <script>
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+            smoothTouch: true,
+            touchMultiplier: 1.5,
+        });
+        requestAnimationFrame(function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,249 @@
+/*=============== AGENT TEAM RETROSPECTIVE ===============*/
+body {
+	padding-bottom: 0;
+}
+
+.retro.section {
+	padding-top: 3rem;
+	padding-bottom: 5rem;
+	background: #ffe4cc;
+	--section-accent: #ea580c;
+}
+
+/* The diagram, cards and table use the full width; running text keeps a
+   readable line length. */
+.retro__wrap {
+	max-width: 968px;
+	margin-inline: auto;
+	padding-inline: 1rem;
+}
+
+.retro__intro,
+.retro__block > p,
+.retro__todo {
+	max-width: 44rem;
+}
+
+.retro__back {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	margin-bottom: 1rem;
+	font-size: var(--small-font-size);
+	font-weight: var(--font-medium);
+	color: var(--title-color);
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
+
+.retro__intro {
+	font-size: clamp(1.05rem, 2vw, 1.25rem);
+	font-weight: var(--font-medium);
+	line-height: 1.55;
+	color: var(--title-color);
+}
+
+.retro__block {
+	margin-top: 4rem;
+}
+
+.retro__block p,
+.retro__block li {
+	line-height: 1.65;
+	color: var(--text-color);
+}
+
+.retro__block strong {
+	color: var(--title-color);
+}
+
+.retro__heading {
+	display: flex;
+	align-items: baseline;
+	gap: 0.75rem;
+	margin-bottom: 1rem;
+	font-size: clamp(1.4rem, 3vw, 1.85rem);
+	font-weight: var(--font-semibold);
+	letter-spacing: -0.02em;
+	color: var(--title-color);
+}
+
+.retro__heading span {
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 1.1rem;
+	font-weight: 400;
+	color: #c2410c;
+}
+
+/* Me over the lead over the workers, joined by plain rules. */
+.retro__org {
+	display: grid;
+	justify-items: center;
+	gap: 1.5rem;
+	margin-top: 2rem;
+}
+
+.retro__node {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 12rem;
+	padding: 0.85rem 1.25rem;
+	border: 2px solid var(--title-color);
+	box-shadow: 4px 4px 0 var(--title-color);
+	background: #ffffff;
+	font-weight: var(--font-semibold);
+	color: var(--title-color);
+	text-align: center;
+}
+
+.retro__node small {
+	font-size: var(--smaller-font-size);
+	font-weight: 400;
+	color: var(--text-color);
+}
+
+.retro__node--me {
+	background: #fed7aa;
+}
+
+.retro__node--me::after,
+.retro__node--lead::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	height: calc(1.5rem + 2px);
+	border-left: 2px solid var(--title-color);
+}
+
+.retro__workers {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+	width: 100%;
+	padding-top: 1.5rem;
+	border-top: 2px solid var(--title-color);
+}
+
+.retro__workers .retro__node {
+	min-width: 0;
+}
+
+.retro__roles {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1.5rem;
+	margin: 2.5rem 0 1.5rem;
+}
+
+.retro__roles dt {
+	margin-bottom: 0.25rem;
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 1.2rem;
+	color: #c2410c;
+}
+
+.retro__roles dd {
+	font-size: var(--small-font-size);
+	line-height: 1.6;
+	color: var(--text-color);
+}
+
+.retro code {
+	padding: 0.05em 0.35em;
+	border-radius: 4px;
+	background: rgba(0, 0, 0, 0.07);
+	font-size: 0.9em;
+}
+
+/* One bordered list: the team practice on the left, the agent version on the right. */
+.retro__map {
+	margin-top: 1.5rem;
+	border: 2px solid var(--title-color);
+	box-shadow: 5px 5px 0 var(--title-color);
+	background: #ffffff;
+}
+
+.retro__map .retro__card {
+	display: grid;
+	grid-template-columns: 14rem 1fr;
+	gap: 1.5rem;
+	align-items: baseline;
+	padding: 1.1rem 1.5rem;
+	border: 0;
+	box-shadow: none;
+	background: none;
+}
+
+.retro__map .retro__card + .retro__card {
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.retro__map .retro__card h3 {
+	margin: 0;
+}
+
+.retro__map .retro__card p {
+	font-size: var(--small-font-size);
+	line-height: 1.6;
+}
+
+.retro__card {
+	padding: 1.5rem;
+	border: 2px solid var(--title-color);
+	box-shadow: 5px 5px 0 var(--title-color);
+	background: #ffffff;
+}
+
+.retro__card h3 {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin-bottom: 0.75rem;
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 1.3rem;
+	font-weight: 400;
+	color: var(--title-color);
+}
+
+.retro__todo {
+	display: grid;
+	gap: 0.75rem;
+}
+
+.retro__todo li {
+	position: relative;
+	padding-left: 1.75rem;
+}
+
+.retro__todo li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0.3em;
+	width: 1rem;
+	height: 1rem;
+	border: 2px solid var(--title-color);
+	background: #ffffff;
+}
+
+.retro__verdict {
+	padding: 1.5rem;
+	border: 2px solid var(--title-color);
+	box-shadow: 5px 5px 0 var(--title-color);
+	background: #fed7aa;
+}
+
+@media screen and (max-width: 640px) {
+	.retro__workers,
+	.retro__roles,
+	.retro__map .retro__card {
+		grid-template-columns: 1fr;
+	}
+
+	.retro__map .retro__card {
+		gap: 0.25rem;
+	}
+}
