@@ -329,13 +329,17 @@ A task is done when:
   typecheck, build, and any schema or migration check. The commands are in
   the README; if you cannot find them, ask rather than skip;
 - anything with a screen or an endpoint has been driven for real. A green suite
-  is not a working screen;
+  is not a working screen. No tool to drive it (no browser tool)? Do not build
+  your own: run the checks, then hand the user the exact page and steps to
+  verify;
 - new warnings and errors are fixed, or explicitly listed as out of scope;
 - the impact is stated: what changed, where, and why;
 - anything deliberately left out is named as a follow-up;
 - your status file is deleted, and the user got the summary of what landed.
 
 If a check failed, say so and show the output. If you skipped one, say that too.
+The same check failing twice the same way is a stop: report it, do not keep
+improvising.
 
 ## Commenting
 
