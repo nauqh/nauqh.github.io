@@ -71,14 +71,9 @@
                     </div>
                     <pre class="md__code" id="mdCode"># Repo Working Agreements
 
-Working agreements for any agent in this repo, whichever tool you are: Claude
-Code, Codex, Cursor, or something else.
-
-This file is process: how to work, coordinate, and finish. It is deliberately
-project-agnostic. The repo's own facts - its domain language, its commands, its
-traps, its state of play - live in the `README` and whatever docs the repo
-keeps. Read those too; find them before you start, do not assume this
-file is all there is.
+Process for any agent in this repo, whatever the tool. The repo's own facts
+(commands, domain language, traps) live in the `README` and its docs; read
+those too.
 
 ## Baseline workflow
 
@@ -134,27 +129,15 @@ Notes: /auth/login now returns { accessToken, refreshToken }
 Updated: 2026-09-11 14:20
 ```
 
-`Pane:` is your Herdr pane id, `$HERDR_PANE_ID`, so others can reach you. Leave
-it out when you are not running in Herdr.
+`Pane:` is your Herdr pane id, `$HERDR_PANE_ID`. `Updated:` is taken from the
+clock, not guessed.
 
-`Updated:` is a real timestamp, taken from the clock, not guessed.
-
-`Status:` is one of:
-
-| Status | Meaning | Are its `Files:` claimed? |
-| --- | --- | --- |
-| `working` | Actively editing right now. | Yes. Do not touch them. |
-| `blocked` | Stopped, waiting on the user or on another session. Say what for in `Notes:`. | Yes. The work is unfinished and will resume. |
-
-There is no `done` status: done means the file is deleted. A session that
-finishes one task and picks up another deletes its file and starts a fresh one
-named after the new task. Waiting on the user to review finished work is still
-`blocked`, with `Notes:` saying what is ready.
+`Status:` is `working` (editing now) or `blocked` (waiting on the user or
+another session, including review of finished work; say what for in
+`Notes:`). Both claim their `Files:`. There is no `done`: done means the file
+is deleted, and a new task gets a fresh file.
 
 ### Herdr
-
-When `HERDR_ENV=1`, sessions can see and talk to each other. Outside Herdr,
-skip this section: the user relays anything another session needs to hear.
 
 - **Name your tab first.** Before you start a task, rename your own tab to a
   two or three word name for it in Title Case, so the user can tell the
@@ -191,8 +174,7 @@ skip this section: the user relays anything another session needs to hear.
 ## Teams
 
 When the user asks for a team, the session they asked becomes the lead and
-spawns workers through Herdr (`HERDR_ENV=1`). Without Herdr, say so and work
-alone.
+spawns workers through Herdr.
 
 ### Lead
 
@@ -232,7 +214,6 @@ alone.
   you write to the user.
 - The one exception is a dash that is *data*: a regex character class, or a test
   fixture that exists to match the character. Converting those breaks them.
-- Match the density of the file you are in rather than importing your own.
 - Prose you were not asked for is debt. A report, a walkthrough or per-phase
   notes the user asked for is not.
 
@@ -253,7 +234,7 @@ needs to be.
 - Patch, don't rewrite. Whole-file rewrites hide the real change in the noise.
 - No unrequested abstraction. No interface with one implementation, no config
   for a value that never changes, no scaffolding for later.
-- Preserve the surrounding conventions rather than importing your own.
+- Match the surrounding conventions and density rather than importing your own.
 
 ### Live services and remote APIs (REQUIRED)
 
@@ -272,8 +253,6 @@ published account, a paid API.
 - Never print secrets. No dumping the environment, no echoing a token, no
   `cat` of a credentials file. Redact when output must be shown.
 - Never write a secret into a status file, a doc, a test fixture or a commit.
-- An exported session cookie is a live login, not a config file. Treat it as a
-  credential and delete it once it has been used.
 
 ### Destructive operations
 
@@ -282,8 +261,6 @@ published account, a paid API.
 - Before deleting or overwriting anything you did not create, look at it. If
   what you find contradicts how it was described, surface that instead of
   proceeding.
-- Say which you are doing before you do it: migrating, or dropping and
-  reseeding.
 
 ### Git
 
@@ -295,17 +272,9 @@ published account, a paid API.
 - Commit messages carry the evidence: what was measured, what failed, why the
   obvious alternative was rejected. They are the durable record; this file is
   not.
-- The subject line is `type(scope): summary`
-  ([Conventional Commits](https://www.conventionalcommits.org)):
-  - `type` is one of `feat`, `fix`, `refactor`, `perf`, `test`, `docs`,
-    `build`, `ci`, `chore`, `revert`.
-  - `scope` is the area touched, one short lowercase word (`api`, `web`,
-    `auth`, `logging`). Leave it out, `type: summary`, when no one area fits.
-  - `summary` is imperative, lowercase, no trailing period, and the whole
-    subject stays under 72 characters: `fix(auth): reject a blank api key`.
-  - A breaking change adds `!` before the colon, `feat(api)!: ...`, and says
-    what breaks in the body.
-  - A blank line, then the body with the evidence above, wrapped at 72.
+- Subject is Conventional Commits, `type(scope): summary`: imperative,
+  lowercase, under 72 characters (`fix(auth): reject a blank api key`). Body
+  wrapped at 72.
 
 ## Accuracy and verification
 
@@ -314,8 +283,6 @@ Prefer what the system tells you now over what you remember.
 - **Ask the running process, not the source.** A route is real when the server
   serves it. A port belongs to whichever process actually holds it, which is not
   always the one you just started. Reading the file proves only what is on disk.
-- **Pinned model ids and API versions rot silently**, and a provider's own list
-  endpoint will still name ids that fail on use. Verify with a real call.
 - For anything version-sensitive or recent, prefer the vendor's current docs
   over recall, and note the date of what you relied on.
 - Never report a command you did not run or a result you did not see.
@@ -325,9 +292,9 @@ Prefer what the system tells you now over what you remember.
 A task is done when:
 
 - the change is implemented, or the question is answered;
-- the repo's checks have been **run**, not merely mentioned: tests, linter,
-  typecheck, build, and any schema or migration check. The commands are in
-  the README; if you cannot find them, ask rather than skip;
+- the checks the change can break have been **run**, not merely mentioned
+  (see "Which checks to run"). The commands are in the README; if you cannot
+  find them, ask rather than skip;
 - anything with a screen or an endpoint has been driven for real. A green suite
   is not a working screen. No tool to drive it (no browser tool)? Do not build
   your own: run the checks, then hand the user the exact page and steps to
@@ -337,9 +304,27 @@ A task is done when:
 - anything deliberately left out is named as a follow-up;
 - your status file is deleted, and the user got the summary of what landed.
 
-If a check failed, say so and show the output. If you skipped one, say that too.
+If a check failed, say so and show the output. Say which checks you ran and
+which you skipped.
 The same check failing twice the same way is a stop: report it, do not keep
 improvising.
+
+### Which checks to run
+
+Checks cost time and tokens. Run the ones the change can break, not all of them
+by reflex.
+
+- **Scope to the change.** Run only the tests for the package, module or file
+  you touched, plus anything that imports it. Skip the full suite unless the
+  change is cross-cutting (shared types, build config, dependencies).
+- **Match the check to the risk.** A type-level change needs the typecheck,
+  logic needs its tests, a build or config change needs the build. Docs,
+  comments and copy need no checks.
+- **Iterate narrow, finish once.** While working, run the single test you are
+  fixing. Run the scoped set once at the end, and never rerun a green check on
+  unchanged code.
+- **Keep output short.** Use the runner's quiet or failures-only mode and read
+  only the failures.
 
 ## Commenting
 
