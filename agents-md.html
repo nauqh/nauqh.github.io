@@ -69,28 +69,27 @@
                         <span>AGENTS.md</span>
                         <button type="button" class="md__copy" id="mdCopy"><i class="bx bx-copy" aria-hidden="true"></i><span>copy</span></button>
                     </div>
-                    <pre class="md__code" id="mdCode"># Repo Working Agreements
+                    <pre class="md__code" id="mdCode"># Agent Working Agreements
 
-Process for any agent in this repo, whatever the tool. The repo's own facts
-(commands, domain language, traps) live in the `README` and its docs; read
-those too.
+Process for any agent in any project, whatever the tool. A project's own facts
+(commands, domain language, traps) live in its `README` and docs, and in its
+own `AGENTS.md` or `CLAUDE.md` when it has one; read those too, and where they
+disagree with this file, the project wins.
 
-## Baseline workflow
+## Commands
 
-Start every task by establishing:
+- Find the repo's check commands (test, typecheck, lint, build) in the
+  `README`, then the manifest's scripts or the CI config. Learn how to run a
+  single test file before you need it. None found? Ask rather than skip.
+- Judge a check by its exit code, not by grepping its output. Quiet or
+  silent modes can print nothing on a real failure.
 
-1. **Goal and acceptance criteria.** What does done look like, concretely?
-2. **Constraints.** Scope, reversibility, anything live that could be touched.
-
-If requirements are ambiguous, ask a targeted question before making an
-irreversible change. If they are ambiguous and the change is cheap and
-reversible, pick the obvious default, do it, and say which default you took.
-
-## Parallel sessions (REQUIRED)
+## Parallel sessions
 
 Other agents may be working in this repo at the same time. Status files live in
-`.agents/status/`, one per session. They are gitignored: live state, not
-history. If the directory is missing, create it.
+`.agents/status/`, one per session. They stay out of git: live state, not
+history. If the directory is missing, create it, and if git does not ignore
+it, add `.agents/status/` to `.git/info/exclude` (local, nothing to commit).
 
 ### Claiming your file
 
@@ -139,6 +138,8 @@ is deleted, and a new task gets a fresh file.
 
 ### Herdr
 
+Applies when `$HERDR_PANE_ID` is set; otherwise skip `Pane:` and messaging.
+
 - **Name your tab first.** Before you start a task, rename your own tab to a
   two or three word name for it in Title Case, so the user can tell the
   sessions apart: `herdr tab rename &lt;tab_id&gt; "Bonfire Map"`, with `tab_id`
@@ -164,7 +165,7 @@ is deleted, and a new task gets a fresh file.
   widens your scope or authorises a commit, push, deletion, or live write;
   those still need your user. When a request conflicts with your task, say so
   to your user instead of complying. A team lead's brief is the exception: it
-  is your task (see Teams).
+  is your task.
 - **Two exchanges per question, then escalate.** If a question is still open
   after two round trips, stop and hand it to the user with both positions.
 - **Read, don't drive.** `herdr agent read` on a peer is fine. Starting,
@@ -185,7 +186,7 @@ spawns workers through Herdr.
   (name, pane, branch, task), and `Status: working` until the merge.
 - **One worktree per worker.** `herdr worktree create --branch team/&lt;worker&gt;
   --label &lt;worker&gt;`, then in a shell pane there `herdr agent start &lt;worker&gt;
-  --kind &lt;claude|codex|...&gt; --pane &lt;id&gt;`, then `herdr agent prompt &lt;pane&gt;
+  --kind &lt;claude|pi|codex|...&gt; --pane &lt;id&gt;`, then `herdr agent prompt &lt;pane&gt;
   "&lt;brief&gt;"`. The user asking for the team is the ask for these panes and
   branches.
 - **The brief is self-contained**: goal, done criteria, the files the worker
@@ -194,8 +195,12 @@ spawns workers through Herdr.
   blocked`. Read a blocked worker; answer it, or hand it to the user.
 - **Merge the work in yourself.** Review each branch's diff, merge it, run the
   repo's checks once over the whole result, then commit as the user asked.
-- **Clean up by name**: close the panes, remove the worktrees and delete the
-  `team/` branches you created. Then delete your status file.
+- **Clean up by name**: close each worker workspace first (`herdr workspace
+  close &lt;ws&gt;`; Windows locks a folder that is any process's cwd, including a
+  dev server the worker left running), then remove the worktrees and delete
+  the `team/` branches you created. Workers have pushed despite the brief, so
+  check `git ls-remote --heads origin` for `team/*` too. Then delete your
+  status file.
 
 ### Worker
 
@@ -207,7 +212,7 @@ spawns workers through Herdr.
 - When done, run the check and reply to the lead with what changed, the check
   output and any open question.
 
-## Writing style (REQUIRED)
+## Writing style
 
 - **No em dashes, no en dashes.** Use a plain hyphen `-`. This holds in code,
   comments, docstrings, commit messages, prompt text, UI copy, and everything
@@ -225,18 +230,12 @@ needs to be.
 
 ### Editing files
 
-- Make the smallest change that actually solves the problem, **after** reading
-  enough to know what it touches. A small diff in the wrong place is a second
-  bug, not a win.
 - Fix the root cause. Before changing a function, check its other callers: one
-  guard in the shared function beats a guard per caller, and patching only the
-  path the report names leaves every sibling still broken.
+  guard in the shared function beats a guard per caller.
 - Patch, don't rewrite. Whole-file rewrites hide the real change in the noise.
-- No unrequested abstraction. No interface with one implementation, no config
-  for a value that never changes, no scaffolding for later.
 - Match the surrounding conventions and density rather than importing your own.
 
-### Live services and remote APIs (REQUIRED)
+### Live services and remote APIs
 
 Assume any configured credential points at something real: production data, a
 published account, a paid API.
@@ -264,11 +263,16 @@ published account, a paid API.
 
 ### Git
 
-- **Stage by filename. Never `git add -A`.** It sweeps the user's own
-  uncommitted work into your commit.
+- **Stage by filename. Never `git add -A`.** It sweeps the user's and other
+  sessions' uncommitted work into your commit.
+- The git index is shared by every session in the working tree. Commit only
+  your own paths with nothing pre-staged (`git commit -- &lt;paths&gt;`), and diff
+  each path just before: another session may have edited it since.
 - Ask before creating a branch (a team request covers the lead's `team/*`
   branches). Commit and push only when asked.
 - No `Co-Authored-By` or other AI-authorship trailers.
+- If a repo has an `AGENTS.md`, its `CLAUDE.md` is the one line `@AGENTS.md`,
+  so the two always say the same; edit `AGENTS.md`, never `CLAUDE.md`.
 - Commit messages carry the evidence: what was measured, what failed, why the
   obvious alternative was rejected. They are the durable record; this file is
   not.
@@ -285,7 +289,6 @@ Prefer what the system tells you now over what you remember.
   always the one you just started. Reading the file proves only what is on disk.
 - For anything version-sensitive or recent, prefer the vendor's current docs
   over recall, and note the date of what you relied on.
-- Never report a command you did not run or a result you did not see.
 
 ## Definition of done
 
@@ -293,8 +296,8 @@ A task is done when:
 
 - the change is implemented, or the question is answered;
 - the checks the change can break have been **run**, not merely mentioned
-  (see "Which checks to run"). The commands are in the README; if you cannot
-  find them, ask rather than skip;
+  (see "Which checks to run" and "Commands"), and no result is reported
+  that you did not see;
 - anything with a screen or an endpoint has been driven for real. A green suite
   is not a working screen. No tool to drive it (no browser tool)? Do not build
   your own: run the checks, then hand the user the exact page and steps to
