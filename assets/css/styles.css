@@ -3753,34 +3753,47 @@ a.seam-note:focus-visible .work__all-head {
 	margin: 1.5rem 0 1rem 0;
 }
 
-/* The staging the note is peeled against. */
-.experience-container {
-	perspective: 1800px;
+/* The flipping role is its own two-sided card: the chrome moves from the
+   frame onto each face, so the whole note turns over, not just its text. */
+.job-details:has(> #coderschool.active) {
+	background: none;
+	border: 0;
+	box-shadow: none;
+	padding: 0;
 }
 
-/* Two pages of the role, mounted back to back, as tall as the taller one so
-   the card never resizes as it turns. The stack uses a grid cell, which sizes
-   to the tallest page while both stay in the same box. */
+/* A pad of two notes stacked in one grid cell, as tall as the taller one so
+   the card never resizes. The pad carries the shadow; the notes peel off it. */
 .job-flip {
 	display: grid;
-	transform-style: preserve-3d;
+	position: relative;
+	box-shadow: 10px 10px 0 var(--title-color);
 }
 
 .job-face--front,
 .job-face--back {
 	grid-area: 1 / 1;
-	backface-visibility: hidden;
+	z-index: 1;
+	background: #fff;
+	border: 1px solid var(--title-color);
+	padding: 1.5rem 2rem;
 }
 
-.job-face--back {
-	transform: rotateY(180deg);
+.job-face[aria-hidden="true"] {
+	z-index: 0;
 }
 
-/* The note turns over on its own vertical axis. The lift comes from the
-   rotation itself - while it is edge-on the paper is out in front of the
-   page - so no trig is needed to carry it. */
-#coderschool.active .job-flip {
-	transform: rotateY(var(--peel, 0deg));
+/* The folded-back flap and its shadows, drawn over the pad while peeling. */
+.job-peel {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+	pointer-events: none;
+	visibility: hidden;
+	color: var(--title-color);
 }
 
 .job-flip__btn {
@@ -3819,12 +3832,6 @@ a.seam-note:focus-visible .work__all-head {
 
 .job-flip__btn[aria-pressed="true"] .job-flip__arrow {
 	transform: rotate(180deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.job-flip {
-		perspective: none;
-	}
 }
 
 @keyframes fadeIn {
@@ -3897,6 +3904,11 @@ a.seam-note:focus-visible .work__all-head {
 	.job-details {
 		min-height: 0;
 		padding: 1.25rem 1.25rem;
+	}
+
+	.job-face--front,
+	.job-face--back {
+		padding: 1.25rem;
 	}
 
 	.job-metric {

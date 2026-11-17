@@ -247,50 +247,134 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	/*=============== RESUME NOTE FLIP ===============*/
-	// The Automation Engineer card carries a second page: the resume's shorter
-	// version of the same role. It behaves like a sticky note peeled off, turned
-	// over and stuck back down: the peel rotates about the note's vertical axis
-	// while the note lifts and settles. The angle drives the face swap, so a
-	// press mid-peel turns the note back over from wherever it is.
+	/*=============== RESUME NOTE PEEL ===============*/
+	// The Automation Engineer card is a pad of two notes. Pressing the arrow
+	// peels the top note off from its bottom-right corner toward the top-left:
+	// the sheet is clipped along a moving crease and the peeled part is drawn
+	// folded back over it, then the note lifts away and the other page is on
+	// top. A press mid-peel sticks the note back down.
 	const card = document.querySelector("#coderschool");
 	if (card) {
-		const flipBtn = card.querySelector(".job-flip__btn");
-		const front = card.querySelector(".job-face--front");
-		const back = card.querySelector(".job-face--back");
+		const pad = card.querySelector(".job-flip");
+		const faces = [card.querySelector(".job-face--front"), card.querySelector(".job-face--back")];
+		const flipBtns = card.querySelectorAll(".job-flip__btn");
+		const svg = pad.querySelector(".job-peel");
+		const fade = svg.querySelector(".job-peel__fade");
+		const lift = svg.querySelector(".job-peel__lift");
+		const shade = svg.querySelector(".job-peel__shade");
+		const cast = svg.querySelector(".job-peel__cast");
+		const flap = svg.querySelector(".job-peel__flap");
+		const shadeGrad = svg.querySelector("#peel-shade");
+		const paperGrad = svg.querySelector("#peel-paper");
 		const Motion = window.Motion;
-		const angle = Motion?.motionValue(0);
+		const t = Motion?.motionValue(0);
 		let flipped = false;
+		let target = 0;
+		let W = 0;
+		let H = 0;
 
-		const sync = (v) => {
-			const showingBack = Math.abs(v) > 90 && Math.abs(v) < 270;
-			front.setAttribute("aria-hidden", String(showingBack));
-			back.setAttribute("aria-hidden", String(!showingBack));
-			front.inert = showingBack;
-			back.inert = !showingBack;
+		const sync = () => {
+			const handOff = card.contains(document.activeElement);
+			faces.forEach((face, i) => {
+				const hidden = i !== Number(flipped);
+				face.setAttribute("aria-hidden", String(hidden));
+				face.inert = hidden;
+			});
+			flipBtns.forEach((b) => b.setAttribute("aria-pressed", String(flipped)));
+			if (handOff) flipBtns[Number(flipped)].focus({ preventScroll: true });
 		};
 
-		if (angle) {
-			angle.on("change", (v) => {
-				card.style.setProperty("--peel", `${v}deg`);
-				sync(v);
+		// Keeps the part of a convex polygon where f(p) >= 0.
+		const cut = (pts, f) => {
+			const out = [];
+			pts.forEach((a, i) => {
+				const b = pts[(i + 1) % pts.length];
+				const fa = f(a);
+				const fb = f(b);
+				if (fa >= 0) out.push(a);
+				if (fa >= 0 !== fb >= 0) {
+					const k = fa / (fa - fb);
+					out.push([a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k]);
+				}
 			});
-		}
+			return out;
+		};
+		const pts = (poly) => poly.map((p) => p.join(",")).join(" ");
+		const setLine = (grad, a, b) => {
+			grad.setAttribute("x1", a[0]);
+			grad.setAttribute("y1", a[1]);
+			grad.setAttribute("x2", b[0]);
+			grad.setAttribute("y2", b[1]);
+		};
 
-		flipBtn.addEventListener("click", () => {
-			flipped = !flipped;
-			flipBtn.setAttribute("aria-pressed", String(flipped));
-			if (angle && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-				Motion.animate(angle, flipped ? -180 : 0, {
-					type: "spring",
-					bounce: 0.12,
-					duration: 0.7,
-				});
+		const render = (v) => {
+			const top = faces[Number(flipped)];
+			if (v <= 0) {
+				faces.forEach((face) => (face.style.clipPath = ""));
+				svg.style.visibility = "hidden";
 				return;
 			}
-			card.style.setProperty("--peel", flipped ? "-180deg" : "0deg");
-			sync(flipped ? -180 : 0);
-		});
+			svg.style.visibility = "visible";
+			// Crease runs perpendicular to the bottom-right to top-left diagonal,
+			// s pixels along it from the bottom-right corner.
+			const L = Math.hypot(W, H);
+			const u = [-W / L, -H / L];
+			const s = v * L;
+			const f = (p) => (p[0] - W) * u[0] + (p[1] - H) * u[1] - s;
+			const rect = [[0, 0], [W, 0], [W, H], [0, H]];
+			const stuck = cut(rect, f);
+			const peeled = cut(rect, (p) => -f(p));
+			const folded = peeled.map((p) => {
+				const d = 2 * f(p);
+				return [p[0] - d * u[0], p[1] - d * u[1]];
+			});
+			const crease = [W + s * u[0], H + s * u[1]];
+
+			top.style.clipPath = stuck.length
+				? `polygon(${stuck.map((p) => `${p[0]}px ${p[1]}px`).join(",")})`
+				: "polygon(0 0, 0 0, 0 0)";
+			shade.setAttribute("points", pts(peeled));
+			flap.setAttribute("points", pts(folded));
+			cast.setAttribute("points", pts(folded));
+			const reach = Math.min(s, 70);
+			setLine(shadeGrad, crease, [crease[0] - reach * u[0], crease[1] - reach * u[1]]);
+			setLine(paperGrad, crease, [crease[0] + Math.max(s, 1) * u[0], crease[1] + Math.max(s, 1) * u[1]]);
+
+			// Past 60% the note lets go: it drifts off up-left and fades.
+			const away = Math.max(0, (v - 0.6) / 0.4);
+			lift.setAttribute("transform", `translate(${away * 90 * u[0]} ${away * 90 * u[1] - away * 30})`);
+			fade.setAttribute("opacity", String(1 - away));
+		};
+
+		if (t) t.on("change", render);
+
+		const flip = () => {
+			if (!t || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+				flipped = !flipped;
+				sync();
+				return;
+			}
+			if (target === 1) {
+				target = 0;
+				Motion.animate(t, 0, { duration: 0.45, ease: [0.2, 0.8, 0.3, 1] });
+				return;
+			}
+			W = pad.offsetWidth;
+			H = pad.offsetHeight;
+			target = 1;
+			Motion.animate(t, 1, {
+				duration: 1.1,
+				ease: [0.55, 0.05, 0.35, 1],
+				onComplete: () => {
+					if (target !== 1 || t.get() < 0.999) return;
+					target = 0;
+					flipped = !flipped;
+					t.set(0);
+					sync();
+				},
+			});
+		};
+		flipBtns.forEach((b) => b.addEventListener("click", flip));
 	}
 
 	/*=============== SCROLL REVEAL ===============*/

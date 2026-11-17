@@ -555,27 +555,28 @@
                 <div class="job-details">
                     <!-- CoderSchool - Automation Engineer -->
                     <div class="job-content active" id="coderschool">
-                        <div class="job-head">
-                            <h3 class="job-title">Automation Engineer <span class="job-title__at">@
-                                    CoderSchool</span></h3>
-                            <button type="button" class="job-flip__btn" aria-pressed="false"
-                                aria-label="Show the learning platform side of this role">
-                                <svg class="job-flip__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.2" stroke-linecap="square" aria-hidden="true">
-                                    <path d="M3 12h16" />
-                                    <path d="M13 6l6 6-6 6" />
-                                </svg>
-                            </button>
-                        </div>
-                        <p class="job-dates">Sep 2023 ~ Present</p>
-                        <ul class="job-metrics">
-                            <li class="job-metric">business intelligence</li>
-                            <li class="job-metric">etl pipelines</li>
-                            <li class="job-metric">cloud automation</li>
-                            <li class="job-metric">data management</li>
-                        </ul>
                         <div class="job-flip">
                             <div class="job-face job-face--front">
+                                <div class="job-head">
+                                    <h3 class="job-title">Automation Engineer <span class="job-title__at">@
+                                            CoderSchool</span></h3>
+                                    <button type="button" class="job-flip__btn" aria-pressed="false"
+                                        aria-label="Show the learning platform side of this role">
+                                        <svg class="job-flip__arrow" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2.2" stroke-linecap="square"
+                                            aria-hidden="true">
+                                            <path d="M3 12h16" />
+                                            <path d="M13 6l6 6-6 6" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <p class="job-dates">Sep 2023 ~ Present</p>
+                                <ul class="job-metrics">
+                                    <li class="job-metric">business intelligence</li>
+                                    <li class="job-metric">etl pipelines</li>
+                                    <li class="job-metric">cloud automation</li>
+                                    <li class="job-metric">data management</li>
+                                </ul>
                                 <ul class="job-description">
                                     <li>Set up and maintained the company's BI platform using Metabase, PostgreSQL and
                                         Google Cloud Run, building dashboards to track enrolment, learner progress and
@@ -588,7 +589,26 @@
                                         contact for data requests.</li>
                                 </ul>
                             </div>
-                            <div class="job-face job-face--back">
+                            <div class="job-face job-face--back" aria-hidden="true" inert>
+                                <div class="job-head">
+                                    <h3 class="job-title">Automation Engineer <span class="job-title__at">@
+                                            CoderSchool</span></h3>
+                                    <button type="button" class="job-flip__btn" aria-pressed="false"
+                                        aria-label="Show the BI platform side of this role">
+                                        <svg class="job-flip__arrow" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2.2" stroke-linecap="square"
+                                            aria-hidden="true">
+                                            <path d="M3 12h16" />
+                                            <path d="M13 6l6 6-6 6" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <p class="job-dates">Sep 2023 ~ Present</p>
+                                <ul class="job-metrics">
+                                    <li class="job-metric">learning platform</li>
+                                    <li class="job-metric">automated grading</li>
+                                    <li class="job-metric">ai teaching assistant</li>
+                                </ul>
                                 <ul class="job-description">
                                     <li>Developed and maintained CoderSchool's online learning platform, which runs
                                         online assessments, automated grading, an AI Teaching Assistant, and student
@@ -599,6 +619,31 @@
                                         written feedback, handling 80% of general queries without a mentor.</li>
                                 </ul>
                             </div>
+                            <svg class="job-peel" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="peel-shade" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#000" stop-opacity="0.22" />
+                                        <stop offset="1" stop-color="#000" stop-opacity="0" />
+                                    </linearGradient>
+                                    <linearGradient id="peel-paper" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#e4e4e4" />
+                                        <stop offset="0.3" stop-color="#fff" />
+                                        <stop offset="1" stop-color="#f3f3f3" />
+                                    </linearGradient>
+                                    <filter id="peel-blur" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feGaussianBlur stdDeviation="6" />
+                                    </filter>
+                                </defs>
+                                <g class="job-peel__fade">
+                                    <polygon class="job-peel__shade" fill="url(#peel-shade)" />
+                                    <g class="job-peel__lift">
+                                        <polygon class="job-peel__cast" fill="#000" fill-opacity="0.25"
+                                            filter="url(#peel-blur)" transform="translate(4 8)" />
+                                        <polygon class="job-peel__flap" fill="url(#peel-paper)"
+                                            stroke="currentColor" stroke-width="1" />
+                                    </g>
+                                </g>
+                            </svg>
                         </div>
                     </div>
 
