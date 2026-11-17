@@ -3656,8 +3656,6 @@ a.seam-note:focus-visible .work__all-head {
 /* Job Details Styling */
 .job-details {
 	position: relative;
-	/* Floor matches the tallest role, so switching tabs never resizes the card */
-	min-height: 27rem;
 	background: #fff;
 	border: 1px solid var(--title-color);
 	box-shadow: 10px 10px 0 var(--title-color);
@@ -3671,6 +3669,15 @@ a.seam-note:focus-visible .work__all-head {
 
 .job-content.active {
 	display: block;
+}
+
+
+/* Title on the left, the resume toggle on the right of the same line. */
+.job-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
 }
 
 .job-title {
@@ -3715,6 +3722,10 @@ a.seam-note:focus-visible .work__all-head {
 	padding: 0;
 }
 
+.job-description + .job-description {
+	margin-top: 1rem;
+}
+
 .job-description li {
 	color: var(--text-color);
 	margin-bottom: 1rem;
@@ -3740,6 +3751,80 @@ a.seam-note:focus-visible .work__all-head {
 	font-size: 1rem;
 	font-weight: 600;
 	margin: 1.5rem 0 1rem 0;
+}
+
+/* The staging the note is peeled against. */
+.experience-container {
+	perspective: 1800px;
+}
+
+/* Two pages of the role, mounted back to back, as tall as the taller one so
+   the card never resizes as it turns. The stack uses a grid cell, which sizes
+   to the tallest page while both stay in the same box. */
+.job-flip {
+	display: grid;
+	transform-style: preserve-3d;
+}
+
+.job-face--front,
+.job-face--back {
+	grid-area: 1 / 1;
+	backface-visibility: hidden;
+}
+
+.job-face--back {
+	transform: rotateY(180deg);
+}
+
+/* The note turns over on its own vertical axis. The lift comes from the
+   rotation itself - while it is edge-on the paper is out in front of the
+   page - so no trig is needed to carry it. */
+#coderschool.active .job-flip {
+	transform: rotateY(var(--peel, 0deg));
+}
+
+.job-flip__btn {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	padding: 0;
+	border: 1px solid var(--title-color);
+	background: var(--body-color);
+	color: var(--title-color);
+	cursor: pointer;
+	transition:
+		transform 0.15s ease-out,
+		background 0.15s ease-out,
+		color 0.15s ease-out;
+}
+
+.job-flip__arrow {
+	width: 1.1rem;
+	height: 1.1rem;
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.job-flip__btn:hover,
+.job-flip__btn:focus-visible {
+	background: var(--title-color);
+	color: var(--body-color);
+	transform: translate(2px, -2px);
+}
+
+.job-flip__btn:active {
+	transform: translate(0, 0) scale(0.94);
+}
+
+.job-flip__btn[aria-pressed="true"] .job-flip__arrow {
+	transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.job-flip {
+		perspective: none;
+	}
 }
 
 @keyframes fadeIn {

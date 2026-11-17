@@ -247,6 +247,52 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
+	/*=============== RESUME NOTE FLIP ===============*/
+	// The Automation Engineer card carries a second page: the resume's shorter
+	// version of the same role. It behaves like a sticky note peeled off, turned
+	// over and stuck back down: the peel rotates about the note's vertical axis
+	// while the note lifts and settles. The angle drives the face swap, so a
+	// press mid-peel turns the note back over from wherever it is.
+	const card = document.querySelector("#coderschool");
+	if (card) {
+		const flipBtn = card.querySelector(".job-flip__btn");
+		const front = card.querySelector(".job-face--front");
+		const back = card.querySelector(".job-face--back");
+		const Motion = window.Motion;
+		const angle = Motion?.motionValue(0);
+		let flipped = false;
+
+		const sync = (v) => {
+			const showingBack = Math.abs(v) > 90 && Math.abs(v) < 270;
+			front.setAttribute("aria-hidden", String(showingBack));
+			back.setAttribute("aria-hidden", String(!showingBack));
+			front.inert = showingBack;
+			back.inert = !showingBack;
+		};
+
+		if (angle) {
+			angle.on("change", (v) => {
+				card.style.setProperty("--peel", `${v}deg`);
+				sync(v);
+			});
+		}
+
+		flipBtn.addEventListener("click", () => {
+			flipped = !flipped;
+			flipBtn.setAttribute("aria-pressed", String(flipped));
+			if (angle && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+				Motion.animate(angle, flipped ? -180 : 0, {
+					type: "spring",
+					bounce: 0.12,
+					duration: 0.7,
+				});
+				return;
+			}
+			card.style.setProperty("--peel", flipped ? "-180deg" : "0deg");
+			sync(flipped ? -180 : 0);
+		});
+	}
+
 	/*=============== SCROLL REVEAL ===============*/
 	const revealEls = [
 		...document.querySelectorAll(".section__title"),

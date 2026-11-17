@@ -555,8 +555,18 @@
                 <div class="job-details">
                     <!-- CoderSchool - Automation Engineer -->
                     <div class="job-content active" id="coderschool">
-                        <h3 class="job-title">Automation Engineer <span class="job-title__at">@
-                                CoderSchool</span></h3>
+                        <div class="job-head">
+                            <h3 class="job-title">Automation Engineer <span class="job-title__at">@
+                                    CoderSchool</span></h3>
+                            <button type="button" class="job-flip__btn" aria-pressed="false"
+                                aria-label="Show the learning platform side of this role">
+                                <svg class="job-flip__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="square" aria-hidden="true">
+                                    <path d="M3 12h16" />
+                                    <path d="M13 6l6 6-6 6" />
+                                </svg>
+                            </button>
+                        </div>
                         <p class="job-dates">Sep 2023 ~ Present</p>
                         <ul class="job-metrics">
                             <li class="job-metric">business intelligence</li>
@@ -564,17 +574,32 @@
                             <li class="job-metric">cloud automation</li>
                             <li class="job-metric">data management</li>
                         </ul>
-                        <ul class="job-description">
-                            <li>Set up and maintained the company's BI platform using Metabase, PostgreSQL and Google
-                                Cloud Run, building dashboards to track enrolment, learner progress and operational
-                                metrics.</li>
-                            <li>Designed ETL pipelines to consolidate data from internal systems into a central
-                                database for reporting and analysis.</li>
-                            <li>Deployed scheduled data jobs on Google Cloud Run, automating monthly operational
-                                reports and cutting reporting time by 90%.</li>
-                            <li>Managed data quality and access across teams, serving as the main point of contact for
-                                data requests.</li>
-                        </ul>
+                        <div class="job-flip">
+                            <div class="job-face job-face--front">
+                                <ul class="job-description">
+                                    <li>Set up and maintained the company's BI platform using Metabase, PostgreSQL and
+                                        Google Cloud Run, building dashboards to track enrolment, learner progress and
+                                        operational metrics.</li>
+                                    <li>Designed ETL pipelines to consolidate data from internal systems into a central
+                                        database for reporting and analysis.</li>
+                                    <li>Deployed scheduled data jobs on Google Cloud Run, automating monthly
+                                        operational reports and cutting reporting time by 90%.</li>
+                                    <li>Managed data quality and access across teams, serving as the main point of
+                                        contact for data requests.</li>
+                                </ul>
+                            </div>
+                            <div class="job-face job-face--back">
+                                <ul class="job-description">
+                                    <li>Developed and maintained CoderSchool's online learning platform, which runs
+                                        online assessments, automated grading, an AI Teaching Assistant, and student
+                                        and mentor management for 500+ learners across two learning tracks.</li>
+                                    <li>Automated grading for assignments and exams, cutting the time to return results
+                                        from 24 hours to 5 minutes.</li>
+                                    <li>Launched an AI teaching assistant that answers student questions and gives
+                                        written feedback, handling 80% of general queries without a mentor.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- CoderSchool - Course Coordinator -->
@@ -957,6 +982,7 @@
 
     <!--=============== LENIS SMOOTH SCROLL ===============-->
     <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.min.js"></script>
 
     <!--=============== ALFRED SCREENSHOTS ===============-->
     <script>
