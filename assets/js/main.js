@@ -969,3 +969,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	load();
 });
+
+/*=============== CURSOR TAG ===============*/
+// a label beside the native cursor over elements with data-cursor, in the
+// colours of the section underneath. Mouse only: touch never hovers
+if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+	const tagEl = document.createElement("div");
+	tagEl.className = "cursor-tag";
+	tagEl.setAttribute("aria-hidden", "true");
+	tagEl.innerHTML = "<span></span>";
+	const label = tagEl.firstChild;
+	document.body.appendChild(tagEl);
+	let x = 0, y = 0, lastTarget = null;
+
+	const update = (target) => {
+		const host = target?.closest?.("[data-cursor]");
+		tagEl.classList.toggle("is-on", !!host);
+		if (!host || target === lastTarget) return;
+		lastTarget = target;
+		label.textContent = host.dataset.cursor;
+		const style = getComputedStyle(host);
+		tagEl.style.setProperty("--tag-bg", style.getPropertyValue("--cursor-tag").trim() || null);
+		tagEl.style.setProperty("--tag-ink", style.getPropertyValue("--cursor-tag-ink").trim() || null);
+	};
+
+	addEventListener("pointermove", (e) => {
+		x = e.clientX;
+		y = e.clientY;
+		tagEl.style.transform = `translate(${x}px, ${y}px)`;
+		update(e.target);
+		// flip above / left when the tag would run off the bottom or right edge
+		tagEl.classList.toggle("is-up", y + 22 + label.offsetHeight > innerHeight);
+		tagEl.classList.toggle("is-left", x + 14 + label.offsetWidth > innerWidth);
+	}, { passive: true });
+	// scrolling slides new elements under a still mouse without a pointermove
+	addEventListener("scroll", () => update(document.elementFromPoint(x, y)), { passive: true });
+	document.documentElement.addEventListener("pointerleave", () => tagEl.classList.remove("is-on"));
+}

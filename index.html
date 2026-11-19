@@ -103,7 +103,7 @@
             <div class="loading__logo"></div>
             <div class="loading__track"><div class="loading__fill" id="loading-fill"></div></div>
         </div>
-        <div class="loading__counter"><span id="loading-pct">0%</span></div>
+        <div class="loading__counter"><span class="loading__digits" id="loading-pct"></span></div>
     </div>
     <script>
         (function () {
@@ -139,7 +139,19 @@
 
             var pct = document.getElementById('loading-pct');
             var fill = document.getElementById('loading-fill');
-            var t0 = performance.now(), ready = false;
+            var FINISH_MS = 700, t0 = performance.now(), t90 = 0, ready = false;
+
+            // odometer: one rolling strip per digit, blank cells hide the leading zeros.
+            // the ones strip ends on a second 0 so 9 rolls forward into it
+            var cols = [['', '1'], ['', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]];
+            var strips = cols.map(function (cells) {
+                var strip = document.createElement('span');
+                strip.className = 'loading__strip';
+                strip.innerHTML = cells.map(function (c) { return '<span>' + c + '</span>'; }).join('');
+                pct.appendChild(strip);
+                return strip;
+            });
+            pct.insertAdjacentHTML('beforeend', '<span>%</span>');
 
             // only show the counter once Poppins is in, so it never swaps font mid-count
             document.fonts.load('300 1em Poppins').finally(function () { pct.classList.add('is-ready'); });
@@ -147,15 +159,26 @@
                 document.fonts.ready.then(function () { ready = true; });
             });
 
-            // paced to the logo draw; slow-to-fast reads as a shorter wait.
-            // holds at 90% until the page has really loaded, then finishes and flies
+            function show(v) {
+                var ones = v % 10, carry = Math.max(0, ones - 9);
+                var tens = Math.floor(v / 10);
+                [Math.floor(v / 100) + (tens === 9 ? carry : 0), tens + carry, ones].forEach(function (y, i) {
+                    strips[i].style.transform = 'translateY(' + -y + 'em)';
+                });
+                fill.style.width = v + '%';
+            }
+
+            function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+
+            // spins fast then settles on 90 with the logo draw, holds there until the
+            // page has really loaded, then rolls the last ten and flies
             requestAnimationFrame(function tick(now) {
                 var t = Math.min((now - t0) / DRAW_MS, 1);
-                var v = Math.round(Math.min(t * t, ready ? 1 : 0.9) * 100);
-                pct.textContent = v + '%';
-                fill.style.width = v + '%';
-                if (v < 100) requestAnimationFrame(tick);
-                else fly();
+                if (t === 1 && ready && !t90) t90 = now;
+                var t2 = t90 ? Math.min((now - t90) / FINISH_MS, 1) : 0;
+                show(90 * easeOut(t) + 10 * easeOut(t2));
+                if (t2 < 1) requestAnimationFrame(tick);
+                else setTimeout(fly, 250);
             });
 
             function fly() {
@@ -244,7 +267,7 @@
                         <div class="stack-btn-wrapper">
                             <div class="stack-btn__shadow-back"></div>
                             <div class="stack-btn__shadow-mid"></div>
-                            <a href="assets/pdf/resume.pdf" class="stack-btn">
+                            <a href="assets/pdf/resume.pdf" class="stack-btn" data-cursor="open pdf">
                                 resume
                             </a>
                         </div>
@@ -288,7 +311,7 @@
             </div>
 
             <div class="about__cta container">
-                <a href="https://www.linkedin.com/in/nauqh/" class="contact-button" id="contactButton">
+                <a href="https://www.linkedin.com/in/nauqh/" class="contact-button" id="contactButton" data-cursor="say hi">
                     <span class="contact-button__roller">
                         <span>contact me</span>
                         <span>contact me</span>
@@ -788,7 +811,7 @@
 
             <div class="projects-grid container">
                 <div class="projects-col">
-                    <a href="https://tierra-agent.vercel.app" class="project-card" target="_blank"
+                    <a href="https://tierra-agent.vercel.app" class="project-card" data-cursor="view project" target="_blank"
                         data-description="A customer service agent for Tierra, a diamond jewelry brand - it answers policy and product questions with hybrid search (pgvector + BM25) over 1,300+ products and hands complex cases to staff. This is an English demo of the Vietnamese production bot."
                         data-tech="Python, FastAPI, Pydantic AI, OpenRouter, Postgres, pgvector">
                         <div class="project-card__thumbnail">
@@ -803,7 +826,7 @@
                         </div>
                     </a>
 
-                    <a href="https://eassess.vercel.app/" class="project-card" target="_blank"
+                    <a href="https://eassess.vercel.app/" class="project-card" data-cursor="view project" target="_blank"
                         data-images="assets/img/assessment-1.png,assets/img/assessment-2.png,assets/img/assessment-3.png,assets/img/assessment-3.png"
                         data-description="A full-stack platform for running automated computer science assessments, featuring real-time code execution and instant grading."
                         data-tech="FastAPI, React, PostgreSQL, Docker">
@@ -819,7 +842,7 @@
                         </div>
                     </a>
 
-                    <a href="https://github.com/nauqh/ti" class="project-card" target="_blank"
+                    <a href="https://github.com/nauqh/ti" class="project-card" data-cursor="view project" target="_blank"
                         data-images="assets/img/ti-1.png,assets/img/ti-2.png,assets/img/ti-3.png,assets/img/ti-4.png"
                         data-description="An LLM-powered assistant embedded in student workflows, delivering context-aware Q&amp;A and automated assignment feedback."
                         data-tech="Python, FastAPI, LangChain, OpenAI" data-github="https://github.com/nauqh/ti">
@@ -838,7 +861,7 @@
                 </div>
 
                 <div class="projects-col">
-                    <a href="https://nauqh.github.io/alfred/" class="project-card" target="_blank"
+                    <a href="https://nauqh.github.io/alfred/" class="project-card" data-cursor="view project" target="_blank"
                         data-images="assets/img/alfred-1.png,assets/img/alfred-2.png"
                         data-description="A self-hosted Discord music bot backed by a dedicated Lavalink server - queues and playback on your own always-on infra."
                         data-tech="Python, hikari, lightbulb, Lavalink" data-github="https://github.com/nauqh/alfred">
@@ -854,7 +877,7 @@
                         </div>
                     </a>
 
-                    <a href="https://github.com/nauqh/fb-agent" class="project-card" target="_blank"
+                    <a href="https://github.com/nauqh/fb-agent" class="project-card" data-cursor="view project" target="_blank"
                         data-images="assets/img/fb-agent-1.png,assets/img/fb-agent-2.png,assets/img/fb-agent-3.png,assets/img/fb-agent-4.png"
                         data-description="An LLM agent that runs social publishing across eight Facebook Pages - it gathers source material, writes a draft in each page's voice, generates the matching image, then hands it to a human to review before Metricool schedules the post."
                         data-tech="Python, FastAPI, Next.js, React, Supabase, Gemini, Metricool API">
@@ -870,7 +893,7 @@
                         </div>
                     </a>
 
-                    <a href="https://www.minuri.tech/" class="project-card"
+                    <a href="https://www.minuri.tech/" class="project-card" data-cursor="view project"
                         data-images="assets/img/minuri-1.png,assets/img/minuri-2.png,assets/img/minuri-3.png"
                         data-description="Minuri is the first friend you make in a new city - the one who knows where to go, what to bring, and what it actually costs. A guide built for young Melburnians, giving you one clear step at a time, starting with whatever you need most right now.">
                         <div class="project-card__thumbnail">
@@ -889,7 +912,7 @@
             </div>
 
             <div class="work__all container">
-                <a href="archive.html" class="work__all-link">
+                <a href="archive.html" class="work__all-link" data-cursor="see everything">
                     <svg class="work__all-arrow" aria-hidden="true" viewBox="0 0 110 52" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g class="work__all-ghost" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
                             stroke-linejoin="round">
@@ -957,7 +980,7 @@
             </div>
             <nav class="contact__links" aria-label="Contact">
                 <span class="contact__links-title">Elsewhere</span>
-                <a href="mailto:dominhquan.ho@gmail.com" class="contact__link">
+                <a href="mailto:dominhquan.ho@gmail.com" class="contact__link" data-cursor="write to me">
                     <span class="contact__link-label">Email</span>
                     <span class="contact__link-handle">dominhquan.ho@gmail.com</span>
                     <i class='bx bx-up-arrow-alt contact__link-arrow'></i>
@@ -985,7 +1008,7 @@
                 Designed and Built by <a href="index.html">Nauqh</a>
             </span>
             <span class="footer__copy">© <span id="currentYear"></span></span>
-            <a href="#home" class="footer__top">Back to top <i class='bx bx-up-arrow-alt'></i></a>
+            <a href="#home" class="footer__top" data-cursor="beam me up">Back to top <i class='bx bx-up-arrow-alt'></i></a>
         </div>
     </section>
 

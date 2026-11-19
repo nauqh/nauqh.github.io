@@ -436,10 +436,12 @@ a.seam-note {
 
 /*=============== SECTION BACKGROUNDS ===============*/
 .home.section {
+	--cursor-tag: #374151;
 	background-color: #ffffff;
 	--section-accent: #6b7280;
 }
 .about.section {
+	--cursor-tag: #047857;
 	background-color: #c8f2dc;
 	--section-accent: #059669;
 	min-height: 100vh;
@@ -447,26 +449,33 @@ a.seam-note {
 	align-content: center;
 }
 .skills.section {
+	--cursor-tag: #1d4ed8;
 	background-color: #ffffff;
 	--section-accent: #3b82f6;
 }
 .agents.section {
+	--cursor-tag: #c2410c;
 	background-color: #ffe4cc;
 	--section-accent: #ea580c;
 }
 .qualification.section {
+	--cursor-tag: #be185d;
 	background-color: #fdd5e6;
 	--section-accent: #db2777;
 }
 .experience.section {
+	--cursor-tag: #b45309;
 	background-color: #fff1b8;
 	--section-accent: #d97706;
 }
 .work.section {
+	--cursor-tag: #1d4ed8;
 	background-color: #d4e5ff;
 	--section-accent: #3b82f6;
 }
 .contact.section {
+	--cursor-tag: #5eead4;
+	--cursor-tag-ink: #0f172a;
 	background-color: #0f172a;
 	--section-accent: #0d9488;
 	padding: 0;
@@ -1614,17 +1623,26 @@ a.seam-note {
 	overflow: hidden;
 	user-select: none;
 	pointer-events: none;
-	background-color: var(--body-color);
-	transition: background-color 0.6s ease 0.15s;
 }
 
-#loading-screen.loading--exit {
-	background-color: transparent;
+/* a curtain that lifts off the page while the logo flies to the nav */
+#loading-screen::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-color: var(--body-color);
+	transform-origin: top;
+	transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+}
+
+#loading-screen.loading--exit::before {
+	transform: scaleY(0);
 }
 
 /* logo + bar share the top row, the counter anchors the bottom-right:
    a diagonal that keeps them apart, and the logo starts close to the nav */
 .loading__top {
+	position: relative;
 	display: flex;
 	align-items: center;
 	gap: clamp(1rem, 3vw, 2.5rem);
@@ -1674,26 +1692,43 @@ a.seam-note {
 .loading__counter {
 	position: absolute;
 	right: clamp(1rem, 3vw, 2.5rem);
-	bottom: 0;
+	/* half the right edge's gap, minus the digits' built-in descender room */
+	bottom: calc(clamp(0.5rem, 1.5vw, 1.25rem) - 0.14em);
+	font-size: clamp(88px, 19vw, 360px);
+	transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
 }
 
-.loading__counter span {
-	display: block;
+/* rides the curtain's bottom edge out: same distance, curve and delay */
+.loading--exit .loading__counter {
+	transform: translateY(-100vh);
+}
+
+/* odometer window: one 1em row of each digit strip shows at a time */
+.loading__digits {
+	display: flex;
+	height: 1em;
+	overflow: hidden;
 	font-weight: 300;
 	font-variant-numeric: tabular-nums;
-	font-size: clamp(88px, 19vw, 360px);
-	line-height: 0.82;
+	line-height: 1;
 	color: var(--title-color);
 	opacity: 0;
 	transition: opacity 0.3s ease;
 }
 
-.loading__counter span.is-ready {
+.loading__digits.is-ready {
 	opacity: 1;
 }
 
-.loading__track,
-.loading__counter {
+/* Poppins has no tabular figures, so each strip takes its widest digit's
+   width and centres the rest: the hundreds strip is exactly one "1" wide */
+.loading__strip span {
+	display: block;
+	height: 1em;
+	text-align: center;
+}
+
+.loading__track {
 	transition:
 		opacity 0.4s ease,
 		transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
@@ -1703,11 +1738,6 @@ a.seam-note {
 	opacity: 0;
 	transform: scaleX(0.6);
 	transform-origin: right;
-}
-
-.loading--exit .loading__counter {
-	opacity: 0;
-	transform: translateY(15%);
 }
 
 .header--logo-drawn .nav__logo-path {
@@ -3918,6 +3948,7 @@ a.seam-note:focus-visible .work__all-head {
 
 /*=============== BUILDING (NOW) ===============*/
 .building.section {
+	--cursor-tag: #0f766e;
 	background-color: #c6f1ec;
 	--section-accent: #0d9488;
 	/* darker teal for small text on white so accordant labels hold 4.5:1 */
@@ -4370,6 +4401,7 @@ a.seam-note:focus-visible .work__all-head {
 
 /*=============== GITHUB SECTION ===============*/
 .github.section {
+	--cursor-tag: #6d28d9;
 	background-color: #e6e0ff;
 	--section-accent: #8b5cf6;
 	/* A soft footer-coloured shadow along the bottom edge: it covers the seam
@@ -4786,4 +4818,49 @@ a.seam-note:focus-visible .work__all-head {
 	.gh-card__total-label {
 		font-size: var(--tiny-font-size);
 	}
+}
+
+/*=============== CURSOR TAG ===============*/
+/* each section sets --cursor-tag one shade darker than its accent, so the
+   tag holds 4.5:1 for its text and stands clear of the section background */
+.cursor-tag {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+	pointer-events: none;
+}
+
+/* offset past the native arrow, which is about 12x19px */
+.cursor-tag span {
+	position: absolute;
+	top: 22px;
+	left: 14px;
+	padding: 2px 8px;
+	border-radius: 4px;
+	white-space: nowrap;
+	font: 500 12px/1.4 ui-monospace, "Cascadia Mono", Consolas, monospace;
+	color: var(--tag-ink, #ffffff);
+	background-color: var(--tag-bg, #000000);
+	opacity: 0;
+	transform: translate(-6px, -4px) scale(0.85);
+	transform-origin: top left;
+	transition:
+		opacity 0.2s ease,
+		transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cursor-tag.is-on span {
+	opacity: 1;
+	transform: none;
+}
+
+.cursor-tag.is-up span {
+	top: auto;
+	bottom: 8px;
+}
+
+.cursor-tag.is-left span {
+	left: auto;
+	right: 8px;
 }
