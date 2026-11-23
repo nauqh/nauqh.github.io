@@ -4050,6 +4050,12 @@ a.seam-note:focus-visible .work__all-head {
 	rotate: -2deg;
 }
 
+.building__note:nth-child(4) {
+	top: 76%;
+	left: 50%;
+	rotate: 5deg;
+}
+
 .building__notes[aria-hidden="false"] {
 	pointer-events: auto;
 }
@@ -4070,6 +4076,10 @@ a.seam-note:focus-visible .work__all-head {
 
 .building__notes[aria-hidden="false"] .building__note:nth-child(3) {
 	transition-delay: 140ms;
+}
+
+.building__notes[aria-hidden="false"] .building__note:nth-child(4) {
+	transition-delay: 210ms;
 }
 
 .building__link {
