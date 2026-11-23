@@ -252,20 +252,18 @@ document.addEventListener("DOMContentLoaded", function () {
 	// peels the top note off from its bottom-right corner toward the top-left:
 	// the sheet is clipped along a moving crease and the peeled part is drawn
 	// folded back over it, then the note lifts away and the other page is on
-	// top. A press mid-peel sticks the note back down.
-	const card = document.querySelector("#coderschool");
-	if (card) {
-		const pad = card.querySelector(".job-flip");
-		const faces = [card.querySelector(".job-face--front"), card.querySelector(".job-face--back")];
-		const flipBtns = card.querySelectorAll(".job-flip__btn");
+	// top. A press mid-peel sticks the note back down. The Now Building card
+	// is the same pad, one project per note.
+	document.querySelectorAll(".job-flip").forEach((pad) => {
+		const faces = [pad.querySelector(".job-face--front"), pad.querySelector(".job-face--back")];
+		const flipBtns = pad.querySelectorAll(".job-flip__btn");
 		const svg = pad.querySelector(".job-peel");
 		const fade = svg.querySelector(".job-peel__fade");
 		const lift = svg.querySelector(".job-peel__lift");
 		const shade = svg.querySelector(".job-peel__shade");
 		const cast = svg.querySelector(".job-peel__cast");
 		const flap = svg.querySelector(".job-peel__flap");
-		const shadeGrad = svg.querySelector("#peel-shade");
-		const paperGrad = svg.querySelector("#peel-paper");
+		const [shadeGrad, paperGrad] = svg.querySelectorAll("linearGradient");
 		const Motion = window.Motion;
 		const t = Motion?.motionValue(0);
 		let flipped = false;
@@ -274,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		let H = 0;
 
 		const sync = () => {
-			const handOff = card.contains(document.activeElement);
+			const handOff = pad.contains(document.activeElement);
 			faces.forEach((face, i) => {
 				const hidden = i !== Number(flipped);
 				face.setAttribute("aria-hidden", String(hidden));
@@ -375,7 +373,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			});
 		};
 		flipBtns.forEach((b) => b.addEventListener("click", flip));
-	}
+	});
 
 	/*=============== SCROLL REVEAL ===============*/
 	const revealEls = [
@@ -390,7 +388,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		document.querySelector(".experience-container"),
 		...document.querySelectorAll(".projects-col"),
 		document.querySelector(".github__grid"),
-		document.querySelector(".building__card"),
+		document.querySelector(".building__pad"),
 		document.querySelector(".archive__table"),
 		document.querySelector(".error__card"),
 	].filter(Boolean);

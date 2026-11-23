@@ -741,7 +741,72 @@
             <h2 class="section__title">what I'm <em>building</em> now</h2>
 
             <div class="building container">
-                <div class="building__card">
+                <div class="job-flip building__pad">
+                <div class="building__card job-face job-face--front">
+                    <div class="building__grid">
+                        <div class="building__media">
+                            <img class="building__frame" src="assets/img/greyfall.png" alt="Lanternport island from above: cliffs, cottages and knights around a bonfire" loading="lazy">
+                            <div class="building__notes" id="greyfall-notes" aria-hidden="true">
+                                <figure class="building__note">
+                                    <img src="assets/img/greyfall1.png" alt="Map of Lanternport, from the Burg Gate down to the Old Bridge" loading="lazy">
+                                    <figcaption>lanternport</figcaption>
+                                </figure>
+                                <figure class="building__note">
+                                    <img src="assets/img/greyfall2.png" alt="Map of Emberwood, a forest of pine and burnt trees" loading="lazy">
+                                    <figcaption>emberwood</figcaption>
+                                </figure>
+                                <figure class="building__note">
+                                    <img src="assets/img/greyfall3.png" alt="Class select screen showing the Warrior's stats" loading="lazy">
+                                    <figcaption>pick a class</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="building__body">
+                            <div class="building__status">
+                                <span class="building__live"><i></i> in progress</span>
+                                <button type="button" class="job-flip__btn" aria-pressed="false"
+                                    aria-label="Show Alfred, the other project I'm building">
+                                    <svg class="job-flip__arrow" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2.2" stroke-linecap="square"
+                                        aria-hidden="true">
+                                        <path d="M3 12h16" />
+                                        <path d="M13 6l6 6-6 6" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <h3 class="building__name">Greyfall</h3>
+                            <p class="building__pitch">
+                                A souls-like action RPG set in the dying land of Aurum, where a nameless survivor
+                                washed ashore at Lanternport rises from bonfire to bonfire to uncover the origins of
+                                the Grey and the gold crown of the Grey Warlord.
+                            </p>
+
+                            <div class="building__demo-controls">
+                                <span class="building__demo-label">see it</span>
+                                <button type="button" data-notes="greyfall-notes" aria-pressed="false"
+                                    aria-controls="greyfall-notes">gameplay</button>
+                            </div>
+
+                            <div class="building__tech">
+                                <span>typescript</span><span>next.js</span><span>phaser</span><span>react</span>
+                            </div>
+
+                            <div class="building__actions">
+                                <div class="stack-btn-wrapper stack-btn-wrapper--dark">
+                                    <div class="stack-btn__shadow-back"></div>
+                                    <div class="stack-btn__shadow-mid"></div>
+                                    <a href="https://greyfall-five.vercel.app" target="_blank"
+                                        class="stack-btn stack-btn--dark">play greyfall</a>
+                                </div>
+                                <a href="https://github.com/nauqh/greyfall" target="_blank" rel="noopener"
+                                    class="building__link">view source</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="building__card job-face job-face--back" aria-hidden="true" inert>
                     <div class="building__grid">
                         <div class="building__media">
                             <div class="building__window">
@@ -750,8 +815,8 @@
                                     <span class="building__window-title">discord / #music-room</span>
                                 </div>
                                 <div class="building__shots">
-                                    <img src="assets/img/alfred-2.png" alt="Alfred answering plain-language requests in Discord: showing the current track and queueing a song" data-alfred-shot="chat" loading="lazy" hidden>
-                                    <img src="assets/img/alfred-1.png" alt="Alfred queue message with playback controls and up-next tracks" data-alfred-shot="queue" loading="lazy">
+                                    <img src="assets/img/alfred-2.png" alt="Alfred answering plain-language requests in Discord: showing the current track and queueing a song" data-shot="chat" loading="lazy" hidden>
+                                    <img src="assets/img/alfred-1.png" alt="Alfred queue message with playback controls and up-next tracks" data-shot="queue" loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -759,6 +824,15 @@
                         <div class="building__body">
                             <div class="building__status">
                                 <span class="building__live"><i></i> in progress</span>
+                                <button type="button" class="job-flip__btn" aria-pressed="false"
+                                    aria-label="Show Greyfall, the other project I'm building">
+                                    <svg class="job-flip__arrow" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2.2" stroke-linecap="square"
+                                        aria-hidden="true">
+                                        <path d="M3 12h16" />
+                                        <path d="M13 6l6 6-6 6" />
+                                    </svg>
+                                </button>
                             </div>
                             <h3 class="building__name">Alfred</h3>
                             <p class="building__pitch">
@@ -769,8 +843,8 @@
 
                             <div class="building__demo-controls" aria-label="Switch Alfred screenshot">
                                 <span class="building__demo-label">see it</span>
-                                <button type="button" data-alfred-view="chat" aria-pressed="false">chat</button>
-                                <button type="button" data-alfred-view="queue" aria-pressed="true">queue</button>
+                                <button type="button" data-view="chat" aria-pressed="false">chat</button>
+                                <button type="button" data-view="queue" aria-pressed="true">queue</button>
                             </div>
 
                             <div class="building__tech">
@@ -789,6 +863,30 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <svg class="job-peel" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="build-peel-shade" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#000" stop-opacity="0.22" />
+                            <stop offset="1" stop-color="#000" stop-opacity="0" />
+                        </linearGradient>
+                        <linearGradient id="build-peel-paper" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#e4e4e4" />
+                            <stop offset="0.3" stop-color="#fff" />
+                            <stop offset="1" stop-color="#f3f3f3" />
+                        </linearGradient>
+                    </defs>
+                    <g class="job-peel__fade">
+                        <polygon class="job-peel__shade" fill="url(#build-peel-shade)" />
+                        <g class="job-peel__lift">
+                            <polygon class="job-peel__cast" fill="#000" fill-opacity="0.25"
+                                filter="url(#peel-blur)" transform="translate(4 8)" />
+                            <polygon class="job-peel__flap" fill="url(#build-peel-paper)"
+                                stroke="currentColor" stroke-width="1" />
+                        </g>
+                    </g>
+                </svg>
                 </div>
             </div>
             <a href="#work" class="seam-note">
@@ -1053,14 +1151,36 @@
     <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.min.js"></script>
 
-    <!--=============== ALFRED SCREENSHOTS ===============-->
+    <!--=============== BUILDING SCREENSHOTS ===============-->
     <script>
-        document.querySelectorAll("[data-alfred-view]").forEach((button, _, buttons) => {
-            button.addEventListener("click", () => {
-                const view = button.dataset.alfredView;
-                buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
-                document.querySelectorAll("[data-alfred-shot]").forEach((img) => (img.hidden = img.dataset.alfredShot !== view));
+        document.querySelectorAll(".building__card").forEach((card) => {
+            const buttons = card.querySelectorAll("[data-view]");
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+                    card.querySelectorAll("[data-shot]").forEach((img) => (img.hidden = img.dataset.shot !== button.dataset.view));
+                });
             });
+        });
+        // Greyfall's gameplay notes open once, 5s after the card scrolls into view,
+        // unless the button got there first.
+        document.querySelectorAll("[data-notes]").forEach((button) => {
+            const notes = document.getElementById(button.dataset.notes);
+            let timer;
+            const set = (open) => {
+                button.setAttribute("aria-pressed", String(open));
+                notes.setAttribute("aria-hidden", String(!open));
+            };
+            button.addEventListener("click", () => {
+                clearTimeout(timer);
+                set(button.getAttribute("aria-pressed") !== "true");
+            });
+            const seen = new IntersectionObserver(([entry]) => {
+                if (!entry.isIntersecting) return;
+                seen.disconnect();
+                timer = setTimeout(() => set(true), 5000);
+            }, { threshold: 0.5 });
+            seen.observe(notes.parentElement);
         });
     </script>
 

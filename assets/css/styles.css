@@ -3955,11 +3955,11 @@ a.seam-note:focus-visible .work__all-head {
 	--building-accent-ink: #0f766e;
 }
 
+/* Each project is a note on a .job-flip pad; the pad carries the shadow. */
 .building__card {
 	background: var(--body-color);
 	border: 1px solid var(--title-color);
 	padding: 2rem;
-	box-shadow: 10px 10px 0 var(--title-color);
 }
 
 .building__grid {
@@ -4051,6 +4051,109 @@ a.seam-note:focus-visible .work__all-head {
 		visibility 0s 160ms;
 }
 
+/* Greyfall's screenshot sits in a bare frame, no window chrome. */
+.building__frame {
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--title-color);
+	border-radius: 10px;
+	transition: opacity 220ms ease-out;
+}
+
+.building__media:has(.building__notes[aria-hidden="false"]) .building__frame {
+	opacity: 0.3;
+}
+
+/* Gameplay shots pinned over the left pane like sticky notes, fanned out
+   and spilling past the card edge. */
+.building__media {
+	position: relative;
+}
+
+.building__notes {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+}
+
+.building__note {
+	position: absolute;
+	width: 56%;
+	margin: 0;
+	padding: 0.4rem 0.4rem 0;
+	border: 2px solid var(--title-color);
+	background: #fff;
+	box-shadow: 4px 4px 0 var(--title-color);
+	opacity: 0;
+	scale: 0.85;
+	translate: 0 1rem;
+	transition:
+		opacity 180ms ease-in,
+		scale 180ms ease-in,
+		translate 180ms ease-in;
+}
+
+.building__note img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.building__note figcaption {
+	padding: 0.2rem 0 0.3rem;
+	font-family: "Shantell Sans", "Segoe Print", cursive;
+	font-size: 0.9rem;
+	text-align: center;
+	color: var(--title-color);
+}
+
+.building__note:nth-child(1) {
+	top: -6%;
+	left: -8%;
+	rotate: -6deg;
+}
+
+.building__note:nth-child(2) {
+	top: 22%;
+	left: 46%;
+	rotate: 4deg;
+}
+
+.building__note:nth-child(3) {
+	top: 56%;
+	left: 2%;
+	rotate: -2deg;
+}
+
+.building__notes[aria-hidden="false"] {
+	pointer-events: auto;
+}
+
+.building__notes[aria-hidden="false"] .building__note {
+	opacity: 1;
+	scale: 1;
+	translate: 0 0;
+	transition:
+		opacity 220ms ease-out,
+		scale 320ms cubic-bezier(0.34, 1.4, 0.64, 1),
+		translate 320ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.building__notes[aria-hidden="false"] .building__note:nth-child(2) {
+	transition-delay: 70ms;
+}
+
+.building__notes[aria-hidden="false"] .building__note:nth-child(3) {
+	transition-delay: 140ms;
+}
+
+/* They poke past the card edge, so they go when the page is flipped away. */
+.job-face[aria-hidden="true"] .building__note {
+	opacity: 0;
+	transition: none;
+}
+
 .building__link {
 	font-size: 0.9rem;
 	font-weight: 500;
@@ -4128,6 +4231,8 @@ a.seam-note:focus-visible .work__all-head {
 .building__status {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
+	align-self: stretch;
 	gap: 0.5rem;
 	margin-top: 0;
 }
@@ -4213,12 +4318,19 @@ a.seam-note:focus-visible .work__all-head {
 @media screen and (max-width: 767px) {
 	.building__card {
 		padding: 1.25rem;
+	}
+
+	.building__pad {
 		box-shadow: 7px 7px 0 var(--title-color);
 	}
 
 	.building__grid {
 		grid-template-columns: 1fr;
 		gap: 2rem;
+	}
+
+	.building__note:nth-child(1) {
+		left: -2%;
 	}
 
 }
@@ -4231,6 +4343,11 @@ a.seam-note:focus-visible .work__all-head {
 	.building__shots img,
 	.building__shots img[hidden] {
 		transform: none;
+	}
+
+	.building__note {
+		scale: 1;
+		translate: 0 0;
 	}
 }
 
