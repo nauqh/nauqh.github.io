@@ -252,8 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	// peels the top note off from its bottom-right corner toward the top-left:
 	// the sheet is clipped along a moving crease and the peeled part is drawn
 	// folded back over it, then the note lifts away and the other page is on
-	// top. A press mid-peel sticks the note back down. The Now Building card
-	// is the same pad, one project per note.
+	// top. A press mid-peel sticks the note back down.
 	document.querySelectorAll(".job-flip").forEach((pad) => {
 		const faces = [pad.querySelector(".job-face--front"), pad.querySelector(".job-face--back")];
 		const flipBtns = pad.querySelectorAll(".job-flip__btn");
@@ -388,7 +387,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		document.querySelector(".experience-container"),
 		...document.querySelectorAll(".projects-col"),
 		document.querySelector(".github__grid"),
-		document.querySelector(".building__pad"),
+		document.querySelector(".building__card"),
 		document.querySelector(".archive__table"),
 		document.querySelector(".error__card"),
 	].filter(Boolean);

@@ -741,8 +741,7 @@
             <h2 class="section__title">what I'm <em>building</em> now</h2>
 
             <div class="building container">
-                <div class="job-flip building__pad">
-                <div class="building__card job-face job-face--front">
+                <div class="building__card">
                     <div class="building__grid">
                         <div class="building__media">
                             <img class="building__frame" src="assets/img/greyfall.png" alt="Lanternport island from above: cliffs, cottages and knights around a bonfire" loading="lazy">
@@ -765,15 +764,6 @@
                         <div class="building__body">
                             <div class="building__status">
                                 <span class="building__live"><i></i> in progress</span>
-                                <button type="button" class="job-flip__btn" aria-pressed="false"
-                                    aria-label="Show Alfred, the other project I'm building">
-                                    <svg class="job-flip__arrow" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2.2" stroke-linecap="square"
-                                        aria-hidden="true">
-                                        <path d="M3 12h16" />
-                                        <path d="M13 6l6 6-6 6" />
-                                    </svg>
-                                </button>
                             </div>
                             <h3 class="building__name">Greyfall</h3>
                             <p class="building__pitch">
@@ -806,88 +796,6 @@
                     </div>
                 </div>
 
-                <div class="building__card job-face job-face--back" aria-hidden="true" inert>
-                    <div class="building__grid">
-                        <div class="building__media">
-                            <div class="building__window">
-                                <div class="building__window-bar" aria-hidden="true">
-                                    <span class="building__lights"><i></i><i></i><i></i></span>
-                                    <span class="building__window-title">discord / #music-room</span>
-                                </div>
-                                <div class="building__shots">
-                                    <img src="assets/img/alfred-2.png" alt="Alfred answering plain-language requests in Discord: showing the current track and queueing a song" data-shot="chat" loading="lazy" hidden>
-                                    <img src="assets/img/alfred-1.png" alt="Alfred queue message with playback controls and up-next tracks" data-shot="queue" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="building__body">
-                            <div class="building__status">
-                                <span class="building__live"><i></i> in progress</span>
-                                <button type="button" class="job-flip__btn" aria-pressed="false"
-                                    aria-label="Show Greyfall, the other project I'm building">
-                                    <svg class="job-flip__arrow" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2.2" stroke-linecap="square"
-                                        aria-hidden="true">
-                                        <path d="M3 12h16" />
-                                        <path d="M13 6l6 6-6 6" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <h3 class="building__name">Alfred</h3>
-                            <p class="building__pitch">
-                                A self-hosted Discord music bot for game nights. One command and Alfred joins the
-                                call, playing from YouTube, Spotify, SoundCloud or Deezer. A single player card
-                                handles the controls, and it leaves when the last listener does.
-                            </p>
-
-                            <div class="building__demo-controls" aria-label="Switch Alfred screenshot">
-                                <span class="building__demo-label">see it</span>
-                                <button type="button" data-view="chat" aria-pressed="false">chat</button>
-                                <button type="button" data-view="queue" aria-pressed="true">queue</button>
-                            </div>
-
-                            <div class="building__tech">
-                                <span>python</span><span>hikari</span><span>lightbulb</span><span>lavalink</span>
-                            </div>
-
-                            <div class="building__actions">
-                                <div class="stack-btn-wrapper stack-btn-wrapper--dark">
-                                    <div class="stack-btn__shadow-back"></div>
-                                    <div class="stack-btn__shadow-mid"></div>
-                                    <a href="https://nauqh.github.io/alfred/" target="_blank"
-                                        class="stack-btn stack-btn--dark">visit alfred</a>
-                                </div>
-                                <a href="https://github.com/nauqh/alfred" target="_blank" rel="noopener"
-                                    class="building__link">view source</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <svg class="job-peel" aria-hidden="true">
-                    <defs>
-                        <linearGradient id="build-peel-shade" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#000" stop-opacity="0.22" />
-                            <stop offset="1" stop-color="#000" stop-opacity="0" />
-                        </linearGradient>
-                        <linearGradient id="build-peel-paper" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#e4e4e4" />
-                            <stop offset="0.3" stop-color="#fff" />
-                            <stop offset="1" stop-color="#f3f3f3" />
-                        </linearGradient>
-                    </defs>
-                    <g class="job-peel__fade">
-                        <polygon class="job-peel__shade" fill="url(#build-peel-shade)" />
-                        <g class="job-peel__lift">
-                            <polygon class="job-peel__cast" fill="#000" fill-opacity="0.25"
-                                filter="url(#peel-blur)" transform="translate(4 8)" />
-                            <polygon class="job-peel__flap" fill="url(#build-peel-paper)"
-                                stroke="currentColor" stroke-width="1" />
-                        </g>
-                    </g>
-                </svg>
-                </div>
             </div>
             <a href="#work" class="seam-note">
                 <span>there's more below</span>
@@ -1151,19 +1059,10 @@
     <script src="https://cdn.jsdelivr.net/npm/lenis@latest/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.min.js"></script>
 
-    <!--=============== BUILDING SCREENSHOTS ===============-->
+    <!--=============== GREYFALL NOTES ===============-->
     <script>
-        document.querySelectorAll(".building__card").forEach((card) => {
-            const buttons = card.querySelectorAll("[data-view]");
-            buttons.forEach((button) => {
-                button.addEventListener("click", () => {
-                    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
-                    card.querySelectorAll("[data-shot]").forEach((img) => (img.hidden = img.dataset.shot !== button.dataset.view));
-                });
-            });
-        });
-        // Greyfall's gameplay notes open once, 5s after the card scrolls into view,
-        // unless the button got there first.
+        // Greyfall's gameplay notes open once the card has sat on screen for 5s,
+        // unless the button got there first. Scrolling away resets the wait.
         document.querySelectorAll("[data-notes]").forEach((button) => {
             const notes = document.getElementById(button.dataset.notes);
             let timer;
@@ -1171,15 +1070,18 @@
                 button.setAttribute("aria-pressed", String(open));
                 notes.setAttribute("aria-hidden", String(!open));
             };
+            const seen = new IntersectionObserver(([entry]) => {
+                clearTimeout(timer);
+                if (entry.isIntersecting) timer = setTimeout(() => {
+                    seen.disconnect();
+                    set(true);
+                }, 5000);
+            }, { threshold: 0.6 });
             button.addEventListener("click", () => {
                 clearTimeout(timer);
+                seen.disconnect();
                 set(button.getAttribute("aria-pressed") !== "true");
             });
-            const seen = new IntersectionObserver(([entry]) => {
-                if (!entry.isIntersecting) return;
-                seen.disconnect();
-                timer = setTimeout(() => set(true), 5000);
-            }, { threshold: 0.5 });
             seen.observe(notes.parentElement);
         });
     </script>
