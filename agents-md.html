@@ -128,7 +128,7 @@ Notes: /auth/login now returns { accessToken, refreshToken }
 Updated: 2026-09-11 14:20
 ```
 
-`Pane:` is your terminal id (see Herdr). `Updated:` is taken from the
+`Pane:` is your pane id (see Herdr). `Updated:` is taken from the
 clock, not guessed.
 
 `Status:` is `working` (editing now) or `blocked` (waiting on the user or
@@ -138,19 +138,20 @@ is deleted, and a new task gets a fresh file.
 
 ### Herdr
 
-If you run inside a Herdr terminal, work out from your environment which
-Herdr CLI owns it and what your terminal id is, then learn that CLI from its
-own guide. Take your id only from your environment: a CLI that does not own
-your terminal answers with someone else's. Not in Herdr? Skip `Pane:` and
-messaging.
+You run inside Herdr when `HERDR_ENV` is `1`; learn the CLI from
+`herdr --skill`. Your pane id is `$HERDR_PANE_ID` (`w1:p3`), not the
+`term_...` terminal id, which agent commands reject. Take it only from your
+environment: a command with no target acts on the focused pane, which may be
+someone else's. Not in Herdr? Skip `Pane:` and messaging.
 
-- **Name your terminal first.** Before you start a task, give your own tab or
-  terminal a two or three word name for it in Title Case, so the user can
-  tell the sessions apart ("Bonfire Map"). Rename it when you switch tasks.
-  Only ever your own.
-- **Find peers.** List the live terminals with their id, `cwd` and status;
-  peers in this repo share its `cwd`. Address a session by its id, taken from
-  that list or its status file `Pane:`.
+- **Name yourself first.** Before you start a task, give your agent your
+  session name (`herdr agent rename`) so peers can address you by it, and
+  your tab a two or three word name in Title Case so the user can tell the
+  sessions apart ("Bonfire Map"). Skip the tab when you share it with
+  another pane. Rename both when you switch tasks. Only ever your own.
+- **Find peers.** List the live agents with their pane, `cwd` and status;
+  peers in this repo share its `cwd`. Address a session by its name or pane,
+  taken from that list or its status file `Pane:`.
 - **Message for these only:** asking for a claimed file, warning an owner
   about a change that touches its `Files:`, or unblocking work that depends on
   another session; in a team, also the brief and the report. Everything else
@@ -194,7 +195,8 @@ spawns workers through Herdr.
 - **The brief is self-contained**: goal, done criteria, the files the worker
   owns, the check command, your pane, and "report back, do not commit".
 - **Wait, do not poll**: use the CLI's wait until the worker is done or
-  blocked. Read a blocked worker; answer it, or hand it to the user.
+  blocked, run in the background so you stay `idle` for reports. Read a
+  blocked worker; answer it, or hand it to the user.
 - **Merge the work in yourself.** Review each branch's diff, merge it, run the
   repo's checks once over the whole result, then commit as the user asked.
 - **Clean up by name**: close each worker's terminal or workspace first
@@ -212,7 +214,8 @@ spawns workers through Herdr.
 - Never commit, push, or write to a live service; that stays with the lead
   and the user.
 - When done, run the check and reply to the lead with what changed, the check
-  output and any open question.
+  output and any open question. Longer than a screen? Write it to a file and
+  send the path: a full-screen agent's scrollback cannot be read back.
 
 ## Writing style
 
