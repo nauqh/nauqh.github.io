@@ -128,7 +128,7 @@ Notes: /auth/login now returns { accessToken, refreshToken }
 Updated: 2026-09-11 14:20
 ```
 
-`Pane:` is your Herdr pane id, `$HERDR_PANE_ID`. `Updated:` is taken from the
+`Pane:` is your terminal id (see Herdr). `Updated:` is taken from the
 clock, not guessed.
 
 `Status:` is `working` (editing now) or `blocked` (waiting on the user or
@@ -138,24 +138,27 @@ is deleted, and a new task gets a fresh file.
 
 ### Herdr
 
-Applies when `$HERDR_PANE_ID` is set; otherwise skip `Pane:` and messaging.
+If you run inside a Herdr terminal, work out from your environment which
+Herdr CLI owns it and what your terminal id is, then learn that CLI from its
+own guide. Take your id only from your environment: a CLI that does not own
+your terminal answers with someone else's. Not in Herdr? Skip `Pane:` and
+messaging.
 
-- **Name your tab first.** Before you start a task, rename your own tab to a
-  two or three word name for it in Title Case, so the user can tell the
-  sessions apart: `herdr tab rename &lt;tab_id&gt; "Bonfire Map"`, with `tab_id`
-  from `herdr agent get $HERDR_PANE_ID`. Rename it again when you switch
-  tasks. Only ever your own tab.
-- **Find peers.** `herdr agent list` shows every live agent with its `pane_id`,
-  `cwd` and `agent_status`; peers in this repo share its `cwd`. Address a
-  session by its pane id, taken from that list or its status file `Pane:`.
+- **Name your terminal first.** Before you start a task, give your own tab or
+  terminal a two or three word name for it in Title Case, so the user can
+  tell the sessions apart ("Bonfire Map"). Rename it when you switch tasks.
+  Only ever your own.
+- **Find peers.** List the live terminals with their id, `cwd` and status;
+  peers in this repo share its `cwd`. Address a session by its id, taken from
+  that list or its status file `Pane:`.
 - **Message for these only:** asking for a claimed file, warning an owner
   about a change that touches its `Files:`, or unblocking work that depends on
   another session; in a team, also the brief and the report. Everything else
   goes in your status file.
-- **Send** with `herdr agent prompt &lt;pane&gt; "&lt;message&gt;"`, one line, no `--wait`.
-  Check `herdr agent get &lt;pane&gt;` first: send when it is `idle` or `done`, and
-  retry later when it is `working`. A `blocked` agent is waiting on its user;
-  leave its dialog to them.
+- **Send** one line, without waiting for the reply. Check the peer's status
+  first: send when it is `idle` or `done`, and retry later when it is
+  `working`. A `blocked` agent is waiting on its user; leave its dialog to
+  them.
 - **Write it self-contained**, because the receiver has none of your context:
   `[from &lt;your-session&gt; @ &lt;your-pane&gt;] &lt;one ask or fact&gt;. Reply: yes|no|none.`
   Name the files, the symbol, and what you need back.
@@ -168,9 +171,9 @@ Applies when `$HERDR_PANE_ID` is set; otherwise skip `Pane:` and messaging.
   is your task.
 - **Two exchanges per question, then escalate.** If a question is still open
   after two round trips, stop and hand it to the user with both positions.
-- **Read, don't drive.** `herdr agent read` on a peer is fine. Starting,
-  closing, focusing, or sending keys to a pane you did not create needs the
-  user to have asked.
+- **Read, don't drive.** Reading a peer's screen is fine. Starting, closing,
+  focusing, or sending keys to a terminal you did not create needs the user
+  to have asked.
 
 ## Teams
 
@@ -184,19 +187,18 @@ spawns workers through Herdr.
   user the split (task, worker, tool, files) before you spawn anything.
 - **Track the team in your own status file**: a `Team:` line per worker
   (name, pane, branch, task), and `Status: working` until the merge.
-- **One worktree per worker.** `herdr worktree create --branch team/&lt;worker&gt;
-  --label &lt;worker&gt;`, then in a shell pane there `herdr agent start &lt;worker&gt;
-  --kind &lt;claude|pi|codex|...&gt; --pane &lt;id&gt;`, then `herdr agent prompt &lt;pane&gt;
-  "&lt;brief&gt;"`. The user asking for the team is the ask for these panes and
-  branches.
+- **One worktree per worker** on branch `team/&lt;worker&gt;`, then start the
+  worker's agent (claude, pi, codex, ...) interactively in a new terminal
+  there, then send it the brief. The user asking for the team is the ask for
+  these terminals and branches.
 - **The brief is self-contained**: goal, done criteria, the files the worker
   owns, the check command, your pane, and "report back, do not commit".
-- **Wait, do not poll**: `herdr agent wait &lt;pane&gt; --until done --until
-  blocked`. Read a blocked worker; answer it, or hand it to the user.
+- **Wait, do not poll**: use the CLI's wait until the worker is done or
+  blocked. Read a blocked worker; answer it, or hand it to the user.
 - **Merge the work in yourself.** Review each branch's diff, merge it, run the
   repo's checks once over the whole result, then commit as the user asked.
-- **Clean up by name**: close each worker workspace first (`herdr workspace
-  close &lt;ws&gt;`; Windows locks a folder that is any process's cwd, including a
+- **Clean up by name**: close each worker's terminal or workspace first
+  (Windows locks a folder that is any process's cwd, including a
   dev server the worker left running), then remove the worktrees and delete
   the `team/` branches you created. Workers have pushed despite the brief, so
   check `git ls-remote --heads origin` for `team/*` too. Then delete your
