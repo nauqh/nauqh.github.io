@@ -128,7 +128,7 @@ Notes: /auth/login now returns { accessToken, refreshToken }
 Updated: 2026-09-11 14:20
 ```
 
-`Pane:` is your Herdr pane id, `$HERDR_PANE_ID`. `Updated:` is taken from the
+`Pane:` is your Herdr pane id (see Herdr). `Updated:` is taken from the
 clock, not guessed.
 
 `Status:` is `working` (editing now) or `blocked` (waiting on the user or
@@ -138,12 +138,14 @@ is deleted, and a new task gets a fresh file.
 
 ### Herdr
 
-Applies when `$HERDR_PANE_ID` is set; otherwise skip `Pane:` and messaging.
+Applies when `herdr pane current` succeeds; otherwise skip `Pane:` and
+messaging. Its `pane_id` and `tab_id` are yours. Do not rely on
+`$HERDR_PANE_ID`: an agent's tool shell may not inherit it.
 
 - **Name your tab first.** Before you start a task, rename your own tab to a
   two or three word name for it in Title Case, so the user can tell the
   sessions apart: `herdr tab rename &lt;tab_id&gt; "Bonfire Map"`, with `tab_id`
-  from `herdr agent get $HERDR_PANE_ID`. Rename it again when you switch
+  from `herdr pane current`. Rename it again when you switch
   tasks. Only ever your own tab.
 - **Find peers.** `herdr agent list` shows every live agent with its `pane_id`,
   `cwd` and `agent_status`; peers in this repo share its `cwd`. Address a
