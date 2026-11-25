@@ -123,6 +123,7 @@ Tool: Codex
 Pane: w1:p3
 Status: working
 Task: Add refresh token endpoint
+Issue: GRE-123
 Files: src/auth/token.ts, src/routes/auth.ts
 Notes: /auth/login now returns { accessToken, refreshToken }
 Updated: 2026-09-11 14:20
@@ -216,6 +217,27 @@ spawns workers through Herdr.
 - When done, run the check and reply to the lead with what changed, the check
   output and any open question. Longer than a screen? Write it to a file and
   send the path: a full-screen agent's scrollback cannot be read back.
+
+## Linear
+
+Every task is tracked in Linear, through the `linear` MCP server, in the team
+the project's `AGENTS.md` names on its `Linear:` line. No line: ask the user
+for the team key and add the line.
+
+- **Standing permission:** create issues, comment on them and change their
+  state, in that team only. Never close, cancel or delete one; the user does.
+- **Every session:** when you claim your status file, create an issue for
+  your task (title = `Task:`) or reuse the one the user named, put its id in
+  `Issue:`, and move it to In Progress. Comment on decisions others need,
+  and move it to In Review when you hand the summary to the user.
+- **Lead:** when the user confirms the split, create a parent issue for the
+  task and one sub-issue per worker. Put the parent in your status file
+  `Issue:` and each sub-issue id in that worker's brief.
+- **Worker:** this is the one live write you make. Move your issue to In
+  Progress when you start, comment on decisions others need (what would go
+  in `Notes:`), and move it to In Review when you report back.
+- Comments carry facts, not narration: what changed, the check result, the
+  open question.
 
 ## Writing style
 
